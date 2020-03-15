@@ -13,7 +13,7 @@ import DateRangeIcon from '@material-ui/icons/DateRange';
 import SpeakerIcon from '@material-ui/icons/Speaker';
 
 
-function Test() {
+function Sidebar() {
   const [menuList,setMenuList] = useState([{menu:"My Team",icon:<GroupIcon/>},
   {menu:"Teams",icon:<BusinessIcon/>},{menu:"Assignment",icon:<AssignmentIcon/>},
   {menu:"Appointments",icon:<DateRangeIcon/>},{menu:"Annoucement",icon:<SpeakerIcon/>}])
@@ -25,6 +25,7 @@ function Test() {
         <div />
         <Divider />
         <List>
+          <h1>SPM System</h1>
           {menuList.map((text, index) => (
             <ListItem button key={index}>
               <ListItemIcon>
@@ -40,4 +41,4 @@ function Test() {
   )
 }
 
-export default Test
+export default Sidebar
