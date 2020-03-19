@@ -8,7 +8,7 @@ function Navbar() {
     const [user,setUser] = useState({id : 60130500114,name : 'Suthiwat Sirithanakom',year : 3})
   return (
     <div>
-      <AppBar >
+      <AppBar>
         <Toolbar variant="dense">
           <Typography variant="h6" color="inherit" style={{textAlign : 'right',flex : 1}}>
             

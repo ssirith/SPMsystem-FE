@@ -11,7 +11,7 @@ import BusinessIcon from '@material-ui/icons/Business';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import DateRangeIcon from '@material-ui/icons/DateRange';
 import SpeakerIcon from '@material-ui/icons/Speaker';
-
+import Avatar from '@material-ui/core/Avatar';
 
 function Sidebar() {
   const [menuList,setMenuList] = useState([{menu:"My Team",icon:<GroupIcon/>},
@@ -25,7 +25,11 @@ function Sidebar() {
         <div />
         <Divider />
         <List>
-          <h1>SPM System</h1>
+          
+          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg"  />
+          <p>
+          Remy Sharp
+          </p>
           {menuList.map((text, index) => (
             <ListItem button key={index}>
               <ListItemIcon>

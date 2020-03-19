@@ -15,7 +15,7 @@ const useStyles = makeStyles({
     },
   });
 function Carditem(){
-    const [group,setGroup] = useState([{id:1,name:"SPM system",detail:"This is group detail section"}])
+    const [group,setGroup] = useState([{id:1,name:"SPM system",detail:"This is group detail section", advisor: 'Dr.Siam Yamsaengsung'}])
     const classes = useStyles();    
     return (
         <>
@@ -24,15 +24,15 @@ function Carditem(){
       
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
-            IT60-0{group.id}
+            IT60-0{group.id} : {group.name}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            {group.detail}
+            Advisor : {group.advisor}
           </Typography>
         </CardContent>
       
       <CardActions>
-        <Button size="small" color="primary" >
+        <Button size="small" color="primary">
           Learn More
         </Button>
       </CardActions>
