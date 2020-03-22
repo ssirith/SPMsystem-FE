@@ -38,7 +38,11 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(3)
   },
   // necessary for content to be below app bar
-  toolbar: theme.mixins.toolbar
+  toolbar: theme.mixins.toolbar,
+  header:{
+    flex : 1,
+    textAlign : 'right'
+  }
 }))
 
 function Navbar() {
@@ -63,7 +67,7 @@ function Navbar() {
           <Typography
             variant="h6"
             color="inherit"
-            style={{ textAlign: "right", flex: 1 }}
+            className ={classes.header}
           >
             {user.id}
           </Typography>

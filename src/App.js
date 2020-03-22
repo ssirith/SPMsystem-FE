@@ -14,7 +14,7 @@ function App() {
     <>
       <div>
         <Navbar />
-      </div>
+      </div> 
       <div>
       <Carditem />
       <Button
@@ -23,7 +23,7 @@ function App() {
         onClick={() => console.log("stesfa")}
       />
       <Boxitem />
-      <Inputtext
+        <Inputtext
         id="groupName"
         label="Temp label"
         defaultValue="Chonki Group"

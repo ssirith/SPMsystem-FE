@@ -10,9 +10,6 @@ const useStyles = makeStyles({
     root: {
       maxWidth: 345,
     },
-    media: {
-      height: 140,
-    },
   });
 function Carditem(){
     const [group,setGroup] = useState([{id:1,name:"SPM system",detail:"This is group detail section", advisor: 'Dr.Siam Yamsaengsung'}])
