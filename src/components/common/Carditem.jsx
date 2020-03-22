@@ -19,8 +19,9 @@ function Carditem(){
     const classes = useStyles();    
     return (
         <>
+        <div>
         {group.map((group,index)=>(
-        <Card className={classes.root} key= {index} style = {{marginLeft:300,marginTop:80}}>
+        <Card className={classes.root} key= {index} >
       
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
@@ -38,7 +39,7 @@ function Carditem(){
       </CardActions>
     </Card>))}
             
-    
+    </div>
         </>
     )
 }
