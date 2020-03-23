@@ -1,36 +1,25 @@
 import React from "react"
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
-import "./App.css"
+// import "./App.css"
 
-import Navbar from "../src/components/common/Navbar"
-import Carditem from "../src/components/common/Carditem"
-import Boxitem from "../src/components/common/Boxitem"
-import Button from "./components/common/Buttons"
-import Inputtext from "./components/common/Inputtext"
-
+import MainLayout from "./components/MainLayout"
+import Test from "./pages/Test"
+import Zompongpage from "./pages/Zompongpage"
 
 function App() {
   return (
-    <>
-      <div>
-        <Navbar />
-      </div> 
-      <div>
-      <Carditem />
-      <Button
-        menu="Test Button"
-        color="primary"
-        onClick={() => console.log("stesfa")}
-      />
-      <Boxitem />
-        <Inputtext
-        id="groupName"
-        label="Temp label"
-        defaultValue="Chonki Group"
-        color="primary"
-      />
-      </div>
-    </>
+    <Router>
+      <Route exact path="/">
+        <MainLayout>
+          <Test />
+        </MainLayout>
+      </Route>
+      <Route exact path="/2">
+        <MainLayout>
+          <Zompongpage />
+        </MainLayout>
+      </Route>
+    </Router>
   )
 }
 
