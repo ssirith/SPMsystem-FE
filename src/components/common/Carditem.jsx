@@ -1,43 +1,39 @@
-import React,{useState} from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
+import React, { useState } from "react"
+import { makeStyles } from "@material-ui/core/styles"
+import Card from "@material-ui/core/Card"
+import CardActions from "@material-ui/core/CardActions"
+import CardContent from "@material-ui/core/CardContent"
+import Button from "@material-ui/core/Button"
+import Typography from "@material-ui/core/Typography"
 
 const useStyles = makeStyles({
-    root: {
-      maxWidth: 345,
-    },
-  });
-function Carditem(){
-    const [group,setGroup] = useState([{id:1,name:"SPM system",detail:"This is group detail section", advisor: 'Dr.Siam Yamsaengsung'}])
-    const classes = useStyles();    
-    return (
-        <>
-        <div>
-        {group.map((group,index)=>(
-        <Card className={classes.root} key= {index} >
-      
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-            IT60-0{group.id} : {group.name}
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            Advisor : {group.advisor}
-          </Typography>
-        </CardContent>
-      
-      <CardActions>
-        <Button size="small" color="primary">
-          Learn More
-        </Button>
-      </CardActions>
-    </Card>))}
-            
-    </div>
-        </>
-    )
+  root: {
+    maxWidth: 345
+  }
+})
+function Carditem(props) {
+  const classes = useStyles()
+  return (
+    <>
+      <div>
+        <Card className={classes.root}>
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="h2">
+              IT60-0{props.group.id} : {props.group.name}
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+              Advisor : {props.group.advisor}
+            </Typography>
+          </CardContent>
+
+          <CardActions>
+            <Button size="small" color="primary">
+              Learn More
+            </Button>
+          </CardActions>
+        </Card>
+      </div>
+    </>
+  )
 }
 export default Carditem

@@ -7,14 +7,14 @@ import {
   DateRange,
   Speaker
 } from "@material-ui/icons"
-
+import {Link} from 'react-router-dom'
 export default function Sidebar() {
   const [menuList, setMenuList] = useState([
-    { menu: "My Team", icon: <Group /> },
-    { menu: "Teams", icon: <Business /> },
-    { menu: "Assignment", icon: <Assignment /> },
-    { menu: "Appointments", icon: <DateRange /> },
-    { menu: "Annoucement", icon: <Speaker /> }
+    { menu: "My Team", icon: <Group />,path:"Myteam"},
+    { menu: "Teams", icon: <Business />,path:"Teams" },
+    { menu: "Assignment", icon: <Assignment />,path:"Assignment" },
+    { menu: "Appointments", icon: <DateRange />,path:"Appointments" },
+    { menu: "Annoucement", icon: <Speaker />,path:"Annoucement" }
   ])
   return (
     <nav class="col-md-2 d-none d-md-block bg-light sidebar min-vh-100">
@@ -26,10 +26,12 @@ export default function Sidebar() {
         <ul class="nav flex-column mb-2">
           {menuList.map((text, index) => (
             <li class="nav-item">
-              <a class="nav-link" href="/dasd">
+              <Link to ={ `/${text.path}`} >
+              <a class="nav-link" >
                 <ListItemIcon>{text.icon}</ListItemIcon>
                 {text.menu}
               </a>
+              </Link>
             </li>
           ))}
         </ul>

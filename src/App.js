@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 
 import MainLayout from "./components/MainLayout"
 import Test from "./pages/Test"
-import Zompongpage from "./pages/Zompongpage"
+import Teams from "./pages/Teams"
 
 function App() {
   return (
@@ -14,9 +14,9 @@ function App() {
           <Test />
         </MainLayout>
       </Route>
-      <Route exact path="/2">
+      <Route exact path="/teams">
         <MainLayout>
-          <Zompongpage />
+          <Teams/>
         </MainLayout>
       </Route>
     </Router>

@@ -7,22 +7,23 @@ import Inputtext from "../components/common/Inputtext"
 export default function Test() {
   return (
     <>
-      <div>
+      {/* <div>
         <Buttons
           menu="Test Button"
           color="primary"
           onClick={() => console.log("stesfa")}
         />
       </div>
-      <Carditem />
-
-      <Boxitem />
+      {/* <Carditem /> */}
+      <div>
+        <Boxitem />
+      </div>
       <Inputtext
         id="groupName"
         label="Temp label"
         defaultValue="Chonki Group"
         color="primary"
       />
-    </>
+    </> 
   )
 }
