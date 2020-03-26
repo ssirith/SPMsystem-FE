@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 // import "./App.css"
 
 import MainLayout from "./components/MainLayout"
-import Test from "./pages/Test"
+import Myteam from "./pages/Myteam"
 import Teams from "./pages/Teams"
 
 function App() {
@@ -11,7 +11,7 @@ function App() {
     <Router>
       <Route exact path="/">
         <MainLayout>
-          <Test />
+          <Myteam/>
         </MainLayout>
       </Route>
       <Route exact path="/teams">

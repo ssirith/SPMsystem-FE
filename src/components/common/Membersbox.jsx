@@ -1,16 +1,12 @@
 import React from "react"
 import { makeStyles } from "@material-ui/core/styles"
 import Card from "@material-ui/core/Card"
-import CardActions from "@material-ui/core/CardActions"
 import CardContent from "@material-ui/core/CardContent"
-import Button from "@material-ui/core/Button"
-import Typography from "@material-ui/core/Typography"
 
 const useStyles = makeStyles({
   root: {
     position: "relative",
-    minWidth: 275,
-    wordWrap: "break-word"
+    minWidth: 275
   },
   bullet: {
     display: "inline-block",
@@ -24,19 +20,25 @@ const useStyles = makeStyles({
     marginBottom: 12
   }
 })
-
-function Boxitem(props) {
+export default function Membersbox(props) {
   const classes = useStyles()
+
   return (
     <>
       <Card className={classes.root}>
-        <CardContent >
+        <CardContent>
           <div>
             <h1>{props.title}</h1>
           </div>
-
-          <div>
-            <p>{props.detail}</p>
+          <div className="container">
+            {props.members.map((data, index) => {
+              return (
+                <div className="row">
+                  <div className="col-6">{data.name}</div>
+                  <div className="col-6">{data.id}</div>
+                </div>
+              )
+            })}
           </div>
           <br />
         </CardContent>
@@ -44,4 +46,3 @@ function Boxitem(props) {
     </>
   )
 }
-export default Boxitem
