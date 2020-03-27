@@ -2,6 +2,8 @@ import React from "react"
 import { makeStyles } from "@material-ui/core/styles"
 import Card from "@material-ui/core/Card"
 import CardContent from "@material-ui/core/CardContent"
+import Buttons from "./Buttons"
+import { CardHeader } from "@material-ui/core"
 
 const useStyles = makeStyles({
   root: {
@@ -27,9 +29,7 @@ export default function Membersbox(props) {
     <>
       <Card className={classes.root}>
         <CardContent>
-          <div>
-            <h1>{props.title}</h1>
-          </div>
+          <CardHeader title={props.title}/>
           <div className="container">
             {props.members.map((data, index) => {
               return (

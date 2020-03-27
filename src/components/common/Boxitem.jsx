@@ -5,6 +5,7 @@ import CardActions from "@material-ui/core/CardActions"
 import CardContent from "@material-ui/core/CardContent"
 import Button from "@material-ui/core/Button"
 import Typography from "@material-ui/core/Typography"
+import { CardHeader } from "@material-ui/core"
 
 const useStyles = makeStyles({
   root: {
@@ -30,13 +31,15 @@ function Boxitem(props) {
   return (
     <>
       <Card className={classes.root}>
-        <CardContent >
-          <div>
-            <h1>{props.title}</h1>
-          </div>
+        <CardContent>
+          <CardHeader title={props.title} />
 
-          <div>
-            <p>{props.detail}</p>
+          <div className="container">
+            <div className="row">
+              <div className="col">
+                <p>{props.detail}</p>
+              </div>
+            </div>
           </div>
           <br />
         </CardContent>

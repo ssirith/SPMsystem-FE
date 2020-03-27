@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import Carditem from "../components/common/Carditem"
+import Testcard from "../components/common/Testcard"
 
 export default function Teams() {
   const [group, setGroup] = useState([
@@ -65,6 +66,7 @@ export default function Teams() {
           })}
         </div>
       </div>
+      <Testcard/>
     </>
   )
 }
