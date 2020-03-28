@@ -6,15 +6,13 @@ import Boxitem from "../components/common/Boxitem"
 import Buttons from "../components/common/Buttons"
 import ModalComponent from "../components/common/Modalcomponent"
 
-export default function Editteam() {
+export default function Createteam() {
   const [isOpenStudent, setIsOpenStudent] = useState(false);
   const [isOpenAdvisor, setIsOpenAdvisor] = useState(false);
   const [mygroup, setMugroup] = useState({
-    name: "Senior Project Management System (SPM system)",
-    id: 14,
-    advisor: "Dr.Siam Yamsaengsung",
-    detail:
-      "sdassjadshjahasdjkhjasdhjksdhjsdhjkasdjhksdassjadshjahasdjkhjasdhjksdhjsdhjkasdjhksdassjadshjahasdjkhjasdhjksdhjsdhjkasdjhksdassjadshjahasdjkhjasdhjksdhjsdhjkasdjhksdassjadshjahasdjkhjasdhjksdhjsdhjkasdjhksdassjadshjahasdjkhjasdhjksdhjsdhjkasdjhksdassjadshjahasdjkhjasdhjksdhjsdhjkasdjhksdassjadshjahasdjkhjasdhjksdhjsdhjkasdjhksdassjadshjahasdjkhjasdhjksdhjsdhjkasdjhksdassjadshjahasdjkhjasdhjksdhjsdhjkasdjhk"
+    name: "",
+    advisor: "",
+    detail:""
   })
   const [members, setMember] = useState([
     {
