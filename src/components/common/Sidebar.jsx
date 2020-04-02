@@ -31,7 +31,7 @@ export default function Sidebar() {
             </div>
           </div>
         </div>
-        <ul class="nav fle  x-column mb-2">
+        <ul class="nav flex-column mb-2">
           {menuList.map((text, index) => (
             <li class="nav-item">
               <Link to={`/${text.path}`}>
