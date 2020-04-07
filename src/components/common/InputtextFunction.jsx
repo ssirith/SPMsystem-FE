@@ -13,8 +13,8 @@ function Inputtext(props) {
   const classes = useStyles()
   return (
         <>
-            <TextField className={classes.margin} id={props.id} label={props.label} defaultValue={props.defaultValue} color={props.color} 
-            variant="outlined" placeholder={props.placeholder}onChange={props.onChange}/>
+            <TextField className={classes.margin} id={props.id} label={props.label} defaultValue={props.defaultValue} 
+            color={props.color} variant="outlined" placeholder={props.placeholder} onChange={(e)=>props.filter(e.target.value)}/>
         </>
   )
 }
