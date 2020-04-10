@@ -4,7 +4,8 @@ import Topicbox from "../components/common/Topicbox"
 import Membersbox from "../components/common/Membersbox"
 import Boxitem from "../components/common/Boxitem"
 import Buttons from "../components/common/Buttons"
-import ModalComponent from "../components/common/Modalcomponent"
+import ModalComponentMember from "../components/common/ModalComponentMember"
+import ModalComponentAdvisor from "../components/common/ModalComponentAdvisor"
 
 export default function Editteam() {
   const [isOpenStudent, setIsOpenStudent] = useState(false);
@@ -51,7 +52,7 @@ export default function Editteam() {
           <div className="col-12 text-right m-2">
 
           <Buttons menu="Edit" color="primary" onClick={()=>setIsOpenStudent(true)}  />
-          <ModalComponent isOpen={isOpenStudent} setIsOpen={setIsOpenStudent} header='Add team members' />
+          <ModalComponentMember isOpen={isOpenStudent} setIsOpen={setIsOpenStudent} header='Add team members' />
           </div>
         </div>
         <div className="row">
@@ -63,7 +64,7 @@ export default function Editteam() {
           <div className="col-12 text-right m-2">
 
           <Buttons menu="Edit" color="primary" onClick={()=>setIsOpenAdvisor(true)}/>
-          <ModalComponent isOpen={isOpenAdvisor} setIsOpen={setIsOpenAdvisor} header='Add advisor'/>
+          <ModalComponentAdvisor isOpen={isOpenAdvisor} setIsOpen={setIsOpenAdvisor} header='Add advisor'/>
           </div>
         </div>
         <div className="row">
