@@ -16,7 +16,7 @@ function App() {
           <Myteam />
         </MainLayout>
       </Route>
-      <Route exact path="/teams">
+      <Route exact path="/AllProject">
         <MainLayout>
           <Teams />
         </MainLayout>

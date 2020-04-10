@@ -10,8 +10,8 @@ import {
 import { Link } from "react-router-dom"
 export default function Sidebar() {
   const [menuList, setMenuList] = useState([
-    { menu: "My Team", icon: <Group />, path: "" },
-    { menu: "Teams", icon: <Business />, path: "Teams" },
+    { menu: "My Project", icon: <Group />, path: "" },
+    { menu: "All Projects", icon: <Business />, path: "AllProject" },
     { menu: "Assignment", icon: <Assignment />, path: "Assignment" },
     { menu: "Appointments", icon: <DateRange />, path: "Appointments" },
     { menu: "Annoucement", icon: <Speaker />, path: "Annoucement" }
