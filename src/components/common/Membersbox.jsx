@@ -68,9 +68,9 @@ export default function Membersbox(props) {
             {props.members && props.members.map((data, index) => {
               return (
                   <div className="row" key={index}>
-                  <div className="col-6">{data.student_id}</div>
-                  <div className="col-6">{data.student_name}</div>
-                  <button className="btn btn-danger"  onClick={()=>handleDelte(data)}>delete</button>
+                  <div className="col-4">{data.student_id}</div>
+                  <div className="col-4">{data.student_name}</div>
+                  <div className="col-4"><button className="btn btn-danger"  onClick={()=>handleDelte(data)}>delete</button></div>
                 </div>
               )
             })}

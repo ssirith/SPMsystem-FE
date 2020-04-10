@@ -1,12 +1,13 @@
 import React, { useState } from "react"
 import { Link, useParams } from "react-router-dom"
+import BreadcrumbNav from "../components/common/BreadcrumbNav"
 import Boxitem from "../components/common/Boxitem"
 import Membersbox from "../components/common/Membersbox"
 import Topicbox from "../components/common/Topicbox"
 import Button from "../components/common/Buttons"
 export default function Otherteam() {
   const { id } = useParams()
-  const [mygroup, setMugroup] = useState({
+  const [group, setMugroup] = useState({
     name: "Senior Project Management System (SPM system)",
     id: 14,
     advisor: "Dr.Siam Yamsaengsung",
@@ -31,10 +32,13 @@ export default function Otherteam() {
     <div className="container">
       <div className="row">
         <div className="col-12 my-3">
+          <BreadcrumbNav pastref="/AllProject" past="All Project" current={`IT-${group.id}`}/>
+          </div>
+        <div className="col-12 my-3">
           <Topicbox
             title="Senior Project Topic"
-            detail={mygroup.name}
-            id={mygroup.id}
+            detail={group.name}
+            id={group.id}
           />
         </div>
 
@@ -44,13 +48,13 @@ export default function Otherteam() {
               <Membersbox title="Members" members={members} />
             </div>
             <div className="col-4">
-              <Boxitem title="Advisor" detail={mygroup.advisor} />
+              <Boxitem title="Advisor" detail={group.advisor} />
             </div>
           </div>
         </div>
 
         <div className="col-12 my-3">
-          <Boxitem title="Detail" detail={mygroup.detail} />
+          <Boxitem title="Detail" detail={group.detail} />
         </div>
       </div>
     </div>
