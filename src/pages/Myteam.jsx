@@ -62,17 +62,17 @@ export default function Myteam() {
     )
   } else {
     return (
-      <div className="container text-center my-auto" >
-        <p>Oops, you don't have any project right click Create button to create one.</p>
+      <div className="container">
+        <div className="text-center">
           <Link to="/createteam">
             <Buttons
-              menu="Create Project"
+              menu="Create"
               color="primary"
               onClick={() => console.log("Create")}
             />
           </Link>
         </div>
-      
+      </div>
     )
   }
 }
