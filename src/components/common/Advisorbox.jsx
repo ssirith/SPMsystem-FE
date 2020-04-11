@@ -7,6 +7,7 @@ import { CardHeader } from "@material-ui/core"
 import axios from 'axios'
 import { useEffect } from "react"
 
+
 const useStyles = makeStyles({
   root: {
     position: "relative",
@@ -24,45 +25,26 @@ const useStyles = makeStyles({
     marginBottom: 12
   }
 })
-export default function Advisorbox(props) {
+export default function Membersbox(props) {
   const classes = useStyles()
 
   console.log(props.advisors)
-  const handleDelte = value =>{
-     
-      props.deleteadvisor(value) 
-
-    }
-
-  function checkAdvisors() {
-    if (props.advisors) {
-      if ((props.advisors.length >= 2)) { // member(submited) = 0 or >3 || ซ้ำกับ submited  **(props.members.length >= 3) ||
-        return "The advisors limit has been reached !!!!"
-      }
-      else { // member 0 1 2 
-        return "Can add more advisors"
-      }
-    }
-    else {
-      return "Can add more advisors"
-    }
-  }
   return (
     <>
       <Card className={classes.root}>
         <CardContent>
-          <CardHeader title={props.title}/>
-          <div className="container">
-            {props.advisors && props.advisors.map((data, index) => {
+          <CardHeader title={props.title} />
+          <div className="container" >
+            {props.advisors && (props.advisors.map((ads, index) => {
               return (
-                <div className="row" key={index}>
-                  <div className="col-6">{data.teacher_name}</div>
-                  <button className="btn btn-danger"  onClick={()=>handleDelte(data)}>delete</button>
-                </div>
+                <>
+                  <p key={index}>
+                    {ads.teacher_name}
+                  </p>
+                </>
               )
-            })}
+            }))}
           </div>
-          {checkAdvisors()}
           <br />
         </CardContent>
       </Card>

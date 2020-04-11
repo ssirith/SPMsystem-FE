@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import BreadcrumbNav from "../components/common/BreadcrumbNav"
 import { Link, useParams } from "react-router-dom"
 import Boxitem from "../components/common/Boxitem"
 import Membersbox from "../components/common/Membersbox"
@@ -11,25 +12,32 @@ export default function Otherteam() {
     id: 14,
     advisor: "Dr.Siam Yamsaengsung",
     detail:
-      "sdassjadshjahasdjkhjasdhjksdhjsdhjkasdjhksdassjadshjahasdjkhjasdhjksdhjsdhjkasdjhksdassjadshjahasdjkhjasdhjksdhjsdhjkasdjhksdassjadshjahasdjkhjasdhjksdhjsdhjkasdjhksdassjadshjahasdjkhjasdhjksdhjsdhjkasdjhksdassjadshjahasdjkhjasdhjksdhjsdhjkasdjhksdassjadshjahasdjkhjasdhjksdhjsdhjkasdjhksdassjadshjahasdjkhjasdhjksdhjsdhjkasdjhksdassjadshjahasdjkhjasdhjksdhjsdhjkasdjhksdassjadshjahasdjkhjasdhjksdhjsdhjkasdjhk"
+      "sdassjadshjahasdjkhjasdhjksdhjsdhjkasdjhksdassjadshjahasdjkhjasdhjksdhjsdhjkasdjhksdassjadshjahasdjkhjasdhjksdhjsdhjkasdjhksdassjadshjahasdjkhjasdhjksdhjsdhjkasdjhksdassjadshjahasdjkhjasdhjksdhjsdhjkasdjhksdassjadshjahasdjkhjasdhjksdhjsdhjkasdjhksdassjadshjahasdjkhjasdhjksdhjsdhjkasdjhksdassjadshjahasdjkhjasdhjksdhjsdhjkasdjhksdassjadshjahasdjkhjasdhjksdhjsdhjkasdjhksdassjadshjahasdjkhjasdhjksdhjsdhjkasdjhk",
   })
   const [members, setMember] = useState([
     {
       name: "Suthiwat Sirithanakom",
-      id: 60130500114
+      id: 60130500114,
     },
     {
       name: "Thamrongchai Chalowat",
-      id: 60130500125
+      id: 60130500125,
     },
     {
       name: "Watunyu Panmun",
-      id: 60130500082
-    }
+      id: 60130500082,
+    },
   ])
   return (
     <div className="container">
       <div className="row">
+        <div className="col-12 my-3">
+          <BreadcrumbNav
+            pastref="/AllProject"
+            past="All Project"
+            current={`IT-${mygroup.id}`}
+          />
+        </div>
         <div className="col-12 my-3">
           <Topicbox
             title="Senior Project Topic"

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react"
 import Inputtext from "../components/common/Inputtext"
+import BreadcrumbNav from "../components/common/BreadcrumbNav"
 import Topicbox from "../components/common/Topicbox"
 import Membersbox from "../components/common/Membersbox"
 import Advisorbox from "../components/common/Advisorbox"
@@ -8,7 +9,7 @@ import Buttons from "../components/common/Buttons"
 import ModalComponentMember from "../components/common/ModalComponentMember"
 import ModalComponentAdvisor from "../components/common/ModalComponentAdvisor"
 import Dropdown from "../components/common/Dropdown"
-import axios from 'axios'
+import axios from 'axios' 
 
 export default function Createteam() {
   const [departmentList, setDepartmentList] = useState(["IT", "CS", "DSI"])
@@ -21,38 +22,20 @@ export default function Createteam() {
   })
   const [member, setMember] = useState([])
   const [advisor, setAdvisor] = useState([])
-  console.log(member)
-
+  
   function addmember(value) {
-    console.log(value)
-    setMember([...member, value])
-  }
-
-  function deletemember(value) {
-    const result = member;
-    const index = result.indexOf(value);
-    if (index > -1) {
-      result.splice(index, 1);
-    }
-    console.log(value)
-    setMember([...result])
-    
+    let temp = []
+    temp.push(value)
+    setMember(...temp)
   }
 
   function addadvisor(value) {
     console.log(value)
-    setAdvisor([...advisor, value])
+    let temp = []
+    temp.push(value)
+    setAdvisor(...temp)
   }
 
-  function deleteadvisor(value) {
-    const result = advisor;
-    const index = result.indexOf(value);
-    if (index > -1) {
-      result.splice(index, 1);
-    }
-    console.log(value)
-    setMember([...result])
-  }
   const handleProject = (event) => {
     setMygroup(
       { ...mygroup, name: event.target.value }
@@ -67,10 +50,7 @@ export default function Createteam() {
     console.log(mygroup)
   }
 
-
-
   const handleSubmit = (event) => {
-
     const project_name = mygroup.name;
     const project_detail = mygroup.detail;
     const student_id = [];
@@ -80,7 +60,7 @@ export default function Createteam() {
 
     console.log({ project_name, project_detail, student_id, teacher_id, department });
 
-    axios.post('http://127.0.0.1:8000/api/project', { project_name, project_detail, student_id, teacher_id, department })
+    axios.post('http://127.0.0.1:8000/api/projects', { project_name, project_detail, student_id, teacher_id, department })
 
   }
 
@@ -88,6 +68,7 @@ export default function Createteam() {
     <div className="container">
       <div className="row">
         <div className="col-12 my-3">
+          <BreadcrumbNav past="My Project" pastref="/" current="Create Proeject"/>
           <p>Senior Project Topic</p>
         </div>
       </div>
@@ -95,7 +76,7 @@ export default function Createteam() {
         <div className="col-7 my-3">
           <Inputtext
             id="projectname"
-            label="Projectname"
+            label="Project Name"
             defaultValue={mygroup.name}
             onChange={(event) => handleProject(event)}
           />
@@ -123,7 +104,7 @@ export default function Createteam() {
               isOpen={isOpenStudent}
               setIsOpen={setIsOpenStudent}
               addmember={addmember}
-              members={member}
+              // members={member}
               header="Add team members"
             />
           </div>
@@ -131,7 +112,7 @@ export default function Createteam() {
 
         <div className="row">
           <div className="col-12">
-            <Membersbox title="Members" members={member} deletemember={deletemember} />
+            <Membersbox title="Members" members={member} />
           </div>
         </div>
 
@@ -148,14 +129,14 @@ export default function Createteam() {
               isOpen={isOpenAdvisor}
               setIsOpen={setIsOpenAdvisor}
               addadvisor={addadvisor}
-              advisors={advisor}
+              // advisors={advisor}
               header="Add advisor"
             />
           </div>
         </div>
         <div className="row">
           <div className="col-12">
-            <Advisorbox title="Advisor" advisors={advisor} deleteadvisor={deleteadvisor} />
+            <Advisorbox title="Advisor" advisors={advisor}  />
           </div>
         </div>
       </div>
