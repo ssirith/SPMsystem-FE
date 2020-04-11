@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react"
 import Inputtext from "../components/common/Inputtext"
+import BreadcrumbNav from "../components/common/BreadcrumbNav"
 import Topicbox from "../components/common/Topicbox"
 import Membersbox from "../components/common/Membersbox"
 import Advisorbox from "../components/common/Advisorbox"
@@ -67,6 +68,7 @@ export default function Createteam() {
     <div className="container">
       <div className="row">
         <div className="col-12 my-3">
+          <BreadcrumbNav past="My Project" pastref="/" current="Create Proeject"/>
           <p>Senior Project Topic</p>
         </div>
       </div>
@@ -74,7 +76,7 @@ export default function Createteam() {
         <div className="col-7 my-3">
           <Inputtext
             id="projectname"
-            label="Projectname"
+            label="Project Name"
             defaultValue={mygroup.name}
             onChange={(event) => handleProject(event)}
           />
