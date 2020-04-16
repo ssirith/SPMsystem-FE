@@ -1,78 +1,85 @@
-import React, { useState } from "react"
+import React, { useState, useCallback, useEffect } from "react"
 import { Link } from "react-router-dom"
 import Carditem from "../components/common/Carditem"
 import Boxitem from "../components/common/Boxitem"
 import Inputtext from "../components/common/Inputtext"
-import Membersbox from "../components/common/Membersbox"
+import MyteamMember from "../components/common/MyteamMember"
+import MyteamAdvisor from "../components/common/MyteamAdvisor"
 import Topicbox from "../components/common/Topicbox"
-import Button from "../components/common/Buttons"
 import Buttons from "../components/common/Buttons"
+import axios from 'axios'
 export default function Myteam() {
-  const [mygroup, setMugroup] = useState()
-  const [members, setMember] = useState([
-    {
-      name: "Suthiwat Sirithanakom",
-      id: 60130500114
-    },
-    {
-      name: "Thamrongchai Chalowat",
-      id: 60130500125
-    },
-    {
-      name: "Watunyu Panmun",
-      id: 60130500082
-    }
-  ])
-  console.log(mygroup)
-  if (mygroup) {
-    return (
-      <div className="container">
-        <div className="row">
-          <div className="ml-auto mt-2">
-            <Link to="/editteam">
-              <Button menu="Edit" color="Primary" />
-            </Link>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-12 my-3">
-            <Topicbox
-              title="Senior Project Topic"
-              detail={mygroup.name}
-              id={mygroup.id}
-            />
-          </div>
+  const [team, setTeam] = useState({})
 
-          <div className="col-12 my-3">
-            <div className="row">
-              <div className="col-8">
-                <Membersbox title="Members" members={members} />
-              </div>
-              <div className="col-4">
-                <Boxitem title="Advisor" detail={mygroup.advisor} />
-              </div>
+  const fetchData = useCallback(
+    async () => {
+      const data = await axios.get(`http://127.0.0.1:8000/api/projects/IT01`)//[]
+      setTeam(data.data)//{group[{},{},{}], project{}, teacher[{}]}
+    },[])
+  useEffect(() => {
+    fetchData()
+  }, [])
+  
+  console.log(team)
+
+  if (team.project) { 
+  return (
+    <div className="container">
+      <div className="row">
+        <div className="col-12 my-3">
+          {team&&
+          <Topicbox
+            title="Senior Project Topic"
+            topic={team.project}
+          />
+          } 
+        </div>
+ 
+        <div className="col-12 my-3">
+          <div className="row">
+            <div className="col-8">
+              <MyteamMember title="Members" members={team.group} />
+            </div>
+            <div className="col-4">
+              <MyteamAdvisor title="Advisor" advisors={team.teacher} />
             </div>
           </div>
+        </div>
 
-          <div className="col-12 my-3">
-            <Boxitem title="Detail" detail={mygroup.detail} />
+        <div className="col-12 my-3">
+          <Boxitem title="Detail" detail={team.project} />
+        </div>  
+        <div className="col-12 mx-auto">
+        <div className="row">
+          <div className="col-12 text-center">
+          <Link to="/editteam">
+            <Buttons menu="Edit" color="Primary" />
+          </Link>
+            <Buttons
+              menu="Delete"
+              color="secondary"
+              onClick={() => console.log("Delete")}             
+            />
           </div>
         </div>
       </div>
-    )
-  } else {
-    return (
-      <div className="container text-center my-auto">
-        <p>Oops,you don't have any project click Create Project button to create one.</p>
-          <Link to="/createteam">
-            <Buttons
-              menu="Create Project "
-              color="primary"
-              onClick={() => console.log("Create")}
-            />
-          </Link>
-        
       </div>
-    )
-  }
+    </div>
+  )
+} 
+else {
+  return (
+    <div className="container">
+      <div className="text-center">
+        <Link to="/createteam">
+          <Buttons
+            menu="Create"
+            color="primary"
+            onClick={() => console.log("Create")}
+          />
+        </Link>
+      </div>
+    </div>
+  )
+}
 }

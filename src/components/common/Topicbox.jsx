@@ -32,11 +32,12 @@ export default function Topicbox(props) {
       <Card className={classes.root}>
         <CardContent>
           <CardHeader title={props.title} />
-
           <div className="container">
             <div className="row">
               <div className="col-6">
-                <p>{`IT60-${props.id} : ${props.detail}`}</p>
+                
+               {props.topic&&`IT60-${props.topic.project_id}
+               ${props.topic.project_name}`}
               </div>
             </div>
           </div>

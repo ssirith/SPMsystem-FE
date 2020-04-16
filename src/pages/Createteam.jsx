@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react"
 import Inputtext from "../components/common/Inputtext"
-import BreadcrumbNav from "../components/common/BreadcrumbNav"
 import Topicbox from "../components/common/Topicbox"
 import Membersbox from "../components/common/Membersbox"
 import Advisorbox from "../components/common/Advisorbox"
@@ -10,6 +9,7 @@ import ModalComponentMember from "../components/common/ModalComponentMember"
 import ModalComponentAdvisor from "../components/common/ModalComponentAdvisor"
 import Dropdown from "../components/common/Dropdown"
 import axios from 'axios' 
+import { Link } from "react-router-dom"
 
 export default function Createteam() {
   const [departmentList, setDepartmentList] = useState(["IT", "CS", "DSI"])
@@ -60,7 +60,8 @@ export default function Createteam() {
 
     console.log({ project_name, project_detail, student_id, teacher_id, department });
 
-    axios.post('http://127.0.0.1:8000/api/projects', { project_name, project_detail, student_id, teacher_id, department })
+    axios.post('http://127.0.0.1:8000/api/projects', 
+    { project_name, project_detail, student_id, teacher_id, department })
 
   }
 
@@ -68,7 +69,6 @@ export default function Createteam() {
     <div className="container">
       <div className="row">
         <div className="col-12 my-3">
-          <BreadcrumbNav past="My Project" pastref="/" current="Create Proeject"/>
           <p>Senior Project Topic</p>
         </div>
       </div>
@@ -76,7 +76,7 @@ export default function Createteam() {
         <div className="col-7 my-3">
           <Inputtext
             id="projectname"
-            label="Project Name"
+            label="Projectname"
             defaultValue={mygroup.name}
             onChange={(event) => handleProject(event)}
           />
@@ -153,21 +153,24 @@ export default function Createteam() {
       <div className="col-12 mx-auto">
         <div className="row">
           <div className="col-12 text-center">
+          <Link to="/">
             <Buttons
               menu="Cancel"
               color="secondary"
               onClick={() => console.log("Cancel")}
             />
+             </Link>
+            <Link to="/">
             <Buttons
-              menu="Save"
+              menu="Create"
               color="primary"
               onClick={() => console.log("save")}
-              onClick={(event) => handleSubmit(event)}
-
+              onClick={(event) => handleSubmit(event)}             
             />
+            </Link>
           </div>
         </div>
-      </div>
+      </div> 
     </div>
   )
 }

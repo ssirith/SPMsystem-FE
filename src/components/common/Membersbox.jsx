@@ -11,7 +11,7 @@ import { useEffect } from "react"
 const useStyles = makeStyles({
   root: {
     position: "relative",
-    minWidth: 275
+    minWidth: 275 
   },
   bullet: {
     display: "inline-block",
@@ -29,7 +29,7 @@ export default function Membersbox(props) {
   const classes = useStyles()
 
   console.log(props.members)
-  return (
+  return ( 
     <>
       <Card className={classes.root}>
         <CardContent>
