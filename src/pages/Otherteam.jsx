@@ -33,7 +33,7 @@ export default function Otherteam() {
       <div className="row">
         <div className="col-12 my-3">
           <BreadcrumbNav
-            pastref="/AllProject"
+            pastref="/AllProjects"
             past="All Project"
             current={`IT-${mygroup.id}`}
           />

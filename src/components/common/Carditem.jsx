@@ -28,7 +28,7 @@ function Carditem(props) {
           </CardContent>
 
           <CardActions>
-            <Link to = {`/Otherteam/:${props.group.id}`} >
+            <Link to = {`/project/:${props.group.id}`} >
             <Button size="small" color="primary">
             Learn More
             </Button></Link>

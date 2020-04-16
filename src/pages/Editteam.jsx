@@ -140,7 +140,7 @@ export default function Editteam() {
           {project &&
             <Inputtext
               id="projectname"
-              label="Projectname"
+              label="Project Name"
               defaultValue={project.project_name}
               onChange={(event) => handleProjectName(event)}
             />}

@@ -76,7 +76,7 @@ export default function Createteam() {
         <div className="col-7 my-3">
           <Inputtext
             id="projectname"
-            label="Projectname"
+            label="Project Name"
             defaultValue={mygroup.name}
             onChange={(event) => handleProject(event)}
           />
