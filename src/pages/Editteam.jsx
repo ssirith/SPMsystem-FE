@@ -11,9 +11,10 @@ import ModalMemberEdit from "../components/common/ModalMemberEdit"
 import ModalAdvisorEdit from "../components/common/ModalAdvisorEdit"
 import Dropdown from "../components/common/Dropdown"
 import axios from 'axios'
-import { Link } from "@reach/router"
+import { Link,useNavigate } from "@reach/router"
 import BreadcrumbNav from "../components/common/BreadcrumbNav"
 export default function Editteam() {
+  let navigate=useNavigate()
   const [departmentList, setDepartmentList] = useState(["IT", "CS", "DSI"])
   const [department, setDepartment] = useState([])
   const [isOpenStudent, setIsOpenStudent] = useState(false);
@@ -87,7 +88,7 @@ export default function Editteam() {
   }
 
   member&&console.log(member[0].group_id)
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     console.log(project)
     const project_id = project.project_id;
     const group_id = member[0].group_id;
@@ -123,8 +124,16 @@ export default function Editteam() {
     
     // const data = JSON.stringify(temp)
     console.log(temp)
-    axios.put(`http://127.0.0.1:8000/api/projects/edit/${project_id}`, temp)
-    console.log(temp)
+    try{
+     const response=await axios.put(`http://127.0.0.1:8000/api/projects/edit/${project_id}`, temp)
+     console.log(response)
+     if(response.status===200){
+       window.location.reload()
+     }
+    }catch(err){
+      console.log(err)
+    }
+    
   }
 
 
