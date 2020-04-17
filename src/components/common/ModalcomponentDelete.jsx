@@ -9,7 +9,7 @@ export default function ModalComponentDelete(props) {
      project_id: props.toDelete.project_id
     }
     console.log(temp)
-    axios.delete(`http://127.0.0.1:8000/api/projects/edit/IT01`, temp)
+    axios.post(`http://127.0.0.1:8000/api/projects/delete`, temp)
   }
   return (
     <Modal
