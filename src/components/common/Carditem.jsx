@@ -14,21 +14,32 @@ const useStyles = makeStyles({
 })
 function Carditem(props) {
   const classes = useStyles()
+  console.log(props.groups)
+ 
   return (
     <>
       <div>
         <Card className={classes.root}>
           <CardContent>
             <Typography gutterBottom variant="h5" component="h2">
-              IT60-0{props.group.id} : {props.group.name}
+                 IT60-{props.groups.project_id} : {props.groups.project_name}
             </Typography>
+            
             <Typography variant="body2" color="textSecondary" component="p">
-              Advisor : {props.group.advisor}
+            
+                 {props.groups.teachers && (props.groups.teachers.map((a,index) =>{
+                   return(
+                     <p key={index}>                    
+                       Advisor: {a.teacher_name}                                          
+                     </p>
+                   )
+                 }))}
+                      
             </Typography>
           </CardContent>
 
           <CardActions>
-            <Link to = {`/project/:${props.group.id}`} >
+            <Link to = {`/project/:${props.groups.project_id}`} >
             <Button size="small" color="primary">
             Learn More
             </Button></Link>

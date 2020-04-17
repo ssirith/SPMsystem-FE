@@ -7,7 +7,7 @@ import Topicbox from "../components/common/Topicbox"
 import Button from "../components/common/Buttons"
 export default function Otherteam() {
   const { id } = useParams()
-  const [mygroup, setMugroup] = useState({
+  const [mygroup, setMygroup] = useState({
     name: "Senior Project Management System (SPM system)",
     id: 14,
     advisor: "Dr.Siam Yamsaengsung",

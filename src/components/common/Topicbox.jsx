@@ -38,7 +38,7 @@ export default function Topicbox(props) {
                 
                {props.topic&&`IT60-${props.topic.project_id}
                ${props.topic.project_name}`}
-              </div>
+              </div> 
             </div>
           </div>
           <br />

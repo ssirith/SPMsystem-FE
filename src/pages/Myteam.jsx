@@ -21,6 +21,7 @@ export default function Myteam() {
   }, [])
 
   console.log(team)
+  console.log(team.project)
 
   if (team.project) {
     return (
@@ -61,6 +62,7 @@ export default function Myteam() {
                   isOpen={isOpenDelete}
                   setIsOpen={setIsOpenDelete}
                   header="Confirmation"
+                  toDelete={team.project}
                 />
               </div>
             </div>
