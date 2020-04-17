@@ -39,8 +39,8 @@ function Carditem(props) {
           </CardContent>
 
           <CardActions>
-            <Link to = {`/project/:${props.groups.project_id}`} >
-            <Button size="small" color="primary">
+            <Link to = {`/projects/${props.groups.project_id}`} >
+            <Button size="small" color="primary" >
             Learn More
             </Button></Link>
           </CardActions>

@@ -10,6 +10,7 @@ import ModalComponentAdvisor from "../components/common/ModalComponentAdvisor"
 import Dropdown from "../components/common/Dropdown"
 import axios from 'axios' 
 import { Link } from "react-router-dom"
+import BreadcrumbNav from "../components/common/BreadcrumbNav"
 
 export default function Createteam() {
   const [departmentList, setDepartmentList] = useState(["IT", "CS", "DSI"])
@@ -68,6 +69,13 @@ export default function Createteam() {
   return (
     <div className="container">
       <div className="row">
+      <div className="col-12 my-3">
+          <BreadcrumbNav
+            pastref="/"
+            past="My Project"
+            current="Create Project"
+          />
+        </div>
         <div className="col-12 my-3">
           <p>Senior Project Topic</p>
         </div>
@@ -165,7 +173,8 @@ export default function Createteam() {
               menu="Create"
               color="primary"
               onClick={() => console.log("save")}
-              onClick={(event) => handleSubmit(event)}             
+              onClick={(event) => handleSubmit(event)} 
+                          
             />
             </Link>
           </div>

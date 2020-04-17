@@ -29,7 +29,8 @@ export default function Myteam() {
         <div className="row">
           <div className="col-12 my-3">
             {team && (
-              <Topicbox title="Senior Project Topic" topic={team.project} />
+              <Topicbox title="Senior Project Topic"
+               topic={team.project} />
             )}
           </div>
 

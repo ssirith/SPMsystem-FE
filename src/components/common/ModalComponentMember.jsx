@@ -86,6 +86,7 @@ export default function ModalComponentMember(props) {
   }
 
   function handleSubmit() {
+    
     props.addmember(save)
     console.log(save)
   }

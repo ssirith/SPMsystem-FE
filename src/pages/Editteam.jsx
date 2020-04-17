@@ -12,7 +12,7 @@ import ModalAdvisorEdit from "../components/common/ModalAdvisorEdit"
 import Dropdown from "../components/common/Dropdown"
 import axios from 'axios'
 import { Link } from "react-router-dom"
-
+import BreadcrumbNav from "../components/common/BreadcrumbNav"
 export default function Editteam() {
   const [departmentList, setDepartmentList] = useState(["IT", "CS", "DSI"])
   const [department, setDepartment] = useState([])
@@ -131,6 +131,13 @@ export default function Editteam() {
   return (
     <div className="container">
       <div className="row">
+      <div className="col-12 my-3">
+          <BreadcrumbNav
+            pastref="/"
+            past="My Project"
+            current="Edit Project"
+          />
+        </div>
         <div className="col-12 my-3">
           <p>Senior Project Topic</p>
         </div>
@@ -170,7 +177,6 @@ export default function Editteam() {
               setIsOpen={setIsOpenStudent}
               addmember={addmember}
               deletemember={deletemember}
-              // members={member}
               header="Add team members"
             />
           </div>

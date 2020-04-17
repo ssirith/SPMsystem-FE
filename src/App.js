@@ -26,7 +26,7 @@ function App() {
           <Editteam />
         </MainLayout>
       </Route>
-      <Route exact path="/project/:id">
+      <Route exact path="/projects/:id">
         <MainLayout>
           <Otherteam/>
         </MainLayout>
