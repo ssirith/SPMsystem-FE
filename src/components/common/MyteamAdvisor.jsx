@@ -4,26 +4,25 @@ import Card from "@material-ui/core/Card"
 import CardContent from "@material-ui/core/CardContent"
 import Buttons from "./Buttons"
 import { CardHeader } from "@material-ui/core"
-import axios from 'axios'
+import axios from "axios"
 import { useEffect } from "react"
-
 
 const useStyles = makeStyles({
   root: {
     position: "relative",
-    minWidth: 275 
+    minWidth: 275,
   },
   bullet: {
     display: "inline-block",
     margin: "0 2px",
-    transform: "scale(0.8)"
+    transform: "scale(0.8)",
   },
   title: {
-    fontSize: 14
+    fontSize: 14,
   },
   pos: {
-    marginBottom: 12
-  }
+    marginBottom: 12,
+  },
 })
 export default function MembersboxAdvisor(props) {
   const classes = useStyles()
@@ -34,17 +33,17 @@ export default function MembersboxAdvisor(props) {
       <Card className={classes.root}>
         <CardContent>
           <CardHeader title={props.title} />
-          <div className="container" >
-            {props.advisors && (props.advisors.map((ads, index) => {
-              return (
-                <>
-                  <p key={index}>
-                    
-                    {ads.teacher_name}
-                  </p>
-                </>
-              )
-            }))}
+          <div className="container">
+            {props.advisors &&
+              props.advisors.map((ads, index) => {
+                return (
+                  <>
+                    <div className="row" key={index}>
+                      <div className="col-6">{ads.teacher_name}</div>
+                    </div>
+                  </>
+                )
+              })}
           </div>
           <br />
         </CardContent>

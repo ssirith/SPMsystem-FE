@@ -22,7 +22,7 @@ function Carditem(props) {
         <Card className={classes.root}>
           <CardContent>
             <Typography gutterBottom variant="h5" component="h2">
-                 IT60-{props.groups.project_id} : {props.groups.project_name}
+                 {props.groups.project_id} : {props.groups.project_name}
             </Typography>
             
             <Typography variant="body2" color="textSecondary" component="p">
