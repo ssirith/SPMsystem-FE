@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import {Link} from 'react-router-dom'
+import {Link} from '@reach/router'
 export default function Navbar() {
   const [user, setUser] = useState({
     id: 60130500114,

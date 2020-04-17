@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from "react"
-import { Link } from "react-router-dom"
+import { Link } from "@reach/router"
 import Carditem from "../components/common/Carditem"
 import Boxitem from "../components/common/Boxitem"
 import Inputtext from "../components/common/Inputtext"

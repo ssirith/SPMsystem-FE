@@ -4,13 +4,14 @@ import Navbar from "./common/Navbar"
 import Sidebar from "./common/Sidebar"
 
 export default function MainLayout(props) {
+  const { component:Child } = props
   return (
     <>
       <Navbar />
       <div className="container-fluid">
         <div className="row">
           <Sidebar />
-          {props.children}
+          <Child {...props}/>
         </div>
       </div>
     </>

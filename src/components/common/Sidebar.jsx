@@ -7,12 +7,12 @@ import {
   DateRange,
   Speaker
 } from "@material-ui/icons"
-import { Link } from "react-router-dom"
+import { Link } from "@reach/router"
 export default function Sidebar() {
   const [menuList, setMenuList] = useState([
     { menu: "My Project", icon: <Group />, path: "" },
     { menu: "All Projects", icon: <Business />, path: "AllProjects" },
-    { menu: "Assignment", icon: <Assignment />, path: "Assignment" },
+    { menu: "Assignments", icon: <Assignment />, path: "Assignment" },
     { menu: "Appointments", icon: <DateRange />, path: "Appointments" },
     { menu: "Annoucement", icon: <Speaker />, path: "Annoucement" }
   ])

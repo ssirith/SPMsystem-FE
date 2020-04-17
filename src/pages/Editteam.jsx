@@ -11,7 +11,7 @@ import ModalMemberEdit from "../components/common/ModalMemberEdit"
 import ModalAdvisorEdit from "../components/common/ModalAdvisorEdit"
 import Dropdown from "../components/common/Dropdown"
 import axios from 'axios'
-import { Link } from "react-router-dom"
+import { Link } from "@reach/router"
 import BreadcrumbNav from "../components/common/BreadcrumbNav"
 export default function Editteam() {
   const [departmentList, setDepartmentList] = useState(["IT", "CS", "DSI"])
