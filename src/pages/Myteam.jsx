@@ -52,7 +52,7 @@ export default function Myteam() {
             <div className="row">
               <div className="col-12 text-center">
                 <Link to="/editteam">
-                  <Buttons menu="Edit" color="Primary" />
+                  <Buttons menu="Edit"/>
                 </Link>
                 <Buttons
                   menu="Delete"
