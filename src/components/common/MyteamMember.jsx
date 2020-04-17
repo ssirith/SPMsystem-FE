@@ -31,19 +31,17 @@ export default function MyteamMember(props) {
   return (
     <>
       <Card className={classes.root}>
+        <CardHeader title={props.title} />
         <CardContent>
-          <CardHeader title={props.title} />
           <div className="container col-12">
             {props.members &&
               props.members.map((std, index) => {
                 return (
                   <>
-                    <div className='row'>
+                    <div className="row">
                       <div className="col-6">{std.student_name}</div>
                       <div className="col-6">{std.student_id}</div>
-                    
                     </div>
-                      
                   </>
                 )
               })}

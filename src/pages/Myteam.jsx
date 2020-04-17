@@ -27,14 +27,14 @@ export default function Myteam() {
     return (
       <div className="container">
         <div className="row">
-          <div className="col-12 my-3">
+          <div className="col-12 mt-5 mb-2">
             {team && (
               <Topicbox title="Senior Project Topic"
                topic={team.project} />
             )}
           </div>
 
-          <div className="col-12 my-3">
+          <div className="col-12 my-2">
             <div className="row">
               <div className="col-8">
                 <MyteamMember title="Members" members={team.group} />

@@ -9,6 +9,16 @@
 .bg {
   background-color: #336699 !important;
 }
+.btn-primary {
+  color: #fff;
+  background-color: #336699!important;
+  border-color: #336699!important;
+}
+.btn-danger {
+  color: #fff;
+  background-color: #EB5757!important;
+  border-color: #EB5757!important;
+}
 .MuiButton-containedPrimary {
   color: #fff;
   background-color: #336699 !important;
@@ -20,6 +30,22 @@
 .MuiButton-textPrimary {
   color: #fff !important;
   background-color: #336699 !important;
+}
+.MuiCardHeader-root {
+  color: #fff;
+  display: flex;
+  padding: 16px;
+  align-items: center;
+  background-color: #336699 !important;
+}
+.breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  padding: .75rem 1rem;
+  margin-bottom: 1rem;
+  list-style: none;
+  background-color: #fff !important;
+  border-radius: .25rem;
 }
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
