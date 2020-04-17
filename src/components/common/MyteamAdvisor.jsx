@@ -1,45 +1,49 @@
-import React from "react"
+import React, { useState, useCallback } from "react"
 import { makeStyles } from "@material-ui/core/styles"
 import Card from "@material-ui/core/Card"
-import CardActions from "@material-ui/core/CardActions"
 import CardContent from "@material-ui/core/CardContent"
-import Button from "@material-ui/core/Button"
-import Typography from "@material-ui/core/Typography"
+import Buttons from "./Buttons"
 import { CardHeader } from "@material-ui/core"
+import axios from "axios"
+import { useEffect } from "react"
 
 const useStyles = makeStyles({
   root: {
     position: "relative",
     minWidth: 275,
-    wordWrap: "break-word"
   },
   bullet: {
     display: "inline-block",
     margin: "0 2px",
-    transform: "scale(0.8)"
+    transform: "scale(0.8)",
   },
   title: {
-    fontSize: 14
+    fontSize: 14,
   },
   pos: {
-    marginBottom: 12
-  }
+    marginBottom: 12,
+  },
 })
- 
-function Boxitem(props) {
+export default function MembersboxAdvisor(props) {
   const classes = useStyles()
+
+  console.log(props.advisors)
   return (
     <>
       <Card className={classes.root}>
         <CardContent>
           <CardHeader title={props.title} />
-
           <div className="container">
-            <div className="row">
-              <div className="col">
-              {props.detail&&props.detail.project_detail}
-              </div>
-            </div>
+            {props.advisors &&
+              props.advisors.map((ads, index) => {
+                return (
+                  <>
+                    <div className="row" key={index}>
+                      <div className="col-6">{ads.teacher_name}</div>
+                    </div>
+                  </>
+                )
+              })}
           </div>
           <br />
         </CardContent>
@@ -47,4 +51,3 @@ function Boxitem(props) {
     </>
   )
 }
-export default Boxitem

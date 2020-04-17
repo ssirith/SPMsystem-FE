@@ -19,6 +19,7 @@ export default function ModalComponentMember(props) {
     async () => {
       const data = await axios.get(`http://127.0.0.1:8000/api/teachers`)
       setAdvisors(data.data)
+      setDisplay(data.data)
 
     },
     [],
@@ -97,7 +98,7 @@ export default function ModalComponentMember(props) {
         return <Button variant="contained" disabled> Submit</Button>
       }
       else { // member 0 1 2 3
-        return <button className="btn btn-primary" onClick={() => handleSubmit()}>Submit</button>
+        return <button className="btn btn-primary" onClick={() => handleSubmit()} >Submit</button>
       }
     }
     else {

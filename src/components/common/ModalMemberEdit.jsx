@@ -6,23 +6,25 @@ import axios from 'axios'
 import { useEffect } from "react"
 import Button from '@material-ui/core/Button';
 
-export default function ModalComponentMember(props) {
+export default function ModalMemberEdit(props) {
 
-  const [students, setStudents] = useState([])//เอาค่ามาจาก axios
-  const [save, setSave] = useState([])
-  const [display, setDisplay] = useState()//ค่าแสดงบน Add
+  const [save, setSave] = useState()//เอาค่ามาจาก axios
+  const [students, setStudents] = useState([])
+  const [display, setDisplay] = useState([])//ค่าแสดงบน Add
   const [submit, setSubmit] = useState("")//ค่าที่ส่งไป
 
 
 
   const fetchData = useCallback(
-    async () => {
-      const data = await axios.get(`http://127.0.0.1:8000/api/students`)
-      setStudents(data.data)
-      setDisplay(data.data)
+    async () => {    
+      const {data} = 
+      await axios.get(`http://127.0.0.1:8000/api/projects/IT01`)
+      const all = 
+      await axios.get(`http://127.0.0.1:8000/api/students`)
+      setStudents(all.data)//{group[{},{},{},project{},teacher{[],}]
+      setDisplay(all.data)
+      setSave(data.group)
       
-      
-      console.log(data.data)
     },
     [],
   )
@@ -33,6 +35,8 @@ export default function ModalComponentMember(props) {
   useEffect(() => {
     !display && setDisplay(students)
   })
+    console.log(students)
+    console.log(display)
 
   function filter(value) {
     const temp = students.filter(
@@ -50,17 +54,19 @@ export default function ModalComponentMember(props) {
   function addToShow() {
     const index = students.indexOf(submit);//เทียบ array ของค่าที่มีกับค่าที่ส่ง
     if (index > -1) {
-      students.splice(index, 1);//ลบตำแหน่งที่ array ซ้ำกัน
+        students.splice(index, 1);//ลบตำแหน่งที่ array ซ้ำกัน
     }
     console.log(students)
     setDisplay(students)
     console.log(display)
     save.push(submit)
-    // setSave([...save, submit])
     console.log(save)
-    // addmember(submit)
+  
   }
-  function deletemember(value) {
+
+  function deletemember(value) { //data
+    console.log(value)
+    props.deletemember(value)
     const result = save;
     students.push(value);
     const index = save.indexOf(value);
@@ -69,6 +75,7 @@ export default function ModalComponentMember(props) {
     }
     console.log(result)
     setSave([...result])
+    
   }
 
   function disAdd() { // fx  disable save button
@@ -86,7 +93,6 @@ export default function ModalComponentMember(props) {
   }
 
   function handleSubmit() {
-    
     props.addmember(save)
     console.log(save)
   }

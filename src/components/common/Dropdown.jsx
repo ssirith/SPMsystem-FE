@@ -17,7 +17,7 @@ export default function Dropdown(props) {
   return (
     <form noValidate autoComplete="off">
       <div>
-        <TextField
+        <TextField disabled={props.disabled}
         className={classes.margin}
           id="outlined-select-currency"
           select
