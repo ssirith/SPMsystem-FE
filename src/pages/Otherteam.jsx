@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from "react"
 import BreadcrumbNav from "../components/common/BreadcrumbNav"
-import { Link, useParams } from "react-router-dom"
+import { Link, useParams } from "@reach/router"
 import Boxitem from "../components/common/Boxitem"
 import Membersbox from "../components/common/Membersbox"
 import Topicbox from "../components/common/Topicbox"
@@ -11,14 +11,17 @@ import Inputtext from "../components/common/Inputtext"
 import MyteamMember from "../components/common/MyteamMember"
 import MyteamAdvisor from "../components/common/MyteamAdvisor"
 
-
-export default function Otherteam(props) { // learnmore={props.group}
+export default function Otherteam(props) {
+  // learnmore={props.group}
+  const [role, setRole] = useState("student")//mock data
   const { id } = useParams()
   console.log({ id })
   const [team, setTeam] = useState({})
   const fetchData = useCallback(async () => {
     const data = await axios.get(`http://127.0.0.1:8000/api/projects/${id}`) //[]
-    setTeam(data.data) //{group[{},{},{}], project{}, teacher[{}]}
+    setTeam(data.data)    
+
+    //{group[{},{},{}], project{}, teacher[{}]}
   }, [])
   useEffect(() => {
     fetchData()
@@ -27,7 +30,7 @@ export default function Otherteam(props) { // learnmore={props.group}
   return (
     <div className="container">
       <div className="row">
-      <div className="col-12 my-3">
+        <div className="col-12 my-3">
           <BreadcrumbNav
             pastref="/AllProjects"
             past="All Project"
@@ -36,8 +39,7 @@ export default function Otherteam(props) { // learnmore={props.group}
         </div>
         <div className="col-12 my-3">
           {team && (
-            <Topicbox title="Senior Project Topic"
-              topic={team.project} />
+            <Topicbox title="Senior Project Topic" topic={team.project} />
           )}
         </div>
 
@@ -55,22 +57,25 @@ export default function Otherteam(props) { // learnmore={props.group}
         <div className="col-12 my-3">
           <Boxitem title="Detail" detail={team.project} />
         </div>
-
       </div>
       <div className="col-12 mx-auto">
         <div className="row">
           <div className="col-12 text-center">
-          <Link to="/AllProjects">
-            <Buttons
-              menu="Back"
-              color="secondary"
-              onClick={() => console.log("Back")}
-            />
-             </Link>
+            <Link to="/AllProjects">
+              <Buttons
+                menu="Back"
+                color="secondary"
+                onClick={() => console.log("Back")}
+              />
+            </Link>
+            {role == "aa" && (
+              <Link to={`/editteam/${id}`}>
+                <Buttons menu="Edit" />
+              </Link>
+            )}
           </div>
         </div>
-      </div> 
-
+      </div>
     </div>
   )
 }

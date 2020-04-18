@@ -10,19 +10,19 @@ import { CardHeader } from "@material-ui/core"
 const useStyles = makeStyles({
   root: {
     position: "relative",
-    minWidth: 275
+    minWidth: 275,
   },
   bullet: {
     display: "inline-block",
     margin: "0 2px",
-    transform: "scale(0.8)"
+    transform: "scale(0.8)",
   },
   title: {
-    fontSize: 14
+    fontSize: 14,
   },
   pos: {
-    marginBottom: 12
-  }
+    marginBottom: 12,
+  },
 })
 
 export default function Topicbox(props) {
@@ -30,15 +30,15 @@ export default function Topicbox(props) {
   return (
     <>
       <Card className={classes.root}>
+        <CardHeader title={props.title} />
         <CardContent>
-          <CardHeader title={props.title} />
           <div className="container">
             <div className="row">
               <div className="col-6">
-                
-               {props.topic&&`${props.topic.project_id}-
+                {props.topic &&
+                  `${props.topic.project_id}-
                ${props.topic.project_name}`}
-              </div> 
+              </div>
             </div>
           </div>
           <br />

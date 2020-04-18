@@ -11,9 +11,9 @@ import ModalMemberEdit from "../components/common/ModalMemberEdit"
 import ModalAdvisorEdit from "../components/common/ModalAdvisorEdit"
 import Dropdown from "../components/common/Dropdown"
 import axios from 'axios'
-import { Link } from "react-router-dom"
+import { Link,useParams } from "@reach/router"
 import BreadcrumbNav from "../components/common/BreadcrumbNav"
-export default function Editteam() {
+export default function Editteam(props) {
   const [departmentList, setDepartmentList] = useState(["IT", "CS", "DSI"])
   const [department, setDepartment] = useState([])
   const [isOpenStudent, setIsOpenStudent] = useState(false);
@@ -25,7 +25,7 @@ export default function Editteam() {
   const [advisorfordelete, setAdvisorForDelete] = useState([])//รอส่งเข้าdbไปลบ
   const fetchData = useCallback(
     async () => {
-      const { data } = await axios.get(`http://127.0.0.1:8000/api/projects/IT01`)
+      const { data } = await axios.get(`http://127.0.0.1:8000/api/projects/${props.id}`)
       setProject(data.project)
       setMember(data.group)
       setAdvisor(data.teacher)
@@ -87,7 +87,7 @@ export default function Editteam() {
   }
 
   member&&console.log(member[0].group_id)
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     console.log(project)
     const project_id = project.project_id;
     const group_id = member[0].group_id;
@@ -123,8 +123,16 @@ export default function Editteam() {
     
     // const data = JSON.stringify(temp)
     console.log(temp)
-    axios.put(`http://127.0.0.1:8000/api/projects/edit/${project_id}`, temp)
-    console.log(temp)
+    try{
+     const response=await axios.put(`http://127.0.0.1:8000/api/projects/edit/${project_id}`, temp)
+     console.log(response)
+     if(response.status===200){
+       window.location.reload()
+     }
+    }catch(err){
+      console.log(err)
+    }
+    
   }
 
 
@@ -134,7 +142,7 @@ export default function Editteam() {
       <div className="col-12 my-3">
           <BreadcrumbNav
             pastref="/"
-            past="My Project"
+            past="Home"
             current="Edit Project"
           />
         </div>

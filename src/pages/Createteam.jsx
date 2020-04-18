@@ -8,22 +8,23 @@ import Buttons from "../components/common/Buttons"
 import ModalComponentMember from "../components/common/ModalComponentMember"
 import ModalComponentAdvisor from "../components/common/ModalComponentAdvisor"
 import Dropdown from "../components/common/Dropdown"
-import axios from 'axios' 
-import { Link } from "react-router-dom"
+import axios from "axios"
+import { Link,useNavigate } from "@reach/router"
 import BreadcrumbNav from "../components/common/BreadcrumbNav"
 
 export default function Createteam() {
+  let navigate = useNavigate()
   const [departmentList, setDepartmentList] = useState(["IT", "CS", "DSI"])
   const [department, setDepartment] = useState("")
   const [isOpenStudent, setIsOpenStudent] = useState(false)
   const [isOpenAdvisor, setIsOpenAdvisor] = useState(false)
   const [mygroup, setMygroup] = useState({
     name: "",
-    detail: ""
+    detail: "",
   })
   const [member, setMember] = useState([])
   const [advisor, setAdvisor] = useState([])
-  
+
   function addmember(value) {
     let temp = []
     temp.push(value)
@@ -38,38 +39,50 @@ export default function Createteam() {
   }
 
   const handleProject = (event) => {
-    setMygroup(
-      { ...mygroup, name: event.target.value }
-    )
+    setMygroup({ ...mygroup, name: event.target.value })
   }
 
   const handleDetail = (event) => {
-    setMygroup(
-      { ...mygroup, detail: event.target.value }
-
-    )
+    setMygroup({ ...mygroup, detail: event.target.value })
     console.log(mygroup)
   }
 
-  const handleSubmit = (event) => {
-    const project_name = mygroup.name;
-    const project_detail = mygroup.detail;
-    const student_id = [];
-    member.map(m => student_id.push(m.student_id));
-    const teacher_id = [];
-    advisor.map(a => teacher_id.push(a.teacher_id));
+  const handleSubmit = async (event) => {
+    const project_name = mygroup.name
+    const project_detail = mygroup.detail
+    const student_id = []
+    member.map((m) => student_id.push(m.student_id))
+    const teacher_id = []
+    advisor.map((a) => teacher_id.push(a.teacher_id))
 
-    console.log({ project_name, project_detail, student_id, teacher_id, department });
-
-    axios.post('http://127.0.0.1:8000/api/projects', 
-    { project_name, project_detail, student_id, teacher_id, department })
-
+    console.log({
+      project_name,
+      project_detail,
+      student_id,
+      teacher_id,
+      department,
+    })
+    try {
+      const response = await axios.post("http://127.0.0.1:8000/api/projects", {
+        project_name,
+        project_detail,
+        student_id,
+        teacher_id,
+        department,
+      })
+      console.log(response)
+      if(response.status === 200){ 
+        navigate("/")
+      }
+    } catch (err) {
+      console.error(err)
+    }
   }
 
   return (
     <div className="container">
       <div className="row">
-      <div className="col-12 my-3">
+        <div className="col-12 my-3">
           <BreadcrumbNav
             pastref="/"
             past="My Project"
@@ -124,7 +137,6 @@ export default function Createteam() {
           </div>
         </div>
 
-
         <div className="row">
           <div className="col-12 text-right m-2">
             <Buttons
@@ -144,7 +156,7 @@ export default function Createteam() {
         </div>
         <div className="row">
           <div className="col-12">
-            <Advisorbox title="Advisor" advisors={advisor}  />
+            <Advisorbox title="Advisor" advisors={advisor} />
           </div>
         </div>
       </div>
@@ -161,25 +173,24 @@ export default function Createteam() {
       <div className="col-12 mx-auto">
         <div className="row">
           <div className="col-12 text-center">
-          <Link to="/">
-            <Buttons
-              menu="Cancel"
-              color="secondary"
-              onClick={() => console.log("Cancel")}
-            />
-             </Link>
             <Link to="/">
-            <Buttons
-              menu="Create"
-              color="primary"
-              onClick={() => console.log("save")}
-              onClick={(event) => handleSubmit(event)} 
-                          
-            />
+              <Buttons
+                menu="Cancel"
+                color="secondary"
+                onClick={() => console.log("Cancel")}
+              />
             </Link>
+            
+              <Buttons
+                menu="Create"
+                color="primary"
+                onClick={() => console.log("save")}
+                onClick={(event) => handleSubmit(event)}
+              />
+            
           </div>
         </div>
-      </div> 
+      </div>
     </div>
   )
 }
