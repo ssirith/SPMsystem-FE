@@ -38,7 +38,7 @@ export default function MyteamMember(props) {
               props.members.map((std, index) => {
                 return (
                   <>
-                    <div className="row">
+                    <div className="row" key={index}>
                       <div className="col-6">{std.student_name}</div>
                       <div className="col-6">{std.student_id}</div>
                     </div>

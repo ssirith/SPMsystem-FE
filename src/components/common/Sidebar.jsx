@@ -9,209 +9,209 @@ import {
 } from "@material-ui/icons"
 import { Link } from "@reach/router"
 export default function Sidebar() {
-  const [role,setRole] = useState("student") //Mock data
+  const [role, setRole] = useState("student") //Mock data
   return (
     <>
-      {role == "student"&&(
-        <nav class="col-md-2 d-none d-md-block bg-light sidebar min-vh-100">
-        <div class="sidebar-sticky">
-          <div className="container">
-            <div className="row">
-              <div className="mx-auto mt-5 mb-2">
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+      {role == "student" && (
+        <nav className="col-md-2 d-none d-md-block bg-light sidebar min-vh-100">
+          <div className="sidebar-sticky">
+            <div className="container">
+              <div className="row">
+                <div className="mx-auto mt-5 mb-2">
+                  <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                </div>
+              </div>
+              <div className="row">
+                <div className="mx-auto">
+                  <p>Remy Sharp</p>
+                </div>
               </div>
             </div>
-            <div className="row">
-              <div className="mx-auto">
-                <p>Remy Sharp</p>
-              </div>
-            </div>
+            <ul className="nav flex-column mb-2">
+              <li className="nav-item">
+                <Link to="/">
+                  <div className="nav-link">
+                    <ListItemIcon>
+                      <Group />
+                    </ListItemIcon>
+                    My Project
+                  </div>
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/AllProjects">
+                  <div className="nav-link">
+                    <ListItemIcon>
+                      <Business />
+                    </ListItemIcon>
+                    All Projects
+                  </div>
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/Assignment">
+                  <div className="nav-link">
+                    <ListItemIcon>
+                      <Assignment />
+                    </ListItemIcon>
+                    Assignments
+                  </div>
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/Appointments">
+                  <div className="nav-link">
+                    <ListItemIcon>
+                      <DateRange />
+                    </ListItemIcon>
+                    Appointments
+                  </div>
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/Annoucement">
+                  <div className="nav-link">
+                    <ListItemIcon>
+                      <Speaker />
+                    </ListItemIcon>
+                    Annoucement
+                  </div>
+                </Link>
+              </li>
+            </ul>
           </div>
-          <ul class="nav flex-column mb-2">
-            <li class="nav-item">
-              <Link to="/">
-                <a class="nav-link">
-                  <ListItemIcon>
-                    <Group />
-                  </ListItemIcon>
-                  My Project
-                </a>
-              </Link>
-            </li>
-            <li class="nav-item">
-              <Link to="/AllProjects">
-                <a class="nav-link">
-                  <ListItemIcon>
-                    <Business />
-                  </ListItemIcon>
-                  All Projects
-                </a>
-              </Link>
-            </li>
-            <li class="nav-item">
-              <Link to="/Assignment">
-                <a class="nav-link">
-                  <ListItemIcon>
-                    <Assignment />
-                  </ListItemIcon>
-                  Assignments
-                </a>
-              </Link>
-            </li>
-            <li class="nav-item">
-              <Link to="/Appointments">
-                <a class="nav-link">
-                  <ListItemIcon>
-                    <DateRange />
-                  </ListItemIcon>
-                  Appointments
-                </a>
-              </Link>
-            </li>
-            <li class="nav-item">
-              <Link to="/Annoucement">
-                <a class="nav-link">
-                  <ListItemIcon>
-                    <Speaker />
-                  </ListItemIcon>
-                  Annoucement
-                </a>
-              </Link>
-            </li>
-          </ul>
-        </div>
-      </nav>
+        </nav>
       )}
-      
-      {role == "teacher"&&(
-        <nav class="col-md-2 d-none d-md-block bg-light sidebar min-vh-100">
-        <div class="sidebar-sticky">
-          <div className="container">
-            <div className="row">
-              <div className="mx-auto mt-5 mb-2">
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+
+      {role == "teacher" && (
+        <nav className="col-md-2 d-none d-md-block bg-light sidebar min-vh-100">
+          <div className="sidebar-sticky">
+            <div className="container">
+              <div className="row">
+                <div className="mx-auto mt-5 mb-2">
+                  <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                </div>
+              </div>
+              <div className="row">
+                <div className="mx-auto">
+                  <p>Remy Sharp</p>
+                </div>
               </div>
             </div>
-            <div className="row">
-              <div className="mx-auto">
-                <p>Remy Sharp</p>
-              </div>
-            </div>
+            <ul className="nav flex-column mb-2">
+              <li className="nav-item">
+                <Link to="/">
+                  <div className="nav-link">
+                    <ListItemIcon>
+                      <Group />
+                    </ListItemIcon>
+                    My Project
+                  </div>
+                </Link>
+              </li>
+              <li class="nav-item">
+                <Link to="/AllProjects">
+                  <div className="nav-link">
+                    <ListItemIcon>
+                      <Business />
+                    </ListItemIcon>
+                    All Projects
+                  </div>
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/Assignment">
+                  <div className="nav-link">
+                    <ListItemIcon>
+                      <Assignment />
+                    </ListItemIcon>
+                    Assignments
+                  </div>
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/Appointments">
+                  <div className="nav-link">
+                    <ListItemIcon>
+                      <DateRange />
+                    </ListItemIcon>
+                    Appointments
+                  </div>
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/Annoucement">
+                  <div className="nav-link">
+                    <ListItemIcon>
+                      <Speaker />
+                    </ListItemIcon>
+                    Annoucement
+                  </div>
+                </Link>
+              </li>
+            </ul>
           </div>
-          <ul class="nav flex-column mb-2">
-            <li class="nav-item">
-              <Link to="/">
-                <a class="nav-link">
-                  <ListItemIcon>
-                    <Group />
-                  </ListItemIcon>
-                  My Project
-                </a>
-              </Link>
-            </li>
-            <li class="nav-item">
-              <Link to="/AllProjects">
-                <a class="nav-link">
-                  <ListItemIcon>
-                    <Business />
-                  </ListItemIcon>
-                  All Projects
-                </a>
-              </Link>
-            </li>
-            <li class="nav-item">
-              <Link to="/Assignment">
-                <a class="nav-link">
-                  <ListItemIcon>
-                    <Assignment />
-                  </ListItemIcon>
-                  Assignments
-                </a>
-              </Link>
-            </li>
-            <li class="nav-item">
-              <Link to="/Appointments">
-                <a class="nav-link">
-                  <ListItemIcon>
-                    <DateRange />
-                  </ListItemIcon>
-                  Appointments
-                </a>
-              </Link>
-            </li>
-            <li class="nav-item">
-              <Link to="/Annoucement">
-                <a class="nav-link">
-                  <ListItemIcon>
-                    <Speaker />
-                  </ListItemIcon>
-                  Annoucement
-                </a>
-              </Link>
-            </li>
-          </ul>
-        </div>
-      </nav>
+        </nav>
       )}
-      {role == "aa"&&(
-        <nav class="col-md-2 d-none d-md-block bg-light sidebar min-vh-100">
-        <div class="sidebar-sticky">
-          <div className="container">
-            <div className="row">
-              <div className="mx-auto mt-5 mb-2">
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+      {role === "aa" && (
+        <nav className="col-md-2 d-none d-md-block bg-light sidebar min-vh-100">
+          <div className="sidebar-sticky">
+            <div className="container">
+              <div className="row">
+                <div className="mx-auto mt-5 mb-2">
+                  <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                </div>
+              </div>
+              <div className="row">
+                <div className="mx-auto">
+                  <p>Remy Sharp</p>
+                </div>
               </div>
             </div>
-            <div className="row">
-              <div className="mx-auto">
-                <p>Remy Sharp</p>
-              </div>
-            </div>
+            <ul className="nav flex-column mb-2">
+              <li className="nav-item">
+                <Link to="/">
+                  <div className="nav-link">
+                    <ListItemIcon>
+                      <Business />
+                    </ListItemIcon>
+                    All Projects
+                  </div>
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/Assignment">
+                  <div className="nav-link">
+                    <ListItemIcon>
+                      <Assignment />
+                    </ListItemIcon>
+                    Assignments
+                  </div>
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/Appointments">
+                  <div className="nav-link">
+                    <ListItemIcon>
+                      <DateRange />
+                    </ListItemIcon>
+                    Appointments
+                  </div>
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/Annoucement">
+                  <div className="nav-link">
+                    <ListItemIcon>
+                      <Speaker />
+                    </ListItemIcon>
+                    Annoucement
+                  </div>
+                </Link>
+              </li>
+            </ul>
           </div>
-          <ul class="nav flex-column mb-2">
-            <li class="nav-item">
-              <Link to="/">
-                <a class="nav-link">
-                  <ListItemIcon>
-                    <Business />
-                  </ListItemIcon>
-                  All Projects
-                </a>
-              </Link>
-            </li>
-            <li class="nav-item">
-              <Link to="/Assignment">
-                <a class="nav-link">
-                  <ListItemIcon>
-                    <Assignment />
-                  </ListItemIcon>
-                  Assignments
-                </a>
-              </Link>
-            </li>
-            <li class="nav-item">
-              <Link to="/Appointments">
-                <a class="nav-link">
-                  <ListItemIcon>
-                    <DateRange />
-                  </ListItemIcon>
-                  Appointments
-                </a>
-              </Link>
-            </li>
-            <li class="nav-item">
-              <Link to="/Annoucement">
-                <a class="nav-link">
-                  <ListItemIcon>
-                    <Speaker />
-                  </ListItemIcon>
-                  Annoucement
-                </a>
-              </Link>
-            </li>
-          </ul>
-        </div>
-      </nav>
+        </nav>
       )}
     </>
   )

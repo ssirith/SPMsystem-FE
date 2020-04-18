@@ -10,7 +10,7 @@ const useStyles = makeStyles({
     minWidth: 275,
   },
 })
-export default function MembersboxAdvisor(props) {
+export default function MyteamAdvisor(props) {
   const classes = useStyles()
 
   console.log(props.advisors)
@@ -24,8 +24,8 @@ export default function MembersboxAdvisor(props) {
               props.advisors.map((ads, index) => {
                 return (
                   <>
-                    <div className="row" key={index}>
-                      <div className="col-6">{ads.teacher_name}</div>
+                    <div className="row"key={index} >
+                      <div className="col-6" >{ads.teacher_name}</div>
                     </div>
                   </>
                 )

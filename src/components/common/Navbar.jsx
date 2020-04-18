@@ -8,16 +8,16 @@ export default function Navbar() {
   })
   
   return (
-    <nav class="navbar navbar-dark sticky-top bg flex-md-nowrap p-0">
+    <nav className="navbar navbar-dark sticky-top bg flex-md-nowrap p-0">
       <Link to = '/'>
-      <a class="navbar-brand col-sm-3 col-md-2 mr-0">
+      <p className="navbar-brand col-sm-3 col-md-2 mr-0">
         Logo
-      </a> 
+      </p> 
       </Link>
-      <ul class="navbar-nav px-3">
-        <li class="nav-item text-nowrap">
+      <ul className="navbar-nav px-3">
+        <li className="nav-item text-nowrap">
           
-          <a class="nav-link" href="/#">
+          <a className="nav-link" href="/#">
             {user.id}
           </a>
           
