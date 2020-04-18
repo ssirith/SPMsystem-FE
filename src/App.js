@@ -12,7 +12,7 @@ function App() {
     <Router>
       <MainLayout path="/" component={Myteam} />
       <MainLayout path="/AllProjects" component={Teams} />
-      <MainLayout path="/editteam" component={Editteam} />
+      <MainLayout path="/editteam/:id" component={Editteam} />
       <MainLayout path="/projects/:id" component={Otherteam} />
       <MainLayout path="/createteam" component={Createteam} />
     </Router>

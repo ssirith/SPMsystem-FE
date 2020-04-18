@@ -13,12 +13,13 @@ import MyteamAdvisor from "../components/common/MyteamAdvisor"
 
 export default function Otherteam(props) {
   // learnmore={props.group}
+  const [role, setRole] = useState("student")//mock data
   const { id } = useParams()
   console.log({ id })
   const [team, setTeam] = useState({})
   const fetchData = useCallback(async () => {
     const data = await axios.get(`http://127.0.0.1:8000/api/projects/${id}`) //[]
-    setTeam(data.data)
+    setTeam(data.data)    
 
     //{group[{},{},{}], project{}, teacher[{}]}
   }, [])
@@ -67,6 +68,11 @@ export default function Otherteam(props) {
                 onClick={() => console.log("Back")}
               />
             </Link>
+            {role == "aa" && (
+              <Link to={`/editteam/${id}`}>
+                <Buttons menu="Edit" />
+              </Link>
+            )}
           </div>
         </div>
       </div>
