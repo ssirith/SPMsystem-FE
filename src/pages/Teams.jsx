@@ -16,9 +16,9 @@ export default function Teams() {
     <>
       <div className="container">
         <div className="row mt-5">
-          {group.map((data) => {
+          {group.map((data,index) => {
             return (            
-              <div className="col-3 my-3">
+              <div className="col-3 my-3" key={index}>
                 <Carditem groups={data} />
               </div>
               

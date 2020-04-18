@@ -12,6 +12,7 @@ import ModalcomponentDelete from "../components/common/ModalcomponentDelete"
 export default function Myteam() {
   const [role, setRole] = useState("student")//Mock data
   const [teacher_id, setTeacher_id]=useState(1)//Mock data
+  const [aa_id, setAa_id]=useState(1)//Mock data
   const [team, setTeam] = useState({})
   const [group, setGroup] = useState([])
   const [isOpenDelete, setIsOpenDelete] = useState(false)
@@ -22,6 +23,9 @@ export default function Myteam() {
       setTeam(data.data) //{group[{},{},{}], project{}, teacher[{}]}
     }else if(role=="teacher"){
       const data= await axios.get(`http://127.0.0.1:8000/api/projects/response/${teacher_id}`)
+      setGroup(data.data)
+    }else if(role=="aa"){
+      const data= await axios.get(`http://127.0.0.1:8000/api/projects/response/aa/${aa_id}`)
       setGroup(data.data)
     }
   }, [])
@@ -123,9 +127,9 @@ export default function Myteam() {
         <>
           <div className="container">
             <div className="row mt-5">
-              {group.map((data) => {
+              {group.map((data,index) => {
                 return (
-                  <div className="col-3 my-3">
+                  <div className="col-3 my-3" key={index}>
                     <Carditem groups={data} />
                   </div>
                 )
