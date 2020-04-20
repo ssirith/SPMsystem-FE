@@ -2,6 +2,7 @@ import React, { useState, useCallback } from "react";
 import { Modal } from "react-bootstrap";
 import Buttons from "./Buttons"
 import InputtextFunction from "./InputtextFunction";
+import Inputtext from "./Inputtext";
 import axios from 'axios'
 import { useEffect } from "react"
 import Button from '@material-ui/core/Button';
@@ -10,59 +11,60 @@ export default function ModalComponentMember(props) {
 
   const [students, setStudents] = useState([])//เอาค่ามาจาก axios
   const [save, setSave] = useState([])
-  const [display, setDisplay] = useState()//ค่าแสดงบน Add
   const [submit, setSubmit] = useState("")//ค่าที่ส่งไป
-
-
+  const [isFilter, setIsFilter] = useState([])
+  const [search, setSearch] = useState("");
 
   const fetchData = useCallback(
     async () => {
       const data = await axios.get(`http://127.0.0.1:8000/api/students`)
       setStudents(data.data)
-      setDisplay(data.data)
-      
-      
+      // setDisplay(data.data)
       console.log(data.data)
     },
     [],
   )
+
   useEffect(() => {
     fetchData()
   }, [])
+  
 
   useEffect(() => {
-    !display && setDisplay(students)
-  })
-
-  function filter(value) {
-    const temp = students.filter(
-      std => std.student_id == value ||
-        std.student_name.toLowerCase() == value.toLowerCase()
+    setIsFilter(
+      students.filter(
+        std =>std.student_name.toLowerCase().includes(search.toLowerCase())
+        ||std.student_id.includes(search)
+      )
     )
-    if (temp.length == 0) {
-      console.log(students)
-      return setDisplay(students)
+    console.log(isFilter)
+    
+    console.log(isFilter.length) 
+  }, [search, students, save]);
+
+  function updateInput(e) {
+    if (isFilter && isFilter.length > 0) {
+      setSubmit(isFilter)
     } else {
-      setDisplay(temp) //show ค่าที่เจอ
-      setSubmit(temp[0]) // setค่าที่เจอเพื่อเตรียมส่ง 
-    }
-  }
-  function addToShow() {
-    const index = students.indexOf(submit);//เทียบ array ของค่าที่มีกับค่าที่ส่ง
+      return isFilter;
+    } 
+    const temp = [...students]
+    const index = temp.indexOf(e);
     if (index > -1) {
-      students.splice(index, 1);//ลบตำแหน่งที่ array ซ้ำกัน
+      temp.splice(index, 1);
     }
-    console.log(students)
-    setDisplay(students)
-    console.log(display)
-    save.push(submit)
-    // setSave([...save, submit])
+    setStudents(temp)
+    console.log(isFilter)
+    setSave([...save,e])
     console.log(save)
-    // addmember(submit)
+    console.log(students)
+    setSearch("")
   }
+
   function deletemember(value) {
     const result = save;
     students.push(value);
+    students.sort(sortId)
     const index = save.indexOf(value);
     if (index > -1) {
       result.splice(index, 1);
@@ -71,31 +73,25 @@ export default function ModalComponentMember(props) {
     setSave([...result])
   }
 
-  function disAdd() { // fx  disable save button
-    if (display) {
-      if ((submit.length == 0) || (display == 0) || (save.includes(submit)) || (save.length >= 3)) { // member(submited) = 0 or >3 || ซ้ำกับ submited  **(props.members.length >= 3) ||
-        return <Button variant="contained" disabled> Add</Button>
+  function sortId(a,b){
+      if(a.student_id > b.student_id){
+        return 1 ;
+      }else if (a.student_id < b.student_id){
+        return -1 ;
       }
-      else { // member 0 1 2 3
-        return <button className="btn btn-primary" onClick={() => addToShow()}>Add</button>
-      }
-    }
-    else {
-      return <button className="btn btn-primary" onClick={() => addToShow()}>Add</button>
-    }
+      return 0 ;
   }
 
   function handleSubmit() {
-    
     props.addmember(save)
     console.log(save)
   }
-  function disSubmit(){
+  function disSubmit() {
     if (save) {
-      if ((save == 0)) { // member(submited) = 0 or >3 || ซ้ำกับ submited  **(props.members.length >= 3) ||
+      if ((save.length == 0) || (save.length > 3)) {
         return <Button variant="contained" disabled> Submit</Button>
       }
-      else { // member 0 1 2 3
+      else {
         return <button className="btn btn-primary" onClick={() => handleSubmit()}>Submit</button>
       }
     }
@@ -103,7 +99,7 @@ export default function ModalComponentMember(props) {
       return <button className="btn btn-primary" onClick={() => handleSubmit()}>Submit</button>
     }
   }
-  ///////////////////////////////////////////////////////////////////////////////////////
+
   return (
     <Modal
       show={props.isOpen}
@@ -115,32 +111,35 @@ export default function ModalComponentMember(props) {
         <Modal.Title>{props.header}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <InputtextFunction id="member" color='primary' placeholder="Search by name or ID"
-          filter={filter} />
-        {display && (display.map((std, index) => {
-          return (
-            <>
-              <p key={index}>
-                {std.student_id}
-                {" "}
-                {std.student_name}
-              </p>
-            </>
-          )
-        }))}
-        {disAdd()}
+        <Inputtext
+          type="text"
+          placeholder="Search by name or ID"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+
+        />
+        <div data-spy="scroll" data-offset="0">
+          {isFilter.map((ads, idx) => (
+            <p key={idx} onClick={() => updateInput(ads)}>
+              {ads.student_id}
+              {" "}
+              {ads.student_name}
+            </p>
+          ))}
+        </div>
       </Modal.Body>
       <Modal.Footer>
         <div className="container" >
           {save && save.map((data, index) => {
             return (
-              <div className="row" key={index}>
+              <div className="row" key={index} >
                 <div className="col-6">{data.student_id}</div>
                 <div className="col-6">{data.student_name}</div>
                 <button className="btn btn-danger" onClick={() => deletemember(data)}>Delete</button>
               </div>
             )
           })}
+
         </div>
         {disSubmit()}
       </Modal.Footer>

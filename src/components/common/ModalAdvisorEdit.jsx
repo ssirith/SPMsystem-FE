@@ -1,143 +1,155 @@
 import React, { useState, useCallback } from "react";
 import { Modal } from "react-bootstrap";
 import Buttons from "./Buttons"
-import InputtextFunction from "./InputtextFunction";
+import Inputtext from "./Inputtext";
 import axios from 'axios'
 import { useEffect } from "react"
 import Button from '@material-ui/core/Button';
 
-export default function ModalComponentMember(props) {
+export default function ModalMemberEdit(props) {
 
-    const [advisors, setAdvisors] = useState([])//เอาค่ามาจาก axios
-    const [save, setSave] = useState([])
-    const [display, setDisplay] = useState([])//ค่าแสดงบน Add
-    const [submit, setSubmit] = useState("")//ค่าที่ส่งไป
+  const [save, setSave] = useState()//เอาค่ามาจาก axios
+  const [teachers, setTeachers] = useState([])
+  const [display, setDisplay] = useState([])//ค่าแสดงบน Add
+  const [submit, setSubmit] = useState("")//ค่าที่ส่งไป
+  const [isFilter, setIsFilter] = useState([])
+  const [search, setSearch] = useState("");
 
 
 
-    const fetchData = useCallback(
-        async () => {
-            const all = await axios.get(`http://127.0.0.1:8000/api/teachers`)
-            const { data } = await axios.get(`http://127.0.0.1:8000/api/projects/IT01`)
-            setAdvisors(all.data)
-            setDisplay(all.data)
-            setSave(data.teacher)
-        },
-        [],
+  const fetchData = useCallback(
+    async () => {    
+      const {data} = 
+      await axios.get(`http://127.0.0.1:8000/api/projects/IT01`)
+      const all = 
+      await axios.get(`http://127.0.0.1:8000/api/teachers`)
+      setTeachers(all.data)//{group[{},{},{},project{},teacher{[],}]
+      setSave(data.teacher)
+      
+    },
+    [],
+  )
+  useEffect(() => {
+    fetchData()
+  }, [])
+
+  useEffect(() => {
+    fetchData()
+  }, [])
+  
+
+  useEffect(() => {
+    setIsFilter(
+        teachers.filter(
+        ads =>ads.teacher_name.toLowerCase()
+        .includes(search.toLowerCase())
+      )
     )
-    useEffect(() => {
-        fetchData()
-    }, [])
+    console.log(isFilter)
+    
+    console.log(isFilter.length) 
+  }, [search, teachers, save]);
 
-    useEffect(() => {
-        !display && setDisplay(advisors)
-    })
+  function updateInput(e) {
+    if (isFilter && isFilter.length > 0) {
+      setSubmit(isFilter)
+    } else {
+      return isFilter;
+    } 
+    const temp = [...teachers]
+    const index = temp.indexOf(e);
+    if (index > -1) {
+      temp.splice(index, 1);
+    }
+    setTeachers(temp)
+    console.log(isFilter)
+    setSave([...save,e])
+    console.log(save)
+    console.log(teachers)
+    setSearch("")
+  }
 
-    function filter(value) {
-        const temp = advisors.filter(
-            ads => ads.teacher_name.toLowerCase() == value.toLowerCase()
-        )
-        if (temp.length == 0) {
-            console.log(advisors)
-            return setDisplay(advisors)
-        } else {
-            setDisplay(temp) //show ค่าที่เจอ
-            setSubmit(temp[0]) // setค่าที่เจอเพื่อเตรียมส่ง 
-        }
+  function deleteadvisor(value) {
+    props.deleteadvisor(value)
+    console.log(value)
+    const result = save;
+    teachers.push(value);
+    teachers.sort(sortId)
+    const index = save.indexOf(value);
+    if (index > -1) {
+      result.splice(index, 1);
     }
-    function addToShow() {
-        const index = advisors.indexOf(submit);//เทียบ array ของค่าที่มีกับค่าที่ส่ง
-        if (index > -1) {
-            advisors.splice(index, 1);//ลบตำแหน่งที่ array ซ้ำกัน
-        }
-        console.log(advisors)
-        setDisplay(advisors)
-        console.log(display)
-        save.push(submit)
-        console.log(save)
-    }
-    function deleteadvisor(value) {
-        console.log(value)
-        props.deleteadvisor(value)
-        const result = save;
-        advisors.push(value);
-        const index = save.indexOf(value);
-        if (index > -1) {
-            result.splice(index, 1);
-        }
-        console.log(result)
-        setSave([...result])
+    console.log(result)
+    setSave([...result])
+  }
 
-    }
+  function sortId(a,b){
+      if(a.teacher_id > b.teacher_id){
+        return 1 ;
+      }else if (a.teacher_id< b.teacher_id){
+        return -1 ;
+      }
+      return 0 ;
+  }
 
-    function disAdd() { // fx  disable save button
-        if (display) {
-            if ((submit.length == 0) || (display == 0) || (save.includes(submit)) || (save.length >= 2)) { // advisor(submited) = 0 or >2 || ซ้ำกับ submited  **(advisor.length >= 2)
-                return <Button variant="contained" disabled> Add</Button>
-            }
-            else { // member 0 1 2 3
-                return <button className="btn btn-primary" onClick={() => addToShow()}>Add</button>
-            }
-        }
-        else {
-            return <button className="btn btn-primary" onClick={() => addToShow()}>Add</button>
-        }
+  function handleSubmit() {
+    props.addadvisor(save)
+    console.log(save)
+  }
+  function disSubmit() {
+    if (save) {
+      if ((save.length == 0) || (save.length > 2)) {
+        return <Button variant="contained" disabled> Submit</Button>
+      }
+      else {
+        return <button className="btn btn-primary" onClick={() => handleSubmit()}>Submit</button>
+      }
     }
-    function handleSubmit() {
-        props.addadvisor(save)
-        console.log(save)
+    else {
+      return <button className="btn btn-primary" onClick={() => handleSubmit()}>Submit</button>
     }
-    function disSubmit() {
-        if (save) {
-            if ((save == 0)) {
-                return <Button variant="contained" disabled> Submit</Button>
-            }
-            else { // member 0 1 2 3
-                return <button className="btn btn-primary" onClick={() => handleSubmit()}>Submit</button>
-            }
-        }
-        else {
-            return <button className="btn btn-primary" onClick={() => handleSubmit()}>Submit</button>
-        }
-    }
-    ///////////////////////////////////////////////////////////////////////////////////////
-    return (
-        <Modal
-            show={props.isOpen}
-            onHide={() => {
-                props.setIsOpen(false);
-            }}
-        >
-            <Modal.Header closeButton>
-                <Modal.Title>{props.header}</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-                <InputtextFunction id="member" color='primary' placeholder="Search by name or ID"
-                    filter={filter} />
-                {display && (display.map((ads, index) => {
-                    return (
-                        <>
-                            <p key={index}>
-                                {ads.teacher_name}
-                            </p>
-                        </>
-                    )
-                }))}
-                {disAdd()}
-            </Modal.Body>
-            <Modal.Footer>
-                <div className="container" >
-                    {save && save.map((data, index) => {
-                        return (
-                            <div className="row" key={index}>
-                                <div className="col-6">{data.teacher_name}</div>
-                                <button className="btn btn-danger" onClick={() => deleteadvisor(data)} >Delete</button>
-                            </div>
-                        )
-                    })}
-                </div>
-                {disSubmit()}
-            </Modal.Footer>
-        </Modal>
-    );
+  }
+
+  return (
+    <Modal
+      show={props.isOpen}
+      onHide={() => {
+        props.setIsOpen(false);
+      }}
+    >
+      <Modal.Header closeButton>
+        <Modal.Title>{props.header}</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Inputtext
+          type="text"
+          placeholder="Search by name or ID"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+
+        />
+        <div data-spy="scroll" data-offset="0">
+          {isFilter.map((ads, idx) => (
+            <p key={idx} onClick={() => updateInput(ads)}>
+              {ads.teacher_name}
+            </p>
+          ))}
+        </div>
+      </Modal.Body>
+      <Modal.Footer>
+        <div className="container" >
+          {save && save.map((data, index) => {
+            return (
+              <div className="row" key={index} >
+                <div className="col-6">{data.teacher_name}</div>
+                <button className="btn btn-danger" onClick={() => deleteadvisor(data)}>Delete</button>
+              </div>
+            )
+          })}
+
+        </div>
+        {disSubmit()}
+      </Modal.Footer>
+    </Modal>
+  );
 }
