@@ -7,8 +7,6 @@ import Boxitem from "../components/common/Boxitem"
 import Buttons from "../components/common/Buttons"
 import ModalComponentMember from "../components/common/ModalComponentMember"
 import ModalComponentAdvisor from "../components/common/ModalComponentAdvisor"
-import ModalMemberEdit from "../components/common/ModalMemberEdit"
-import ModalAdvisorEdit from "../components/common/ModalAdvisorEdit"
 import Dropdown from "../components/common/Dropdown"
 import axios from 'axios'
 import { Link,useParams } from "@reach/router"
@@ -124,7 +122,8 @@ export default function Editteam(props) {
     // const data = JSON.stringify(temp)
     console.log(temp)
     try{
-     const response=await axios.put(`http://127.0.0.1:8000/api/projects/edit/${project_id}`, temp)
+     const response=await axios.
+     put(`http://127.0.0.1:8000/api/projects/edit/${project_id}`, temp)
      console.log(response)
      if(response.status===200){
        window.location.reload()
@@ -180,7 +179,7 @@ export default function Editteam(props) {
               color="primary"
               onClick={() => setIsOpenStudent(true)}
             />
-            <ModalMemberEdit
+            <ModalComponentMember
               isOpen={isOpenStudent}
               setIsOpen={setIsOpenStudent}
               addmember={addmember}
@@ -204,7 +203,7 @@ export default function Editteam(props) {
               onClick={() => setIsOpenAdvisor(true)}
             />
 
-            <ModalAdvisorEdit
+            <ModalComponentAdvisor
               isOpen={isOpenAdvisor}
               setIsOpen={setIsOpenAdvisor}
               addadvisor={addadvisor}

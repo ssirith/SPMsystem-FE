@@ -1,7 +1,6 @@
 import React, { useState, useCallback } from "react";
 import { Modal } from "react-bootstrap";
 import Buttons from "./Buttons"
-import InputtextFunction from "./InputtextFunction";
 import Inputtext from "./Inputtext";
 import axios from 'axios'
 import { useEffect } from "react"
@@ -9,37 +8,46 @@ import Button from '@material-ui/core/Button';
 
 export default function ModalComponentMember(props) {
 
-  const [students, setStudents] = useState([])//เอาค่ามาจาก axios
-  const [save, setSave] = useState([])
+  const [save, setSave] = useState()//เอาค่ามาจาก axios
+  const [students, setStudents] = useState([])
+  const [display, setDisplay] = useState([])//ค่าแสดงบน Add
   const [submit, setSubmit] = useState("")//ค่าที่ส่งไป
   const [isFilter, setIsFilter] = useState([])
   const [search, setSearch] = useState("");
 
+
+
   const fetchData = useCallback(
     async () => {
-      const data = await axios.get(`http://127.0.0.1:8000/api/students`)
-      setStudents(data.data)
-      // setDisplay(data.data)
-      console.log(data.data)
+      const { data } =
+        await axios.get(`http://127.0.0.1:8000/api/projects/IT01`)
+      const all =
+        await axios.get(`http://127.0.0.1:8000/api/students`)
+      setStudents(all.data)//{group[{},{},{},project{},teacher{[],}]
+      setSave(data.group)
+
     },
     [],
   )
+  useEffect(() => {
+    fetchData()
+  }, [])
 
   useEffect(() => {
     fetchData()
   }, [])
-  
+
 
   useEffect(() => {
     setIsFilter(
       students.filter(
-        std =>std.student_name.toLowerCase().includes(search.toLowerCase())
-        ||std.student_id.includes(search)
+        std => std.student_name.toLowerCase().includes(search.toLowerCase())
+          || std.student_id.includes(search)
       )
     )
     console.log(isFilter)
-    
-    console.log(isFilter.length) 
+
+    console.log(isFilter.length)
   }, [search, students, save]);
 
   function updateInput(e) {
@@ -47,7 +55,7 @@ export default function ModalComponentMember(props) {
       setSubmit(isFilter)
     } else {
       return isFilter;
-    } 
+    }
     const temp = [...students]
     const index = temp.indexOf(e);
     if (index > -1) {
@@ -55,13 +63,14 @@ export default function ModalComponentMember(props) {
     }
     setStudents(temp)
     console.log(isFilter)
-    setSave([...save,e])
+    setSave([...save, e])
     console.log(save)
     console.log(students)
     setSearch("")
   }
 
   function deletemember(value) {
+    props.deletemember(value)
     const result = save;
     students.push(value);
     students.sort(sortId)
@@ -73,13 +82,13 @@ export default function ModalComponentMember(props) {
     setSave([...result])
   }
 
-  function sortId(a,b){
-      if(a.student_id > b.student_id){
-        return 1 ;
-      }else if (a.student_id < b.student_id){
-        return -1 ;
-      }
-      return 0 ;
+  function sortId(a, b) {
+    if (a.student_id > b.student_id) {
+      return 1;
+    } else if (a.student_id < b.student_id) {
+      return -1;
+    }
+    return 0;
   }
 
   function handleSubmit() {
@@ -118,15 +127,22 @@ export default function ModalComponentMember(props) {
           onChange={(e) => setSearch(e.target.value)}
 
         />
-        <div data-spy="scroll" data-offset="0">
-          {isFilter.map((ads, idx) => (
-            <p key={idx} onClick={() => updateInput(ads)}>
-              {ads.student_id}
-              {" "}
-              {ads.student_name}
-            </p>
-          ))}
-        </div>
+        <table className="table table-striped">
+          <tbody>
+            <tr>
+              <th scope="row"></th>
+              <td>
+              {isFilter.map((ads, idx) => (
+                <p key={idx} onClick={() => updateInput(ads)}>
+                  {ads.student_id}
+                  {" "}
+                  {ads.student_name}
+                </p>
+              ))}
+             </td>
+            </tr>
+          </tbody>
+        </table>
       </Modal.Body>
       <Modal.Footer>
         <div className="container" >
