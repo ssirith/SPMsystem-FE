@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react"
+import React, { useState, useCallback, useEffect,useContext } from "react"
 import { Link } from "@reach/router"
 import Carditem from "../components/common/Carditem"
 import Boxitem from "../components/common/Boxitem"
@@ -9,23 +9,23 @@ import Topicbox from "../components/common/Topicbox"
 import Buttons from "../components/common/Buttons"
 import axios from "axios"
 import ModalcomponentDelete from "../components/common/ModalcomponentDelete"
+import { UserContext } from "../UserContext"
 export default function Myteam() {
-  const [role, setRole] = useState("student")//Mock data
-  const [teacher_id, setTeacher_id]=useState(1)//Mock data
-  const [aa_id, setAa_id]=useState(1)//Mock data
+  const { user,setUser }=useContext(UserContext)//Mock data user context
   const [team, setTeam] = useState({})
   const [group, setGroup] = useState([])
   const [isOpenDelete, setIsOpenDelete] = useState(false)
-
+  console.log('team: ', team)
   const fetchData = useCallback(async () => {
-    if (role == "student") {
-      const data = await axios.get(`http://127.0.0.1:8000/api/projects/IT01`) //[]
+    if (user.role === "student") {
+      const data = await axios.get(`http://127.0.0.1:8000/api/group/${user.id}`) //[]
       setTeam(data.data) //{group[{},{},{}], project{}, teacher[{}]}
-    }else if(role=="teacher"){
-      const data= await axios.get(`http://127.0.0.1:8000/api/projects/response/${teacher_id}`)
+    }else if(user.role==="teacher"){
+      const data= await axios.get(`http://127.0.0.1:8000/api/projects/response/teacher/${user.id}`)
+      // console.log("data for teacher :",data.data)
       setGroup(data.data)
-    }else if(role=="aa"){
-      const data= await axios.get(`http://127.0.0.1:8000/api/projects/response/aa/${aa_id}`)
+    }else if(user.role==="aa"){
+      const data= await axios.get(`http://127.0.0.1:8000/api/projects/response/aa/${user.id}`)
       setGroup(data.data)
     }
   }, [])
@@ -39,7 +39,7 @@ export default function Myteam() {
 
   return (
     <>
-      {role == "student" && (
+      {user.role === "student" && (
         <>
           {team.project ? (
             <div className="container">
@@ -108,7 +108,7 @@ export default function Myteam() {
         </>
       )}
 
-      {role == "teacher" && (
+      {user.role === "teacher" && (
         <>
           <div className="container">
             <div className="row mt-5">
@@ -123,7 +123,7 @@ export default function Myteam() {
           </div>
         </>
       )}
-      {role == "aa" && (
+      {user.role == "aa" && (
         <>
           <div className="container">
             <div className="row mt-5">

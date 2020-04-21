@@ -1,11 +1,8 @@
-import React, { useState } from "react"
+import React, { useState,useContext } from "react"
 import {Link} from '@reach/router'
+import { UserContext } from "../../UserContext"
 export default function Navbar() {
-  const [user, setUser] = useState({
-    id: 60130500114,
-    name: "Suthiwat Sirithanakom",
-    year: 3
-  })
+  const {user, setUser} = useContext(UserContext)
   
   return (
     <nav className="navbar navbar-dark sticky-top bg flex-md-nowrap p-0">
@@ -18,7 +15,7 @@ export default function Navbar() {
         <li className="nav-item text-nowrap">
           
           <a className="nav-link" href="/#">
-            {user.id}
+            {user.name}
           </a>
           
         </li>

@@ -5,12 +5,14 @@ import Sidebar from "./common/Sidebar"
 
 export default function MainLayout(props) {
   const { component:Child } = props
+  
   return (
     <>
       <Navbar />
       <div className="container-fluid">
         <div className="row">
-          <Sidebar />
+          <Sidebar statusbar={props.statusbar}/>
+          
           <Child {...props}/>
         </div>
       </div>
