@@ -34,7 +34,7 @@ export default function Otherteam(props) {
           <BreadcrumbNav
             pastref="/AllProjects"
             past="All Project"
-            current={`IT-${id}`}
+            current={`IT60-${id.substring(2)}`}//IT01
           />
         </div>
         <div className="col-12 my-3">
