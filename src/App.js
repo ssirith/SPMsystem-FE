@@ -10,11 +10,11 @@ import Createteam from "./pages/Createteam"
 function App() {
   return (
     <Router>
-      <MainLayout path="/" component={Myteam} />
-      <MainLayout path="/AllProjects" component={Teams} />
-      <MainLayout path="/editteam/:id" component={Editteam} />
-      <MainLayout path="/projects/:id" component={Otherteam} />
-      <MainLayout path="/createteam" component={Createteam} />
+      <MainLayout path="/" component={Myteam} statusbar={1} />
+      <MainLayout path="/AllProjects" component={Teams} statusbar={2}  />
+      <MainLayout path="/editteam/:id" component={Editteam} statusbar={3}  />
+      <MainLayout path="/projects/:id" component={Otherteam} statusbar={4}  />
+      <MainLayout path="/createteam" component={Createteam} statusbar={5} />
     </Router>
   )
 }
