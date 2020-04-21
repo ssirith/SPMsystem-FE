@@ -6,7 +6,7 @@ export default function Teams() {
   const [group, setGroup] = useState([])
   const fetchData = useCallback(async () => {
     const data = await axios.get(`http://127.0.0.1:8000/api/projects`) //[]
-    setGroup(data.data) // [{{}+teacher[{}]},{{}+teacher[{}]}]
+    setGroup(data.data) // AllProject
   }, [])
   useEffect(() => {
     fetchData()
