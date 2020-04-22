@@ -6,12 +6,12 @@ import axios from "axios"
 import { useEffect } from "react"
 import Button from "@material-ui/core/Button"
 
-export default function ModalComponentMember(props) {
+export default function ModalEditMember(props) {
 
-  const [save, setSave] = useState() //เอาค่ามาจาก axios array
+  const [save, setSave] = useState() //เอาค่ามาจาก axios
   const [students, setStudents] = useState([])
-  // const [display, setDisplay] = useState([]) //ค่าแสดงบน Add
-  // const [submit, setSubmit] = useState("")
+  const [display, setDisplay] = useState([]) //ค่าแสดงบน Add
+  const [submit, setSubmit] = useState("") //ค่าที่ส่งไป
   const [isFilter, setIsFilter] = useState([])
   const [search, setSearch] = useState("")
 
@@ -26,6 +26,7 @@ export default function ModalComponentMember(props) {
   }, [])
 
  
+
   useEffect(() => {
     console.log(save) 
     const temp = [...students]
@@ -33,7 +34,6 @@ export default function ModalComponentMember(props) {
         for (let i = 0; i < save.length; i++) {
           console.log(save[i])
           console.log(temp)
-
           const index = temp.findIndex(temp => temp.student_id === save[i].student_id)
           if (index > 0) {
             temp.splice(index, 1)
@@ -45,25 +45,20 @@ export default function ModalComponentMember(props) {
           temp.filter(
             std => std.student_name.toLowerCase().includes(search.toLowerCase()) || std.student_id.includes(search))
         )
-       
-
+      
+    
     console.log(isFilter)
     console.log(isFilter.length)
   }, [search, students, save])
 
-  function updateInput(e) {
-    // if (isFilter && isFilter.length > 0) {
-    //   setSubmit(isFilter)
-    // } else {
-    //   return isFilter
+  function updateInput(e) {  
+    // const temp = [...isFilter]
+    // const index = temp.indexOf(e)
+    // if (index > -1) {
+    //   temp.splice(index, 1)
     // }
-    const temp = [...students]
-    const index = temp.indexOf(e)
-    if (index > -1) {
-      temp.splice(index, 1)
-    }
-    setStudents(temp)
-    console.log(isFilter)
+    // setIsFilter(temp)
+    // console.log(isFilter)
     setSave([...save, e])
     console.log(save)
     console.log(students)
@@ -72,15 +67,15 @@ export default function ModalComponentMember(props) {
   console.log(save)
 
   function deletemember(value) {
-    const result = save
-    students.push(value)
-    students.sort(sortId)
-    const index = save.indexOf(value)
+    props.deletemember(value)
+    const result = [...save]
+    const index = result.indexOf(value)
     if (index > -1) {
       result.splice(index, 1)
     }
     console.log(result)
     setSave([...result])
+    console.log(save)
   }
 
   function sortId(a, b) {
@@ -94,14 +89,13 @@ export default function ModalComponentMember(props) {
 
   async function handleSubmit() {
     await props.addmember(save)
-    console.log(save)
     if (props.setIsOpen(false)) {
         
       setTimeout(()=>{
         window.location.reload()
       },2000)
     }
-    
+    console.log(save)
   }
   function disSubmit() {
     if (save) {

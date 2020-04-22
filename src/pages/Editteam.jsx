@@ -7,10 +7,13 @@ import Boxitem from "../components/common/Boxitem"
 import Buttons from "../components/common/Buttons"
 import ModalComponentMember from "../components/common/ModalComponentMember"
 import ModalComponentAdvisor from "../components/common/ModalComponentAdvisor"
+import ModalEditMember from "../components/common/ModalEditMember"
+import ModalEditAdvisor from "../components/common/ModalEditAdvisor"
 import Dropdown from "../components/common/Dropdown"
 import axios from 'axios'
 import { Link,useParams } from "@reach/router"
 import BreadcrumbNav from "../components/common/BreadcrumbNav"
+
 export default function Editteam(props) {
   const [departmentList, setDepartmentList] = useState(["IT", "CS", "DSI"])
   const [department, setDepartment] = useState([])
@@ -84,7 +87,7 @@ export default function Editteam(props) {
     console.log(advisorfordelete)
   }
 
-  member&&console.log(member[0].group_id)
+  
   const handleSubmit = async (event) => {
     console.log(project)
     const project_id = project.project_id;
@@ -179,7 +182,7 @@ export default function Editteam(props) {
               color="primary"
               onClick={() => setIsOpenStudent(true)}
             />
-            <ModalComponentMember
+            <ModalEditMember
               isOpen={isOpenStudent}
               setIsOpen={setIsOpenStudent}
               addmember={addmember}
@@ -203,7 +206,7 @@ export default function Editteam(props) {
               onClick={() => setIsOpenAdvisor(true)}
             />
 
-            <ModalComponentAdvisor
+            <ModalEditAdvisor
               isOpen={isOpenAdvisor}
               setIsOpen={setIsOpenAdvisor}
               addadvisor={addadvisor}

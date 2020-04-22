@@ -3,7 +3,7 @@ import { Link } from "@reach/router"
 import { makeStyles } from "@material-ui/core/styles"
 import { Card, CardActions, CardHeader, CardContent } from "@material-ui/core"
 import Button from "@material-ui/core/Button"
-import Typography from "@material-ui/core/Typography"
+
 
 const useStyles = makeStyles({
   root: {

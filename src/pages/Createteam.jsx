@@ -27,7 +27,7 @@ export default function Createteam() {
     let temp = []
     temp.push(value)
     setMember(...temp)
-  }
+  } // mun log mai dai mun mai mee return อ่อ ต้องreturnตรงไหน no need cuz member are set อะไรคือ cuz because  k v.short
 
   function addadvisor(value) {
     console.log(value)
@@ -45,12 +45,7 @@ export default function Createteam() {
     console.log(mygroup)
   }
 
-  function deletemember(value){  
-  }
-  function deleteadvisor(value){
-    
-  }
-
+  
   const handleSubmit = async (event) => {
     const project_name = mygroup.name
     const project_detail = mygroup.detail
@@ -130,7 +125,7 @@ export default function Createteam() {
               isOpen={isOpenStudent}
               setIsOpen={setIsOpenStudent}
               addmember={addmember}
-              deletemember={deletemember}
+              
               // members={member}
               header="Add team members"
             />
@@ -155,7 +150,7 @@ export default function Createteam() {
               isOpen={isOpenAdvisor}
               setIsOpen={setIsOpenAdvisor}
               addadvisor={addadvisor}
-              deleteadvisor={deleteadvisor}
+             
               // advisors={advisor}
               header="Add advisor"
             />

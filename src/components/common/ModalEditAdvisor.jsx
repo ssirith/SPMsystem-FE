@@ -6,76 +6,60 @@ import axios from "axios"
 import { useEffect } from "react"
 import Button from "@material-ui/core/Button"
 
-export default function ModalComponentMember(props) {
-
-  const [save, setSave] = useState() //เอาค่ามาจาก axios array
-  const [students, setStudents] = useState([])
-  // const [display, setDisplay] = useState([]) //ค่าแสดงบน Add
-  // const [submit, setSubmit] = useState("")
+export default function ModalEditAdvisor(props) {
+  const [save, setSave] = useState() //เอาค่ามาจาก axios
+  const [teachers, setTeachers] = useState([])
+  const [display, setDisplay] = useState([]) //ค่าแสดงบน Add
+  const [submit, setSubmit] = useState("") //ค่าที่ส่งไป
   const [isFilter, setIsFilter] = useState([])
   const [search, setSearch] = useState("")
 
   const fetchData = useCallback(async () => {
     const { data } = await axios.get(`http://127.0.0.1:8000/api/projects/IT01`)
-    const all = await axios.get(`http://127.0.0.1:8000/api/students`)
-    setStudents(all.data) //{group[{},{},{},project{},teacher{[],}]
-    setSave(data.group)
+    const all = await axios.get(`http://127.0.0.1:8000/api/teachers`)
+    setTeachers(all.data) //{group[{},{},{},project{},teacher{[],}]
+    setSave(data.teacher)
   }, [])
   useEffect(() => {
     fetchData()
   }, [])
 
- 
   useEffect(() => {
-    console.log(save) 
-    const temp = [...students]
-      if (save) {
-        for (let i = 0; i < save.length; i++) {
-          console.log(save[i])
-          console.log(temp)
-
-          const index = temp.findIndex(temp => temp.student_id === save[i].student_id)
-          if (index > 0) {
-            temp.splice(index, 1)
-          }
+    const temp = [...teachers]
+    if (save) {
+      for (let i = 0; i < save.length; i++) {
+        console.log(save[i])
+        console.log(temp)
+        const index = temp.findIndex(temp => temp.teacher_id === save[i].teacher_id)
+        if (index > 0) {
+          temp.splice(index, 1)
         }
       }
-        console.log(temp)
-        setIsFilter(
-          temp.filter(
-            std => std.student_name.toLowerCase().includes(search.toLowerCase()) || std.student_id.includes(search))
-        )
-       
-
+    }
+      console.log(temp)
+      setIsFilter(
+        temp.filter(
+          tch => tch.teacher_name.toLowerCase().includes(search.toLowerCase()) )
+      )
     console.log(isFilter)
+
     console.log(isFilter.length)
-  }, [search, students, save])
+  }, [search, teachers, save])
 
   function updateInput(e) {
-    // if (isFilter && isFilter.length > 0) {
-    //   setSubmit(isFilter)
-    // } else {
-    //   return isFilter
-    // }
-    const temp = [...students]
-    const index = temp.indexOf(e)
-    if (index > -1) {
-      temp.splice(index, 1)
-    }
-    setStudents(temp)
-    console.log(isFilter)
+
     setSave([...save, e])
     console.log(save)
-    console.log(students)
+    console.log(teachers)
     setSearch("")
   }
-  console.log(save)
 
-  function deletemember(value) {
-    const result = save
-    students.push(value)
-    students.sort(sortId)
-    const index = save.indexOf(value)
+  function deleteadvisor(value) {
+    props.deleteadvisor(value)
+    console.log(value)
+    const result = [...save];
+    // teachers.sort(sortId)
+    const index = result.indexOf(value)
     if (index > -1) {
       result.splice(index, 1)
     }
@@ -84,28 +68,27 @@ export default function ModalComponentMember(props) {
   }
 
   function sortId(a, b) {
-    if (a.student_id > b.student_id) {
+    if (a.teacher_id > b.teacher_id) {
       return 1
-    } else if (a.student_id < b.student_id) {
+    } else if (a.teacher_id < b.teacher_id) {
       return -1
     }
     return 0
   }
 
   async function handleSubmit() {
-    await props.addmember(save)
-    console.log(save)
+    await props.addadvisor(save)
     if (props.setIsOpen(false)) {
         
       setTimeout(()=>{
         window.location.reload()
       },2000)
     }
-    
+    console.log(save)
   }
   function disSubmit() {
     if (save) {
-      if (save.length == 0 || save.length > 3) {
+      if (save.length > 2) {
         return (
           <Button variant="contained" disabled>
             {" "}
@@ -134,7 +117,7 @@ export default function ModalComponentMember(props) {
       onHide={() => {
         props.setIsOpen(false)
       }}
-      scrollable='true'
+      scrollable="true"
     >
       <Modal.Header closeButton>
         <Modal.Title>{props.header}</Modal.Title>
@@ -146,18 +129,15 @@ export default function ModalComponentMember(props) {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
-
         <table className="table table-striped">
           <tbody>
             {isFilter.map((ads, idx) => (
               <tr key={idx} onClick={() => updateInput(ads)}>
-                <td>{ads.student_id}</td>
-                <td>{ads.student_name}</td>
+                <td>{ads.teacher_name}</td>
               </tr>
             ))}
           </tbody>
         </table>
-
       </Modal.Body>
       <Modal.Footer>
         <div className="container">
@@ -165,11 +145,10 @@ export default function ModalComponentMember(props) {
             save.map((data, index) => {
               return (
                 <div className="row my-2" key={index}>
-                  <div className="col-4">{data.student_id}</div>
-                  <div className="col-4">{data.student_name}</div>
+                  <div className="col-4">{data.teacher_name}</div>
                   <button
                     className="btn btn-danger"
-                    onClick={() => deletemember(data)}
+                    onClick={() => deleteadvisor(data)}
                   >
                     Delete
                   </button>

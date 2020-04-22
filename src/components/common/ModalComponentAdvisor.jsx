@@ -24,27 +24,36 @@ export default function ModalComponentAdvisor(props) {
     fetchData()
   }, [])
 
+ 
   useEffect(() => {
-    fetchData()
-  }, [])
-
-  useEffect(() => {
-    setIsFilter(
-      teachers.filter((ads) =>
-        ads.teacher_name.toLowerCase().includes(search.toLowerCase())
+    const temp = [...teachers]
+    if (save) {
+      for (let i = 0; i < save.length; i++) {
+        console.log(save[i])
+        console.log(temp)
+        // console.log(temp.findIndex(temp => temp.student_id === save[i].student_id))
+        const index = temp.findIndex(temp => temp.teacher_name === save[i].teacher_name)
+        if (index > 0) {
+          temp.splice(index, 1)
+        }
+      }
+    }
+      console.log(temp)
+      setIsFilter(
+        temp.filter(
+          tch => tch.teacher_name.toLowerCase().includes(search.toLowerCase()) )
       )
-    )
     console.log(isFilter)
 
     console.log(isFilter.length)
   }, [search, teachers, save])
 
   function updateInput(e) {
-    if (isFilter && isFilter.length > 0) {
-      setSubmit(isFilter)
-    } else {
-      return isFilter
-    }
+    // if (isFilter && isFilter.length > 0) {
+    //   setSubmit(isFilter)
+    // } else {
+    //   return isFilter
+    // }
     const temp = [...teachers]
     const index = temp.indexOf(e)
     if (index > -1) {
@@ -59,7 +68,7 @@ export default function ModalComponentAdvisor(props) {
   }
 
   function deleteadvisor(value) {
-    props.deleteadvisor(value)
+ 
     console.log(value)
     const result = save
     teachers.push(value)
@@ -81,8 +90,14 @@ export default function ModalComponentAdvisor(props) {
     return 0
   }
 
-  function handleSubmit() {
-    props.addadvisor(save)
+  async function handleSubmit() {
+    await props.addadvisor(save)
+    if (props.setIsOpen(false)) {
+        
+      setTimeout(()=>{
+        window.location.reload()
+      },2000)
+    }
     console.log(save)
   }
   function disSubmit() {
