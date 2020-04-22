@@ -9,6 +9,9 @@
 .bg {
   background-color: #336699 !important;
 }
+.bg-light {
+  background-color: #EDEDED!important;
+}
 .btn-primary {
   color: #fff;
   background-color: #336699!important;

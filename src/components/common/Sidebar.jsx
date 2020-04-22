@@ -1,4 +1,5 @@
-import React, { useState } from "react"
+import React, { useState, useContext } from "react"
+import { UserContext } from "../../UserContext"
 import { Avatar, ListItemIcon } from "@material-ui/core"
 import {
   Group,
@@ -8,27 +9,32 @@ import {
   Speaker,
 } from "@material-ui/icons"
 import { Link } from "@reach/router"
-export default function Sidebar() {
-  const [role, setRole] = useState("student") //Mock data
+export default function Sidebar(props) {
+  const { user, setUser } = useContext(UserContext) //mock data from UserContext
   return (
     <>
-      {role == "student" && (
+      {user.role == "student" && (
         <nav className="col-md-2 d-none d-md-block bg-light sidebar min-vh-100">
           <div className="sidebar-sticky">
             <div className="container">
               <div className="row">
                 <div className="mx-auto mt-5 mb-2">
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                  <Avatar alt={user.name} src="/static/images/avatar/1.jpg" />
                 </div>
               </div>
-              <div className="row">
+              <div className="row text-center">
                 <div className="mx-auto">
-                  <p>Remy Sharp</p>
+                  <p>{user.name}</p>
+                  <p>{user.role}</p>
                 </div>
               </div>
             </div>
             <ul className="nav flex-column mb-2">
-              <li className="nav-item">
+              <li
+                className={`nav-item ${
+                  props.statusbar === 1 ? "bg-white" : "bg-light"
+                } rounded`}
+              >
                 <Link to="/">
                   <div className="nav-link">
                     <ListItemIcon>
@@ -38,7 +44,11 @@ export default function Sidebar() {
                   </div>
                 </Link>
               </li>
-              <li className="nav-item">
+              <li
+                className={`nav-item ${
+                  props.statusbar === 2 ? "bg-white" : "bg-light"
+                } rounded`}
+              >
                 <Link to="/AllProjects">
                   <div className="nav-link">
                     <ListItemIcon>
@@ -48,8 +58,12 @@ export default function Sidebar() {
                   </div>
                 </Link>
               </li>
-              <li className="nav-item">
-                <Link to="/Assignment">
+              <li
+                className={`nav-item ${
+                  props.statusbar === 3 ? "bg-white" : "bg-light"
+                } rounded`}
+              >
+                <Link to="/Assignments">
                   <div className="nav-link">
                     <ListItemIcon>
                       <Assignment />
@@ -58,7 +72,11 @@ export default function Sidebar() {
                   </div>
                 </Link>
               </li>
-              <li className="nav-item">
+              <li
+                className={`nav-item ${
+                  props.statusbar === 4 ? "bg-white" : "bg-light"
+                } rounded`}
+              >
                 <Link to="/Appointments">
                   <div className="nav-link">
                     <ListItemIcon>
@@ -68,8 +86,12 @@ export default function Sidebar() {
                   </div>
                 </Link>
               </li>
-              <li className="nav-item">
-                <Link to="/Annoucement">
+              <li
+                className={`nav-item ${
+                  props.statusbar === 5 ? "bg-white" : "bg-light"
+                } rounded`}
+              >
+                <Link to="/Annoucements">
                   <div className="nav-link">
                     <ListItemIcon>
                       <Speaker />
@@ -83,23 +105,28 @@ export default function Sidebar() {
         </nav>
       )}
 
-      {role == "teacher" && (
+      {user.role == "teacher" && (
         <nav className="col-md-2 d-none d-md-block bg-light sidebar min-vh-100">
           <div className="sidebar-sticky">
             <div className="container">
               <div className="row">
                 <div className="mx-auto mt-5 mb-2">
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                  <Avatar alt={user.name} src="/static/images/avatar/1.jpg" />
                 </div>
               </div>
               <div className="row">
                 <div className="mx-auto">
-                  <p>Remy Sharp</p>
+                  <p>{user.name}</p>
+                  <p>{user.role}</p>
                 </div>
               </div>
             </div>
             <ul className="nav flex-column mb-2">
-              <li className="nav-item">
+              <li
+                className={`nav-item ${
+                  props.statusbar === 1 ? "bg-white" : "bg-light"
+                } rounded`}
+              >
                 <Link to="/">
                   <div className="nav-link">
                     <ListItemIcon>
@@ -109,7 +136,11 @@ export default function Sidebar() {
                   </div>
                 </Link>
               </li>
-              <li class="nav-item">
+              <li
+                class={`nav-item ${
+                  props.statusbar === 2 ? "bg-white" : "bg-light"
+                } rounded`}
+              >
                 <Link to="/AllProjects">
                   <div className="nav-link">
                     <ListItemIcon>
@@ -119,8 +150,12 @@ export default function Sidebar() {
                   </div>
                 </Link>
               </li>
-              <li className="nav-item">
-                <Link to="/Assignment">
+              <li
+                className={`nav-item ${
+                  props.statusbar === 3 ? "bg-white" : "bg-light"
+                } rounded`}
+              >
+                <Link to="/Assignments">
                   <div className="nav-link">
                     <ListItemIcon>
                       <Assignment />
@@ -129,7 +164,11 @@ export default function Sidebar() {
                   </div>
                 </Link>
               </li>
-              <li className="nav-item">
+              <li
+                className={`nav-item ${
+                  props.statusbar === 4 ? "bg-white" : "bg-light"
+                } rounded`}
+              >
                 <Link to="/Appointments">
                   <div className="nav-link">
                     <ListItemIcon>
@@ -139,8 +178,12 @@ export default function Sidebar() {
                   </div>
                 </Link>
               </li>
-              <li className="nav-item">
-                <Link to="/Annoucement">
+              <li
+                className={`nav-item ${
+                  props.statusbar === 5 ? "bg-white" : "bg-light"
+                } rounded`}
+              >
+                <Link to="/Annoucements">
                   <div className="nav-link">
                     <ListItemIcon>
                       <Speaker />
@@ -153,23 +196,28 @@ export default function Sidebar() {
           </div>
         </nav>
       )}
-      {role === "aa" && (
+      {user.role === "aa" && (
         <nav className="col-md-2 d-none d-md-block bg-light sidebar min-vh-100">
           <div className="sidebar-sticky">
             <div className="container">
               <div className="row">
                 <div className="mx-auto mt-5 mb-2">
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                  <Avatar alt={user.name} src="/static/images/avatar/1.jpg" />
                 </div>
               </div>
               <div className="row">
                 <div className="mx-auto">
-                  <p>Remy Sharp</p>
+                  <p>{user.name}</p>
+                  <p>{user.role}</p>
                 </div>
               </div>
             </div>
             <ul className="nav flex-column mb-2">
-              <li className="nav-item">
+              <li
+                className={`nav-item ${
+                  props.statusbar === 1 ? "bg-white" : "bg-light"
+                } rounded`}
+              >
                 <Link to="/">
                   <div className="nav-link">
                     <ListItemIcon>
@@ -179,8 +227,12 @@ export default function Sidebar() {
                   </div>
                 </Link>
               </li>
-              <li className="nav-item">
-                <Link to="/Assignment">
+              <li
+                className={`nav-item ${
+                  props.statusbar === 2 ? "bg-white" : "bg-light"
+                } rounded`}
+              >
+                <Link to="/Assignments">
                   <div className="nav-link">
                     <ListItemIcon>
                       <Assignment />
@@ -189,7 +241,11 @@ export default function Sidebar() {
                   </div>
                 </Link>
               </li>
-              <li className="nav-item">
+              <li
+                className={`nav-item ${
+                  props.statusbar === 3 ? "bg-white" : "bg-light"
+                } rounded`}
+              >
                 <Link to="/Appointments">
                   <div className="nav-link">
                     <ListItemIcon>
@@ -199,8 +255,12 @@ export default function Sidebar() {
                   </div>
                 </Link>
               </li>
-              <li className="nav-item">
-                <Link to="/Annoucement">
+              <li
+                className={`nav-item ${
+                  props.statusbar === 4 ? "bg-white" : "bg-light"
+                } rounded`}
+              >
+                <Link to="/Annoucements">
                   <div className="nav-link">
                     <ListItemIcon>
                       <Speaker />

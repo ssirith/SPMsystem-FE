@@ -18,7 +18,7 @@ function Carditem(props) {
     <>
       <div>
         <Card className={classes.root}>
-          <CardHeader title={`${props.groups.project_id}`} />
+          <CardHeader title={`IT60-${props.groups.project_id.substring(2)}`} />
           <CardContent>
             <div className="text-center">
               

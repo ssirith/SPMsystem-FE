@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react"
+import React, { useState, useCallback, useEffect,useContext } from "react"
 import BreadcrumbNav from "../components/common/BreadcrumbNav"
 import { Link, useParams } from "@reach/router"
 import Boxitem from "../components/common/Boxitem"
@@ -10,10 +10,11 @@ import axios from "axios"
 import Inputtext from "../components/common/Inputtext"
 import MyteamMember from "../components/common/MyteamMember"
 import MyteamAdvisor from "../components/common/MyteamAdvisor"
+import { UserContext } from "../UserContext"
 
 export default function Otherteam(props) {
   // learnmore={props.group}
-  const [role, setRole] = useState("student")//mock data
+  const { user,setUser } = useContext(UserContext)
   const { id } = useParams()
   console.log({ id })
   const [team, setTeam] = useState({})
@@ -34,7 +35,7 @@ export default function Otherteam(props) {
           <BreadcrumbNav
             pastref="/AllProjects"
             past="All Project"
-            current={`IT-${id}`}
+            current={`IT60-${id.substring(2)}`}//IT01
           />
         </div>
         <div className="col-12 my-3">
@@ -68,7 +69,7 @@ export default function Otherteam(props) {
                 onClick={() => console.log("Back")}
               />
             </Link>
-            {role == "aa" && (
+            {user.role == "aa" && (
               <Link to={`/editteam/${id}`}>
                 <Buttons menu="Edit" />
               </Link>

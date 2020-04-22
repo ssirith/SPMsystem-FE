@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react"
 import Inputtext from "../components/common/Inputtext"
-import Topicbox from "../components/common/Topicbox"
 import Membersbox from "../components/common/Membersbox"
 import Advisorbox from "../components/common/Advisorbox"
-import Boxitem from "../components/common/Boxitem"
 import Buttons from "../components/common/Buttons"
 import ModalComponentMember from "../components/common/ModalComponentMember"
 import ModalComponentAdvisor from "../components/common/ModalComponentAdvisor"
@@ -47,6 +45,12 @@ export default function Createteam() {
     console.log(mygroup)
   }
 
+  function deletemember(value){  
+  }
+  function deleteadvisor(value){
+    
+  }
+
   const handleSubmit = async (event) => {
     const project_name = mygroup.name
     const project_detail = mygroup.detail
@@ -71,6 +75,7 @@ export default function Createteam() {
         department,
       })
       console.log(response)
+      
       if(response.status === 200){ 
         navigate("/")
       }
@@ -125,6 +130,7 @@ export default function Createteam() {
               isOpen={isOpenStudent}
               setIsOpen={setIsOpenStudent}
               addmember={addmember}
+              deletemember={deletemember}
               // members={member}
               header="Add team members"
             />
@@ -149,6 +155,7 @@ export default function Createteam() {
               isOpen={isOpenAdvisor}
               setIsOpen={setIsOpenAdvisor}
               addadvisor={addadvisor}
+              deleteadvisor={deleteadvisor}
               // advisors={advisor}
               header="Add advisor"
             />
