@@ -5,19 +5,20 @@ import Inputtext from "./Inputtext"
 import axios from "axios"
 import { useEffect } from "react"
 import Button from "@material-ui/core/Button"
-
+import {useParams} from "@reach/router"
 export default function ModalEditMember(props) {
 
   const [save, setSave] = useState() //เอาค่ามาจาก axios
   const [students, setStudents] = useState([])
-  const [display, setDisplay] = useState([]) //ค่าแสดงบน Add
-  const [submit, setSubmit] = useState("") //ค่าที่ส่งไป
+  // const [display, setDisplay] = useState([]) //ค่าแสดงบน Add
+  // const [submit, setSubmit] = useState("") //ค่าที่ส่งไป
   const [isFilter, setIsFilter] = useState([])
   const [search, setSearch] = useState("")
+  const { id } = useParams()
 
   const fetchData = useCallback(async () => {
-    const { data } = await axios.get(`http://127.0.0.1:8000/api/projects/IT01`)
-    const all = await axios.get(`http://127.0.0.1:8000/api/students`)
+    const { data } = await axios.get(`http://127.0.0.1:8000/api/projects/${id}`)
+    const all = await axios.get(`http://127.0.0.1:8000/api/students/nogroup`)
     setStudents(all.data) //{group[{},{},{},project{},teacher{[],}]
     setSave(data.group)
   }, [])
@@ -35,7 +36,7 @@ export default function ModalEditMember(props) {
           console.log(save[i])
           console.log(temp)
           const index = temp.findIndex(temp => temp.student_id === save[i].student_id)
-          if (index > 0) {
+          if (index > -1) {
             temp.splice(index, 1)
           }
         }
@@ -78,14 +79,14 @@ export default function ModalEditMember(props) {
     console.log(save)
   }
 
-  function sortId(a, b) {
-    if (a.student_id > b.student_id) {
-      return 1
-    } else if (a.student_id < b.student_id) {
-      return -1
-    }
-    return 0
-  }
+  // function sortId(a, b) {
+  //   if (a.student_id > b.student_id) {
+  //     return 1
+  //   } else if (a.student_id < b.student_id) {
+  //     return -1
+  //   }
+  //   return 0
+  // }
 
   async function handleSubmit() {
     await props.addmember(save)

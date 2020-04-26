@@ -27,7 +27,7 @@ export default function Createteam() {
     let temp = []
     temp.push(value)
     setMember(...temp)
-  } // mun log mai dai mun mai mee return อ่อ ต้องreturnตรงไหน no need cuz member are set อะไรคือ cuz because  k v.short
+  }
 
   function addadvisor(value) {
     console.log(value)
