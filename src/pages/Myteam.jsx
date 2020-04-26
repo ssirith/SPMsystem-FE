@@ -12,14 +12,14 @@ import ModalcomponentDelete from "../components/common/ModalcomponentDelete"
 import { UserContext } from "../UserContext"
 export default function Myteam() {
   const { user,setUser }=useContext(UserContext)//Mock data user context
-  const [team, setTeam] = useState({})
+  const [stdGroup, setStdGroup] = useState({})// กลุ่มของนศ.ถูกเก็บเป็น object
   const [group, setGroup] = useState([])
   const [isOpenDelete, setIsOpenDelete] = useState(false)
-  console.log('team: ', team)
+  // console.log('team: ', team)
   const fetchData = useCallback(async () => {
     if (user.role === "student") {
       const data = await axios.get(`http://127.0.0.1:8000/api/group/${user.id}`) //[]
-      setTeam(data.data) //{group[{},{},{}], project{}, teacher[{}]}
+      setStdGroup(data.data) //{group[{},{},{}], project{}, teacher[{}]}
     }else if(user.role==="teacher"){
       const data= await axios.get(`http://127.0.0.1:8000/api/projects/response/teacher/${user.id}`)
       // console.log("data for teacher :",data.data)
@@ -34,21 +34,21 @@ export default function Myteam() {
     fetchData()
   }, [])
 
-  console.log(team)
-  console.log(team.project)
+  console.log(stdGroup)
+  console.log(stdGroup.project)
 
   return (
     <>
       {user.role === "student" && (
         <>
-          {team.project ? (
+          {stdGroup.project ? (
             <div className="container">
               <div className="row">
                 <div className="col-12 mt-5 mb-2">
-                  {team && (
+                  {stdGroup && (
                     <Topicbox
                       title="Senior Project Topic"
-                      topic={team.project}
+                      topic={stdGroup.project}
                     />
                   )}
                 </div>
@@ -56,21 +56,21 @@ export default function Myteam() {
                 <div className="col-12 my-2">
                   <div className="row">
                     <div className="col-8">
-                      <MyteamMember title="Members" members={team.group} />
+                      <MyteamMember title="Members" members={stdGroup.group} />
                     </div>
                     <div className="col-4">
-                      <MyteamAdvisor title="Advisor" advisors={team.teacher} />
+                      <MyteamAdvisor title="Advisor" advisors={stdGroup.teacher} />
                     </div>
                   </div>
                 </div>
 
                 <div className="col-12 my-3">
-                  <Boxitem title="Detail" detail={team.project} />
+                  <Boxitem title="Detail" detail={stdGroup.project} />
                 </div>
                 <div className="col-12 mx-auto">
                   <div className="row">
                     <div className="col-12 text-center">
-                      <Link to={`/editteam/${team.group[0].project_id}`}>
+                      <Link to={`/editteam/${stdGroup.group[0].project_id}`}>
                         <Buttons menu="Edit" />
                       </Link>
                       <Buttons
@@ -82,7 +82,7 @@ export default function Myteam() {
                         isOpen={isOpenDelete}
                         setIsOpen={setIsOpenDelete}
                         header="Confirmation"
-                        toDelete={team.project}
+                        toDelete={stdGroup.project}
                       />
                     </div>
                   </div>

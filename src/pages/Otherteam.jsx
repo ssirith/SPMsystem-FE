@@ -17,12 +17,10 @@ export default function Otherteam(props) {
   const { user,setUser } = useContext(UserContext)
   const { id } = useParams()
   console.log({ id })
-  const [team, setTeam] = useState({})
+  const [group, setGroup] = useState({})
   const fetchData = useCallback(async () => {
     const data = await axios.get(`http://127.0.0.1:8000/api/projects/${id}`) //[]
-    setTeam(data.data)    
-
-    //{group[{},{},{}], project{}, teacher[{}]}
+    setGroup(data.data) //{group[{},{},{}], project{}, teacher[{}]}
   }, [])
   useEffect(() => {
     fetchData()
@@ -39,24 +37,24 @@ export default function Otherteam(props) {
           />
         </div>
         <div className="col-12 my-3">
-          {team && (
-            <Topicbox title="Senior Project Topic" topic={team.project} />
+          {group && (
+            <Topicbox title="Senior Project Topic" topic={group.project} />
           )}
         </div>
 
         <div className="col-12 my-3">
           <div className="row">
             <div className="col-8">
-              <MyteamMember title="Members" members={team.group} />
+              <MyteamMember title="Members" members={group.group} />
             </div>
             <div className="col-4">
-              <MyteamAdvisor title="Advisor" advisors={team.teacher} />
+              <MyteamAdvisor title="Advisor" advisors={group.teacher} />
             </div>
           </div>
         </div>
 
         <div className="col-12 my-3">
-          <Boxitem title="Detail" detail={team.project} />
+          <Boxitem title="Detail" detail={group.project} />
         </div>
       </div>
       <div className="col-12 mx-auto">

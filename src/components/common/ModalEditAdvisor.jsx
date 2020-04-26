@@ -1,13 +1,12 @@
 import React, { useState, useCallback } from "react"
-import {useParams} from "@reach/router"
 import { Modal } from "react-bootstrap"
 import Buttons from "./Buttons"
 import Inputtext from "./Inputtext"
 import axios from "axios"
 import { useEffect } from "react"
 import Button from "@material-ui/core/Button"
-
-export default function ModalComponentAdvisor(props) {
+import {useParams} from "@reach/router"
+export default function ModalEditAdvisor(props) {
   const [save, setSave] = useState() //เอาค่ามาจาก axios
   const [teachers, setTeachers] = useState([])
   const [display, setDisplay] = useState([]) //ค่าแสดงบน Add
@@ -15,9 +14,11 @@ export default function ModalComponentAdvisor(props) {
   const [isFilter, setIsFilter] = useState([])
   const [search, setSearch] = useState("")
   const { id } = useParams()
+
   const fetchData = useCallback(async () => {
     const { data } = await axios.get(`http://127.0.0.1:8000/api/projects/${id}`)
     const all = await axios.get(`http://127.0.0.1:8000/api/teachers`)
+    
     setTeachers(all.data) //{group[{},{},{},project{},teacher{[],}]
     setSave(data.teacher)
   }, [])
@@ -25,14 +26,13 @@ export default function ModalComponentAdvisor(props) {
     fetchData()
   }, [])
 
- 
   useEffect(() => {
     const temp = [...teachers]
     if (save) {
       for (let i = 0; i < save.length; i++) {
         console.log(save[i])
         console.log(temp)
-        const index = temp.findIndex(temp => temp.teacher_name === save[i].teacher_name)
+        const index = temp.findIndex(temp => temp.teacher_id === save[i].teacher_id)
         if (index > -1) {
           temp.splice(index, 1)
         }
@@ -49,6 +49,7 @@ export default function ModalComponentAdvisor(props) {
   }, [search, teachers, save])
 
   function updateInput(e) {
+
     setSave([...save, e])
     console.log(save)
     console.log(teachers)
@@ -56,11 +57,11 @@ export default function ModalComponentAdvisor(props) {
   }
 
   function deleteadvisor(value) {
+    props.deleteadvisor(value)
     console.log(value)
-    const result = save
-    // teachers.push(value)
+    const result = [...save];
     // teachers.sort(sortId)
-    const index = save.indexOf(value)
+    const index = result.indexOf(value)
     if (index > -1) {
       result.splice(index, 1)
     }
@@ -132,9 +133,9 @@ export default function ModalComponentAdvisor(props) {
         />
         <table className="table table-striped">
           <tbody>
-            {isFilter.map((tch, idx) => (
-              <tr key={idx} onClick={() => updateInput(tch)}>
-                <td>{tch.teacher_name}</td>
+            {isFilter.map((ads, idx) => (
+              <tr key={idx} onClick={() => updateInput(ads)}>
+                <td>{ads.teacher_name}</td>
               </tr>
             ))}
           </tbody>
