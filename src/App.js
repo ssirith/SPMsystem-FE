@@ -13,9 +13,9 @@ import Appointments from "./pages/Appointments"
 import Annoucements from "./pages/Annoucements"
 function App() {
   const [user,setUser]=useState({
-        id: "60130500082",//เวลา demo  เปลี่ยนที่นี่
-        name: "Watunyu",
-        role:"student"//เวลา demo  เปลี่ยนที่นี่
+        id: "1",//เวลา demo  เปลี่ยนที่นี่
+        name: "tuk",
+        role:"aa"//เวลา demo  เปลี่ยนที่นี่
   })
   const value=useMemo(()=>({ user,setUser }), [user,setUser])
   return (

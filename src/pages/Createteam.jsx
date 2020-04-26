@@ -62,7 +62,7 @@ export default function Createteam() {
       department,
     })
     try {
-      const response = await axios.post("http://127.0.0.1:8000/api/projects", {
+      const response = await axios.post("http://127.0.0.1:8000/api/projects/create", {
         project_name,
         project_detail,
         student_id,

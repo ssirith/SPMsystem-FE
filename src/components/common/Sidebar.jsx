@@ -229,7 +229,7 @@ export default function Sidebar(props) {
               </li>
               <li
                 className={`nav-item ${
-                  props.statusbar === 2 ? "bg-white" : "bg-light"
+                  props.statusbar === 3 ? "bg-white" : "bg-light"
                 } rounded`}
               >
                 <Link to="/Assignments">
@@ -243,7 +243,7 @@ export default function Sidebar(props) {
               </li>
               <li
                 className={`nav-item ${
-                  props.statusbar === 3 ? "bg-white" : "bg-light"
+                  props.statusbar === 4 ? "bg-white" : "bg-light"
                 } rounded`}
               >
                 <Link to="/Appointments">
@@ -257,7 +257,7 @@ export default function Sidebar(props) {
               </li>
               <li
                 className={`nav-item ${
-                  props.statusbar === 4 ? "bg-white" : "bg-light"
+                  props.statusbar === 5 ? "bg-white" : "bg-light"
                 } rounded`}
               >
                 <Link to="/Annoucements">
