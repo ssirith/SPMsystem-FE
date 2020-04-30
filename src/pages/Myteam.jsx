@@ -15,14 +15,12 @@ export default function Myteam() {
   const [stdGroup, setStdGroup] = useState({})// กลุ่มของนศ.ถูกเก็บเป็น object
   const [group, setGroup] = useState([])
   const [isOpenDelete, setIsOpenDelete] = useState(false)
-  // console.log('team: ', team)
   const fetchData = useCallback(async () => {
     if (user.role === "student") {
       const data = await axios.get(`http://127.0.0.1:8000/api/group/${user.id}`) //[]
       setStdGroup(data.data) //{group[{},{},{}], project{}, teacher[{}]}
     }else if(user.role==="teacher"){
       const data= await axios.get(`http://127.0.0.1:8000/api/projects/response/teacher/${user.id}`)
-      // console.log("data for teacher :",data.data)
       setGroup(data.data)
     }else if(user.role==="aa"){
       const data= await axios.get(`http://127.0.0.1:8000/api/projects/response/aa/${user.id}`)
@@ -33,9 +31,6 @@ export default function Myteam() {
   useEffect(() => {
     fetchData()
   }, [])
-
-  console.log(stdGroup)
-  console.log(stdGroup.project)
 
   return (
     <>

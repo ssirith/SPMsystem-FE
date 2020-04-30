@@ -25,59 +25,39 @@ export default function ModalComponentMember(props) {
 
  
   useEffect(() => {
-    console.log(save) 
-    const temp = [...students]
+    const temp = [...students] // จำลองค่า students เพื่อไม่ให้เกิดการเปลี่ยนแปลงโดยตรงที่ students
       if (save) {
         for (let i = 0; i < save.length; i++) {
-          console.log(save[i])
-          console.log(temp)
           const index = temp.findIndex(temp => temp.student_id === save[i].student_id)
           if (index > -1) {
             temp.splice(index, 1)
           }
         }
       }
-        console.log(temp)
         setIsFilter(
           temp.filter(
             std => std.student_name.toLowerCase().includes(search.toLowerCase()) || std.student_id.includes(search))
         )
        
-
-    console.log(isFilter)
-    console.log(isFilter.length)
   }, [search, students, save])
 
-  function updateInput(e) {
+  function updateInput(e) { //เอาค่าที่แอดไปแสดง
     setSave([...save, e])
-    console.log(save)
-    console.log(students)
     setSearch("")
   }
-  console.log(save)
+ 
 
-  function deletemember(value) {
+  function deleteMember(value) {
     const result = save
-    // students.push(value)
-    // students.sort(sortId)
     const index = save.indexOf(value)
     if (index > -1) {
       result.splice(index, 1)
     }
-    console.log(result)
-    setSave([...result])
+    setSave([...result])//สมาชิกที่เหลือหลังจากลบออก
   }
-  // function sortId(a, b) {
-  //   if (a.student_id > b.student_id) {
-  //     return 1
-  //   } else if (a.student_id < b.student_id) {
-  //     return -1
-  //   }
-  //   return 0
-  // }
+
   async function handleSubmit() {
-    await props.addmember(save)
-    console.log(save)
+    await props.addMember(save)
     if (props.setIsOpen(false)) {  
       setTimeout(()=>{
         window.location.reload()
@@ -85,7 +65,7 @@ export default function ModalComponentMember(props) {
     }
     
   }
-  function disSubmit() {
+  function disSubmit() { //ฟังก์ชันเพื่อไม่ให้สามารถกดปุ่ม  submit ได้ ถ้าแอดเกินที่กำหนด
     if (save) {
       if (save.length == 0 || save.length > 3) {
         return (
@@ -151,7 +131,7 @@ export default function ModalComponentMember(props) {
                   <div className="col-4">{data.student_name}</div>
                   <button
                     className="btn btn-danger"
-                    onClick={() => deletemember(data)}
+                    onClick={() => deleteMember(data)}
                   >
                     Delete
                   </button>

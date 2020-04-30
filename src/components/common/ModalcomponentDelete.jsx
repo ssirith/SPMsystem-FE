@@ -8,14 +8,14 @@ export default function ModalComponentDelete(props) {
   let navigate=useNavigate()
   async function deleteProject(value) {
     
-    const temp = {
+    const idForDelete = {
       project_id: props.toDelete.project_id,
     }
-    console.log(temp)
+    
     try {
       const response = await axios.post(
         `http://127.0.0.1:8000/api/projects/delete`,
-        temp
+        idForDelete
       )
       console.log(response)
       if (response.status === 200) {

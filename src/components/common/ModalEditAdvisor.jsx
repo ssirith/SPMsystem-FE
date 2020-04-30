@@ -27,56 +27,35 @@ export default function ModalEditAdvisor(props) {
   }, [])
 
   useEffect(() => {
-    const temp = [...teachers]
+    const temp = [...teachers] //จำลองค่าเพื่อไม่ให้เปลี่ยนที่ DB โดยตรง
     if (save) {
       for (let i = 0; i < save.length; i++) {
-        console.log(save[i])
-        console.log(temp)
         const index = temp.findIndex(temp => temp.teacher_id === save[i].teacher_id)
         if (index > -1) {
           temp.splice(index, 1)
         }
       }
     }
-      console.log(temp)
       setIsFilter(
         temp.filter(
           tch => tch.teacher_name.toLowerCase().includes(search.toLowerCase()) )
       )
-    console.log(isFilter)
-
-    console.log(isFilter.length)
   }, [search, teachers, save])
 
   function updateInput(e) {
-
     setSave([...save, e])
-    console.log(save)
-    console.log(teachers)
     setSearch("")
   }
 
-  function deleteadvisor(value) {
-    props.deleteadvisor(value)
-    console.log(value)
+  function deleteAdvisor(value) {
+    props.deleteAdvisor(value)
     const result = [...save];
-    // teachers.sort(sortId)
     const index = result.indexOf(value)
     if (index > -1) {
       result.splice(index, 1)
     }
-    console.log(result)
     setSave([...result])
   }
-
-  // function sortId(a, b) {
-  //   if (a.teacher_id > b.teacher_id) {
-  //     return 1
-  //   } else if (a.teacher_id < b.teacher_id) {
-  //     return -1
-  //   }
-  //   return 0
-  // }
 
   async function handleSubmit() {
     await props.addadvisor(save)
@@ -86,8 +65,8 @@ export default function ModalEditAdvisor(props) {
         window.location.reload()
       },2000)
     }
-    console.log(save)
   }
+
   function disSubmit() {
     if (save) {
       if (save.length > 2) {
@@ -150,7 +129,7 @@ export default function ModalEditAdvisor(props) {
                   <div className="col-4">{data.teacher_name}</div>
                   <button
                     className="btn btn-danger"
-                    onClick={() => deleteadvisor(data)}
+                    onClick={() => deleteAdvisor(data)}
                   >
                     Delete
                   </button>

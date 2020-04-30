@@ -10,7 +10,7 @@ import ModalEditAdvisor from "../components/common/ModalEditAdvisor"
 import Dropdown from "../components/common/Dropdown"
 import axios from 'axios'
 import { Link,useParams } from "@reach/router"
-import BreadcrumbNav from "../components/common/BreadcrumbNav"
+import BreadcrumbNavString from "../components/common/BreadcrumbNavString"
 
 export default function Editteam(props) {
   const [departmentList, setDepartmentList] = useState(["IT", "CS", "DSI"])
@@ -29,7 +29,6 @@ export default function Editteam(props) {
       setMember(data.group)
       setAdvisor(data.teacher)
       setDepartment(data.group[0].department)
-      console.log(data)
     },
     [],
   )
@@ -37,70 +36,59 @@ export default function Editteam(props) {
     fetchData()
   }, [])
 
-
   const handleProjectName = (event) => {
-    console.log(event.target.value)
     setProject({
       ...project,
       project_name: event.target.value
     })
-
-    console.log(project)
   }
-  const handleProjectDetail = (event) => {
-    console.log(event.target.value)
+
+  const handleProjectDetail = (event) => {  
     setProject({
       ...project,
       project_detail: event.target.value
     })
-    console.log(project)
-
   }
-  function addmember(value) {
-    console.log(value)
+
+  function addMember(value) {   
     let temp = []
     temp.push(value)
     setMember(...temp)
-    console.log(member)
+    
   }
 
-  function addadvisor(value) {
+  function addAdvisor(value) {
     let temp = []
     temp.push(value)
     setAdvisor(...temp)
   }
-  function deletemember(value){
-    console.log(value.student_id)
+  function deleteMember(value){
     let temp = memberForDelete
     temp.push(value.student_id)
     setMemberForDelete(temp)
-    console.log(memberForDelete)
+    
   }
 
-  function deleteadvisor(value){
-    console.log(value.teacher_id)
+  function deleteAdvisor(value){
     let temp = advisorForDelete
     temp.push(value.teacher_id)
-    setAdvisorForDelete(temp)
-    console.log(advisorForDelete)
+    setAdvisorForDelete(temp) 
   }
 
   
   const handleSubmit = async (event) => {
-    console.log(project)
     const project_id = project.project_id;
     const group_id = member[0].group_id;
     const project_name = project.project_name;
     const project_detail = project.project_detail;
     const delete_student_id = memberForDelete;
-    console.log(memberForDelete)
     const delete_teacher_id = advisorForDelete;
     const add_student_id = [];
     member.map(m => add_student_id.push(m.student_id));
     const add_teacher_id = [];
     advisor.map(a => add_teacher_id.push(a.teacher_id));
     
-    const temp = {
+    const dataForEdit = {
       project_id: project_id,
       group_id: group_id,
       department: department,
@@ -111,10 +99,10 @@ export default function Editteam(props) {
       add_teacher_id: add_teacher_id,
       project_detail: project_detail
     }
-    console.log(temp)
+    
     try{
      const response=await axios.
-     put(`http://127.0.0.1:8000/api/projects/edit/${project_id}`, temp)
+     put(`http://127.0.0.1:8000/api/projects/edit/${project_id}`, dataForEdit)
      console.log(response)
      if(response.status===200){
        window.location.reload()
@@ -130,7 +118,7 @@ export default function Editteam(props) {
     <div className="container">
       <div className="row">
       <div className="col-12 my-3">
-          <BreadcrumbNav
+          <BreadcrumbNavString
             pastref="/"
             past="Home"
             current="Edit Project"
@@ -173,8 +161,8 @@ export default function Editteam(props) {
             <ModalEditMember
               isOpen={isOpenStudent}
               setIsOpen={setIsOpenStudent}
-              addmember={addmember}
-              deletemember={deletemember}
+              addMember={addMember}
+              deleteMember={deleteMember}
               header="Add team members"
             />
           </div>
@@ -197,9 +185,8 @@ export default function Editteam(props) {
             <ModalEditAdvisor
               isOpen={isOpenAdvisor}
               setIsOpen={setIsOpenAdvisor}
-              addadvisor={addadvisor}
-              deleteadvisor={deleteadvisor}
-              // advisors={advisor}
+              addAdvisor={addAdvisor}
+              deleteAdvisor={deleteAdvisor}
               header="Add advisor"
             />
           </div>

@@ -11,7 +11,6 @@ export default function Teams() {
   useEffect(() => {
     fetchData()
   }, [])
-  console.log(group)
   return (
     <>
       <div className="container">

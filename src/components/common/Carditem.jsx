@@ -12,16 +12,13 @@ const useStyles = makeStyles({
 })
 function Carditem(props) {
   const classes = useStyles()
-  console.log(props.groups)
-
   return (
     <>
       <div>
         <Card className={classes.root}>
-          <CardHeader title={`IT60-${props.groups.project_id.substring(2)}`} />
+          <CardHeader title={`${props.groups.department}60-${props.groups.project_id.substring(2)}`} />
           <CardContent>
             <div className="text-center">
-              
                 {props.groups.project_name}
                 {props.groups.teachers &&
                   props.groups.teachers.map((a, index) => {
@@ -30,7 +27,6 @@ function Carditem(props) {
               
             </div>
           </CardContent>
-
           <CardActions>
             <Link to={`/projects/${props.groups.project_id}`}>
               <Button size="small" color="primary">

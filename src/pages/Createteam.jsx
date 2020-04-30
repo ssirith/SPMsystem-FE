@@ -8,7 +8,7 @@ import ModalComponentAdvisor from "../components/common/ModalComponentAdvisor"
 import Dropdown from "../components/common/Dropdown"
 import axios from "axios"
 import { Link,useNavigate } from "@reach/router"
-import BreadcrumbNav from "../components/common/BreadcrumbNav"
+import BreadcrumbNavString from "../components/common/BreadcrumbNavString"
 
 export default function Createteam() {
   let navigate = useNavigate()
@@ -23,14 +23,13 @@ export default function Createteam() {
   const [member, setMember] = useState([])
   const [advisor, setAdvisor] = useState([])
 
-  function addmember(value) {
+  function addMember(value) {
     let temp = []
     temp.push(value)
     setMember(...temp)
   }
 
-  function addadvisor(value) {
-    console.log(value)
+  function addAdvisor(value) {
     let temp = []
     temp.push(value)
     setAdvisor(...temp)
@@ -42,7 +41,6 @@ export default function Createteam() {
 
   const handleDetail = (event) => {
     setMygroup({ ...mygroup, detail: event.target.value })
-    console.log(mygroup)
   }
 
   
@@ -53,14 +51,6 @@ export default function Createteam() {
     member.map((m) => student_id.push(m.student_id))
     const teacher_id = []
     advisor.map((a) => teacher_id.push(a.teacher_id))
-
-    console.log({
-      project_name,
-      project_detail,
-      student_id,
-      teacher_id,
-      department,
-    })
     try {
       const response = await axios.post("http://127.0.0.1:8000/api/projects/create", {
         project_name,
@@ -69,7 +59,6 @@ export default function Createteam() {
         teacher_id,
         department,
       })
-      console.log(response)
       
       if(response.status === 200){ 
         navigate("/")
@@ -83,7 +72,7 @@ export default function Createteam() {
     <div className="container">
       <div className="row">
         <div className="col-12 my-3">
-          <BreadcrumbNav
+          <BreadcrumbNavString
             pastref="/"
             past="My Project"
             current="Create Project"
@@ -124,9 +113,7 @@ export default function Createteam() {
             <ModalComponentMember
               isOpen={isOpenStudent}
               setIsOpen={setIsOpenStudent}
-              addmember={addmember}
-              
-              // members={member}
+              addMember={addMember}
               header="Add team members"
             />
           </div>
@@ -149,9 +136,7 @@ export default function Createteam() {
             <ModalComponentAdvisor
               isOpen={isOpenAdvisor}
               setIsOpen={setIsOpenAdvisor}
-              addadvisor={addadvisor}
-             
-              // advisors={advisor}
+              addAdvisor={addAdvisor}
               header="Add advisor"
             />
           </div>
