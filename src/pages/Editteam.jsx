@@ -11,6 +11,7 @@ import Dropdown from "../components/common/Dropdown"
 import axios from 'axios'
 import { Link,useParams } from "@reach/router"
 import BreadcrumbNavString from "../components/common/BreadcrumbNavString"
+import Textarea from "../components/common/Textarea"
 
 export default function Editteam(props) {
   const [departmentList, setDepartmentList] = useState(["IT", "CS", "DSI"])
@@ -200,11 +201,12 @@ export default function Editteam(props) {
       {/*Detail */}
       <div className="col-12 my-3">
         {project &&
-          <Inputtext
+          <Textarea
             id="projectdetail"
             label="Projectdetail"
             defaultValue={project.project_detail}
             onChange={(event) => handleProjectDetail(event)}
+            multiline={true}
           />}
       </div>
       {/*Cancel / Save*/}

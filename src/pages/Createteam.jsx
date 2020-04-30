@@ -9,6 +9,7 @@ import Dropdown from "../components/common/Dropdown"
 import axios from "axios"
 import { Link,useNavigate } from "@reach/router"
 import BreadcrumbNavString from "../components/common/BreadcrumbNavString"
+import Textarea from "../components/common/Textarea"
 
 export default function Createteam() {
   let navigate = useNavigate()
@@ -149,7 +150,7 @@ export default function Createteam() {
       </div>
 
       <div className="col-12 my-3">
-        <Inputtext
+        <Textarea
           id="projectdetail"
           label="Project Detail"
           defaultValue={mygroup.detail}

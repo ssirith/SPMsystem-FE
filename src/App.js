@@ -13,8 +13,8 @@ import Appointments from "./pages/Appointments"
 import Annoucements from "./pages/Annoucements"
 function App() {
   const [user,setUser]=useState({
-        id: "60130500105",//เวลา demo  เปลี่ยนที่นี่
-        name: "WTY",
+        id: "60130500114",//เวลา demo  เปลี่ยนที่นี่
+        name: "Suthiwat",
         role:"student"//เวลา demo  เปลี่ยนที่นี่
   })
   const value=useMemo(()=>({ user,setUser }), [user,setUser])
