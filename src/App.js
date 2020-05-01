@@ -11,11 +11,12 @@ import Createteam from "./pages/Createteam"
 import Assignments from "./pages/Assignments"
 import Appointments from "./pages/Appointments"
 import Annoucements from "./pages/Annoucements"
+import Setting from "./pages/Setting"
 function App() {
   const [user,setUser]=useState({
-        id: "60130500114",//เวลา demo  เปลี่ยนที่นี่
-        name: "Suthiwat",
-        role:"student"//เวลา demo  เปลี่ยนที่นี่
+        id: "1",//เวลา demo  เปลี่ยนที่นี่
+        name: "Tuk",
+        role:"aa"//เวลา demo  เปลี่ยนที่นี่
   })
   const value=useMemo(()=>({ user,setUser }), [user,setUser])
   return (
@@ -29,6 +30,7 @@ function App() {
       <MainLayout path="/Assignments" component={Assignments} statusbar={3} />
       <MainLayout path="/Appointments" component={Appointments} statusbar={4} />
       <MainLayout path="/Annoucements" component={Annoucements} statusbar={5} />
+      <MainLayout path="/Setting" component={Setting} statusbar={6} />
     </Router>
       </UserContext.Provider>
   )
