@@ -5,7 +5,7 @@ import axios from "axios"
 export default function Teams() {
   const [group, setGroup] = useState([])
   const fetchData = useCallback(async () => {
-    const data = await axios.get(`http://127.0.0.1:8000/api/projects`) //[]
+    const data = await axios.get(`${process.env.REACT_APP_API_BE}/projects`) //[]
     setGroup(data.data) // AllProject
   }, [])
   useEffect(() => {

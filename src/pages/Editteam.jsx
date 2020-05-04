@@ -25,7 +25,7 @@ export default function Editteam(props) {
   const [advisorForDelete, setAdvisorForDelete] = useState([])//รอส่งเข้าdbไปลบ
   const fetchData = useCallback(
     async () => {
-      const { data } = await axios.get(`http://127.0.0.1:8000/api/projects/${props.id}`)
+      const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/projects/${props.id}`)
       setProject(data.project)
       setMember(data.group)
       setAdvisor(data.teacher)
@@ -103,7 +103,7 @@ export default function Editteam(props) {
     
     try{
      const response=await axios.
-     put(`http://127.0.0.1:8000/api/projects/edit/${project_id}`, dataForEdit)
+     put(`${process.env.REACT_APP_API_BE}/projects/edit/${project_id}`, dataForEdit)
      console.log(response)
      if(response.status===200){
        window.location.reload()

@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect,useContext } from "react"
+import React, { useState, useCallback, useEffect, useContext } from "react"
 import { Link } from "@reach/router"
 import Carditem from "../components/common/Carditem"
 import Boxitem from "../components/common/Boxitem"
@@ -10,20 +10,29 @@ import Buttons from "../components/common/Buttons"
 import axios from "axios"
 import ModalcomponentDelete from "../components/common/ModalcomponentDelete"
 import { UserContext } from "../UserContext"
+import { SettingContext } from '../SettingContext'
+
 export default function Myteam() {
-  const { user,setUser }=useContext(UserContext)//Mock data user context
-  const [stdGroup, setStdGroup] = useState({})// กลุ่มของนศ.ถูกเก็บเป็น object
+  const { user, setUser } = useContext(UserContext) //Mock data user context
+  const { settingContext,setSettingContext } = useContext(SettingContext)
+  const [stdGroup, setStdGroup] = useState({}) // กลุ่มของนศ.ถูกเก็บเป็น object
   const [group, setGroup] = useState([])
   const [isOpenDelete, setIsOpenDelete] = useState(false)
   const fetchData = useCallback(async () => {
     if (user.role === "student") {
-      const data = await axios.get(`http://127.0.0.1:8000/api/group/${user.id}`) //[]
+      const data = await axios.get(
+        `${process.env.REACT_APP_API_BE}/group/${user.id}`
+      ) //[]
       setStdGroup(data.data) //{group[{},{},{}], project{}, teacher[{}]}
-    }else if(user.role==="teacher"){
-      const data= await axios.get(`http://127.0.0.1:8000/api/projects/response/teacher/${user.id}`)
+    } else if (user.role === "teacher") {
+      const data = await axios.get(
+        `${process.env.REACT_APP_API_BE}/projects/response/teacher/${user.id}`
+      )
       setGroup(data.data)
-    }else if(user.role==="aa"){
-      const data= await axios.get(`http://127.0.0.1:8000/api/projects/response/aa/${user.id}`)
+    } else if (user.role === "aa") {
+      const data = await axios.get(
+        `${process.env.REACT_APP_API_BE}/projects/response/aa/${user.id}`
+      )
       setGroup(data.data)
     }
   }, [])
@@ -54,7 +63,10 @@ export default function Myteam() {
                       <MyteamMember title="Members" members={stdGroup.group} />
                     </div>
                     <div className="col-4">
-                      <MyteamAdvisor title="Advisor" advisors={stdGroup.teacher} />
+                      <MyteamAdvisor
+                        title="Advisor"
+                        advisors={stdGroup.teacher}
+                      />
                     </div>
                   </div>
                 </div>
@@ -107,7 +119,7 @@ export default function Myteam() {
         <>
           <div className="container">
             <div className="row mt-5">
-              {group.map((data,index) => {
+              {group.map((data, index) => {
                 return (
                   <div className="col-3 my-3" key={index}>
                     <Carditem groups={data} />
@@ -122,7 +134,7 @@ export default function Myteam() {
         <>
           <div className="container">
             <div className="row mt-5">
-              {group.map((data,index) => {
+              {group.map((data, index) => {
                 return (
                   <div className="col-3 my-3" key={index}>
                     <Carditem groups={data} />
@@ -133,7 +145,6 @@ export default function Myteam() {
           </div>
         </>
       )}
-     
     </>
   )
 }

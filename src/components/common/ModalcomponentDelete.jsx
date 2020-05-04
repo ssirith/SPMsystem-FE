@@ -14,7 +14,7 @@ export default function ModalComponentDelete(props) {
     
     try {
       const response = await axios.post(
-        `http://127.0.0.1:8000/api/projects/delete`,
+        `${process.env.REACT_APP_API_BE}/projects/delete`,
         idForDelete
       )
       console.log(response)

@@ -18,7 +18,7 @@ export default function Otherteam(props) {
   console.log({ id })
   const [group, setGroup] = useState({})
   const fetchData = useCallback(async () => {
-    const data = await axios.get(`http://127.0.0.1:8000/api/projects/${id}`) //[]
+    const data = await axios.get(`${process.env.REACT_APP_API_BE}/projects/${id}`) //[]
     setGroup(data.data) //{group[{},{},{}], project{}, teacher[{}]}
 
   }, [])

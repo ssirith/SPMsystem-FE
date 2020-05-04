@@ -1,4 +1,4 @@
-import React,{useState,useMemo} from "react"
+import React, { useState, useMemo,useEffect, useCallback } from "react"
 import "./App.css"
 import { UserContext } from "./UserContext"
 import { Router } from "@reach/router"
@@ -12,27 +12,77 @@ import Assignments from "./pages/Assignments"
 import Appointments from "./pages/Appointments"
 import Annoucements from "./pages/Annoucements"
 import Setting from "./pages/Setting"
+import dayjs from 'dayjs';
+import { SettingYearContext } from "./SettingYearContext"
+import { SettingContext } from "./SettingContext"
+import axios from "axios"
+
 function App() {
-  const [user,setUser]=useState({
-        id: "1",//เวลา demo  เปลี่ยนที่นี่
-        name: "Tuk",
-        role:"aa"//เวลา demo  เปลี่ยนที่นี่
+  const [settingYearContext, setSettingYearContext] = useState('2019')
+  const [settingContext,setSettingContext] =useState({})
+  const settingYearValue = useMemo(
+    () => ({ settingYearContext, setSettingYearContext }),
+    [settingYearContext, setSettingYearContext]
+  )
+  const settingValue = useMemo(
+    () => ({ settingContext,setSettingContext }),
+    [settingContext,setSettingContext]
+  )
+
+  const [user, setUser] = useState({
+    id: "1", //เวลา demo  เปลี่ยนที่นี่
+    name: "Tuk",
+    role: "aa", //เวลา demo  เปลี่ยนที่นี่
   })
-  const value=useMemo(()=>({ user,setUser }), [user,setUser])
+  const userValue = useMemo(() => ({ user, setUser }), [user, setUser])
+
+  const fetchData = useCallback(async ()=>{
+    try{
+      const response = await axios.get(`${process.env.REACT_APP_API_BE}/config/${settingYearContext}`)
+      setSettingContext(response.data)
+    }catch(err){
+      console.log(err)
+    }
+  })
+
+  useEffect(()=>{
+    fetchData()
+  },[settingYearContext])
+
   return (
-      <UserContext.Provider value={value}>
-    <Router>
-      <MainLayout path="/" component={Myteam} statusbar={1} />
-      <MainLayout path="/editteam/:id" component={Editteam} statusbar={1}  />
-      <MainLayout path="/createteam" component={Createteam} statusbar={1} />
-      <MainLayout path="/AllProjects" component={Teams} statusbar={2}  />
-      <MainLayout path="/projects/:id" component={Otherteam} statusbar={2}  />
-      <MainLayout path="/Assignments" component={Assignments} statusbar={3} />
-      <MainLayout path="/Appointments" component={Appointments} statusbar={4} />
-      <MainLayout path="/Annoucements" component={Annoucements} statusbar={5} />
-      <MainLayout path="/Setting" component={Setting} statusbar={6} />
-    </Router>
+    <SettingYearContext.Provider value={settingYearValue}>
+    <SettingContext.Provider value={settingValue}>
+      <UserContext.Provider value={userValue}>
+        <Router>
+          <MainLayout path="/" component={Myteam} statusbar={1} />
+          <MainLayout path="/editteam/:id" component={Editteam} statusbar={1} />
+          <MainLayout path="/createteam" component={Createteam} statusbar={1} />
+          <MainLayout path="/AllProjects" component={Teams} statusbar={2} />
+          <MainLayout
+            path="/projects/:id"
+            component={Otherteam}
+            statusbar={2}
+          />
+          <MainLayout
+            path="/Assignments"
+            component={Assignments}
+            statusbar={3}
+          />
+          <MainLayout
+            path="/Appointments"
+            component={Appointments}
+            statusbar={4}
+          />
+          <MainLayout
+            path="/Annoucements"
+            component={Annoucements}
+            statusbar={5}
+          />
+          <MainLayout path="/Setting" component={Setting} statusbar={6} />
+        </Router>
       </UserContext.Provider>
+    </SettingContext.Provider>
+    </SettingYearContext.Provider>
   )
 }
 

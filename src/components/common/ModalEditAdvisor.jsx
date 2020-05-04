@@ -16,8 +16,8 @@ export default function ModalEditAdvisor(props) {
   const { id } = useParams()
 
   const fetchData = useCallback(async () => {
-    const { data } = await axios.get(`http://127.0.0.1:8000/api/projects/${id}`)
-    const all = await axios.get(`http://127.0.0.1:8000/api/teachers`)
+    const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/projects/${id}`)
+    const all = await axios.get(`${process.env.REACT_APP_API_BE}/teachers`)
     
     setTeachers(all.data) //{group[{},{},{},project{},teacher{[],}]
     setSave(data.teacher)

@@ -53,7 +53,7 @@ export default function Createteam() {
     const teacher_id = []
     advisor.map((a) => teacher_id.push(a.teacher_id))
     try {
-      const response = await axios.post("http://127.0.0.1:8000/api/projects/create", {
+      const response = await axios.post(`${process.env.REACT_APP_API_BE}/projects`, {
         project_name,
         project_detail,
         student_id,
