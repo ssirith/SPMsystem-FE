@@ -11,19 +11,22 @@ import axios from "axios"
 import ModalcomponentDelete from "../components/common/ModalcomponentDelete"
 import { UserContext } from "../UserContext"
 import { SettingContext } from '../SettingContext'
-
+import ModalWindowProfile from "../components/common/ModalWindowProfile"
 export default function Myteam() {
   const { user, setUser } = useContext(UserContext) //Mock data user context
   const { settingContext,setSettingContext } = useContext(SettingContext)
   const [stdGroup, setStdGroup] = useState({}) // กลุ่มของนศ.ถูกเก็บเป็น object
   const [group, setGroup] = useState([])
   const [isOpenDelete, setIsOpenDelete] = useState(false)
+  const [isOpenwindow, setIsOpenWindow] = useState(false)
+  const [checkDepartment, setCheckDepartment] = useState("")
   const fetchData = useCallback(async () => {
     if (user.role === "student") {
-      const data = await axios.get(
-        `${process.env.REACT_APP_API_BE}/group/${user.id}`
-      ) //[]
-      setStdGroup(data.data) //{group[{},{},{}], project{}, teacher[{}]}
+      const dat = await axios.get(`${process.env.REACT_APP_API_BE}/group/${user.id}` )//[]
+      setStdGroup(dat.data)
+      const {data} = await axios.get(`${process.env.REACT_APP_API_BE}/student`)
+      const dep = data.find((a)=>a.student_id === user.id)
+      setCheckDepartment(dep.dapartment)
     } else if (user.role === "teacher") {
       const data = await axios.get(
         `${process.env.REACT_APP_API_BE}/projects/response/teacher/${user.id}`
@@ -40,12 +43,15 @@ export default function Myteam() {
   useEffect(() => {
     fetchData()
   }, [])
-
+ console.log(checkDepartment)
+ console.log(user.id)
   return (
     <>
       {user.role === "student" && (
         <>
-          {stdGroup.project ? (
+         {checkDepartment ? (
+           <>
+            {stdGroup.project ? (
             <div className="container">
               <div className="row">
                 <div className="col-12 mt-5 mb-2">
@@ -102,7 +108,6 @@ export default function Myteam() {
                 Oops,you don't have any project click Create Project button to
                 create one.
               </p>
-
               <Link to="/createteam">
                 <Buttons
                   menu="Create"
@@ -112,6 +117,14 @@ export default function Myteam() {
               </Link>
             </div>
           )}
+           </>
+         ):(  
+           <ModalWindowProfile
+           isOpen={isOpenwindow}
+           setIsOpen={setIsOpenWindow}
+           />
+           
+         )}
         </>
       )}
 

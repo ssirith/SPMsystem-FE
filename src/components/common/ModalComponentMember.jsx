@@ -1,51 +1,64 @@
-import React, { useState, useCallback } from "react"
+import React, { useState, useCallback, useContext } from "react"
 import { Modal } from "react-bootstrap"
 import Buttons from "./Buttons"
 import Inputtext from "./Inputtext"
 import axios from "axios"
 import { useEffect } from "react"
 import Button from "@material-ui/core/Button"
-import {useParams} from "@reach/router"
-export default function ModalComponentMember(props) {
+import { useParams } from "@reach/router"
+import { SettingContext } from "../../SettingContext"
 
+export default function ModalComponentMember(props) {
+  const [isPreFetch, setIsPreFetch] = useState(false)
   const [save, setSave] = useState() //เอาค่ามาจาก axios array
   const [students, setStudents] = useState([])
   const [isFilter, setIsFilter] = useState([])
   const [search, setSearch] = useState("")
+  const { settingContext, setSettingContext } = useContext(SettingContext)
   const { id } = useParams()
   const fetchData = useCallback(async () => {
-    const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/projects/${id}`)
-    const all = await axios.get(`${process.env.REACT_APP_API_BE}/students/nogroup`)
-    setStudents(all.data) //{group[{},{},{},project{},teacher{[],}]
-    setSave(data.group)
+    setIsPreFetch(true)
+    if (settingContext.student_one_more_group==0) {//false
+      const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/projects/${id}`)
+      const all = await axios.get(`${process.env.REACT_APP_API_BE}/students/nogroup`)
+      setStudents(all.data) //{group[{},{},{},project{},teacher{[],}]
+      setSave(data.group)
+    }else if(settingContext.student_one_more_group==1){//true
+      const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/projects/${id}`)
+      const all = await axios.get(`${process.env.REACT_APP_API_BE}/students`)
+      setStudents(all.data) //{group[{},{},{},project{},teacher{[],}]
+      setSave(data.group)
+    }
+
+    setIsPreFetch(false)
   }, [])
   useEffect(() => {
     fetchData()
   }, [])
 
- 
+  console.log(settingContext)
   useEffect(() => {
     const temp = [...students] // จำลองค่า students เพื่อไม่ให้เกิดการเปลี่ยนแปลงโดยตรงที่ students
-      if (save) {
-        for (let i = 0; i < save.length; i++) {
-          const index = temp.findIndex(temp => temp.student_id === save[i].student_id)
-          if (index > -1) {
-            temp.splice(index, 1)
-          }
+    if (save) {
+      for (let i = 0; i < save.length; i++) {
+        const index = temp.findIndex(temp => temp.student_id === save[i].student_id)
+        if (index > -1) {
+          temp.splice(index, 1)
         }
       }
-        setIsFilter(
-          temp.filter(
-            std => std.student_name.toLowerCase().includes(search.toLowerCase()) || std.student_id.includes(search))
-        )
-       
+    }
+    setIsFilter(
+      temp.filter(
+        std => std.student_name.toLowerCase().includes(search.toLowerCase()) || std.student_id.includes(search))
+    )
+
   }, [search, students, save])
 
   function updateInput(e) { //เอาค่าที่แอดไปแสดง
     setSave([...save, e])
     setSearch("")
   }
- 
+
 
   function deleteMember(value) {
     const result = save
@@ -58,16 +71,16 @@ export default function ModalComponentMember(props) {
 
   async function handleSubmit() {
     await props.addMember(save)
-    if (props.setIsOpen(false)) {  
-      setTimeout(()=>{
+    if (props.setIsOpen(false)) {
+      setTimeout(() => {
         window.location.reload()
-      },2000)
+      }, 2000)
     }
-    
+
   }
   function disSubmit() { //ฟังก์ชันเพื่อไม่ให้สามารถกดปุ่ม  submit ได้ ถ้าแอดเกินที่กำหนด
     if (save) {
-      if (save.length == 0 || save.length > 3) {
+      if (save.length < settingContext.number_of_member_min || save.length > settingContext.number_of_member_max) {
         return (
           <Button variant="contained" disabled>
             {" "}
@@ -88,6 +101,9 @@ export default function ModalComponentMember(props) {
         </button>
       )
     }
+  }
+  if (isPreFetch) {
+    return <></>
   }
 
   return (

@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react"
+import React, { useState, useCallback,useContext } from "react"
 import { Modal } from "react-bootstrap"
 import Buttons from "./Buttons"
 import Inputtext from "./Inputtext"
@@ -6,19 +6,22 @@ import axios from "axios"
 import { useEffect } from "react"
 import Button from "@material-ui/core/Button"
 import {useParams} from "@reach/router"
+import { SettingContext } from "../../SettingContext"
 export default function ModalEditMember(props) {
-
+  const [isPreFetch, setIsPreFetch] = useState(false)
   const [save, setSave] = useState() //เอาค่ามาจาก axios
   const [students, setStudents] = useState([])
   const [isFilter, setIsFilter] = useState([])
   const [search, setSearch] = useState("")
   const { id } = useParams()
-
+  const {settingContext,setSettingContext} =useContext(SettingContext)
+  setIsPreFetch(true)
   const fetchData = useCallback(async () => {
     const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/projects/${id}`)
     const all = await axios.get(`${process.env.REACT_APP_API_BE}/students/nogroup`)
     setStudents(all.data) //[{group[{},{},{},project{},teacher{[],}]
     setSave(data.group)
+    setIsPreFetch(false)
   }, [])
   useEffect(() => {
     fetchData()

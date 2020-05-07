@@ -1,0 +1,109 @@
+import React, { useState, useCallback, useContext, useEffect } from "react"
+import { Modal } from "react-bootstrap"
+import axios from "axios"
+import Button from "@material-ui/core/Button"
+import { useParams } from "@reach/router"
+import Dropdown from "./Dropdown"
+import { UserContext } from "../../UserContext"
+export default function ModalWindowProfile(props) {
+    const [departmentList, setDepartmentList] = useState(["IT", "CS", "DSI"])
+    const [image, setImage] = useState()
+    const [department, setDepartment] = useState("")
+    const { id } = useParams()
+    const [isPreFetch, setIsPreFetch] = useState(false)
+    const { user, setUser } = useContext(UserContext)
+   
+    const fetchData = useCallback(async () => {
+        setIsPreFetch(true)
+        const {data} = await axios.get(`${process.env.REACT_APP_API_BE}/student`)
+        const dep = data.find((a)=>a.student_id === user.id)
+        setDepartment(dep.department)
+        setIsPreFetch(false)
+      }, [])
+      useEffect(() => {
+        fetchData()
+      }, [])
+      const uploadImage = async e =>{
+        // const files = e.target.files[0];
+        // const data = new FormData();
+        // data.append('file',file)
+        // setImage(data)
+        // console.log(image)
+        const input = e.target.files[0];
+        const reader = new FileReader();
+        reader.onload = function(){
+            const result = reader.result;
+            const img = document.getElementById('img');
+            img.src = result;
+        }
+    }
+    async function handleSave(e){
+        try{
+            const data = {
+                student_id : user.id,
+                department : department,
+                image : ""
+            }
+            const res = await axios.post(`${process.env.REACT_APP_API_BE}/student/edit/profile`,data)
+            if(res.status=== 200){
+                alert("Edit Profile Success.")
+
+            }
+        }
+        catch (err) {
+            console.log(err)
+          }
+    }
+    function disSave (){
+        if(department){
+            return (<button className="btn btn-primary" onClick={() => handleSave()}>Save</button>)
+        }else{
+            return (<button variant="contained" disabled>
+            {" "}
+            Submit
+          </button>)
+        }
+    }
+    if(isPreFetch){
+       return <></>
+    }
+    console.log(department)
+    console.log(user.id)
+    return (
+        <Modal
+          show={props.isOpen}
+          
+          onHide={() => {
+            props.setIsOpen(false)
+          }}
+          
+        >
+            {console.log(props.isOpen)}
+          <Modal.Header closeButton>
+            <Modal.Title id="contained-model-title-vcenter">Profile</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+          <div className="row">
+              <div className="col-7 my-3">
+                  <img  src={image/user.png} style={{width:'100px'}} id="img"/>
+                  <input type="file" id="file-input" name="file" onChange={(e)=> uploadImage(e)}/> <br/>
+                  <p>Upload your image. (Supported File Type: .jpg, .jpeg, .png)</p>
+              </div>
+              <div className="col-5 my-3">
+                  <div className="row">
+                  <Dropdown
+                     departmentList={departmentList}
+                     department={department}
+                     setDepartment={setDepartment}
+                     value={department}
+                  />
+                  </div>
+              </div>
+          </div>
+          </Modal.Body>
+          <Modal.Footer>
+          {disSave()}
+          </Modal.Footer>
+        </Modal>
+      )
+}

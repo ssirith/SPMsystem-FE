@@ -14,7 +14,7 @@ import BreadcrumbNavString from "../components/common/BreadcrumbNavString"
 import Textarea from "../components/common/Textarea"
 
 export default function Editteam(props) {
-  const [departmentList, setDepartmentList] = useState(["IT", "CS", "DSI"])
+  const [departmentList, setDepartmentList] = useState(["SIT","IT", "CS", "DSI"])
   const [department, setDepartment] = useState([])
   const [isOpenStudent, setIsOpenStudent] = useState(false);
   const [isOpenAdvisor, setIsOpenAdvisor] = useState(false);

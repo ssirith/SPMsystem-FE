@@ -13,7 +13,7 @@ import Textarea from "../components/common/Textarea"
 
 export default function Createteam() {
   let navigate = useNavigate()
-  const [departmentList, setDepartmentList] = useState(["IT", "CS", "DSI"])
+  const [departmentList, setDepartmentList] = useState(["SIT","IT", "CS", "DSI"])
   const [department, setDepartment] = useState("")
   const [isOpenStudent, setIsOpenStudent] = useState(false)
   const [isOpenAdvisor, setIsOpenAdvisor] = useState(false)
