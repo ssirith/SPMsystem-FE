@@ -12,8 +12,6 @@ const useStyles = makeStyles({
 })
 export default function MyteamAdvisor(props) {
   const classes = useStyles()
-
-  console.log(props.advisors)
   return (
     <>
       <Card className={classes.root}>
@@ -21,11 +19,11 @@ export default function MyteamAdvisor(props) {
         <CardContent>
           <div className="container">
             {props.advisors &&
-              props.advisors.map((ads, index) => {
+              props.advisors.map((adv, index) => {
                 return (
                   <>
                     <div className="row"key={index} >
-                      <div className="col-6" >{ads.teacher_name}</div>
+                      <div className="col-6" >{adv.teacher_name}</div>
                     </div>
                   </>
                 )

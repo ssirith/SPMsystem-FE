@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect,useContext } from "react"
+import React, { useState, useCallback, useEffect, useContext } from "react"
 import BreadcrumbNav from "../components/common/BreadcrumbNav"
 import { Link, useParams } from "@reach/router"
 import Boxitem from "../components/common/Boxitem"
@@ -13,14 +13,14 @@ import MyteamAdvisor from "../components/common/MyteamAdvisor"
 import { UserContext } from "../UserContext"
 
 export default function Otherteam(props) {
-  // learnmore={props.group}
-  const { user,setUser } = useContext(UserContext)
+  const { user, setUser } = useContext(UserContext)
   const { id } = useParams()
   console.log({ id })
   const [group, setGroup] = useState({})
   const fetchData = useCallback(async () => {
-    const data = await axios.get(`http://127.0.0.1:8000/api/projects/${id}`) //[]
+    const data = await axios.get(`${process.env.REACT_APP_API_BE}/projects/${id}`) //[]
     setGroup(data.data) //{group[{},{},{}], project{}, teacher[{}]}
+
   }, [])
   useEffect(() => {
     fetchData()
@@ -30,11 +30,13 @@ export default function Otherteam(props) {
     <div className="container">
       <div className="row">
         <div className="col-12 my-3">
-          <BreadcrumbNav
-            pastref="/AllProjects"
-            past="All Project"
-            current={`IT60-${id.substring(2)}`}//IT01
-          />
+          {group &&(
+            <BreadcrumbNav
+              pastref="/AllProjects"
+              past="All Project"
+              current={group.project}
+            />
+          )}
         </div>
         <div className="col-12 my-3">
           {group && (

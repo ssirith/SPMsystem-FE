@@ -26,8 +26,6 @@ const useStyles = makeStyles({
 })
 export default function MyteamMember(props) {
   const classes = useStyles()
-
-  console.log(props.members)
   return (
     <>
       <Card className={classes.root}>

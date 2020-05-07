@@ -36,7 +36,7 @@ export default function Topicbox(props) {
             <div className="row">
               <div className="col-6">
                 {props.topic &&
-                  `IT60-${props.topic.project_id.substring(2)}:
+                  `${props.topic.department}60-${props.topic.project_id.substring(2)}:
                ${props.topic.project_name}`}
               </div>
             </div>

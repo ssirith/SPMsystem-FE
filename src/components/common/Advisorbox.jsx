@@ -24,7 +24,7 @@ const useStyles = makeStyles({
     marginBottom: 12,
   },
 })
-export default function Membersbox(props) {
+export default function Advisorbox(props) {
   const classes = useStyles()
 
   console.log(props.advisors)

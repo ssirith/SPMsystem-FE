@@ -9,7 +9,7 @@ export default function MainLayout(props) {
   return (
     <>
       <Navbar />
-      <div className="container-fluid">
+      <div className="container-fluid ">
         <div className="row">
           <Sidebar statusbar={props.statusbar}/>
           

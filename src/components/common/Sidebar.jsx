@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react"
 import { UserContext } from "../../UserContext"
 import { Avatar, ListItemIcon } from "@material-ui/core"
+import SettingsIcon from '@material-ui/icons/Settings';
 import {
   Group,
   Business,
@@ -229,7 +230,7 @@ export default function Sidebar(props) {
               </li>
               <li
                 className={`nav-item ${
-                  props.statusbar === 2 ? "bg-white" : "bg-light"
+                  props.statusbar === 3 ? "bg-white" : "bg-light"
                 } rounded`}
               >
                 <Link to="/Assignments">
@@ -243,7 +244,7 @@ export default function Sidebar(props) {
               </li>
               <li
                 className={`nav-item ${
-                  props.statusbar === 3 ? "bg-white" : "bg-light"
+                  props.statusbar === 4 ? "bg-white" : "bg-light"
                 } rounded`}
               >
                 <Link to="/Appointments">
@@ -257,7 +258,7 @@ export default function Sidebar(props) {
               </li>
               <li
                 className={`nav-item ${
-                  props.statusbar === 4 ? "bg-white" : "bg-light"
+                  props.statusbar === 5 ? "bg-white" : "bg-light"
                 } rounded`}
               >
                 <Link to="/Annoucements">
@@ -266,6 +267,20 @@ export default function Sidebar(props) {
                       <Speaker />
                     </ListItemIcon>
                     Annoucement
+                  </div>
+                </Link>
+              </li>
+              <li
+                className={`nav-item ${
+                  props.statusbar === 6 ? "bg-white" : "bg-light"
+                } rounded`}
+              >
+                <Link to="/Setting">
+                  <div className="nav-link">
+                    <ListItemIcon>
+                      <SettingsIcon />
+                    </ListItemIcon>
+                    Setting
                   </div>
                 </Link>
               </li>
