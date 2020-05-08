@@ -8,10 +8,10 @@ export default function Navbar() {
   const { user, setUser } = useContext(UserContext)
   const [isOpenWindow, setIsOpenWindow] = useState(false)
   return (
-    <nav className="navbar navbar-dark sticky-top bg flex-md-nowrap p-0">
+    <nav className="navbar navbar-dark sticky-top bg flex-md-nowrap p-0 ">
       <Link to='/'>
-        <p className="navbar-brand col-sm-3 col-md-2 mr-0">
-          Logo
+        <p className="navbar-brand col-sm-3 col-md-2 p-0 ml-3 mt-3">
+          SPM System
       </p>
       </Link>
       <ul className="navbar-nav px-3">

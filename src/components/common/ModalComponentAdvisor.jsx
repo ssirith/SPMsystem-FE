@@ -16,6 +16,7 @@ export default function ModalComponentAdvisor(props) {
   const fetchData = useCallback(async () => {
     const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/projects/${id}`)
     const all = await axios.get(`${process.env.REACT_APP_API_BE}/teachers`)
+    console.log(all)
     setTeachers(all.data) //[{group[{},{},{},project{},teacher{[],}]
     setSave(data.teacher)
   }, [])

@@ -15,7 +15,7 @@ export default function Sidebar(props) {
   return (
     <>
       {user.role == "student" && (
-        <nav className="col-md-2 d-none d-md-block bg-light sidebar min-vh-100">
+        <nav className="col-md-2 d-none d-md-block bg-light sidebar min-vh-100 p-0">
           <div className="sidebar-sticky">
             <div className="container">
               <div className="row">
@@ -107,7 +107,7 @@ export default function Sidebar(props) {
       )}
 
       {user.role == "teacher" && (
-        <nav className="col-md-2 d-none d-md-block bg-light sidebar min-vh-100">
+        <nav className="col-md-2 d-none d-md-block bg-light sidebar min-vh-100 p-0">
           <div className="sidebar-sticky">
             <div className="container">
               <div className="row">
@@ -198,7 +198,7 @@ export default function Sidebar(props) {
         </nav>
       )}
       {user.role === "aa" && (
-        <nav className="col-md-2 d-none d-md-block bg-light sidebar min-vh-100">
+        <nav className="col-md-2 d-none d-md-block bg-light sidebar min-vh-100 p-0">
           <div className="sidebar-sticky">
             <div className="container">
               <div className="row">

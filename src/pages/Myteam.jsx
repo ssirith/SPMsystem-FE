@@ -89,7 +89,7 @@ export default function Myteam() {
                 <div className="col-12 mx-auto">
                   <div className="row">
                     <div className="col-12 text-center">
-                      <Link to={`/editteam/${stdGroup.group[0].project_id}`}>
+                      <Link className='mr-2' to={`/editteam/${stdGroup.group[0].project_id}`}>
                         <Buttons menu="Edit" />
                       </Link>
                       <Buttons
@@ -140,7 +140,7 @@ export default function Myteam() {
             <div className="row mt-5">
               {group.map((data, index) => {
                 return (
-                  <div className="col-3 my-3" key={index}>
+                  <div className="col-3 m-3" key={index}>
                     <Carditem groups={data} />
                   </div>
                 )
