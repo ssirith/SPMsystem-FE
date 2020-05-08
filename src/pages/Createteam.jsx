@@ -62,6 +62,7 @@ export default function Createteam() {
       })
       
       if(response.status === 200){ 
+        alert("Crete Success.")
         navigate("/")
       }
     } catch (err) {

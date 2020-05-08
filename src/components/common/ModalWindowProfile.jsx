@@ -8,14 +8,14 @@ import { UserContext } from "../../UserContext"
 export default function ModalWindowProfile(props) {
     const [departmentList, setDepartmentList] = useState(["IT", "CS", "DSI"])
     const [image, setImage] = useState()
-    const [department, setDepartment] = useState("")
+    const [department, setDepartment] = useState()
     const { id } = useParams()
     const [isPreFetch, setIsPreFetch] = useState(false)
     const { user, setUser } = useContext(UserContext)
    
     const fetchData = useCallback(async () => {
         setIsPreFetch(true)
-        const {data} = await axios.get(`${process.env.REACT_APP_API_BE}/student`)
+        const {data} = await axios.get(`${process.env.REACT_APP_API_BE}/students`)
         const dep = data.find((a)=>a.student_id === user.id)
         setDepartment(dep.department)
         setIsPreFetch(false)
@@ -36,18 +36,23 @@ export default function ModalWindowProfile(props) {
             const img = document.getElementById('img');
             img.src = result;
         }
+        reader.readAsDataURL(input);
+        setImage(input)
+        console.log(input)
     }
+    
     async function handleSave(e){
         try{
             const data = {
                 student_id : user.id,
                 department : department,
-                image : ""
+                image : image
             }
             const res = await axios.post(`${process.env.REACT_APP_API_BE}/student/edit/profile`,data)
             if(res.status=== 200){
                 alert("Edit Profile Success.")
-
+                props.setIsOpen(false)
+                console.log(data)
             }
         }
         catch (err) {
@@ -60,32 +65,28 @@ export default function ModalWindowProfile(props) {
         }else{
             return (<button variant="contained" disabled>
             {" "}
-            Submit
+            Save
           </button>)
         }
     }
     if(isPreFetch){
        return <></>
     }
-    console.log(department)
-    console.log(user.id)
+
     return (
         <Modal
           show={props.isOpen}
-          
           onHide={() => {
             props.setIsOpen(false)
           }}
-          
         >
-            {console.log(props.isOpen)}
           <Modal.Header closeButton>
             <Modal.Title id="contained-model-title-vcenter">Profile</Modal.Title>
           </Modal.Header>
           <Modal.Body>
           <div className="row">
               <div className="col-7 my-3">
-                  <img  src={image/user.png} style={{width:'100px'}} id="img"/>
+                  <img  id="img" src={image/user.png} style={{width:'100px'}} />
                   <input type="file" id="file-input" name="file" onChange={(e)=> uploadImage(e)}/> <br/>
                   <p>Upload your image. (Supported File Type: .jpg, .jpeg, .png)</p>
               </div>

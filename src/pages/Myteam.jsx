@@ -18,15 +18,17 @@ export default function Myteam() {
   const [stdGroup, setStdGroup] = useState({}) // กลุ่มของนศ.ถูกเก็บเป็น object
   const [group, setGroup] = useState([])
   const [isOpenDelete, setIsOpenDelete] = useState(false)
-  const [isOpenwindow, setIsOpenWindow] = useState(false)
-  const [checkDepartment, setCheckDepartment] = useState("")
+  const [isOpenwindow, setIsOpenWindow] = useState(true)
+  const [checkDepartment, setCheckDepartment] = useState()
+  const [isPreFetch, setIsPreFetch] = useState(false)
   const fetchData = useCallback(async () => {
+    setIsPreFetch(true)
     if (user.role === "student") {
       const dat = await axios.get(`${process.env.REACT_APP_API_BE}/group/${user.id}` )//[]
       setStdGroup(dat.data)
-      const {data} = await axios.get(`${process.env.REACT_APP_API_BE}/student`)
+      const {data} = await axios.get(`${process.env.REACT_APP_API_BE}/students`)
       const dep = data.find((a)=>a.student_id === user.id)
-      setCheckDepartment(dep.dapartment)
+      setCheckDepartment(dep.department)
     } else if (user.role === "teacher") {
       const data = await axios.get(
         `${process.env.REACT_APP_API_BE}/projects/response/teacher/${user.id}`
@@ -38,15 +40,19 @@ export default function Myteam() {
       )
       setGroup(data.data)
     }
+    setIsPreFetch(false)
   }, [])
 
   useEffect(() => {
     fetchData()
   }, [])
- console.log(checkDepartment)
- console.log(user.id)
+
+ if(isPreFetch){
+   return <></>
+ }
   return (
     <>
+    
       {user.role === "student" && (
         <>
          {checkDepartment ? (

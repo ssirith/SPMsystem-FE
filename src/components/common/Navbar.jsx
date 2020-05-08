@@ -19,8 +19,7 @@ export default function Navbar() {
         
           <a className="nav-link" href="/#">
             <DropdownButton id="dropdown-basic-button" title={user.name}>
-              <DropdownItem href="#/action-1" 
-              onClick={() => setIsOpenWindow(true)}>Edit Profile</DropdownItem>
+              <DropdownItem href="#/action-1" onClick={() => setIsOpenWindow(true)}>Edit Profile</DropdownItem>
               <ModalWindowProfile
                isOpen={isOpenWindow}
                setIsOpen={setIsOpenWindow}

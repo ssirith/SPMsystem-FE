@@ -106,6 +106,7 @@ export default function Editteam(props) {
      put(`${process.env.REACT_APP_API_BE}/projects/edit/${project_id}`, dataForEdit)
      console.log(response)
      if(response.status===200){
+      alert("Edit Success.")
        window.location.reload()
      }
     }catch(err){
