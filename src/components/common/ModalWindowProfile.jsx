@@ -7,7 +7,7 @@ import Dropdown from "./Dropdown"
 import { UserContext } from "../../UserContext"
 export default function ModalWindowProfile(props) {
     const [departmentList, setDepartmentList] = useState(["IT", "CS", "DSI"])
-    const [image, setImage] = useState()
+    const [image, setImage] = useState("")
     const [department, setDepartment] = useState()
     const { id } = useParams()
     const [isPreFetch, setIsPreFetch] = useState(false)
