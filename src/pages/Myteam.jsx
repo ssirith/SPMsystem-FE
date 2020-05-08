@@ -23,8 +23,9 @@ export default function Myteam() {
   const [isPreFetch, setIsPreFetch] = useState(false)
   const fetchData = useCallback(async () => {
     setIsPreFetch(true)
+    
     if (user.role === "student") {
-      const dat = await axios.get(`${process.env.REACT_APP_API_BE}/group/${user.id}` )//[]
+      const dat = await axios.get(`http://127.0.0.1:8000/api/group/${user.id}` )//[]http://127.0.0.1:8000/api/projects
       setStdGroup(dat.data)
       const {data} = await axios.get(`${process.env.REACT_APP_API_BE}/students`)
       const dep = data.find((a)=>a.student_id === user.id)
@@ -50,6 +51,7 @@ export default function Myteam() {
  if(isPreFetch){
    return <></>
  }
+ 
   return (
     <>
     

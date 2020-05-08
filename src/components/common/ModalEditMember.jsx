@@ -15,12 +15,26 @@ export default function ModalEditMember(props) {
   const [search, setSearch] = useState("")
   const { id } = useParams()
   const {settingContext,setSettingContext} =useContext(SettingContext)
-  setIsPreFetch(true)
+  // setIsPreFetch(true)
   const fetchData = useCallback(async () => {
-    const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/projects/${id}`)
-    const all = await axios.get(`${process.env.REACT_APP_API_BE}/students/nogroup`)
-    setStudents(all.data) //[{group[{},{},{},project{},teacher{[],}]
-    setSave(data.group)
+  //   const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/projects/${id}`)
+  //   const all = await axios.get(`${process.env.REACT_APP_API_BE}/students/nogroup`)
+  //   setStudents(all.data) 
+  //   setSave(data.group)
+  //   setIsPreFetch(false)
+  setIsPreFetch(true)
+    if (settingContext.student_one_more_group==0) {//false
+      const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/projects/${id}`)
+      const all = await axios.get(`${process.env.REACT_APP_API_BE}/students/nogroup`)
+      setStudents(all.data) //{group[{},{},{},project{},teacher{[],}]
+      setSave(data.group)
+    }else if(settingContext.student_one_more_group==1){//true
+      const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/projects/${id}`)
+      const all = await axios.get(`${process.env.REACT_APP_API_BE}/students`)
+      setStudents(all.data) //{group[{},{},{},project{},teacher{[],}]
+      setSave(data.group)
+    }
+
     setIsPreFetch(false)
   }, [])
   useEffect(() => {
@@ -69,7 +83,7 @@ export default function ModalEditMember(props) {
   }
   function disSubmit() {
     if (save) {
-      if (save.length == 0 || save.length > 3) {
+      if (save.length < settingContext.number_of_member_min || save.length > settingContext.number_of_member_max) {
         return (
           <Button variant="contained" disabled>
             {" "}
