@@ -214,7 +214,7 @@ export default function Editteam(props) {
       <div className="col-12 mx-auto">
         <div className="row">
           <div className="col-12 text-center">
-            <Link to="/">
+            <Link className='mr-2' to="/">
               <Buttons menu="Cancel"
                 color="secondary" />
             </Link>

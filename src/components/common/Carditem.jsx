@@ -35,7 +35,7 @@ function Carditem(props) {
                 })}
             </div>
           </CardContent>
-          <CardActions className='d-flex justify-content-end mt-4'>
+          <CardActions className='d-flex justify-content-end mt-2'>
               <Link to={`/projects/${props.groups.project_id}`}>
                 <Button size="small" color="primary">
                   More

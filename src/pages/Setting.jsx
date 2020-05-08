@@ -153,7 +153,7 @@ export default function Setting() {
             <div className="col-4 mx-0">
               <h6>Student can have more than one group:</h6>
             </div>
-            <div className="row col-8">
+            <div className="row col-8 ml-2">
               <div className="col-4">
                 <input
                   className="form-check-input"

@@ -207,7 +207,7 @@ export default function Sidebar(props) {
                 </div>
               </div>
               <div className="row">
-                <div className="mx-auto">
+                <div className="mx-auto text-center">
                   <p>{user.name}</p>
                   <p>{user.role}</p>
                 </div>
