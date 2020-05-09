@@ -77,6 +77,9 @@ export default function Setting() {
         setSettingYearContext(setting.year_of_study)
         alert("The setting has been create.")
         navigate("/")
+        setTimeout(()=>{
+          window.location.reload()
+        },2000)
       }
     } catch (err) {
       console.log(err)

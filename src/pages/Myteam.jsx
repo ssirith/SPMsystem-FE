@@ -51,7 +51,7 @@ export default function Myteam() {
  if(isPreFetch){
    return <></>
  }
- 
+
   return (
     <>
     

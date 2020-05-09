@@ -19,7 +19,7 @@ export default function ModalComponentDelete(props) {
       )
       console.log(response)
       if (response.status === 200) {
-        
+        alert("Delete Success.")
         setTimeout(()=>{
           window.location.reload()
         },2000)

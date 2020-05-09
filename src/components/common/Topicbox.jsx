@@ -27,6 +27,7 @@ const useStyles = makeStyles({
 
 export default function Topicbox(props) {
   const classes = useStyles()
+ 
   return (
     <>
       <Card className={classes.root}>
@@ -36,7 +37,7 @@ export default function Topicbox(props) {
             <div className="row">
               <div className="col-6">
                 {props.topic &&
-                  `${props.topic.department}60-${props.topic.project_id.substring(2)}:
+                  `${props.topic.project_department}60-${props.topic.project_id.substring(2)}:
                ${props.topic.project_name}`}
               </div>
             </div>

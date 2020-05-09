@@ -8,7 +8,7 @@ export default function BreadcrumbNav(props) {
           <Breadcrumb.Item href={props.pastref}>{props.past}</Breadcrumb.Item>
           <Breadcrumb.Item active>
             {props.current &&
-              `${props.current.department}60-${props.current.project_id.substring(2)}`
+              `${props.current.project_department}60-${props.current.project_id.substring(2)}`
             }
           </Breadcrumb.Item>
 

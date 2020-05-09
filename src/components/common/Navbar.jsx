@@ -18,24 +18,24 @@ export default function Navbar() {
 
       <ul className="navbar-nav px-3">
         <li className="nav-item text-nowrap">
-          <a className="nav-link" href="/#">
+          <a className="nav-link" >
             <DropdownButton id="dropdown-basic-button" title={user.name}>
               <DropdownItem
                 href="#/action-1"
-                onClick={() => setIsOpenWindow(true)}
+                onClick={() => setIsOpenWindow(true) }
               >
                 Edit Profile
               </DropdownItem>
               <ModalWindowProfile
                 isOpen={isOpenWindow}
                 setIsOpen={setIsOpenWindow}
-              />
+                    />
               <DropdownItem href="#/action-2">Logout</DropdownItem>
             </DropdownButton>
-          </a>
-        </li>
-        <li className="nav-item text-nowrap">
+            <li className="nav-item text-nowrap">
           <NotificationsIcon />
+        </li>
+          </a>
         </li>
       </ul>
     </nav>

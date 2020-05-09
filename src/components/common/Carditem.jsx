@@ -18,7 +18,7 @@ function Carditem(props) {
         <Card className={classes.root}>
           <CardHeader
             title={`${
-              props.groups.department
+              props.groups.project_department
             }60-${props.groups.project_id.substring(2)}`}
           />
           <CardContent className='pb-0'>
