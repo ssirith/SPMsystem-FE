@@ -14,8 +14,8 @@
 .bg-light {
   background-color: #EDEDED!important;
 }
-.bg-red {
-  background-color: red!important;
+.text {
+  color: #336699!important;
 }
 .btn-primary {
   color: #fff;

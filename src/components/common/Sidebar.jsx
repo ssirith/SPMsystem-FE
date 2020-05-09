@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react"
 import { UserContext } from "../../UserContext"
 import { Avatar, ListItemIcon } from "@material-ui/core"
-import SettingsIcon from '@material-ui/icons/Settings';
+import SettingsIcon from "@material-ui/icons/Settings"
 import {
   Group,
   Business,
@@ -38,10 +38,10 @@ export default function Sidebar(props) {
               >
                 <Link to="/">
                   <div className="nav-link">
-                    <ListItemIcon>
+                    <ListItemIcon className='ml-3' >
                       <Group />
+                      <p className="mb-0 ml-4 text">My Project</p>
                     </ListItemIcon>
-                    My Project
                   </div>
                 </Link>
               </li>
@@ -53,9 +53,9 @@ export default function Sidebar(props) {
                 <Link to="/AllProjects">
                   <div className="nav-link">
                     <ListItemIcon>
-                      <Business />
+                      <Business className='ml-3' />
+                      <p className="mb-0 ml-4 text">All Projects</p>
                     </ListItemIcon>
-                    All Projects
                   </div>
                 </Link>
               </li>
@@ -67,9 +67,9 @@ export default function Sidebar(props) {
                 <Link to="/Assignments">
                   <div className="nav-link">
                     <ListItemIcon>
-                      <Assignment />
+                      <Assignment className='ml-3' />
+                      <p className="mb-0 ml-4 text">Assignments</p>
                     </ListItemIcon>
-                    Assignments
                   </div>
                 </Link>
               </li>
@@ -81,9 +81,9 @@ export default function Sidebar(props) {
                 <Link to="/Appointments">
                   <div className="nav-link">
                     <ListItemIcon>
-                      <DateRange />
+                      <DateRange className='ml-3' />
+                      <p className="mb-0 ml-4 text">Appointments</p>
                     </ListItemIcon>
-                    Appointments
                   </div>
                 </Link>
               </li>
@@ -95,9 +95,9 @@ export default function Sidebar(props) {
                 <Link to="/Annoucements">
                   <div className="nav-link">
                     <ListItemIcon>
-                      <Speaker />
+                      <Speaker className='ml-3' />
+                      <p className="mb-0 ml-4 text">Annoucement</p>
                     </ListItemIcon>
-                    Annoucement
                   </div>
                 </Link>
               </li>
@@ -131,9 +131,9 @@ export default function Sidebar(props) {
                 <Link to="/">
                   <div className="nav-link">
                     <ListItemIcon>
-                      <Group />
+                      <Group className='ml-3'  />
+                      <p className="mb-0 ml-4 text">My Project</p>
                     </ListItemIcon>
-                    My Project
                   </div>
                 </Link>
               </li>
@@ -145,9 +145,9 @@ export default function Sidebar(props) {
                 <Link to="/AllProjects">
                   <div className="nav-link">
                     <ListItemIcon>
-                      <Business />
+                      <Business className='ml-3'  />
+                      <p className="mb-0 ml-4 text">All Projects</p>
                     </ListItemIcon>
-                    All Projects
                   </div>
                 </Link>
               </li>
@@ -159,9 +159,9 @@ export default function Sidebar(props) {
                 <Link to="/Assignments">
                   <div className="nav-link">
                     <ListItemIcon>
-                      <Assignment />
+                      <Assignment className='ml-3'  />
+                      <p className="mb-0 ml-4 text">Assignments</p>
                     </ListItemIcon>
-                    Assignments
                   </div>
                 </Link>
               </li>
@@ -173,9 +173,9 @@ export default function Sidebar(props) {
                 <Link to="/Appointments">
                   <div className="nav-link">
                     <ListItemIcon>
-                      <DateRange />
+                      <DateRange className='ml-3'  />
+                      <p className="mb-0 ml-4 text">Appointments</p>
                     </ListItemIcon>
-                    Appointments
                   </div>
                 </Link>
               </li>
@@ -187,9 +187,9 @@ export default function Sidebar(props) {
                 <Link to="/Annoucements">
                   <div className="nav-link">
                     <ListItemIcon>
-                      <Speaker />
+                      <Speaker className='ml-3' />
+                      <p className="mb-0 ml-4 text">Annoucement</p>
                     </ListItemIcon>
-                    Annoucement
                   </div>
                 </Link>
               </li>
@@ -222,9 +222,9 @@ export default function Sidebar(props) {
                 <Link to="/">
                   <div className="nav-link">
                     <ListItemIcon>
-                      <Business />
+                      <Business className='ml-3'  />
+                      <p className="mb-0 ml-4 text">All Projects</p>
                     </ListItemIcon>
-                    All Projects
                   </div>
                 </Link>
               </li>
@@ -236,9 +236,9 @@ export default function Sidebar(props) {
                 <Link to="/Assignments">
                   <div className="nav-link">
                     <ListItemIcon>
-                      <Assignment />
+                      <Assignment className='ml-3'  />
+                      <p className="mb-0 ml-4 text">Assignments</p>
                     </ListItemIcon>
-                    Assignments
                   </div>
                 </Link>
               </li>
@@ -250,9 +250,9 @@ export default function Sidebar(props) {
                 <Link to="/Appointments">
                   <div className="nav-link">
                     <ListItemIcon>
-                      <DateRange />
+                      <DateRange className='ml-3'  />
+                      <p className="mb-0 ml-4 text">Appointments</p>
                     </ListItemIcon>
-                    Appointments
                   </div>
                 </Link>
               </li>
@@ -264,9 +264,9 @@ export default function Sidebar(props) {
                 <Link to="/Annoucements">
                   <div className="nav-link">
                     <ListItemIcon>
-                      <Speaker />
+                      <Speaker className='ml-3'  />
+                      <p className="mb-0 ml-4 text">Annoucement</p>
                     </ListItemIcon>
-                    Annoucement
                   </div>
                 </Link>
               </li>
@@ -278,9 +278,9 @@ export default function Sidebar(props) {
                 <Link to="/Setting">
                   <div className="nav-link">
                     <ListItemIcon>
-                      <SettingsIcon />
+                      <SettingsIcon className='ml-3'  />
+                      <p className="mb-0 ml-4 text">Setting</p>
                     </ListItemIcon>
-                    Setting
                   </div>
                 </Link>
               </li>
