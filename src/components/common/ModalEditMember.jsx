@@ -78,7 +78,7 @@ export default function ModalEditMember(props) {
         
       setTimeout(()=>{
         window.location.reload()
-      },2000)
+      },1000)
     }
   }
   function disSubmit() {

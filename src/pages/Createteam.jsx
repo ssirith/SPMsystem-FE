@@ -60,10 +60,10 @@ export default function Createteam() {
         teacher_id,
         department,
       })
-      
       if(response.status === 200){ 
         alert("Create Success.")
         navigate("/")
+        window.location.reload()
       }
     } catch (err) {
       console.error(err)

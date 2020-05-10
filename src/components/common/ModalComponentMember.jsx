@@ -74,7 +74,7 @@ export default function ModalComponentMember(props) {
     if (props.setIsOpen(false)) {
       setTimeout(() => {
         window.location.reload()
-      }, 2000)
+      }, 1000)
     }
 
   }
