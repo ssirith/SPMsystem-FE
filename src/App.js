@@ -31,8 +31,8 @@ function App() {
   )
 
   const [user, setUser] = useState({
-    id: "60130500082", //เวลา demo  เปลี่ยนที่นี่
-    name: "Ney",
+    id: "60130500105", //เวลา demo  เปลี่ยนที่นี่
+    name: "Intira",
     role: "student", //เวลา demo  เปลี่ยนที่นี่
   })
   const userValue = useMemo(() => ({ user, setUser }), [user, setUser])

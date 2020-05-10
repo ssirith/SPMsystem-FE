@@ -112,6 +112,7 @@ export default function Myteam() {
             </div>
           ) : (
             <div className="container text-center my-auto">
+              <img src='/image/DashboardLogo.jpg' alt='Dashboard logo' className='img-fluid' width='50%' height='auto'/>
               <p>
                 Oops,you don't have any project click Create Project button to
                 create one.
