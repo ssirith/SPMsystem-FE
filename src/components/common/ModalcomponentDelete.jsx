@@ -22,7 +22,7 @@ export default function ModalComponentDelete(props) {
         alert("Delete Success.")
         setTimeout(()=>{
           window.location.reload()
-        },2000)
+        },1000)
       }
     } catch (err) {
       console.log(err)

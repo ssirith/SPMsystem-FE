@@ -2,10 +2,9 @@ import React, { useState, useCallback, useContext, useEffect } from "react"
 import { Modal } from "react-bootstrap"
 import axios from "axios"
 import Button from "@material-ui/core/Button"
-import { useParams } from "@reach/router"
-import DropdownProfile from "./DropdownProfile"
-import DropdownEditProfile from "./DropdownEditProfile"
-// import Dropdown from "./Dropdown"
+import { useParams,useNavigate } from "@reach/router"
+import Dropdown from "./Dropdown"
+import DropdownEdit from "./DropdownEdit"
 import { UserContext } from "../../UserContext"
 export default function ModalWindowProfile(props) {
   const [image, setImage] = useState("")
@@ -15,7 +14,7 @@ export default function ModalWindowProfile(props) {
   const { id } = useParams()
   const [isPreFetch, setIsPreFetch] = useState(false)
   const { user, setUser } = useContext(UserContext)
-
+  let navigate = useNavigate()
   const fetchData = useCallback(async () => {
     setIsPreFetch(true)
     const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/students`)
@@ -53,10 +52,12 @@ export default function ModalWindowProfile(props) {
         image: image
       }
       const res = await axios.post(`${process.env.REACT_APP_API_BE}/student/edit/profile`, data)
+      console.log(data)
       if (res.status === 200) {
         alert("Edit Profile Success.")
+        window.location.reload()
+        navigate("/")
         props.setIsOpen(false)
-        console.log(data)
       }
     }
     catch (err) {
@@ -74,6 +75,8 @@ export default function ModalWindowProfile(props) {
         alert("Edit Profile Success.")
         props.setIsOpen(false)
         console.log(data)
+        window.location.reload()
+        
       }
     }
     catch (err) {
@@ -109,10 +112,10 @@ export default function ModalWindowProfile(props) {
       return (<></>)
     }
   }
-  console.log('checkDepartment==>>', checkDepartment)
+  // console.log('checkDepartment==>>', checkDepartment)
   function DropdownHandler() {
     if (checkDepartment) {
-      return (<DropdownEditProfile
+      return (<DropdownEdit
         disabled={true}
         departmentList={departmentList}
         checkDepartment={checkDepartment}
@@ -121,7 +124,7 @@ export default function ModalWindowProfile(props) {
       />)
     } else {
       return(
-      <DropdownProfile
+      <Dropdown
         departmentList={departmentList}
         department={department}
         setDepartment={setDepartment}
@@ -139,9 +142,9 @@ export default function ModalWindowProfile(props) {
       show={props.isOpen}
       onHide={disOnHide()}
     >
-      <Modal.Header >
+      <Modal.Header closeButton>
         <Modal.Title id="contained-model-title-vcenter">Profile</Modal.Title>
-      </Modal.Header>
+      </Modal.Header >
       <Modal.Body>
         <div className="row">
           <div className="col-7 my-3">
