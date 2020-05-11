@@ -142,13 +142,13 @@ export default function ModalWindowProfile(props) {
       show={props.isOpen}
       onHide={disOnHide()}
     >
-      <Modal.Header closeButton>
+      <Modal.Header closeButton={disOnHide()}>
         <Modal.Title id="contained-model-title-vcenter">Profile</Modal.Title>
       </Modal.Header >
       <Modal.Body>
         <div className="row">
           <div className="col-7 my-3">
-            <img id="img" src={image / user.png} style={{ width: '100px' }} />
+            <img id="img" src={'/image/userimage.png'} style={{ width: '100px' }} />
             <input type="file" id="file-input" name="file" onChange={(e) => uploadImage(e)} /> <br />
             <p>Upload your image. (Supported File Type: .jpg, .jpeg, .png)</p>
           </div>

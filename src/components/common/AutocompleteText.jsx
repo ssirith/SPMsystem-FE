@@ -16,7 +16,7 @@ export default function AutocompleteText(props) {
       renderInput={(params) => (
         <TextField
           {...params}
-          label="Choose..."
+          label="Input year"
           variant="outlined"
           onChange={(event) =>
             props.setSetting({

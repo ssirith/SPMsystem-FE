@@ -30,10 +30,10 @@ function Carditem(props) {
               <p>{props.groups.project_detail}</p>
               <p className="my-0">
                 Advisor:
-                {props.groups.teachers &&
-                  props.groups.teachers.map((a, index) => {
+                {props.groups.teachers &&( props.groups.teachers.length ===0 ? "No Advisor":
+                  (props.groups.teachers.map((a, index) => {
                     return a.teacher_name
-                  })}
+                  })))}
               </p>
             </div>
           </CardContent>

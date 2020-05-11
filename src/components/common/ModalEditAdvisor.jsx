@@ -58,7 +58,7 @@ export default function ModalEditAdvisor(props) {
   }
 
   async function handleSubmit() {
-    await props.addadvisor(save)
+    await props.addAdvisor(save)
     if (props.setIsOpen(false)) {
         
       setTimeout(()=>{

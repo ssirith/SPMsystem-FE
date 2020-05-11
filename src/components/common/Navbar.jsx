@@ -49,11 +49,10 @@ export default function Navbars() {
           SPM System
          </p>
       </Link>
-      <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-      <Navbar.Collapse id="responsive-navbar-nav">
-        <Nav className="mr-auto">
-        </Nav>
-        <Nav>
+      <Nav className="mr-auto">
+      </Nav>
+      <Nav>
+        <ul className="navbar-nav px-3">
           <NavDropdown title={user.name} id="collasible-nav-dropdown">
             <DropdownItem onClick={() => setIsOpenWindow(true)}>
               Edit Profile
@@ -64,13 +63,11 @@ export default function Navbars() {
             />
             <DropdownItem >Logout</DropdownItem>
           </NavDropdown>
-          <ul className="navbar-nav px-3">
-            <li className="nav-item text-nowrap">
-              <NotificationsIcon />
-            </li>
-          </ul>
-        </Nav>
-      </Navbar.Collapse>
+          <li className="nav-item text-nowrap">
+            <NotificationsIcon />
+          </li>
+        </ul>
+      </Nav>
     </Navbar>
   )
 }
