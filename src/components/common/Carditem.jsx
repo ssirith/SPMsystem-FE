@@ -6,8 +6,11 @@ import Button from "@material-ui/core/Button"
 
 const useStyles = makeStyles({
   root: {
-    width: '293px',
-    height: '220px'
+    width: "293px",
+    height: "220px",
+  },
+  stickToBottom: {
+    bottom: 0,
   },
 })
 function Carditem(props) {
@@ -21,27 +24,27 @@ function Carditem(props) {
               props.groups.project_department
             }60-${props.groups.project_id.substring(2)}`}
           />
-          <CardContent className='pb-0'>
+          <CardContent className="pb-0">
             <div className="text-center">
-              <p className='m-0'>{props.groups.project_name}</p>
+              <p className="m-0">{props.groups.project_name}</p>
               <p>{props.groups.project_detail}</p>
-              {props.groups.teachers &&
-                props.groups.teachers.map((a, index) => {
-                  return (
-                    <p className="my-0" key={index}>
-                      Advisor: {a.teacher_name}
-                    </p>
-                  )
-                })}
+              <p className="my-0">
+                Advisor:
+                {props.groups.teachers &&
+                  props.groups.teachers.map((a, index) => {
+                    return a.teacher_name
+                  })}
+              </p>
             </div>
           </CardContent>
-          <CardActions className='d-flex justify-content-end mt-2'>
-              <Link to={`/projects/${props.groups.project_id}`}>
-                <Button size="small" color="primary">
-                  More
-                </Button>
-              </Link>
-            
+          <CardActions
+            className={`d-flex justify-content-end mt-2 ${classes.stickToBottom}`}
+          >
+            <Link to={`/projects/${props.groups.project_id}`}>
+              <Button size="small" color="primary">
+                More
+              </Button>
+            </Link>
           </CardActions>
         </Card>
       </div>
