@@ -80,6 +80,7 @@ export default function ModalWindowProfile(props) {
       }
     }
     catch (err) {
+      alert("Not success, please check your input.")
       console.log(err)
     }
   }

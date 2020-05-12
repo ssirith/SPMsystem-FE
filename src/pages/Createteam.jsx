@@ -66,7 +66,7 @@ export default function Createteam() {
         window.location.reload()
       }
     } catch (err) {
-      alert("It's not success, Pleas check your input")
+      alert("It's not success, Please check your input")
       console.error(err)
     }
   }

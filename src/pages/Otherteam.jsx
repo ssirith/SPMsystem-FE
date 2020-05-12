@@ -18,14 +18,14 @@ export default function Otherteam(props) {
   console.log({ id })
   const [group, setGroup] = useState({})
   const fetchData = useCallback(async () => {
-    const data = await axios.get(`${process.env.REACT_APP_API_BE}/projects/${id}`) //[]
-    setGroup(data.data) //{group[{},{},{}], project{}, teacher[{}]}
+    const data = await axios.get(`${process.env.REACT_APP_API_BE}/projects/${id}`) 
+    setGroup(data.data) 
 
   }, [])
   useEffect(() => {
     fetchData()
   }, [])
-
+console.log(group)
   return (
     <div className="container">
       <div className="row">

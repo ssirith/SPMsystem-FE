@@ -2,8 +2,37 @@ import React from "react"
 import { Card } from "react-bootstrap"
 import Button from "@material-ui/core/Button"
 
+<<<<<<< Updated upstream
 export default function Carditem(props) {
   return (
+=======
+<<<<<<< HEAD
+const useStyles = makeStyles({
+  root: {
+    width: "293px",
+    height: "220px",
+  },
+  stickToBottom: {
+    bottom: 0,
+  },
+})
+function Carditem(props) {
+  const classes = useStyles()
+  console.log(props.groups.project_id.length)//DSI-5 IT-4
+  return (
+    <>
+      <div>
+        <Card className={classes.root}>
+          <CardHeader
+            title={`${
+              props.groups.project_department
+            }60-${props.groups.project_id &&(props.groups.project_id.length >4 ? (props.groups.project_id.substring(3)):(props.groups.project_id.substring(2)))}`}
+          />
+          <CardContent className="pb-0">
+=======
+export default function Carditem(props) {
+  return (
+>>>>>>> Stashed changes
     <div>
       <Card style={{ width: "18rem", height:"14rem" }}>
         <Card.Header>
@@ -13,6 +42,10 @@ export default function Carditem(props) {
         </Card.Header>
         <Card.Body>
           <Card.Text>
+<<<<<<< Updated upstream
+=======
+>>>>>>> Group-Feature
+>>>>>>> Stashed changes
             <div className="text-center">
               <p className="m-0">{props.groups.project_name}</p>
               <p>{props.groups.project_detail}</p>

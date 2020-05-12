@@ -111,6 +111,7 @@ export default function Editteam(props) {
      }
     }catch(err){
       console.log(err)
+      alert("It's not success, Please check your input")
     }
     
   }
