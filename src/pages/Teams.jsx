@@ -19,12 +19,14 @@ export default function Teams() {
           {group.map((data,index) => {
             return (            
               <div className="col-3 m-3" key={index}>
-                <Carditem groups={data} />
+                {/* <Carditem groups={data} /> */}
+                <Carditem groups={data}/>
               </div>
               
             )
           })}
         </div>
+        
       </div>
     </>
   )

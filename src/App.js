@@ -18,7 +18,7 @@ import { SettingContext } from "./SettingContext"
 import axios from "axios"
 
 function App() {
-  const [settingYearContext, setSettingYearContext] = useState(dayjs().format('YYYY'))// อิงตาม ปฏิทิน
+  const [settingYearContext, setSettingYearContext] = useState(dayjs().format('YYYY')-1)// อิงตาม ปฏิทิน
   // const [settingYearContext, setSettingYearContext] = useState(dayjs().format('2019'))
   const [settingContext,setSettingContext] =useState({})
   const settingYearValue = useMemo(
@@ -29,7 +29,6 @@ function App() {
     () => ({ settingContext,setSettingContext }),
     [settingContext,setSettingContext]
   )
-
   const [user, setUser] = useState({
 
     id: "60130500082", //เวลา demo  เปลี่ยนที่นี่

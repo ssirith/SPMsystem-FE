@@ -46,6 +46,13 @@
   align-items: center;
   background-color: #336699 !important;
 }
+.card-header {
+  color: #fff;
+  display: flex;
+  padding: 16px;
+  align-items: center;
+  background-color: #336699 !important;
+}
 .breadcrumb {
   display: flex;
   flex-wrap: wrap;

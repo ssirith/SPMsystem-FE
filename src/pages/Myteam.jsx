@@ -1,6 +1,5 @@
 import React, { useState, useCallback, useEffect, useContext } from "react"
 import { Link } from "@reach/router"
-import Carditem from "../components/common/Carditem"
 import Boxitem from "../components/common/Boxitem"
 import Inputtext from "../components/common/Inputtext"
 import MyteamMember from "../components/common/MyteamMember"
@@ -12,6 +11,7 @@ import ModalcomponentDelete from "../components/common/ModalcomponentDelete"
 import { UserContext } from "../UserContext"
 import { SettingContext } from '../SettingContext'
 import ModalWindowProfile from "../components/common/ModalWindowProfile"
+import Carditem from "../components/common/Carditem"
 export default function Myteam() {
   const { user, setUser } = useContext(UserContext) //Mock data user context
   const { settingContext,setSettingContext } = useContext(SettingContext)

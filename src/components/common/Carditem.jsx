@@ -1,54 +1,40 @@
-import React, { useState } from "react"
-import { Link } from "@reach/router"
-import { makeStyles } from "@material-ui/core/styles"
-import { Card, CardActions, CardHeader, CardContent } from "@material-ui/core"
+import React from "react"
+import { Card } from "react-bootstrap"
 import Button from "@material-ui/core/Button"
 
-const useStyles = makeStyles({
-  root: {
-    width: "293px",
-    height: "220px",
-  },
-  stickToBottom: {
-    bottom: 0,
-  },
-})
-function Carditem(props) {
-  const classes = useStyles()
+export default function Carditem(props) {
   return (
-    <>
-      <div>
-        <Card className={classes.root}>
-          <CardHeader
-            title={`${
-              props.groups.project_department
-            }60-${props.groups.project_id.substring(2)}`}
-          />
-          <CardContent className="pb-0">
+    <div>
+      <Card style={{ width: "18rem", height:"14rem" }}>
+        <Card.Header>
+          {`${
+            props.groups.project_department
+          }60-${props.groups.project_id.substring(2)}`}
+        </Card.Header>
+        <Card.Body>
+          <Card.Text>
             <div className="text-center">
               <p className="m-0">{props.groups.project_name}</p>
               <p>{props.groups.project_detail}</p>
-              <p className="my-0">
-                Advisor:
-                {props.groups.teachers &&( props.groups.teachers.length ===0 ? "No Advisor":
-                  (props.groups.teachers.map((a, index) => {
-                    return a.teacher_name
-                  })))}
-              </p>
+
+              {props.groups.teachers &&
+                (props.groups.teachers.length === 0
+                  ? "No Advisor"
+                  : props.groups.teachers.map((a, index) => {
+                      return <p className="my-0">Advisor: {a.teacher_name}</p>
+                    }))}
             </div>
-          </CardContent>
-          <CardActions
-            className={`d-flex justify-content-end mt-2 ${classes.stickToBottom}`}
-          >
-            <Link to={`/projects/${props.groups.project_id}`}>
-              <Button size="small" color="primary">
-                More
-              </Button>
-            </Link>
-          </CardActions>
-        </Card>
-      </div>
-    </>
+          </Card.Text>
+
+        </Card.Body>
+        
+          <Card.Link href={`/projects/${props.groups.project_id}`} className='d-flex justify-content-end m-2'>
+            <Button size="small" color="primary">
+              More
+            </Button>
+          </Card.Link>
+          
+      </Card>
+    </div>
   )
 }
-export default Carditem
