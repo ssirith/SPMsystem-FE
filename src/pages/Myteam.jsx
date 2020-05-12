@@ -158,7 +158,7 @@ export default function Myteam() {
             <div className="row mt-5">
               {group.map((data, index) => {
                 return (
-                  <div className="col-3 my-3" key={index}>
+                  <div className="col-3 m-3" key={index}>
                     <Carditem groups={data} />
                   </div>
                 )
