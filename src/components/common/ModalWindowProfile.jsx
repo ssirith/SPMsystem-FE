@@ -20,17 +20,13 @@ export default function ModalWindowProfile(props) {
     const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/students`)
     const dep = data.find((a) => a.student_id === user.id)
     setCheckDepartment(dep.department)//ค่าจาก db
+    // const getImage =  await axios.get()
     setIsPreFetch(false)
   }, [])
   useEffect(() => {
     fetchData()
   }, [])
   const uploadImage = async e => {
-    // const files = e.target.files[0];
-    // const data = new FormData();
-    // data.append('file',file)
-    // setImage(data)
-    // console.log(image)
     const input = e.target.files[0];
     const reader = new FileReader();
     reader.onload = function () {
@@ -40,19 +36,22 @@ export default function ModalWindowProfile(props) {
     }
     reader.readAsDataURL(input);
     setImage(input)
-    console.log(input)
   }
-
+  
   async function handleSave(e) {
+    const student_id = user.id;
     if(department){
     try {
-      const data = {
-        student_id: user.id,
-        department: department,
-        image: image
-      }
+      const data = new FormData();//craete form
+      data.append("image", image)
+      data.append("student_id", student_id)
+      data.append("department", department)
+      // const sendData = {
+      //   student_id: user.id,
+      //   department: department,
+      //   image: image
+      // }
       const res = await axios.post(`${process.env.REACT_APP_API_BE}/student/edit/profile`, data)
-      console.log(data)
       if (res.status === 200) {
         alert("Edit Profile Success.")
         window.location.reload()
@@ -61,15 +60,20 @@ export default function ModalWindowProfile(props) {
       }
     }
     catch (err) {
+      alert("Not success, please check your input.")
       console.log(err)
     }
   }else if(checkDepartment){
     try {
-      const data = {
-        student_id: user.id,
-        department: checkDepartment,
-        image: image
-      }
+      const data = new FormData();//craete form
+      data.append("image", image)
+      data.append("student_id", student_id)
+      data.append("department", checkDepartment)
+      // const data = {
+      //   student_id: user.id,
+      //   department: checkDepartment,
+      //   image: image
+      // }
       const res = await axios.post(`${process.env.REACT_APP_API_BE}/student/edit/profile`, data)
       if (res.status === 200) {
         alert("Edit Profile Success.")
@@ -113,7 +117,7 @@ export default function ModalWindowProfile(props) {
       return (<></>)
     }
   }
-  // console.log('checkDepartment==>>', checkDepartment)
+
   function DropdownHandler() {
     if (checkDepartment) {
       return (<DropdownEdit
@@ -149,19 +153,13 @@ export default function ModalWindowProfile(props) {
       <Modal.Body>
         <div className="row">
           <div className="col-7 my-3">
-            <img id="img" src={'/image/userimage.png'} style={{ width: '100px' }} />
+            <img id="img" src={'http://localhost:8000/storage/app/public/public/images/60130500082.jpg'} style={{ width: '100px' }} />
             <input type="file" id="file-input" name="file" onChange={(e) => uploadImage(e)} /> <br />
             <p>Upload your image. (Supported File Type: .jpg, .jpeg, .png)</p>
           </div>
           <div className="col-5 my-3">
             <div className="row">
               {DropdownHandler()}
-              {/* <DropdownProfile
-                departmentList={departmentList}
-                department={department}
-                setDepartment={setDepartment}
-                value={department}
-              /> */}
             </div>
           </div>
         </div>
