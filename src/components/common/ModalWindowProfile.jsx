@@ -20,7 +20,6 @@ export default function ModalWindowProfile(props) {
     const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/students`)
     const dep = data.find((a) => a.student_id === user.id)
     setCheckDepartment(dep.department)//ค่าจาก db
-    // const getImage =  await axios.get()
     setIsPreFetch(false)
   }, [])
   useEffect(() => {
@@ -46,11 +45,7 @@ export default function ModalWindowProfile(props) {
       data.append("image", image)
       data.append("student_id", student_id)
       data.append("department", department)
-      // const sendData = {
-      //   student_id: user.id,
-      //   department: department,
-      //   image: image
-      // }
+
       const res = await axios.post(`${process.env.REACT_APP_API_BE}/student/edit/profile`, data)
       if (res.status === 200) {
         alert("Edit Profile Success.")
@@ -69,11 +64,6 @@ export default function ModalWindowProfile(props) {
       data.append("image", image)
       data.append("student_id", student_id)
       data.append("department", checkDepartment)
-      // const data = {
-      //   student_id: user.id,
-      //   department: checkDepartment,
-      //   image: image
-      // }
       const res = await axios.post(`${process.env.REACT_APP_API_BE}/student/edit/profile`, data)
       if (res.status === 200) {
         alert("Edit Profile Success.")
@@ -137,7 +127,7 @@ export default function ModalWindowProfile(props) {
       />)
     }
   }
-
+ console.log(image.name.substr(1))
   if (isPreFetch) {
     return <></>
   }
@@ -153,14 +143,14 @@ export default function ModalWindowProfile(props) {
       <Modal.Body>
         <div className="row">
           <div className="col-7 my-3">
-            <img id="img" src={'http://localhost:8000/storage/app/public/public/images/60130500082.jpg'} style={{ width: '100px' }} />
-            <input type="file" id="file-input" name="file" onChange={(e) => uploadImage(e)} /> <br />
+            <img id="img"  src={`http://127.0.0.1:8000/storage/images/${user.id}.jpg`} style={{ width: '100px' }} />
+            <input type="file" id="file-input" name="file" accept=".jpg,.jpeg,.png" onChange={(e) => uploadImage(e)} /> <br />
             <p>Upload your image. (Supported File Type: .jpg, .jpeg, .png)</p>
           </div>
           <div className="col-5 my-3">
             <div className="row">
               {DropdownHandler()}
-            </div>
+            </div>      
           </div>
         </div>
       </Modal.Body>

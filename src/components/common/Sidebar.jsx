@@ -20,7 +20,7 @@ export default function Sidebar(props) {
             <div className="container">
               <div className="row">
                 <div className="mx-auto mt-5 mb-2">
-                  <Avatar alt={user.name} src="/static/images/avatar/1.jpg" />
+                  <Avatar alt={user.name} src={`http://127.0.0.1:8000/storage/images/${user.id}.jpg`} />
                 </div>
               </div>
               <div className="row text-center">
