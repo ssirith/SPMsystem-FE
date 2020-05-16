@@ -12,6 +12,7 @@ import {
 import { Link } from "@reach/router"
 export default function Sidebar(props) {
   const { user, setUser } = useContext(UserContext) //mock data from UserContext
+
   return (
     <>
       {user.role == "student" && (
