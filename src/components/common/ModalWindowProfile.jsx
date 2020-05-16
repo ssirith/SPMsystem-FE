@@ -1,11 +1,13 @@
 import React, { useState, useCallback, useContext, useEffect } from "react"
 import { Modal } from "react-bootstrap"
 import axios from "axios"
+import Image from "react-bootstrap/Image"
 import Button from "@material-ui/core/Button"
 import { useParams,useNavigate } from "@reach/router"
 import Dropdown from "./Dropdown"
 import DropdownEdit from "./DropdownEdit"
 import { UserContext } from "../../UserContext"
+import { Height } from "@material-ui/icons"
 export default function ModalWindowProfile(props) {
   const [image, setImage] = useState("")
   const [departmentList, setDepartmentList] = useState(["IT", "CS", "DSI"])
@@ -127,7 +129,6 @@ export default function ModalWindowProfile(props) {
       />)
     }
   }
- console.log(image.name.substr(1))
   if (isPreFetch) {
     return <></>
   }
@@ -143,7 +144,7 @@ export default function ModalWindowProfile(props) {
       <Modal.Body>
         <div className="row">
           <div className="col-7 my-3">
-            <img id="img"  src={`http://127.0.0.1:8000/storage/images/${user.id}.jpg`} style={{ width: '100px' }} />
+            <Image id="img"  src={`http://127.0.0.1:8000/storage/images/${user.id}.jpg`} className="mb-2" style={{ width: '100px' ,height:'50%'}} roundedCircle  />
             <input type="file" id="file-input" name="file" accept=".jpg,.jpeg,.png" onChange={(e) => uploadImage(e)} /> <br />
             <p>Upload your image. (Supported File Type: .jpg, .jpeg, .png)</p>
           </div>
