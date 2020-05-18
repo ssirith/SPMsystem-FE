@@ -17,7 +17,7 @@ const useStyles = makeStyles({
 
 export default function Carditem(props) {
   const classes = useStyles()
-  console.log(props.groups.project_id.length)//DSI-5 IT-4
+  // console.log(props.groups.project_id.length)//DSI-5 IT-4
   return (
     <>
       {/* <div>
