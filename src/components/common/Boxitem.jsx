@@ -36,7 +36,7 @@ function Boxitem(props) {
           <div className="container">
             <div className="row">
               <div className="col">
-                {props.detail && props.detail.project_detail}
+                {props.detail && (! props.detail.project_detail ? " - No deatil - ":props.detail.project_detail )}
               </div>
             </div>
           </div>

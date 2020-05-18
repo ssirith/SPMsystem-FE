@@ -18,12 +18,12 @@ export default function ModalComponentMember(props) {
   const { id } = useParams()
   const fetchData = useCallback(async () => {
     setIsPreFetch(true)
-    if (settingContext.student_one_more_group==0) {//false
+    if (settingContext.student_one_more_group===false) {//false 0
       const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/projects/${id}`)
       const all = await axios.get(`${process.env.REACT_APP_API_BE}/students/nogroup`)
       setStudents(all.data) //{group[{},{},{},project{},teacher{[],}]
       setSave(data.group)
-    }else if(settingContext.student_one_more_group==1){//true
+    }else if(settingContext.student_one_more_group===true){//true 1
       const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/projects/${id}`)
       const all = await axios.get(`${process.env.REACT_APP_API_BE}/students`)
       setStudents(all.data) //{group[{},{},{},project{},teacher{[],}]

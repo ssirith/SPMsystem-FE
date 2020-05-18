@@ -30,9 +30,11 @@ function App() {
     [settingContext,setSettingContext]
   )
   const [user, setUser] = useState({
+
     id: "1", //เวลา demo  เปลี่ยนที่นี่
-    name: "Tuk",
-    role: "aa", //เวลา demo  เปลี่ยนที่นี่
+    name: "teacher",
+    role: "teacher", //เวลา demo  เปลี่ยนที่นี่
+
   })
   const userValue = useMemo(() => ({ user, setUser }), [user, setUser])
 
@@ -56,7 +58,7 @@ function App() {
   useEffect(()=>{
     fetchData()
   },[settingYearContext])
-
+  
   return (
     <SettingYearContext.Provider value={settingYearValue}>
     <SettingContext.Provider value={settingValue}>

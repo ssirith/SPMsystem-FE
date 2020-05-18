@@ -10,7 +10,7 @@ import axios from "axios"
 import ModalcomponentDelete from "../components/common/ModalcomponentDelete"
 import { UserContext } from "../UserContext"
 import { SettingContext } from '../SettingContext'
-import ModalWindowProfile from "../components/common/ModalWindowProfile"
+import ModalWindowProfileStudent from "../components/common/ModalWindowProfileStudent"
 import Carditem from "../components/common/Carditem"
 export default function Myteam() {
   const { user, setUser } = useContext(UserContext) //Mock data user context
@@ -128,7 +128,7 @@ export default function Myteam() {
           )}
            </>
          ):(  
-           <ModalWindowProfile
+           <ModalWindowProfileStudent
            isOpen={isOpenwindow}
            setIsOpen={setIsOpenWindow}
            />

@@ -15,6 +15,7 @@ export default function AutocompleteText(props) {
       value={props.value}
       renderInput={(params) => (
         <TextField
+        required
           {...params}
           label="Input year"
           variant="outlined"

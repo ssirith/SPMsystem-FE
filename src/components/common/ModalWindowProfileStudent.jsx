@@ -7,13 +7,13 @@ import { useParams, useNavigate } from "@reach/router"
 import Dropdown from "./Dropdown"
 import DropdownEdit from "./DropdownEdit"
 import { UserContext } from "../../UserContext"
-import { Height } from "@material-ui/icons"
+import { Avatar } from "@material-ui/core"
 export default function ModalWindowProfile(props) {
-  const [checkType, setCheckType] = useState()
   const [image, setImage] = useState("")
   const [departmentList, setDepartmentList] = useState(["IT", "CS", "DSI"])
   const [department, setDepartment] = useState()
   const [checkDepartment, setCheckDepartment] = useState()
+  const [checkImage, setCheckImage] = useState()
   const { id } = useParams()
   const [isPreFetch, setIsPreFetch] = useState(false)
   const { user, setUser } = useContext(UserContext)
@@ -21,18 +21,27 @@ export default function ModalWindowProfile(props) {
   const fetchData = useCallback(async () => {
     setIsPreFetch(true)
     const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/students`)
-    const dep = data.find((a) => a.student_id === user.id)
-    setCheckDepartment(dep.department)//ค่าจาก db
+    const check = data.find((temp) => temp.student_id === user.id)
+    setCheckDepartment(check.department)//ค่าจาก db
+    setCheckImage(check.image)
     setIsPreFetch(false)
+
   }, [])
   useEffect(() => {
     fetchData()
   }, [])
+
+  function imageHandler(){
+    if(checkImage){
+      return (`http://127.0.0.1:8000/storage/images/${user.id}.jpg`)
+    }else{
+      return (`/image/userimage.png`)
+    }
+  }
   const uploadImage = async e => {
     const input = e.target.files[0];
     const ImageTypes = ['image/gif', 'image/jpeg', 'image/png'];
     const acceptedImageTypes = input && ImageTypes.includes(input['type'])
-
     if (acceptedImageTypes === true) {
       const reader = new FileReader();
       reader.onload = function () {
@@ -47,9 +56,7 @@ export default function ModalWindowProfile(props) {
       alert("It's not a image, please check your file.")
       return (props.setIsOpen(false))
     }
-
   }
-
   async function handleSave(e) {
     const student_id = user.id;
     if (department) {
@@ -58,8 +65,7 @@ export default function ModalWindowProfile(props) {
         data.append("image", image)
         data.append("student_id", student_id)
         data.append("department", department)
-
-        const res = await axios.post(`${process.env.REACT_APP_API_BE}/student/edit/profile`, data)
+        const res = await axios.post(`${process.env.REACT_APP_API_BE}/student/edit/profile/student`, data)
         if (res.status === 200) {
           alert("Edit Profile Success.")
           window.location.reload()
@@ -77,17 +83,16 @@ export default function ModalWindowProfile(props) {
         data.append("image", image)
         data.append("student_id", student_id)
         data.append("department", checkDepartment)
-        const res = await axios.post(`${process.env.REACT_APP_API_BE}/student/edit/profile`, data)
+        const res = await axios.post(`${process.env.REACT_APP_API_BE}/student/edit/profile/student`, data)
         if (res.status === 200) {
           alert("Edit Profile Success.")
           props.setIsOpen(false)
           console.log(data)
           window.location.reload()
-
         }
       }
       catch (err) {
-        alert("Not success, please check your input.")
+        alert("It's not success, please check your input.")
         console.log(err)
       }
     }
@@ -120,7 +125,6 @@ export default function ModalWindowProfile(props) {
       return (<></>)
     }
   }
-
   function DropdownHandler() {
     if (checkDepartment) {
       return (<DropdownEdit
@@ -140,12 +144,11 @@ export default function ModalWindowProfile(props) {
         />)
     }
   }
-
   if (isPreFetch) {
     return <></>
   }
-
   return (
+    <>
     <Modal
       show={props.isOpen}
       onHide={disOnHide()}
@@ -156,7 +159,7 @@ export default function ModalWindowProfile(props) {
       <Modal.Body>
         <div className="row">
           <div className="col-7 my-3">
-            <Image id="img" src={`http://127.0.0.1:8000/storage/images/${user.id}.jpg`} className="mb-2" style={{ width: '100px', height: '50%' }} roundedCircle />
+            <Image id="img" src={imageHandler()} className="mb-2" style={{ width: '100px', height: '50%' }} roundedCircle />
             <input type="file" id="file-input" name="file" accept=".jpg,.jpeg,.png" onChange={(e) => uploadImage(e)} /> <br />
             <p>Upload your image. (Supported File Type: .jpg, .jpeg, .png)</p>
           </div>
@@ -179,5 +182,6 @@ export default function ModalWindowProfile(props) {
         </div>
       </Modal.Footer>
     </Modal>
+    </>
   )
 }

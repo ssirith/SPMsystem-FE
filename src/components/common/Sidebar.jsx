@@ -12,7 +12,7 @@ import {
 import { Link } from "@reach/router"
 export default function Sidebar(props) {
   const { user, setUser } = useContext(UserContext) //mock data from UserContext
-
+  console.log(user.id)
   return (
     <>
       {user.role == "student" && (
@@ -35,7 +35,7 @@ export default function Sidebar(props) {
               <li
                 className={`nav-item ${
                   props.statusbar === 1 ? "bg-white" : "bg-light"
-                } rounded`}
+                  } rounded`}
               >
                 <Link to="/">
                   <div className="nav-link">
@@ -49,7 +49,7 @@ export default function Sidebar(props) {
               <li
                 className={`nav-item ${
                   props.statusbar === 2 ? "bg-white" : "bg-light"
-                } rounded`}
+                  } rounded`}
               >
                 <Link to="/AllProjects">
                   <div className="nav-link">
@@ -63,7 +63,7 @@ export default function Sidebar(props) {
               <li
                 className={`nav-item ${
                   props.statusbar === 3 ? "bg-white" : "bg-light"
-                } rounded`}
+                  } rounded`}
               >
                 <Link to="/Assignments">
                   <div className="nav-link">
@@ -77,7 +77,7 @@ export default function Sidebar(props) {
               <li
                 className={`nav-item ${
                   props.statusbar === 4 ? "bg-white" : "bg-light"
-                } rounded`}
+                  } rounded`}
               >
                 <Link to="/Appointments">
                   <div className="nav-link">
@@ -91,7 +91,7 @@ export default function Sidebar(props) {
               <li
                 className={`nav-item ${
                   props.statusbar === 5 ? "bg-white" : "bg-light"
-                } rounded`}
+                  } rounded`}
               >
                 <Link to="/Annoucements">
                   <div className="nav-link">
@@ -113,7 +113,7 @@ export default function Sidebar(props) {
             <div className="container">
               <div className="row">
                 <div className="mx-auto mt-5 mb-2">
-                  <Avatar alt={user.name} src="/static/images/avatar/1.jpg" />
+                  <Avatar alt={user.name}  src={`http://127.0.0.1:8000/storage/images/${user.id}.jpg`} />
                 </div>
               </div>
               <div className="row">
@@ -127,12 +127,12 @@ export default function Sidebar(props) {
               <li
                 className={`nav-item ${
                   props.statusbar === 1 ? "bg-white" : "bg-light"
-                } rounded`}
+                  } rounded`}
               >
                 <Link to="/">
                   <div className="nav-link">
                     <ListItemIcon>
-                      <Group className='ml-3'  />
+                      <Group className='ml-3' />
                       <p className="mb-0 ml-4 text">My Project</p>
                     </ListItemIcon>
                   </div>
@@ -141,12 +141,12 @@ export default function Sidebar(props) {
               <li
                 class={`nav-item ${
                   props.statusbar === 2 ? "bg-white" : "bg-light"
-                } rounded`}
+                  } rounded`}
               >
                 <Link to="/AllProjects">
                   <div className="nav-link">
                     <ListItemIcon>
-                      <Business className='ml-3'  />
+                      <Business className='ml-3' />
                       <p className="mb-0 ml-4 text">All Projects</p>
                     </ListItemIcon>
                   </div>
@@ -155,12 +155,12 @@ export default function Sidebar(props) {
               <li
                 className={`nav-item ${
                   props.statusbar === 3 ? "bg-white" : "bg-light"
-                } rounded`}
+                  } rounded`}
               >
                 <Link to="/Assignments">
                   <div className="nav-link">
                     <ListItemIcon>
-                      <Assignment className='ml-3'  />
+                      <Assignment className='ml-3' />
                       <p className="mb-0 ml-4 text">Assignments</p>
                     </ListItemIcon>
                   </div>
@@ -169,12 +169,12 @@ export default function Sidebar(props) {
               <li
                 className={`nav-item ${
                   props.statusbar === 4 ? "bg-white" : "bg-light"
-                } rounded`}
+                  } rounded`}
               >
                 <Link to="/Appointments">
                   <div className="nav-link">
                     <ListItemIcon>
-                      <DateRange className='ml-3'  />
+                      <DateRange className='ml-3' />
                       <p className="mb-0 ml-4 text">Appointments</p>
                     </ListItemIcon>
                   </div>
@@ -183,7 +183,7 @@ export default function Sidebar(props) {
               <li
                 className={`nav-item ${
                   props.statusbar === 5 ? "bg-white" : "bg-light"
-                } rounded`}
+                  } rounded`}
               >
                 <Link to="/Annoucements">
                   <div className="nav-link">
@@ -194,6 +194,7 @@ export default function Sidebar(props) {
                   </div>
                 </Link>
               </li>
+              
             </ul>
           </div>
         </nav>
@@ -204,7 +205,7 @@ export default function Sidebar(props) {
             <div className="container">
               <div className="row">
                 <div className="mx-auto mt-5 mb-2">
-                  <Avatar alt={user.name} src="/static/images/avatar/1.jpg" />
+                  <Avatar alt={user.name}  src={`http://127.0.0.1:8000/storage/images/${user.id}.jpg`} />
                 </div>
               </div>
               <div className="row">
@@ -218,12 +219,12 @@ export default function Sidebar(props) {
               <li
                 className={`nav-item ${
                   props.statusbar === 1 ? "bg-white" : "bg-light"
-                } rounded`}
+                  } rounded`}
               >
                 <Link to="/">
                   <div className="nav-link">
                     <ListItemIcon>
-                      <Business className='ml-3'  />
+                      <Business className='ml-3' />
                       <p className="mb-0 ml-4 text">All Projects</p>
                     </ListItemIcon>
                   </div>
@@ -232,12 +233,12 @@ export default function Sidebar(props) {
               <li
                 className={`nav-item ${
                   props.statusbar === 3 ? "bg-white" : "bg-light"
-                } rounded`}
+                  } rounded`}
               >
                 <Link to="/Assignments">
                   <div className="nav-link">
                     <ListItemIcon>
-                      <Assignment className='ml-3'  />
+                      <Assignment className='ml-3' />
                       <p className="mb-0 ml-4 text">Assignments</p>
                     </ListItemIcon>
                   </div>
@@ -246,12 +247,12 @@ export default function Sidebar(props) {
               <li
                 className={`nav-item ${
                   props.statusbar === 4 ? "bg-white" : "bg-light"
-                } rounded`}
+                  } rounded`}
               >
                 <Link to="/Appointments">
                   <div className="nav-link">
                     <ListItemIcon>
-                      <DateRange className='ml-3'  />
+                      <DateRange className='ml-3' />
                       <p className="mb-0 ml-4 text">Appointments</p>
                     </ListItemIcon>
                   </div>
@@ -260,12 +261,12 @@ export default function Sidebar(props) {
               <li
                 className={`nav-item ${
                   props.statusbar === 5 ? "bg-white" : "bg-light"
-                } rounded`}
+                  } rounded`}
               >
                 <Link to="/Annoucements">
                   <div className="nav-link">
                     <ListItemIcon>
-                      <Speaker className='ml-3'  />
+                      <Speaker className='ml-3' />
                       <p className="mb-0 ml-4 text">Annoucement</p>
                     </ListItemIcon>
                   </div>
@@ -274,12 +275,12 @@ export default function Sidebar(props) {
               <li
                 className={`nav-item ${
                   props.statusbar === 6 ? "bg-white" : "bg-light"
-                } rounded`}
+                  } rounded`}
               >
                 <Link to="/Setting">
                   <div className="nav-link">
                     <ListItemIcon>
-                      <SettingsIcon className='ml-3'  />
+                      <SettingsIcon className='ml-3' />
                       <p className="mb-0 ml-4 text">Setting</p>
                     </ListItemIcon>
                   </div>

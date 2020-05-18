@@ -73,7 +73,7 @@ export default function Setting() {
   useEffect(() => {
     checkRole()
   }, [user])
-
+  
   async function handleToggle() {
     if (
       settingDisplay.number_of_member_min > settingDisplay.number_of_member_max
@@ -101,6 +101,7 @@ export default function Setting() {
         setSettingYearContext(settingDisplay.year_of_study)
         alert("The setting has been Updated.")
         navigate("/")
+
       }
     } catch (err) {
       alert("Your input is incorrect, Please try again.")
@@ -145,6 +146,7 @@ export default function Setting() {
               <div className="col-4">
                 <label htmlFor="Min">Min</label>
                 <input
+                  required
                   type="number"
                   className="form-control"
                   id="minUser"
@@ -160,6 +162,7 @@ export default function Setting() {
               <div className="col-4">
                 <label htmlFor="Max">Max</label>
                 <input
+                required
                   type="number"
                   className="form-control"
                   id="maxUser"
@@ -185,6 +188,7 @@ export default function Setting() {
             <div className="row col-8 ml-2">
               <div className="col-4">
                 <input
+                required
                   className="form-check-input"
                   type="radio"
                   name="exampleRadios"
@@ -204,6 +208,7 @@ export default function Setting() {
               </div>
               <div className="col-4">
                 <input
+                required
                   className="form-check-input"
                   type="radio"
                   name="exampleRadios"
