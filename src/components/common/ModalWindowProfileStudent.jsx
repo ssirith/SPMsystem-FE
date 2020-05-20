@@ -100,22 +100,22 @@ export default function ModalWindowProfile(props) {
   }
   function hideCancel() {
     if (checkDepartment) {
-      return (<button className="btn btn-danger" onClick={() => props.setIsOpen(false)}>Cancel</button>)
+      return (<button className="btn btn-danger" onClick={() => props.setIsOpen(false)}>CANCEL</button>)
     } else {
-      return (<button variant="contained" disabled>
+      return (<Button variant="contained" disabled>
         {" "}
-            Cancel
-      </button>)
+            CANCEL
+      </Button>)
     }
   }
   function disSave() {
     if (department || checkDepartment) {
-      return (<button className="btn btn-primary" onClick={() => handleSave()}>Save</button>)
+      return (<button className="btn btn-primary" onClick={() => handleSave()}>SAVE</button>)
     } else {
-      return (<button variant="contained" disabled>
+      return (<Button variant="contained" disabled>
         {" "}
-            Save
-      </button>)
+            SAVE
+      </Button>)
     }
   }
   function disOnHide() {

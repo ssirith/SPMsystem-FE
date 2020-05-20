@@ -78,24 +78,24 @@ export default function ModalWindowProfileProfileTeacher(props) {
                 alert("Not success, please check your input.")
                 console.log(err)
             }
-        }else{
+        } else {
             const aa_id = user.id;
-        try {
-            const data = new FormData();//craete form
-            data.append("image", image)
-            data.append("aa_id", aa_id)
-            const res = await axios.post(`${process.env.REACT_APP_API_BE}/student/edit/profile/aa`, data)
-            if (res.status === 200) {
-                alert("Edit Profile Success.")
-                window.location.reload()
-                navigate("/")
-                props.setIsOpen(false)
+            try {
+                const data = new FormData();//craete form
+                data.append("image", image)
+                data.append("aa_id", aa_id)
+                const res = await axios.post(`${process.env.REACT_APP_API_BE}/student/edit/profile/aa`, data)
+                if (res.status === 200) {
+                    alert("Edit Profile Success.")
+                    window.location.reload()
+                    navigate("/")
+                    props.setIsOpen(false)
+                }
             }
-        }
-        catch (err) {
-            alert("Not success, please check your input.")
-            console.log(err)
-        }
+            catch (err) {
+                alert("Not success, please check your input.")
+                console.log(err)
+            }
         }
 
     }
@@ -105,39 +105,36 @@ export default function ModalWindowProfileProfileTeacher(props) {
     }
     return (
         <>
-        <Modal
-            show={props.isOpen}
-            onHide={() => { props.setIsOpen(false) }}
-        >
-            <Modal.Header closeButton>
-                <Modal.Title id="contained-model-title-vcenter">Profile</Modal.Title>
-            </Modal.Header >
-            <Modal.Body>
-                <div className="row">
-                    <div className="col-7 my-3">
-                        <Image id="img" src={imageHandler()} className="mb-2" style={{ width: '100px', height: '50%' }} roundedCircle />
-                        <input type="file" id="file-input" name="file" accept=".jpg,.jpeg,.png" onChange={(e) => uploadImage(e)} /> <br />
-                        <p>Upload your image. (Supported File Type: .jpg, .jpeg, .png)</p>
-                    </div>
-                    {/* <div className="col-5 my-3">
-                        <div className="row">
-                            {DropdownHandler()}
-                        </div>
-                    </div> */}
-                </div>
-            </Modal.Body>
-            <Modal.Footer>
-                <div className="col-12 mx-auto">
-                    <div className="row">
+            <Modal
+                show={props.isOpen}
+                onHide={() => { props.setIsOpen(false) }}
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title id="contained-model-title-vcenter">Profile</Modal.Title>
+                </Modal.Header >
+                <Modal.Body>
+                    <div className="col-12 mx-auto">
+                        
                         <div className="col-12 text-center">
-                            <button className="btn btn-danger" onClick={() => props.setIsOpen(false)}>Cancel</button>
+                            <Image id="img" src={imageHandler()} className="mb-2" style={{ width: '150px', height: '50%' }} roundedCircle />
                             {" "}
-                            <button className="btn btn-primary" onClick={() => handleSave()}>Save</button>
+                            <input type="file" id="file-input" name="file" accept=".jpg,.jpeg,.png" onChange={(e) => uploadImage(e)} /> <br />
+                            <p>Upload your image (Supported File Type: .jpg, .jpeg, .png)</p>
                         </div>
                     </div>
-                </div>
-            </Modal.Footer>
-        </Modal>
+                </Modal.Body>
+                <Modal.Footer>
+                    <div className="col-12 mx-auto">
+                        <div className="row">
+                            <div className="col-12 text-center">
+                                <button className="btn btn-danger" onClick={() => props.setIsOpen(false)}>Cancel</button>
+                                {" "}
+                                <button className="btn btn-primary" onClick={() => handleSave()}>Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </Modal.Footer>
+            </Modal>
         </>
     )
 }

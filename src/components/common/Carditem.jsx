@@ -45,8 +45,7 @@ export default function Carditem(props) {
             <Card.Text>
               <div className="text-center">
                 <p className="m-0">{props.groups.project_name}</p>
-                <p>{props.groups.project_detail}</p>
-
+                <p>{props.groups.project_detail}</p> 
                 {props.groups.teachers &&
                   (props.groups.teachers.length === 0
                     ? "No Advisor"

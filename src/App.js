@@ -18,7 +18,7 @@ import { SettingContext } from "./SettingContext"
 import axios from "axios"
 
 function App() {
-  const [settingYearContext, setSettingYearContext] = useState(dayjs().format('YYYY'))// อิงตาม ปฏิทิน
+  const [settingYearContext, setSettingYearContext] = useState(dayjs().format('YYYY')-1)// อิงตาม ปฏิทิน 2020
   // const [settingYearContext, setSettingYearContext] = useState(dayjs().format('2019'))
   const [settingContext,setSettingContext] =useState({})
   const settingYearValue = useMemo(
@@ -31,11 +31,12 @@ function App() {
   )
   const [user, setUser] = useState({
 
-    id: "1", //เวลา demo  เปลี่ยนที่นี่
-    name: "teacher",
-    role: "teacher", //เวลา demo  เปลี่ยนที่นี่
+    id: "60130500125", //เวลา demo  เปลี่ยนที่นี่
+    name: "siam",
+    role: "student", //เวลา demo  เปลี่ยนที่นี่
 
   })
+  console.log(settingContext)
   const userValue = useMemo(() => ({ user, setUser }), [user, setUser])
 
   const fetchData = useCallback(async ()=>{

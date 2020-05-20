@@ -81,6 +81,7 @@ export default function ModalEditMember(props) {
       },1000)
     }
   }
+  console.log(settingContext)
   function disSubmit() {
     if (save) {
       if (save.length < settingContext.number_of_member_min || save.length > settingContext.number_of_member_max) {
