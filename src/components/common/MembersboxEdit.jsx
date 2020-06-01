@@ -24,7 +24,7 @@ const useStyles = makeStyles({
     marginBottom: 12,
   },
 })
-export default function Membersbox(props) {
+export default function MembersboxEdit(props) {
   const { user, setUser } = useContext(UserContext)
   const classes = useStyles()
   return (
@@ -33,7 +33,6 @@ export default function Membersbox(props) {
         <CardHeader title={props.title} />
         <CardContent>
           <div className="container">
-          {user.id} {user.name}<br/>
             {props.members &&
               props.members.map((std, index) => {
                 return (

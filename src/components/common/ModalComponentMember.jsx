@@ -7,8 +7,9 @@ import { useEffect } from "react"
 import Button from "@material-ui/core/Button"
 import { useParams } from "@reach/router"
 import { SettingContext } from "../../SettingContext"
-
+import { UserContext } from "../../UserContext"
 export default function ModalComponentMember(props) {
+  const { user, setUser } = useContext(UserContext)
   const [isPreFetch, setIsPreFetch] = useState(false)
   const [save, setSave] = useState() //เอาค่ามาจาก axios array
   const [students, setStudents] = useState([])
@@ -18,12 +19,12 @@ export default function ModalComponentMember(props) {
   const { id } = useParams()
   const fetchData = useCallback(async () => {
     setIsPreFetch(true)
-    if (settingContext.student_one_more_group===false) {//false 0
+    if (settingContext.student_one_more_group === false) {//false 0
       const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/projects/${id}`)
       const all = await axios.get(`${process.env.REACT_APP_API_BE}/students/nogroup`)
       setStudents(all.data) //{group[{},{},{},project{},teacher{[],}]
       setSave(data.group)
-    }else if(settingContext.student_one_more_group===true){//true 1
+    } else if (settingContext.student_one_more_group === true) {//true 1
       const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/projects/${id}`)
       const all = await axios.get(`${process.env.REACT_APP_API_BE}/students`)
       setStudents(all.data) //{group[{},{},{},project{},teacher{[],}]
@@ -46,6 +47,10 @@ export default function ModalComponentMember(props) {
           temp.splice(index, 1)
         }
       }
+    }
+    const filterUser = temp.findIndex(temp => temp.student_id === user.id)
+    if (filterUser > -1) {
+      temp.splice(filterUser, 1)
     }
     setIsFilter(
       temp.filter(
@@ -80,7 +85,7 @@ export default function ModalComponentMember(props) {
   }
   function disSubmit() { //ฟังก์ชันเพื่อไม่ให้สามารถกดปุ่ม  submit ได้ ถ้าแอดเกินที่กำหนด
     if (save) {
-      if (save.length < settingContext.number_of_member_min || save.length > settingContext.number_of_member_max) {
+      if (save.length < settingContext.number_of_member_min - 1 || save.length > settingContext.number_of_member_max - 1) {
         return (
           <Button variant="contained" disabled>
             {" "}
@@ -139,6 +144,11 @@ export default function ModalComponentMember(props) {
       </Modal.Body>
       <Modal.Footer>
         <div className="container">
+          <div className="row my-2" >
+            <div className="col-4">{user.id}</div>
+            <div className="col-4">{user.name}</div>
+          </div>
+          <br />
           {save &&
             save.map((data, index) => {
               return (

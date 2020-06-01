@@ -31,12 +31,12 @@ function App() {
   )
   const [user, setUser] = useState({
 
-    id: "60130500125", //เวลา demo  เปลี่ยนที่นี่
-    name: "siam",
+    id: "60130500082", //เวลา demo  เปลี่ยนที่นี่
+    name: "Watunyu",
     role: "student", //เวลา demo  เปลี่ยนที่นี่
 
   })
-  console.log(settingContext)
+ 
   const userValue = useMemo(() => ({ user, setUser }), [user, setUser])
 
   const fetchData = useCallback(async ()=>{
@@ -55,7 +55,7 @@ function App() {
       console.log(err)
     }
   })
- console.log('app',settingContext)
+//  console.log('app',settingContext)
   useEffect(()=>{
     fetchData()
   },[settingYearContext])
