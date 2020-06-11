@@ -77,7 +77,7 @@ export default function ModalEditMember(props) {
   }
 
   async function handleSubmit() {
-    
+
     await props.addMember(save)
     if (props.setIsOpen(false)) {
 
@@ -112,7 +112,9 @@ export default function ModalEditMember(props) {
     }
   }
 
+  function disDeleteButton() {
 
+  }
   return (
     <Modal
       show={props.isOpen}
@@ -157,15 +159,23 @@ export default function ModalEditMember(props) {
                 <div className="row my-2" key={index}>
                   <div className="col-4">{data.student_id}</div>
                   <div className="col-4">{data.student_name}</div>
-                  <button
-                    className="btn btn-danger"
-                    onClick={() => deleteMember(data)}
-                  >
-                    Delete
-                  </button>
+                  {data.student_id !== user.id ?
+                    <button
+                      className="btn btn-danger"
+                      onClick={() => deleteMember(data)}
+                    >
+                      Delete
+                </button>
+                :<></>
+                  }
+                  <br/>
+                  <br/>  
                 </div>
+                
               )
-            })}
+            })
+            }
+            
         </div>
         {disSubmit()}
       </Modal.Footer>
