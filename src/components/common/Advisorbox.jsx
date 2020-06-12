@@ -26,8 +26,6 @@ const useStyles = makeStyles({
 })
 export default function Advisorbox(props) {
   const classes = useStyles()
-
-  console.log(props.advisors)
   return (
     <>
       <Card className={classes.root}>

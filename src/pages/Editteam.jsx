@@ -1,7 +1,7 @@
-import React, { useState, useCallback, useEffect } from "react"
+import React, { useState, useCallback, useEffect,useContext } from "react"
 import Inputtext from "../components/common/Inputtext"
 import Topicbox from "../components/common/Topicbox"
-import Membersbox from "../components/common/Membersbox"
+import MembersboxEdit from "../components/common/MembersboxEdit"
 import Advisorbox from "../components/common/Advisorbox"
 import Boxitem from "../components/common/Boxitem"
 import Buttons from "../components/common/Buttons"
@@ -9,12 +9,13 @@ import ModalEditMember from "../components/common/ModalEditMember"
 import ModalEditAdvisor from "../components/common/ModalEditAdvisor"
 import Dropdown from "../components/common/Dropdown"
 import axios from 'axios'
-import { Link,useParams } from "@reach/router"
+import { Link, useParams } from "@reach/router"
 import BreadcrumbNavString from "../components/common/BreadcrumbNavString"
 import Textarea from "../components/common/Textarea"
-
+import { UserContext } from "../UserContext"
 export default function Editteam(props) {
-  const [departmentList, setDepartmentList] = useState(["IT", "CS", "DSI"])
+  const { user, setUser } = useContext(UserContext)
+  const [departmentList, setDepartmentList] = useState(["SIT", "IT", "CS", "DSI"])
   const [department, setDepartment] = useState([])
   const [isOpenStudent, setIsOpenStudent] = useState(false);
   const [isOpenAdvisor, setIsOpenAdvisor] = useState(false);
@@ -23,13 +24,19 @@ export default function Editteam(props) {
   const [advisor, setAdvisor] = useState()//advisor
   const [memberForDelete, setMemberForDelete] = useState([])//รอส่งเข้าdbไปลบ
   const [advisorForDelete, setAdvisorForDelete] = useState([])//รอส่งเข้าdbไปลบ
+  const [isPreFetch, setIsPreFetch] = useState(false)
+  const [students, setStudents] = useState([])
   const fetchData = useCallback(
     async () => {
+      setIsPreFetch(true)
       const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/projects/${props.id}`)
       setProject(data.project)
       setMember(data.group)
       setAdvisor(data.teacher)
       setDepartment(data.group[0].department)
+      const all = await axios.get(`${process.env.REACT_APP_API_BE}/students`)
+      setStudents(all.data)
+      setIsPreFetch(false)
     },
     [],
   )
@@ -44,18 +51,18 @@ export default function Editteam(props) {
     })
   }
 
-  const handleProjectDetail = (event) => {  
+  const handleProjectDetail = (event) => {
     setProject({
       ...project,
       project_detail: event.target.value
     })
   }
 
-  function addMember(value) {   
+  function addMember(value) {
     let temp = []
     temp.push(value)
     setMember(...temp)
-    
+
   }
 
   function addAdvisor(value) {
@@ -63,19 +70,18 @@ export default function Editteam(props) {
     temp.push(value)
     setAdvisor(...temp)
   }
-  function deleteMember(value){
+  function deleteMember(value) {
     let temp = memberForDelete
     temp.push(value.student_id)
     setMemberForDelete(temp)
-    
+
   }
 
-  function deleteAdvisor(value){
+  function deleteAdvisor(value) {
     let temp = advisorForDelete
     temp.push(value.teacher_id)
-    setAdvisorForDelete(temp) 
+    setAdvisorForDelete(temp)
   }
-
   
   const handleSubmit = async (event) => {
     const project_id = project.project_id;
@@ -86,9 +92,15 @@ export default function Editteam(props) {
     const delete_teacher_id = advisorForDelete;
     const add_student_id = [];
     member.map(m => add_student_id.push(m.student_id));
+    const value = students.find((std) => std.student_id === user.id)//no std.id
+    if(value){
+      add_student_id.push(value.student_id) 
+    }
+    let add_student_id_unique = [...new Set(add_student_id)]
+    
     const add_teacher_id = [];
     advisor.map(a => add_teacher_id.push(a.teacher_id));
-    
+
     const dataForEdit = {
       project_id: project_id,
       group_id: group_id,
@@ -96,29 +108,33 @@ export default function Editteam(props) {
       project_name: project_name,
       delete_student_id: delete_student_id,
       delete_teacher_id: delete_teacher_id,
-      add_student_id: add_student_id,
+      add_student_id: add_student_id_unique,
       add_teacher_id: add_teacher_id,
       project_detail: project_detail
     }
     
-    try{
-     const response=await axios.
-     put(`${process.env.REACT_APP_API_BE}/projects/edit/${project_id}`, dataForEdit)
-     console.log(response)
-     if(response.status===200){
-       window.location.reload()
-     }
-    }catch(err){
+    try {
+      const response = await axios.
+        put(`${process.env.REACT_APP_API_BE}/projects/edit/${project_id}`, dataForEdit)
+      console.log(response)
+      if (response.status === 200) {
+        alert("Edit Success.")
+        window.location.reload()
+      }
+    } catch (err) {
       console.log(err)
+      alert("It's not success, Please check your input") 
     }
-    
-  }
 
+  }
+  if (isPreFetch) {
+    return <></>
+  }
 
   return (
     <div className="container">
       <div className="row">
-      <div className="col-12 my-3">
+        <div className="col-12 my-3">
           <BreadcrumbNavString
             pastref="/"
             past="Home"
@@ -170,7 +186,7 @@ export default function Editteam(props) {
         </div>
         <div className="row">
           <div className="col-12">
-            <Membersbox title="Members" members={member} />
+            <MembersboxEdit title="Members" members={member} />
           </div>
         </div>
 
@@ -213,21 +229,21 @@ export default function Editteam(props) {
       <div className="col-12 mx-auto">
         <div className="row">
           <div className="col-12 text-center">
-            <Link to="/">
+            <Link className='mr-2' to="/">
               <Buttons menu="Cancel"
                 color="secondary" />
             </Link>
             <Link to="/">
-            <Buttons
-              menu="Save"
-              color="primary"
-              onClick={() => console.log("Save")}
-              onClick={(event) => handleSubmit(event)}/>
-              </Link>
-            
+              <Buttons
+                menu="Save"
+                color="primary"
+                onClick={() => console.log("Save")}
+                onClick={(event) => handleSubmit(event)} />
+            </Link>
+
           </div>
         </div>
-      </div> 
+      </div>
     </div>
   )
 }

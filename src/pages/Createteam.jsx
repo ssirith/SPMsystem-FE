@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react"
+import React, { useState, useEffect, useCallback, useContext } from "react"
 import Inputtext from "../components/common/Inputtext"
 import Membersbox from "../components/common/Membersbox"
 import Advisorbox from "../components/common/Advisorbox"
@@ -7,22 +7,34 @@ import ModalComponentMember from "../components/common/ModalComponentMember"
 import ModalComponentAdvisor from "../components/common/ModalComponentAdvisor"
 import Dropdown from "../components/common/Dropdown"
 import axios from "axios"
-import { Link,useNavigate } from "@reach/router"
+import { Link, useNavigate } from "@reach/router"
 import BreadcrumbNavString from "../components/common/BreadcrumbNavString"
 import Textarea from "../components/common/Textarea"
-
+import { UserContext } from "../UserContext"
 export default function Createteam() {
+  const { user, setUser } = useContext(UserContext)
   let navigate = useNavigate()
-  const [departmentList, setDepartmentList] = useState(["IT", "CS", "DSI"])
+  const [isPreFetch, setIsPreFetch] = useState(false)
+  const [departmentList, setDepartmentList] = useState(["SIT", "IT", "CS", "DSI"])
   const [department, setDepartment] = useState("")
   const [isOpenStudent, setIsOpenStudent] = useState(false)
   const [isOpenAdvisor, setIsOpenAdvisor] = useState(false)
+  const [students, setStudents] = useState([])
   const [mygroup, setMygroup] = useState({
     name: "",
     detail: "",
   })
   const [member, setMember] = useState([])
   const [advisor, setAdvisor] = useState([])
+  const fetchData = useCallback(async () => {
+    setIsPreFetch(true)
+    const all = await axios.get(`${process.env.REACT_APP_API_BE}/students`)
+    setStudents(all.data)
+    setIsPreFetch(false)
+  }, [])
+  useEffect(() => {
+    fetchData()
+  }, [])
 
   function addMember(value) {
     let temp = []
@@ -44,12 +56,16 @@ export default function Createteam() {
     setMygroup({ ...mygroup, detail: event.target.value })
   }
 
-  
+
   const handleSubmit = async (event) => {
     const project_name = mygroup.name
     const project_detail = mygroup.detail
-    const student_id = []
+    const student_id = []//array
     member.map((m) => student_id.push(m.student_id))
+    const value = students.find((std) => std.student_id === user.id)//no std.id
+    if(value){
+      student_id.push(value.student_id)
+    }
     const teacher_id = []
     advisor.map((a) => teacher_id.push(a.teacher_id))
     try {
@@ -60,15 +76,19 @@ export default function Createteam() {
         teacher_id,
         department,
       })
-      
-      if(response.status === 200){ 
+      if (response.status === 200) {
+        alert("Create Success.")
         navigate("/")
+        window.location.reload()
       }
     } catch (err) {
+      alert("It's not success, Please check your input")
       console.error(err)
     }
   }
-
+  if (isPreFetch) {
+    return <></>
+  }
   return (
     <div className="container">
       <div className="row">
@@ -161,21 +181,21 @@ export default function Createteam() {
       <div className="col-12 mx-auto">
         <div className="row">
           <div className="col-12 text-center">
-            <Link to="/">
+            <Link className="mr-2" to="/">
               <Buttons
                 menu="Cancel"
                 color="secondary"
                 onClick={() => console.log("Cancel")}
               />
             </Link>
-            
-              <Buttons
-                menu="Create"
-                color="primary"
-                onClick={() => console.log("save")}
-                onClick={(event) => handleSubmit(event)}
-              />
-            
+
+            <Buttons
+              menu="Create"
+              color="primary"
+              onClick={() => console.log("save")}
+              onClick={(event) => handleSubmit(event)}
+            />
+
           </div>
         </div>
       </div>

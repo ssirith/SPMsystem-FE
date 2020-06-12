@@ -18,8 +18,7 @@ export default function MyteamAdvisor(props) {
         <CardHeader title={props.title} />
         <CardContent>
           <div className="container">
-            {props.advisors &&
-              props.advisors.map((adv, index) => {
+            {props.advisors && (props.advisors.length===0 ? "- No Advisor -" : (props.advisors.map((adv, index) => {
                 return (
                   <>
                     <div className="row"key={index} >
@@ -27,7 +26,7 @@ export default function MyteamAdvisor(props) {
                     </div>
                   </>
                 )
-              })}
+              })))}
           </div>
           <br />
         </CardContent>

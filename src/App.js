@@ -18,7 +18,8 @@ import { SettingContext } from "./SettingContext"
 import axios from "axios"
 
 function App() {
-  const [settingYearContext, setSettingYearContext] = useState('2019')
+  const [settingYearContext, setSettingYearContext] = useState(dayjs().format('YYYY')-1)// อิงตาม ปฏิทิน 2020
+  // const [settingYearContext, setSettingYearContext] = useState(dayjs().format('2019'))
   const [settingContext,setSettingContext] =useState({})
   const settingYearValue = useMemo(
     () => ({ settingYearContext, setSettingYearContext }),
@@ -28,27 +29,37 @@ function App() {
     () => ({ settingContext,setSettingContext }),
     [settingContext,setSettingContext]
   )
-
   const [user, setUser] = useState({
-    id: "1", //เวลา demo  เปลี่ยนที่นี่
-    name: "Tuk",
-    role: "aa", //เวลา demo  เปลี่ยนที่นี่
+
+    id: "2", //เวลา demo  เปลี่ยนที่นี่
+    name: "Jing",
+    role: "teacher", //เวลา demo  เปลี่ยนที่นี่
+
   })
+ 
   const userValue = useMemo(() => ({ user, setUser }), [user, setUser])
 
   const fetchData = useCallback(async ()=>{
     try{
       const response = await axios.get(`${process.env.REACT_APP_API_BE}/config/${settingYearContext}`)
-      setSettingContext(response.data)
+      console.log('response true false from database',response.data.student_one_more_group)
+      // setSettingContext(response.data)
+      if (parseInt(response.data.student_one_more_group)) {
+        console.log('In if')
+        setSettingContext({ ...response.data, student_one_more_group: true })
+      } else  {
+        console.log('In else')
+        setSettingContext({ ...response.data, student_one_more_group: false })
+      }
     }catch(err){
       console.log(err)
     }
   })
-
+//  console.log('app',settingContext)
   useEffect(()=>{
     fetchData()
   },[settingYearContext])
-
+  
   return (
     <SettingYearContext.Provider value={settingYearValue}>
     <SettingContext.Provider value={settingValue}>

@@ -18,19 +18,20 @@ export default function Otherteam(props) {
   console.log({ id })
   const [group, setGroup] = useState({})
   const fetchData = useCallback(async () => {
-    const data = await axios.get(`${process.env.REACT_APP_API_BE}/projects/${id}`) //[]
-    setGroup(data.data) //{group[{},{},{}], project{}, teacher[{}]}
-
+    const data = await axios.get(
+      `${process.env.REACT_APP_API_BE}/projects/${id}`
+    )
+    setGroup(data.data)
   }, [])
   useEffect(() => {
     fetchData()
   }, [])
-
+  console.log(group)
   return (
     <div className="container">
       <div className="row">
         <div className="col-12 my-3">
-          {group &&(
+          {group && (
             <BreadcrumbNav
               pastref="/AllProjects"
               past="All Project"
@@ -62,15 +63,26 @@ export default function Otherteam(props) {
       <div className="col-12 mx-auto">
         <div className="row">
           <div className="col-12 text-center">
-            <Link to="/AllProjects">
-              <Buttons
-                menu="Back"
-                color="secondary"
-                onClick={() => console.log("Back")}
-              />
-            </Link>
+            {user.role == "aa" ? (
+              <Link to="/">
+                <Buttons
+                  menu="Back"
+                  color="secondary"
+                  onClick={() => console.log("Back")}
+                />
+              </Link>
+            ) : (
+              <Link to="/AllProjects">
+                <Buttons
+                  menu="Back"
+                  color="secondary"
+                  onClick={() => console.log("Back")}
+                />
+              </Link>
+            )}
+
             {user.role == "aa" && (
-              <Link to={`/editteam/${id}`}>
+              <Link to={`/editteam/${id}`} className="mx-2">
                 <Buttons menu="Edit" />
               </Link>
             )}
