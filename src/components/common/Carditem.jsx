@@ -31,6 +31,7 @@ export default function Carditem(props) {
           <CardContent className="pb-0">
           </CardContent>
         </Card>
+         
       </div> */}
 
       <div>
@@ -45,7 +46,10 @@ export default function Carditem(props) {
             <Card.Text>
               <div className="text-center">
                 <p className="m-0">{props.groups.project_name}</p>
-                <p>{props.groups.project_detail}</p> 
+                {props.groups.project_detail &&
+                  (props.groups.project_detail.length === 0 ? <></> : <p>{props.groups.project_detail.substring(0, 80) + "..."}</p>)
+                }
+
                 {props.groups.teachers &&
                   (props.groups.teachers.length === 0
                     ? "No Advisor"
