@@ -33,7 +33,7 @@ function App() {
 
     id: "2", //เวลา demo  เปลี่ยนที่นี่
     name: "Jing",
-    role: "teacher", //เวลา demo  เปลี่ยนที่นี่
+    role: "student", //เวลา demo  เปลี่ยนที่นี่
 
   })
  

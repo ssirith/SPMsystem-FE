@@ -138,7 +138,7 @@ export default function Sidebar(props) {
                 </Link>
               </li>
               <li
-                class={`nav-item ${
+                className={`nav-item ${
                   props.statusbar === 2 ? "bg-white" : "bg-light"
                   } rounded`}
               >
