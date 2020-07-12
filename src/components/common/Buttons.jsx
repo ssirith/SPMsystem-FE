@@ -6,7 +6,7 @@ function Buttons(props){
   
     return(
         <>
-      <Button className={props.className} variant = 'contained' color = {props.color} onClick={props.onClick} fullWidth={props.fullWidth} >
+      <Button variant = 'contained' color = {props.color} onClick={props.onClick} >
        {props.menu}
       </Button>
         </>

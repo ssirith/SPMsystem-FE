@@ -1,55 +1,59 @@
-import React, { useState, useContext } from "react"
-import AssignmentTable from "../components/common/AssignmentTable"
+import React, { useState, useCallback, useEffect, useContext } from "react"
+import BreadcrumbNav from "../components/common/BreadcrumbNav"
+import { Link, useParams } from "@reach/router"
+import Boxitem from "../components/common/Boxitem"
+import Membersbox from "../components/common/Membersbox"
+import Topicbox from "../components/common/Topicbox"
+import Button from "../components/common/Buttons"
+import Buttons from "../components/common/Buttons"
+import axios from "axios"
+import Inputtext from "../components/common/Inputtext"
+import AssignmentTopicBox from "../components/common/AssignmentTopicBox"
+import FilterAssignmentBox from "../components/common/FilterAssignmentBox"
+import MyteamAdvisor from "../components/common/MyteamAdvisor"
 import { UserContext } from "../UserContext"
-import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord"
-import dayjs from "dayjs"
 
 export default function Assignments() {
-  const { user, setUser } = useContext(UserContext)
-  const [assignments, setAssignments] = useState([
-    {
-      name: "Joel",
-      duedate: dayjs().format("MMMM D,YYYY / HH.MM"),
-      createdate: dayjs().format("MMMM D,YYYY / HH.MM"),
-    },
-    {
-      name: "Lisa",
-      duedate: dayjs().format("MMMM D,YYYY / HH.MM"),
-      createdate: dayjs().format("MMMM D,YYYY / HH.MM"),
-    },
-  ])
-  const isPrefetch = useState(false)
-  return (
-    <>
-    {user.role==="student"&&(
-       <div className="container mt-5">
-      <div className="d-inline my-auto">
-        <FiberManualRecordIcon color="primary" />
-        <small className="d-inline">Submitted</small>
-        <FiberManualRecordIcon color="disabled" />  
-        <small className="d-inline">Not submitted</small>
-        <FiberManualRecordIcon color="secondary" />
-        <small className="d-inline">Late</small>
-      </div>
+    const [search, setSearch] = useState("")
+    return (
+        <div className="container">
+            <div className="row">
 
-      <table class="table">
-        <thead class="thead-primary">
-          <tr>
-            <th colSpan="7">Assignments</th>
-          </tr>
-        </thead>
-        <tbody>
-          {assignments.map((assignment, index) => (
-            <AssignmentTable assignment={assignment} index={index+1} />
-          ))}
-        </tbody>
-      </table>
-    </div>
-    )}
-    {user.role==='teacher'&&(
-      <p>This is teacher's assignments page</p>
-    )}
-   
-    </>
-  )
+                <div className="col-12 my-3">
+                    <div className="row">
+                        <div className="col-8">
+                            <Inputtext
+                                type="text"
+                                placeholder="Search Assignment Topic"
+                                value={search}
+                                onChange={(e) => setSearch(e.target.value)}
+                            />
+                        </div>
+                        <Link to="/createassignment">
+                            <div className="col-10">
+                                <br />
+                                <Buttons
+                                    menu="Create Assignment"
+                                    color="primary"
+                                    onClick={() => console.log("Create Assignment")}
+                                />
+                            </div>
+                        </Link>
+                    </div>
+                </div>
+
+                <div className="col-12 my-3">
+                    <div className="row">
+                        <div className="col-8">
+                            <AssignmentTopicBox title="Assignment 1" assignment={""} />  {/*ค่าที่จะmap*/}
+                        </div>
+                        <div className="col-3">
+                            <FilterAssignmentBox filter={""} />
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    )
 }
