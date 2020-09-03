@@ -15,7 +15,6 @@ import { UserContext } from "../UserContext"
 export default function Otherteam(props) {
   const { user, setUser } = useContext(UserContext)
   const { id } = useParams()
-  console.log({ id })
   const [group, setGroup] = useState({})
   const fetchData = useCallback(async () => {
     const data = await axios.get(
@@ -26,7 +25,7 @@ export default function Otherteam(props) {
   useEffect(() => {
     fetchData()
   }, [])
-  console.log(group)
+  
   return (
     <div className="container">
       <div className="row">
@@ -60,6 +59,7 @@ export default function Otherteam(props) {
           <Boxitem title="Detail" detail={group.project} />
         </div>
       </div>
+
       <div className="col-12 mx-auto">
         <div className="row">
           <div className="col-12 text-center">

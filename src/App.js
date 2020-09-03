@@ -31,9 +31,9 @@ function App() {
   )
   const [user, setUser] = useState({
 
-    id: "2", //เวลา demo  เปลี่ยนที่นี่
-    name: "Jing",
-    role: "teacher", //เวลา demo  เปลี่ยนที่นี่
+    id: "60130500114", //เวลา demo  เปลี่ยนที่นี่
+    name: "Suthiwat",
+    role: "student", //เวลา demo  เปลี่ยนที่นี่
 
   })
  
@@ -42,13 +42,13 @@ function App() {
   const fetchData = useCallback(async ()=>{
     try{
       const response = await axios.get(`${process.env.REACT_APP_API_BE}/config/${settingYearContext}`)
-      console.log('response true false from database',response.data.student_one_more_group)
+      // console.log('response true false from database',response.data.student_one_more_group)
       // setSettingContext(response.data)
       if (parseInt(response.data.student_one_more_group)) {
-        console.log('In if')
+        // console.log('In if')
         setSettingContext({ ...response.data, student_one_more_group: true })
       } else  {
-        console.log('In else')
+        // console.log('In else')
         setSettingContext({ ...response.data, student_one_more_group: false })
       }
     }catch(err){

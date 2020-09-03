@@ -139,7 +139,7 @@ export default function Myteam() {
 
       {user.role === "teacher" && (
         <>
-          {stdGroup.project ? (
+          {group ? (
             <div className="container">
               <div className="row mt-5">
                 {group.map((data, index) => {
@@ -164,7 +164,7 @@ export default function Myteam() {
       )}
       {user.role == "aa" && (
         <>
-          {stdGroup.project ? (
+          {group ? (
             <div className="container">
               <div className="row mt-5">
                 {group.map((data, index) => {
