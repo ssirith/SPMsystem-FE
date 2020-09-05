@@ -256,7 +256,7 @@ export default function AssignmentTable(props) {
                       {`Description: ${props.assignment.assignment_detail}`}{" "}
                     </p>
                   </div>
-                  <div className="col-4 uploadarea overflow-hidden">
+                  <div className="col-4 filearea">
                     <p>Your works</p>
                     <div className="fileContent ">
                       <ul className="list-unstyled">
@@ -264,11 +264,12 @@ export default function AssignmentTable(props) {
                           if (file) {
                             return (
                               <>
-                                <li key={index} className="d-inline-block">
+                                <li key={index} className="li-Content">
                                   {" "}
                                   <FolderIcon className="primary" />
-                                  &nbsp;{file.send_assignment_name} &nbsp;{" "}
+                                  &nbsp;<span>{file.send_assignment_name.substring(0,20)} &nbsp;{"..."}</span>
                                   <button
+                                  className="no-bg float-right m-0"
                                     onClick={() => {
                                       deleteFileFromBE(file)
                                     }}
@@ -289,11 +290,12 @@ export default function AssignmentTable(props) {
                           if (file) {
                             return (
                               <>
-                                <li key={index}>
+                                <li className='li-Content' key={index}>
                                   {" "}
                                   <FolderIcon className="primary" />
-                                  &nbsp;{file.name} &nbsp;{" "}
+                                  &nbsp;<span>{file.name.substring(0,20)} &nbsp;{" "}</span>
                                   <button
+                                  className="no-bg float-right m-0"
                                     onClick={() => {
                                       deleteFile(index)
                                     }}
@@ -312,8 +314,11 @@ export default function AssignmentTable(props) {
                         })}
                       </ul>
                     </div>
-                    <div className="col-12 text-center mb-3">
-                      <input
+                    <div className="col-12 text-center mb-3 p-0 uploadarea">
+                      <label className='labelupload' for='file'>
+                       + Add
+                      </label>
+                       <input
                         value=""
                         type="file"
                         id="uploadfile"
@@ -381,7 +386,7 @@ export default function AssignmentTable(props) {
             <div className="col-12 text-center mb-3">
               <Buttons
                 color="primary"
-                menu="Save"
+                menu="Submit"
                 onClick={() => handleToggle()}
               />
             </div>
