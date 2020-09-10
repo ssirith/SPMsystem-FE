@@ -108,6 +108,7 @@
   left: 0;
   top: 0;
   opacity: 0;
+  display: none;
 }
 
 .uploadarea input[type="file"]:hover {

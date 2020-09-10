@@ -22,11 +22,12 @@ export default function AssignmentTable(props) {
   const [isOpenFeedback, setIsOpenFeedback] = useState(false)
   const [isOpenRubric, setIsOpenRubric] = useState(false)
   const expanderBody = useRef()
+  const uploadFileRef = useRef()
   const [isPrefetch, setIsPreFetch] = useState(false)
   const [rubric, setRubric] = useState({})
   const [newCriterions, setNewCriterions] = useState([])
-  var thisDay = dayjs(new Date()).format("MMMM d, YYYY HH:mm A")
-  var dueDate = dayjs(props.assignment.date_time).format("MMMM d, YYYY HH:mm A")
+  var thisDay = dayjs(new Date()).format("YYYY-M-D HH:mm")
+  var dueDate = props.assignment.date_time
 
   const fetchData = useCallback(async () => {
     try {
@@ -73,8 +74,11 @@ export default function AssignmentTable(props) {
     }
   }
 
-  console.log(selectedFile, "selectedFile")
+  // console.log(selectedFile, "selectedFile")
 
+  function handleUpload(){
+    uploadFileRef.current.click()
+  }
   function deleteFile(index) {
     selectedFile.splice(index, 1)
     setSelectedFile([...selectedFile])
@@ -138,8 +142,10 @@ export default function AssignmentTable(props) {
       var status = ""
       if (dayjs().isBefore(dueDate, thisDay)) {
         status = "Submitted"
-      } else {
+        console.log('in if')
+      } else if((dayjs().isAfter(thisDay,dueDate))){
         status = "SubmittedLate"
+        console.log('in else')
       }
       const formData = new FormData()
       formData.append("assignment_id", assignment.assignment_id)
@@ -192,15 +198,18 @@ export default function AssignmentTable(props) {
 
   return (
     <>
+    {console.log('this day is before duedate',dayjs().isBefore(thisDay, dueDate))}
       {/* {console.log('res assigment',response.data)} */}
       {/* {console.log("criterions", rubric.criterions)} */}
-      {console.log("sort criterions", newCriterions)}
+      {/* {console.log("sort criterions", newCriterions)} */}
       {/* {console.log("rubric obj", rubric)} */}
       <tr key="main" onClick={toggleExpander}>
+        <td className="uk-text-nowrap"></td>
         <td>{`Assignment: ${props.index}`}</td>
         <td>{props.assignment.assignment_title}</td>
         <td className="uk-text-nowrap"></td>
         <td>
+          
           {assignment.status ? (
             assignment.status.status === "Submitted" ? (
               <FiberManualRecordIcon color="primary" />
@@ -210,13 +219,13 @@ export default function AssignmentTable(props) {
           ) : (
             <FiberManualRecordIcon
               color={
-                dayjs().isAfter(thisDay, dueDate) ? "disabled" : "secondary"
+                thisDay<dueDate ? "disabled" : "secondary"
               }
             />
           )}
         </td>{" "}
         <td>{`Due ${dayjs(props.assignment.date_time).format(
-          "MMMM d, YYYY / HH:mm A"
+          "YYYY MMMM, D / HH:mm A"
         )}`}</td>
         <td>
           {expanded ? (
@@ -229,7 +238,7 @@ export default function AssignmentTable(props) {
 
       {expanded && (
         <tr className="expandable" key="tr-expander">
-          <td className="uk-background-muted" colSpan={6}>
+          <td className="uk-background-muted" colSpan={7}>
             <div ref={expanderBody} className="inner uk-grid">
               <div className="uk-width-1-4 uk-text-center">
                 <small className="text-danger">{`by ${
@@ -240,23 +249,77 @@ export default function AssignmentTable(props) {
                   "HH:mm A"
                 )} `}</small>
               </div>
-              <div className="container">
-                <div className="row">
-                  <div className="col-8 p-0">
-                    <div className="d-flex">
+              <div className="container row">
+                <div className="col-8">
+                  <div className="row">
+                    <div className="col-2 p-0">
                       <p className="m-0">Due Date:&nbsp;</p>
-                      <p className="text-danger m-0">{` ${dayjs(
-                        props.assignment.due_date
-                      ).format("MMMM d, YYYY")} at ${dayjs(
-                        props.assignment.date_time
-                      ).format("HH:mm A")}`}</p>
+                      <p className="m-0">Description:&nbsp;</p>
+
+                      {/* <p>
+                      {`Description: ${props.assignment.assignment_detail}`}{" "}
+                    </p> */}
+                    </div>
+                    <div className="col-4 p-0">
+                      <div className="d-flex">
+                        &nbsp;
+                        <p className="text-danger m-0">{` ${dayjs(
+                          props.assignment.due_date
+                        ).format("MMMM d, YYYY")} at ${dayjs(
+                          props.assignment.date_time
+                        ).format("HH:mm A")}`}</p>
+                      </div>
+                      <p className="text-break">
+                        {props.assignment.assignment_detail}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-2 p-0">
+                      <p>Attachment:&nbsp;</p>
                     </div>
 
-                    <p>
-                      {`Description: ${props.assignment.assignment_detail}`}{" "}
-                    </p>
+                    <div className="col-4">
+                      {assignment.attachment.map((a, index) => {
+                        return (
+                          <>
+                            <a
+                              href={`http://127.0.0.1:8000/storage/${a.attachment}`}
+                              download
+                              target="_blank"
+                            >
+                              {a.attachment_name}
+                              <br></br>
+                            </a>
+                          </>
+                        )
+                      })}
+                    </div>
                   </div>
-                  <div className="col-4 filearea">
+                  <div className="row">
+                    <div className="col-2 p-0">
+                      <p>Rubric:&nbsp;</p>
+                    </div>
+                    &nbsp;&nbsp;&nbsp;
+                    <a
+                      style={{ cursor: "pointer" }}
+                      className="text-danger"
+                      onClick={() => {
+                        setIsOpenRubric(true)
+                      }}
+                    >
+                      View rubric(Click)
+                    </a>
+                    <ModalRubric
+                      isOpen={isOpenRubric}
+                      setIsOpen={setIsOpenRubric}
+                      newCriterions={newCriterions}
+                    />
+                  </div>
+                </div>
+
+                <div className="col-4">
+                  <div className=" col-12 filearea">
                     <p>Your works</p>
                     <div className="fileContent ">
                       <ul className="list-unstyled">
@@ -267,18 +330,21 @@ export default function AssignmentTable(props) {
                                 <li key={index} className="li-Content">
                                   {" "}
                                   <FolderIcon className="primary" />
-                                  &nbsp;<span>{file.send_assignment_name.substring(0,20)} &nbsp;{"..."}</span>
-                                  <button
-                                  className="no-bg float-right m-0"
-                                    onClick={() => {
-                                      deleteFileFromBE(file)
-                                    }}
-                                  >
+                                  &nbsp;
+                                  <span>
+                                    {file.send_assignment_name.substring(0, 20)}{" "}
+                                    &nbsp;{"..."}
+                                  </span>
+                                  <div className="float-right">
                                     <DeleteIcon
+                                      onClick={() => {
+                                        deleteFileFromBE(file)
+                                      }}
+                                      style={{ cursor: "pointer" }}
                                       fontSize="small"
                                       color="error"
                                     />
-                                  </button>
+                                  </div>
                                 </li>
                               </>
                             )
@@ -290,21 +356,30 @@ export default function AssignmentTable(props) {
                           if (file) {
                             return (
                               <>
-                                <li className='li-Content' key={index}>
+                                <li className="li-Content" key={index}>
                                   {" "}
                                   <FolderIcon className="primary" />
-                                  &nbsp;<span>{file.name.substring(0,20)} &nbsp;{" "}</span>
-                                  <button
-                                  className="no-bg float-right m-0"
-                                    onClick={() => {
-                                      deleteFile(index)
-                                    }}
-                                  >
+                                  &nbsp;
+                                  <span>
+                                    {file.name.substring(0, 20)} &nbsp;{" "}
+                                  </span>
+                                  <div className="float-right">
                                     <DeleteIcon
+                                      onClick={() => {
+                                        deleteFile(file)
+                                      }}
+                                      style={{ cursor: "pointer" }}
                                       fontSize="small"
                                       color="error"
                                     />
-                                  </button>
+                                  </div>
+                                  {/* <button
+                                    className="no-bg float-right m-0"
+                                    onClick={() => {
+                                      deleteFile(index)
+                                    }}
+                                  > */}
+                                  {/* </button> */}
                                 </li>
                               </>
                             )
@@ -315,44 +390,22 @@ export default function AssignmentTable(props) {
                       </ul>
                     </div>
                     <div className="col-12 text-center mb-3 p-0 uploadarea">
-                      <label className='labelupload' for='file'>
-                       + Add
-                      </label>
-                       <input
+                      <input
                         value=""
                         type="file"
                         id="uploadfile"
                         onChange={(e) => uploadFile(e)}
+                        ref={uploadFileRef}
                       />
-                      {/* <Buttons
+                      <Buttons
                         fullWidth={true}
                         color=""
                         menu="+ Add"
-                        onClick={() => handleToggle()}
-                      /> */}
+                        onClick={() => handleUpload()}
+                      />
                     </div>
                   </div>
-                </div>
-
-                <div className="row mt-3">
-                  <div className="col-8 p-0 d-flex">
-                    <p>Attachment:&nbsp;</p>
-                    {assignment.attachment.map((a, index) => {
-                      return (
-                        <>
-                          <a
-                            href={`http://127.0.0.1:8000/storage/attachments/${a.attachment_name}`}
-                            download
-                            target="_blank"
-                          >
-                            {a.attachment_name}&nbsp;
-                          </a>
-                        </>
-                      )
-                    })}
-                  </div>
-
-                  <div className="col-4 text-right p-0">
+                  <div className="col-4 float-right p-0">
                     <Buttons
                       className="success"
                       menu="Feedback"
@@ -363,22 +416,6 @@ export default function AssignmentTable(props) {
                       setIsOpen={setIsOpenFeedback}
                     />
                   </div>
-                </div>
-                <div className="row">
-                  <p>{`Rubric: `}</p>
-                  <a
-                    className="text-danger"
-                    onClick={() => {
-                      setIsOpenRubric(true)
-                    }}
-                  >
-                    View rubric(Click)
-                  </a>
-                  <ModalRubric
-                    isOpen={isOpenRubric}
-                    setIsOpen={setIsOpenRubric}
-                    newCriterions={newCriterions}
-                  />
                 </div>
               </div>
             </div>

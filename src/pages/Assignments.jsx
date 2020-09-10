@@ -45,19 +45,19 @@ export default function Assignments() {
         <div className="container mt-5">
           <div className="d-inline my-auto">
             <FiberManualRecordIcon color="primary" />
-            <small className="d-inline">Submitted</small>
+            <small className="d-inline">Submitted</small>&nbsp;&nbsp;
             <FiberManualRecordIcon className='warning' />
-            <small className="d-inline">Submitted Late</small>
+            <small className="d-inline">Submitted Late</small>&nbsp;&nbsp;
             <FiberManualRecordIcon color="disabled" />
-            <small className="d-inline">Not submitted</small>
+            <small className="d-inline">Not submitted</small>&nbsp;&nbsp;
             <FiberManualRecordIcon color="secondary" />
             <small className="d-inline">Late</small>
           </div>
 
-          <table class="table">
+          <table class="table" style={{outlineStyle:'solid',outlineWidth:'1px',outlineColor:'#C4C4C4'}}>
             <thead class="thead-primary">
               <tr>
-                <th colSpan="7">Assignments</th>
+                <th colSpan="8" style={{fontSize:'20px'}}>Assignments</th>
               </tr>
             </thead>
             <tbody>
