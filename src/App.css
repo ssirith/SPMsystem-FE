@@ -92,6 +92,13 @@
   overflow: hidden;
   text-overflow: ellipsis;
 } */
+.linkRubric{
+  cursor: pointer;
+  color:#3f51b5
+}
+.linkRubric:hover{
+  text-decoration-line: underline;
+}
 .filearea {
   background-color: #ffffff !important;
   border-radius: 5px !important;

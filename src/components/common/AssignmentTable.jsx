@@ -256,9 +256,7 @@ export default function AssignmentTable(props) {
                       <p className="m-0">Due Date:&nbsp;</p>
                       <p className="m-0">Description:&nbsp;</p>
 
-                      {/* <p>
-                      {`Description: ${props.assignment.assignment_detail}`}{" "}
-                    </p> */}
+                      
                     </div>
                     <div className="col-4 p-0">
                       <div className="d-flex">
@@ -301,15 +299,15 @@ export default function AssignmentTable(props) {
                       <p>Rubric:&nbsp;</p>
                     </div>
                     &nbsp;&nbsp;&nbsp;
-                    <a
-                      style={{ cursor: "pointer" }}
-                      className="text-danger"
+                    <p
+                      style={{ cursor: "pointer",color:'#3f51b5'}}
+                      className="linkRubric"
                       onClick={() => {
                         setIsOpenRubric(true)
                       }}
                     >
                       View rubric(Click)
-                    </a>
+                    </p>
                     <ModalRubric
                       isOpen={isOpenRubric}
                       setIsOpen={setIsOpenRubric}
@@ -320,7 +318,7 @@ export default function AssignmentTable(props) {
 
                 <div className="col-4">
                   <div className=" col-12 filearea">
-                    <p>Your works</p>
+                    <p className="pt-3">Your works</p>
                     <div className="fileContent ">
                       <ul className="list-unstyled">
                         {filefromBE.map((file, index) => {
@@ -405,8 +403,9 @@ export default function AssignmentTable(props) {
                       />
                     </div>
                   </div>
-                  <div className="col-4 float-right p-0">
+                  <div className=" float-right pt-3">
                     <Buttons
+                      style={{backgroundColor:'green'}}
                       className="success"
                       menu="Feedback"
                       onClick={() => setIsOpenFeedback(true)}
@@ -419,7 +418,6 @@ export default function AssignmentTable(props) {
                 </div>
               </div>
             </div>
-
             <div className="col-12 text-center mb-3">
               <Buttons
                 color="primary"
