@@ -124,10 +124,10 @@ export default function ModalAddReviewer(props) {
               onChange={(e) => setSearch(e.target.value)}
             />
             <table className="table table-striped">
-              <tbody>
+              <tbody style={{cursor: 'pointer'}}>
                 {isFilter.map((tch, idx) => (
                   <tr className="text-center" key={idx} onClick={() => updateInput(tch)} >                   
-                    <td>{tch.teacher_name}</td>
+                    <td >{tch.teacher_name}</td>
                   </tr>
                 ))}
               </tbody>

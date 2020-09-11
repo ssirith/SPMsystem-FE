@@ -169,7 +169,6 @@ export default function CreateRubric() {
 																	<div key={index}>
 																		<td>
 																			<div className="col-13 ">
-
 																				<Inputtext
 																					id={criteria_detail.criteria_score_id}
 																					onChange={(event) => handleScoreValue(criteria_detail, event, index)}
@@ -196,11 +195,11 @@ export default function CreateRubric() {
 																</td>
 															)
 														})}
-														<td>
+														<td className="text-center">
 															<br />
 															<br />
 															<br />
-															<Col style={{ alignItems: "center" }}>
+															<Col>
 																<button onClick={() => addDetailScore(index)}>
 																	<AddIcon fontSize="large" style={{ color: green[500] }} />
 																</button>

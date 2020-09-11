@@ -219,7 +219,7 @@ export default function AssignmentTable(props) {
           ) : (
             <FiberManualRecordIcon
               color={
-                thisDay<dueDate ? "disabled" : "secondary"
+                dayjs().isBefore(dueDate, thisDay) ? "disabled" : "secondary"
               }
             />
           )}

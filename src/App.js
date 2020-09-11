@@ -70,33 +70,6 @@ function App() {
     <SettingYearContext.Provider value={settingYearValue}>
     <SettingContext.Provider value={settingValue}>
       <UserContext.Provider value={userValue}>
-        {/* <Router>
-          <MainLayout path="/" component={Myteam} statusbar={1} />
-          <MainLayout path="/editteam/:id" component={Editteam} statusbar={1} />
-          <MainLayout path="/createteam" component={Createteam} statusbar={1} />
-          <MainLayout path="/AllProjects" component={Teams} statusbar={2} />
-          <MainLayout
-            path="/projects/:id"
-            component={Otherteam}
-            statusbar={2}
-          />
-          <MainLayout
-            path="/Assignments"
-            component={Assignments}
-            statusbar={3}
-          />
-          <MainLayout
-            path="/Appointments"
-            component={Appointments}
-            statusbar={4}
-          />
-          <MainLayout
-            path="/Annoucements"
-            component={Annoucements}
-            statusbar={5}
-          />
-          <MainLayout path="/Setting" component={Setting} statusbar={6} />
-        </Router> */}
         <Router>
             <MainLayout
               path="/"
