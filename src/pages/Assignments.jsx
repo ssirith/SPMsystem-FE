@@ -2,14 +2,40 @@ import React, { useState, useContext, useCallback, useEffect } from "react"
 import AssignmentTable from "../components/common/AssignmentTable"
 import { UserContext } from "../UserContext"
 import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord"
+import { Link, useParams } from "@reach/router"
+import { makeStyles } from "@material-ui/core/styles"
 import dayjs from "dayjs"
 import axios from "axios"
-
+import Buttons from "../components/common/Buttons"
+import Inputtext from "../components/common/Inputtext"
+import AssignmentTopicBox from "../components/common/AssignmentTopicBox"
+import FilterAssignmentBox from "../components/common/FilterAssignmentBox"
 export default function Assignments() {
+  const useStyles = makeStyles({
+    root: {
+      position: "relative",
+      minWidth: 275,
+    },
+    bullet: {
+      display: "inline-block",
+      margin: "0 2px",
+      transform: "scale(0.8)",
+    },
+    title: {
+      fontSize: 14,
+    },
+    pos: {
+      marginBottom: 12,
+    },
+  })
+  const classes = useStyles()
   const { user, setUser } = useContext(UserContext)
   const [assignments, setAssignments] = useState([])
   const [isPrefetch, setIsPreFetch] = useState(false)
-
+  const [teacher_assignments, setTeacher_Assignments] = useState()
+  const [responsible, setResponsible] = useState()
+  const [checkFilter, setCheckFilter] = useState(false)
+  const [search, setSearch] = useState("")
   const fetchData = useCallback(async () => {
     try {
       setIsPreFetch(true)
@@ -20,21 +46,25 @@ export default function Assignments() {
       const temp = []
 
       response.data.map((data, index) => {
-        temp.push({...data,data})
+        temp.push({ ...data, data })
         // console.log('temp',temp)
       })
       setAssignments(temp)
+      const ass = await axios.get(`${process.env.REACT_APP_API_BE}/assignments`)
+      const tch = await axios.get(`${process.env.REACT_APP_API_BE}/assignments/responsible/teacher/${user.id}`)
+      setTeacher_Assignments(ass.data)
+      setResponsible(tch.data)
       setIsPreFetch(false)
-      // console.log('ass',assignments)
     } catch (err) {
       console.log(err)
     }
-  })
+  }, [])
 
   useEffect(() => {
     fetchData()
   }, [])
-
+  console.log(teacher_assignments)
+  console.log(responsible)
   if (isPrefetch) {
     return <></>
   }
@@ -68,7 +98,93 @@ export default function Assignments() {
           </table>
         </div>
       )}
-      {user.role === "teacher" && <p>This is teacher's assignments page</p>}
+      {user.role === "teacher" && (
+        <div className="container">
+          <div className="row">
+            <div className="col-12 my-3">
+              <div className="row">
+                <div className="col-8">
+                  <Inputtext
+                    type="text"
+                    placeholder="Search Assignment Topic"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                  />
+                </div>
+                <Link to="/createassignment">
+                  <div className="col-10">
+                    <br />
+                    <Buttons
+                      menu="Create Assignment"
+                      color="primary"
+                    />
+                  </div> 
+                </Link>
+              </div>
+            </div>
+            <div className="col-12 my-3">
+              <div className="row">
+                <div className="col-8">
+                  <AssignmentTopicBox
+                    assignments={teacher_assignments}
+                    responsible={responsible}
+                    search={search}
+                    checkFilter={checkFilter}
+                  />
+                </div>
+                <div className="col-3">
+                  <FilterAssignmentBox
+                    setCheckFilter={setCheckFilter} />
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      )}
+      {user.role === "aa" && (
+        <div className="container">
+          <div className="row">
+            <div className="col-12 my-3">
+              <div className="row">
+                <div className="col-8">
+                  <Inputtext
+                    type="text"
+                    placeholder="Search Assignment Topic"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                  />
+                </div>
+                <Link to="/createassignment">
+                  <div className="col-10">
+                    <br />
+                    <Buttons
+                      menu="Create Assignment"
+                      color="primary"
+                    />
+                  </div>
+                </Link>
+              </div>
+            </div>
+            <div className="col-12 my-3">
+              <div className="row">
+                <div className="col-8">
+                  <AssignmentTopicBox
+                    assignments={teacher_assignments}
+                    search={search}
+                    checkFilter={checkFilter}
+                  />
+                </div>
+                <div className="col-3">
+                  <FilterAssignmentBox
+                    setCheckFilter={setCheckFilter} />
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      )}
     </>
   )
 }

@@ -139,7 +139,7 @@ export default function Myteam() {
 
       {user.role === "teacher" && (
         <>
-          {group ? (
+          {group && group.length > 0 ? (
             <div className="container">
               <div className="row mt-5">
                 {group.map((data, index) => {
@@ -156,6 +156,7 @@ export default function Myteam() {
                 <img src='/image/myproject.jpg' alt='Dashboard logo' className='img-fluid' width='50%' height='auto' />
                 <p>
                   Oops, you don't have any project.
+                  
               </p>
               </div>
             )}

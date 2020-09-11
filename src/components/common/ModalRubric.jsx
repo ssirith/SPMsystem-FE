@@ -5,7 +5,7 @@ import Table from "react-bootstrap/Table"
 export default function ModalFeedback(props) {
   return (
     <>
-    {/* {console.log('frommodal',props.newCriterions)} */}
+      {/* {console.log('frommodal',props.newCriterions)} */}
       <Modal
         show={props.isOpen}
         onHide={() => {
@@ -21,34 +21,33 @@ export default function ModalFeedback(props) {
         <Modal.Body>
           <Table striped bordered hover responsive="sm">
             <tbody>
-              
-                 {props.newCriterions.map((criterion,index)=>{
-                return(
+              {props.newCriterions.map((criterion, index) => {
+                return (
                   <>
-                  <tr>
+                    <tr>
                       <td>{criterion.criteria_name}</td>
-                     {criterion.criteria_detail.map((c,index)=>{
-                     return(
-                       <>
-                       <td className="text-center">
-                        {c.score}
-                        <br />
-                        {c.detail}
-                      </td>
-                       </>
-                     )
-                   })}
-                  </tr>
-                 
-                 </>
+                      {criterion.criteria_detail.map((c, index) => {
+                        return (
+                          <>
+                            <td className="text-center">
+                              {c.score}
+                              <br />
+                              {c.detail}
+                            </td>
+                          </>
+                        )
+                      })}
+                    </tr>
+
+                  </>
                 )
-              
-               })}
-               
-              
-              
-                
-                {/* {props.newCriterions.map((criterion, index) => {
+
+              })}
+
+
+
+
+              {/* {props.newCriterions.map((criterion, index) => {
                   return (
                     <tr>
                     <td>{criterion.criteria_name}</td>
@@ -66,7 +65,7 @@ export default function ModalFeedback(props) {
                     </tr>
                   )
                 })} */}
-              
+
             </tbody>
           </Table>
         </Modal.Body>

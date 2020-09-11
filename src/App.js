@@ -8,7 +8,13 @@ import Teams from "./pages/Teams"
 import Editteam from "./pages/Editteam"
 import Otherteam from "./pages/Otherteam"
 import Createteam from "./pages/Createteam"
+import Assignment from "./pages/Assignment"
 import Assignments from "./pages/Assignments"
+import CreateAssignment from "./pages/CreateAssignment"
+import EditAssignment from "./pages/EditAssignment"
+import CreateRubric from "./pages/CreateRubric"
+import EditRubric from "./pages/EditRubric"
+import Assesment from "./pages/Assesment"
 import Appointments from "./pages/Appointments"
 import Annoucements from "./pages/Annoucements"
 import Setting from "./pages/Setting"
@@ -31,9 +37,9 @@ function App() {
   )
   const [user, setUser] = useState({
 
-    id: "60130500114", //เวลา demo  เปลี่ยนที่นี่
-    name: "Suthiwat",
-    role: "student", //เวลา demo  เปลี่ยนที่นี่
+    id: "2", //เวลา demo  เปลี่ยนที่นี่
+    name: "Umaporn Supasitthimethee",
+    role: "teacher", //เวลา demo  เปลี่ยนที่นี่
 
   })
  
@@ -64,7 +70,7 @@ function App() {
     <SettingYearContext.Provider value={settingYearValue}>
     <SettingContext.Provider value={settingValue}>
       <UserContext.Provider value={userValue}>
-        <Router>
+        {/* <Router>
           <MainLayout path="/" component={Myteam} statusbar={1} />
           <MainLayout path="/editteam/:id" component={Editteam} statusbar={1} />
           <MainLayout path="/createteam" component={Createteam} statusbar={1} />
@@ -90,7 +96,76 @@ function App() {
             statusbar={5}
           />
           <MainLayout path="/Setting" component={Setting} statusbar={6} />
-        </Router>
+        </Router> */}
+        <Router>
+            <MainLayout
+              path="/"
+              component={Myteam}
+              statusbar={1} />
+            <MainLayout
+              path="/editteam/:id"
+              component={Editteam}
+              statusbar={1} />
+            <MainLayout
+              path="/createteam"
+              component={Createteam}
+              statusbar={1} />
+            <MainLayout
+              path="/AllProjects"
+              component={Teams}
+              statusbar={2} />
+            <MainLayout
+              path="/projects/:id"
+              component={Otherteam}
+              statusbar={2}
+            />
+            <MainLayout
+              path="/Assignments"
+              component={Assignments}
+              statusbar={3}
+            />
+            <MainLayout
+              path="/createassignment"
+              component={CreateAssignment}
+              statusbar={3}
+            />
+            <MainLayout
+              path="/editassignment/:id"
+              component={EditAssignment}
+              statusbar={3}
+            />
+            <MainLayout
+              path="/assignments/:id"
+              component={Assignment}
+              statusbar={3}
+            />
+            <MainLayout
+              path="/assignments/:id/assesment"
+              component={Assesment}
+              statusbar={3}
+            />
+            <MainLayout
+              path="/createrubric"
+              component={CreateRubric}
+              statusbar={3}
+            />
+            <MainLayout
+              path="/editrubric/:id"
+              component={EditRubric}
+              statusbar={3}
+            />
+            <MainLayout
+              path="/Appointments"
+              component={Appointments}
+              statusbar={4}
+            />
+            <MainLayout
+              path="/Annoucements"
+              component={Annoucements}
+              statusbar={5}
+            />
+            <MainLayout path="/Setting" component={Setting} statusbar={6} />
+          </Router>
       </UserContext.Provider>
     </SettingContext.Provider>
     </SettingYearContext.Provider>

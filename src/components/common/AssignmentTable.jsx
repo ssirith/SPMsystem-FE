@@ -85,12 +85,12 @@ export default function AssignmentTable(props) {
     const newDeleteSeletedFile = [...deleteSelectedFile]
     const newFileFromBE = [...filefromBE]
 
-    newDeleteSeletedFile.push(file.send_assignment_id) // อันนี้ป่ะ
+    newDeleteSeletedFile.push(file.send_assignment_id) // fileFromBE
     const seletedFile = newFileFromBE.filter(
       (files) => files.send_assignment_id !== file.send_assignment_id
     )
 
-    setFilefromBE(seletedFile)
+    setFilefromBE(seletedFile) //แทนที่ค่าเก่าใน BE ด้วยค่า selectfile
     setDeleteSelectedFile(newDeleteSeletedFile)
 
     // deleteSelectedFile.push(filefromBE[index].send_assignment_id)

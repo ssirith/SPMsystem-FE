@@ -8,26 +8,28 @@ import Buttons from "../components/common/Buttons"
 import DueDate from "../components/common/DueDate"
 import DropdownRubric from "../components/common/DropdownRubric"
 import CreateRubric from "../components/common/CreateRubric"
-import ModalAddReviewer from "../components/common/ModalAddReviewer"
+import ModalEditReviewer from "../components/common/ModalEditReviewer"
 import { Link, useNavigate, Redirect, Router } from "@reach/router"
 import { UserContext } from "../UserContext"
 import axios from "axios"
 import ReviewerBox from "../components/common/ReviewerBox"
 import ModalDeleteRubric from "../components/common/ModalDeleteRubric"
 import EditIcon from '@material-ui/icons/Edit';
-import DeleteIcon from '@material-ui/icons/Delete';
 import FolderIcon from "@material-ui/icons/Folder"
+import DeleteIcon from '@material-ui/icons/Delete';
 import TimePicker from '../components/common/TimePicker';
 import { keys } from "@material-ui/core/styles/createBreakpoints"
 import dayjs from "dayjs"
 import { Container, Row, Col } from 'reactstrap';
 // import { Router } from "@material-ui/icons"
-export default function CreateAssignment() {
+export default function CreateAssignment(props) {
     let navigate = useNavigate()
     const inputRef = useRef()
     const { user, setUser } = useContext(UserContext)
-    const [attachment, setAttachment] = useState([])
-    const [isOpenAttachment, setIsOpenAttachment] = useState(false)
+    const [assignment, setAssignment] = useState({})
+    const [attachmentFromBE, setAttachmentFromBE] = useState([])
+    const [selectAttachment, setSelectAttachment] = useState([])
+    const [delete_attachment, setDelete_attachment] = useState([])
     const [isPreFetch, setIsPreFetch] = useState(false)
     const [isOpenReviewer, setIsOpenReviewer] = useState(false)
     const [assignment_title, setAssignment_title] = useState("")
@@ -35,19 +37,44 @@ export default function CreateAssignment() {
     const [due_date, setDue_date] = useState("")
     const [due_time, setDue_time] = useState("")
     const [reviewer, setReviewer] = useState([])
+    const [reviewerFromBE, setReviewerFromBE] = useState([])
     const [showAllRubric, setShowAllRubric] = useState([])
+    const [delete_responsible_teacher, setDelete_responsible_teacher] = useState([])
     const [rubric, setRubric] = useState("")
     const [isOpenDeleteRubric, setIsOpenDeleteRubric] = useState(false)
     const fetchData = useCallback(async () => {
         setIsPreFetch(true)
         const rub = await axios.get(`${process.env.REACT_APP_API_BE}/rubric`)
-        setShowAllRubric(rub.data)// ได้ array ของ rubric ทั้งหมด
+        setShowAllRubric(rub.data)
+        const teacehr = await axios.get(`${process.env.REACT_APP_API_BE}/teachers`)
+        const res = await axios.get(`${process.env.REACT_APP_API_BE}/assignments/${props.id}`)
+        setAssignment(res.data)
+        setAssignment_title(res.data.assignment_title)
+        setAssignment_detail(res.data.assignment_detail)
+        setDue_date(res.data.due_date)
+        setDue_time(res.data.due_time)
+        setAttachmentFromBE(res.data.attachment)
+        var newReviewer = []
+        teacehr.data.map((t) => {
+            res.data.resnponsible.map((r) => {
+                if (t.teacher_id === r.resposible_teacher_id) {
+                    newReviewer.push(t)
+                    setReviewer(newReviewer)
+                    setReviewerFromBE(newReviewer)
+                }
+            }
+            )
+        })
+        rub.data.map((r) => {
+            if (r.rubric_id === res.data.rubric_id) {
+                setRubric(r)
+            }
+        })
         setIsPreFetch(false)
     }, [])
     useEffect(() => {
         fetchData()
     }, [])
-
     const handleAssignmentName = (event) => {
         setAssignment_title(event.target.value)
     }
@@ -59,26 +86,41 @@ export default function CreateAssignment() {
     const uploadFiles = (event) => {
         if (event.target.files[0]) {
             let files = event.target.files[0]
-            setAttachment([...attachment, files])
+            const newSelectAttachment = [...selectAttachment]
+            newSelectAttachment.push(files)
+            setSelectAttachment(newSelectAttachment)
         }
     }
 
-    const deleteFilesUpload = (data, index) => {
-        attachment.splice(index, 1)
-        setAttachment([...attachment])
+    function deleteSelectFile(index) {
+        selectAttachment.splice(index, 1)
+        setSelectAttachment([...selectAttachment])
     }
+
+    function deleteFilesFromBE(data) {
+        const newDeleteSeletedFile = [...delete_attachment]
+        const newAttachmentFromBE = [...attachmentFromBE]
+
+        newDeleteSeletedFile.push(data.attachment_id) // del fileFromBE
+        const seletedFile = newAttachmentFromBE.filter(
+            (files) => files.attachment_id !== data.attachment_id
+        )
+
+        setAttachmentFromBE(seletedFile) //แทนที่ค่าเก่าใน BE ด้วยค่า selectfile ใหม่
+        setDelete_attachment(newDeleteSeletedFile)
+    }
+
+
 
     const handleDuedate = (event) => {
         var date = dayjs(event.target.value).format('YYYY-MM-DD');
         setDue_date(date)
-        console.log("due_date=>", due_date)
     }
 
     const handleTimePicker = (event) => {
         var isTime = due_date + ' ' + event.target.value
         var sendTime = dayjs(isTime).format('HH:mm')
         setDue_time(sendTime)
-
     }
 
     function addReviewer(value) {
@@ -86,15 +128,18 @@ export default function CreateAssignment() {
         temp.push(value)
         setReviewer(...temp)
     }
+    function deleteReviewer(value) {
+        let temp = delete_responsible_teacher
+        temp.push(value.teacher_id)
+        setDelete_responsible_teacher(temp)
 
+    }
     function setEdit(value) {
         if (value) {
             navigate(`/editrubric/${value}`)
         }
         else (alert("No rubric for editing !!"))
     }
-
-
 
     function setModalDelete(value) {
         if (rubric !== "") {
@@ -103,43 +148,72 @@ export default function CreateAssignment() {
         else (alert("No rubric for deleting !!"))
     }
 
-    function handleClickAdd(){
+    function handleClickAdd() {
         inputRef.current.click()
     }
 
     async function handleSubmit() {
-        const responsible_teacher = []
-        reviewer.map((r, index) => responsible_teacher.push(r.teacher_id))
+        const assignment_id = assignment.assignment_id
+        let sendReviewer = []
+        if (reviewerFromBE.length !== 0) {
+            reviewer.map(r => {
+                if (!reviewerFromBE.some(item => item.teacher_id === r.teacher_id)) {
+                    sendReviewer.push(r.teacher_id)
+
+                }
+            })
+        }
         const teacher_id = user.id
         const rubric_id = rubric.rubric_id
+
         const data = new FormData();
-        data.append('assignment_title', assignment_title)
-        data.append('assignment_detail', assignment_detail)
-        data.append('due_date', due_date)
-        data.append('due_time', due_time)
-        data.append('teacher_id', teacher_id)
-        data.append('rubric_id', rubric_id)
-        if (attachment.length !== 0) {
-            for (const acceptFile of attachment) {
-                data.append('attachment[]', acceptFile)
-            }
-        } else {
-            data.append('attachment[]', [])
-        }
-        if (responsible_teacher.length !== 0) {
-            for (const acceptResponsible_teacher of responsible_teacher) {
+        data.append('assignment_id', assignment_id)//assignment_id
+
+        if (sendReviewer.length !== 0) {//responsible_teacher
+            for (const acceptResponsible_teacher of sendReviewer) {
                 data.append('responsible_teacher[]', acceptResponsible_teacher)
             }
         } else {
             data.append('responsible_teacher[]', [])
         }
 
+        if (delete_responsible_teacher.length !== 0) {//delete_responsible_teacher
+            for (const acceptDelete_responsible_teacher of delete_responsible_teacher) {
+                data.append('delete_responsible_teacher[]', acceptDelete_responsible_teacher)
+            }
+        } else {
+            data.append('delete_responsible_teacher[]', [])
+        }
+
+        if (selectAttachment.length !== 0) {//selectAttachment
+            for (const acceptFile of selectAttachment) {
+                data.append('attachment[]', acceptFile)
+            }
+        } else {
+            data.append('attachment[]', [])
+        }
+
+        if (delete_attachment.length !== 0) {//delete_attachment
+            for (const acceptDelete_attachment of delete_attachment) {
+                data.append('delete_attachment[]', acceptDelete_attachment)
+            }
+        } else {
+            data.append('delete_attachment[]', [])
+        }
+
+        data.append('assignment_title', assignment_title)//assignment_title
+        data.append('assignment_detail', assignment_detail)//assignment_detail
+        data.append('due_date', due_date)//due_date
+        data.append('due_time', due_time)//due_time
+        data.append('teacher_id', teacher_id)//teacher_id
+        data.append('rubric_id', rubric_id)//rubric_id
+
         try {
-            const response = await axios.post(`${process.env.REACT_APP_API_BE}/assignments`, data)
+            const response = await axios.post(`${process.env.REACT_APP_API_BE}/assignments/edit`, data)
             if (response.status === 200) {
-                alert("Create Success.")
-                navigate("/Assignments")
-                window.location.reload()
+                alert("Edit Success.")
+                // navigate("/Assignments")
+                // window.location.reload()
             }
         } catch (err) {
             alert("It's not success, Please check your input")
@@ -158,9 +232,9 @@ export default function CreateAssignment() {
                 <Row>
                     <Col xs={12} md={8}>
                         <BreadcrumbNavString
-                            pastref="/Assignments"
-                            past="All Assignment"
-                            current="Create Assignment"
+                            pastref={`/assignments/ ${props.id}`}
+                            past={`Assignment ${props.id}`}
+                            current="Edit Assignment"
                         />
                     </Col>
                 </Row>
@@ -180,14 +254,14 @@ export default function CreateAssignment() {
                         <Inputtext
                             id="assignmentname"
                             label="Input Assignment Name"
-                            defaultValue={assignment_title}
+                            defaultValue={assignment.assignment_title}
                             onChange={(event) => handleAssignmentName(event)}
                         />
 
                     </Col>
                 </Row>
                 <br />
-                <Row >
+                <Row>
                     <Col sm={1}>
                         Description:
                     </Col>
@@ -195,12 +269,11 @@ export default function CreateAssignment() {
                         <Textarea
                             id="description"
                             label="Input Assignment Description"
-                            defaultValue={assignment_detail}
+                            defaultValue={assignment.assignment_detail}
                             onChange={(event) => handleDescription(event)}
                         />
                     </Col>
                 </Row>
-
                 <br />
 
                 <Row>
@@ -209,7 +282,7 @@ export default function CreateAssignment() {
                     </Col>
                     <Col sm={5}>
                         <Card style={{ marginLeft: 8 }}>
-                            <Card.Body>
+                            <Card.Body >
                                 <div className="row">
                                     <div className="col-12 text-center m-2">
                                         <input type="file" id="file"
@@ -218,24 +291,25 @@ export default function CreateAssignment() {
                                             onChange={(e) => uploadFiles(e)}
                                             ref={inputRef}
                                         />
+
                                         <Buttons
-                                            menu="+ Add "
+                                            menu="+Add"
                                             onClick={() => handleClickAdd()}
                                         />
                                     </div>
                                     <ul>
-                                        {attachment && attachment.map((f, index) => {
+                                        {attachmentFromBE && attachmentFromBE.map((f, index) => {
                                             if (f) {
                                                 return (
                                                     <>
-
                                                         <li key={index}>
                                                             &nbsp;
                                                             <FolderIcon className="primary" />
                                                             &nbsp;
+                                                            {f.attachment_name}
                                                             {f.name}
                                                             &nbsp;
-                                                            <button onClick={() => deleteFilesUpload(f, index)}>
+                                                            <button onClick={() => deleteFilesFromBE(f, index)}>
                                                                 <DeleteIcon fontSize="small" color="error" />
                                                             </button>
                                                         </li>
@@ -244,6 +318,34 @@ export default function CreateAssignment() {
                                                 )
                                             } else {
                                                 return (<></>)
+                                            }
+                                        })}
+                                        {selectAttachment.map((file, index) => {
+                                            if (file) {
+                                                return (
+                                                    <>
+                                                        <li key={index}>
+                                                            &nbsp;
+                                                            <FolderIcon className="primary" />
+                                                            &nbsp;
+                                                            {file.name}
+                                                            &nbsp;
+                                                            <button
+                                                                onClick={() => {
+                                                                    deleteSelectFile(index)
+                                                                }}
+                                                            >
+                                                                <DeleteIcon
+                                                                    fontSize="small"
+                                                                    color="error"
+                                                                />
+                                                            </button>
+                                                        </li>
+                                                        <br />
+                                                    </>
+                                                )
+                                            } else {
+                                                return <></>
                                             }
                                         })}
                                     </ul>
@@ -255,7 +357,6 @@ export default function CreateAssignment() {
                 <br />
 
                 <Row>
-
                     <Col sm={1.5} style={{ marginLeft: 15 }}>
                         Due Date:
                     </Col>
@@ -263,7 +364,7 @@ export default function CreateAssignment() {
                         <DueDate
                             id="date"
                             type="date"
-                            defaultValue=""
+                            defaultValue={assignment.due_date}
                             InputLabelProps={{
                                 shrink: true,
                             }}
@@ -280,7 +381,7 @@ export default function CreateAssignment() {
                         <TimePicker
                             id="time"
                             type="time"
-                            defaultValue="HH:mm"
+                            defaultValue={assignment.due_time}
                             InputLabelProps={{
                                 shrink: true,
                             }}
@@ -301,13 +402,13 @@ export default function CreateAssignment() {
                             color="primary"
                             onClick={() => setIsOpenReviewer(true)}
                         />
-                        <ModalAddReviewer
+                        <ModalEditReviewer
                             isOpen={isOpenReviewer}
                             setIsOpen={setIsOpenReviewer}
                             addReviewer={addReviewer}
+                            deleteReviewer={deleteReviewer}
                             header="Add Reviewer"
                         />
-
                     </Col>
                 </Row>
                 <br />
@@ -329,6 +430,7 @@ export default function CreateAssignment() {
                             rubricList={showAllRubric}
                             rubric={rubric}
                             setRubric={setRubric}
+                            value={rubric}
                         />
                         <Link className="col-12 text-center" to={`/createrubric`}>
                             Create New Rubric
@@ -373,7 +475,7 @@ export default function CreateAssignment() {
                             </Link>
 
                             <Buttons
-                                menu="Create"
+                                menu="Edit"
                                 color="primary"
                                 onClick={(event) => handleSubmit(event)}
                             />
@@ -382,7 +484,7 @@ export default function CreateAssignment() {
                     </div>
                 </div>
                 <br />
-            </Container>
+            </Container >
         </>
     )
 }
