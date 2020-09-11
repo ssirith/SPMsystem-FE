@@ -24,22 +24,22 @@ export default function ModalFeedback(props) {
               {props.newCriterions.map((criterion, index) => {
                 return (
                   <>
-                    <tr>
-                      <td>{criterion.criteria_name}</td>
-                      {criterion.criteria_detail.map((c, index) => {
-                        return (
-                          <>
-                            <td className="text-center">
-                              {c.score}
-                              <br />
-                              {c.detail}
-                            </td>
-                          </>
-                        )
-                      })}
-                    </tr>
-
-                  </>
+                  <tr>
+                      <td className='table-active' style={{width:'20%'}}>{criterion.criteria_name}</td>
+                     {criterion.criteria_detail.map((c,index)=>{
+                     return(
+                       <>
+                       <td className="text-center table-light" style={{width:'15%'}}>
+                        {c.score}
+                        <br />
+                        {c.detail}
+                      </td>
+                       </>
+                     )
+                   })}
+                  </tr>
+                 
+                 </>
                 )
 
               })}

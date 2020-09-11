@@ -8,39 +8,43 @@
   height: 40vmin;
   pointer-events: none;
 } */
+.no-bg{
+  background-color: white;
+  border: none;
+}
 .primary {
   color: #336699;
 }
 .warning {
-  color: #FFBA07;
+  color: #ffba07;
 }
 .bg {
   background-color: #336699 !important;
 }
 .bg-light {
-  background-color: #EDEDED!important;
+  background-color: #ededed !important;
 }
 .text {
-  color: #336699!important;
+  color: #336699 !important;
 }
 .btn-primary {
   color: #fff;
-  background-color: #336699!important;
-  border-color: #336699!important;
+  background-color: #336699 !important;
+  border-color: #336699 !important;
 }
 .btn-danger {
   color: #fff;
-  background-color: #EB5757!important;
-  border-color: #EB5757!important;
+  background-color: #eb5757 !important;
+  border-color: #eb5757 !important;
 }
 .success {
   color: #fff !important;
-  background-color: #2FBB18!important;
-  border-color: #2FBB18!important;
+  background-color: #2fbb18 !important;
+  border-color: #2fbb18 !important;
 }
-.btn-add{
-  background-color: #EDEDED !important;
-  border-color: #EDEDED !important;
+.btn-add {
+  background-color: #ededed !important;
+  border-color: #ededed !important;
 }
 .MuiButton-containedPrimary {
   color: #fff;
@@ -48,7 +52,7 @@
 }
 .MuiButton-containedSecondary {
   color: #fff;
-  background-color: #EB5757 !important;
+  background-color: #eb5757 !important;
 }
 .MuiButton-textPrimary {
   color: #fff !important;
@@ -71,21 +75,54 @@
 .breadcrumb {
   display: flex;
   flex-wrap: wrap;
-  padding: .75rem 1rem;
+  padding: 0.75rem 1rem;
   margin-bottom: 1rem;
   list-style: none;
   background-color: #fff !important;
-  border-radius: .25rem;
+  border-radius: 0.25rem;
 }
 /* @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
 } */
-.uploadarea{
-  background-color:#FFFFFF !important;
-  border-radius: 5px!important;
+/* .li-Content{
+  width: auto;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+} */
+.linkRubric{
+  cursor: pointer;
+  color:#3f51b5
 }
+.linkRubric:hover{
+  text-decoration-line: underline;
+}
+.filearea {
+  background-color: #ffffff !important;
+  border-radius: 5px !important;
+  width: 50%;
+}
+.uploadarea {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+.uploadarea input[type="file"] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  display: none;
+}
+
+.uploadarea input[type="file"]:hover {
+cursor: pointer !important;
+pointer-events: auto;
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -100,6 +137,15 @@
 .App-link {
   color: #61dafb;
 }
+.labelupload {
+  background-color: #EDEDED !important;
+  display: inline-block !important;
+  width: 100%;
+  height: 100%;
+  border-radius: 3rem;
+  margin: 0px;
+}
+
 
 /* @keyframes App-logo-spin {
   from {
@@ -109,13 +155,13 @@
     transform: rotate(360deg);
   }
 } */
-.thead-primary{
+.thead-primary {
   background-color: #336699 !important;
-  border-radius: 5px!important;
-  color: #FFFFFF;
+  border-radius: 5px !important;
+  color: #ffffff;
 }
-.uk-background-muted{
-  background-color: #EDEDED !important;
+.uk-background-muted {
+  background-color: #ededed !important;
 }
 .table-container {
   margin: 10px;
@@ -124,7 +170,7 @@
   border-radius: 5px;
 }
 tr.expandable > td {
-  box-shadow: inset 0 3px 6px -3px rgba(0, 0, 0, .2);
+  box-shadow: inset 0 3px 6px -3px rgba(0, 0, 0, 0.2);
   padding: 0;
 }
 
