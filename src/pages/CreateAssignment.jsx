@@ -297,7 +297,7 @@ export default function CreateAssignment() {
 
                     <Col sm={2}>
                         <Buttons
-                            menu="Edit"
+                            menu="Add"
                             color="primary"
                             onClick={() => setIsOpenReviewer(true)}
                         />

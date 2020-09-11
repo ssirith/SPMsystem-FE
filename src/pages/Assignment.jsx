@@ -144,7 +144,7 @@ export default function Assignment(props) {
                         </Table>
                     </div>
                 </div>
-                <div className="col-12 mx-auto">
+                <div className="col-12 mx-auto my-4">
                     <div className="row">
                         <div className="col-12 text-center">
                             <Link className="mr-2" to={`/editassignment/${props.id}`}>

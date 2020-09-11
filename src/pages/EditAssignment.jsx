@@ -212,8 +212,8 @@ export default function CreateAssignment(props) {
             const response = await axios.post(`${process.env.REACT_APP_API_BE}/assignments/edit`, data)
             if (response.status === 200) {
                 alert("Edit Success.")
-                // navigate("/Assignments")
-                // window.location.reload()
+                navigate(`assignments/${props.id}`)
+                window.location.reload()
             }
         } catch (err) {
             alert("It's not success, Please check your input")
@@ -475,7 +475,7 @@ export default function CreateAssignment(props) {
                             </Link>
 
                             <Buttons
-                                menu="Edit"
+                                menu="Save"
                                 color="primary"
                                 onClick={(event) => handleSubmit(event)}
                             />
