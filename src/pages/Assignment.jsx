@@ -1,7 +1,7 @@
-import React, { useState, useCallback } from "react"
+import React, { useState, useCallback,useContext } from "react"
 import { makeStyles } from "@material-ui/core/styles"
 import { Card } from "react-bootstrap"
-import { Link } from "@reach/router"
+import { Link,useNavigate } from "@reach/router"
 import Buttons from "../components/common/Buttons"
 import { CardHeader } from "@material-ui/core"
 import axios from "axios"
@@ -9,15 +9,8 @@ import { useEffect } from "react"
 import BreadcrumbNavString from "../components/common/BreadcrumbNavString"
 import ModalDeleteAssignment from "../components/common/ModalDeleteAssignment"
 import Submission from "../components/common/Submission"
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormControl from '@material-ui/core/FormControl';
-import FormLabel from '@material-ui/core/FormLabel';
 import { Table } from "react-bootstrap"
-import Inputtext from "../components/common/Inputtext"
-import ArrowDropDownCircleIcon from '@material-ui/icons/ArrowDropDownCircle';
-import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled';
+import { UserContext } from "../UserContext"
 const useStyles = makeStyles(
     {
         root: {
@@ -53,6 +46,8 @@ export default function Assignment(props) {
     const [isOpenDelete, setIsOpenDelete] = useState(false)
     const [isPreFetch, setIsPreFetch] = useState(false)
     const [search, setSearch] = useState("")
+    const { user, setUser } = useContext(UserContext)
+    let navigate = useNavigate()
     // const { user, setUser } = useContext(UserContext)
     const fetchData = useCallback(async () => {
         setIsPreFetch(true)
@@ -92,7 +87,16 @@ export default function Assignment(props) {
     useEffect(() => {
         fetchData()
     }, [])
-
+    const checkRole = useCallback(() => {
+        if (user.role === "student") {
+          alert(`You dont'have permission to go this page.`)
+          navigate("/")
+        }
+      })
+    
+      useEffect(() => {
+        checkRole()
+      }, [user])
     if (isPreFetch) {
         return <></>
     }
@@ -104,7 +108,7 @@ export default function Assignment(props) {
                 <div className="row">
                     <div className="col-12 my-3">
                         <BreadcrumbNavString
-                            pastref="/Assignments"
+                            pastref="/assignments"
                             past="All Assignment"
                             current={`Assignment ${props.id}`}
                         />
@@ -123,11 +127,11 @@ export default function Assignment(props) {
                                     return (
                                         <>
                                             <tr>
-                                                <td>{data.criteria_name}</td>
+                                                <td  className='table-active' style={{width:'20%'}}>{data.criteria_name}</td>
                                                 {data.score.map((s, pos) => {
                                                     return (
                                                         <>
-                                                            <td className="text-center">
+                                                            <td className="text-center table-light" style={{width:'15%'}}>
                                                                 {s.value}
                                                                 <br />
                                                                 {s.name}
@@ -150,7 +154,6 @@ export default function Assignment(props) {
                             <Link className="mr-2" to={`/editassignment/${props.id}`}>
                                 <Buttons
                                     menu="Edit"
-                                    color="primary"
                                 />
                             </Link>
 
@@ -174,7 +177,9 @@ export default function Assignment(props) {
                 <div className="container">
                     <div className="row">
                         <div className="col">
+                            <h4>
                             Submission:
+                            </h4>
                         </div>
                         <Submission
                             id={props.id}

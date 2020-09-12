@@ -84,7 +84,7 @@ function App() {
               component={Createteam}
               statusbar={1} />
             <MainLayout
-              path="/AllProjects"
+              path="/allprojects"
               component={Teams}
               statusbar={2} />
             <MainLayout
@@ -93,7 +93,7 @@ function App() {
               statusbar={2}
             />
             <MainLayout
-              path="/Assignments"
+              path="/assignments"
               component={Assignments}
               statusbar={3}
             />
@@ -128,12 +128,12 @@ function App() {
               statusbar={3}
             />
             <MainLayout
-              path="/Appointments"
+              path="/appointments"
               component={Appointments}
               statusbar={4}
             />
             <MainLayout
-              path="/Annoucements"
+              path="/annoucements"
               component={Annoucements}
               statusbar={5}
             />

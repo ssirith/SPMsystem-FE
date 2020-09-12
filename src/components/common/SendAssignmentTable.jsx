@@ -61,13 +61,13 @@ function SendAssignmentTable(props) {
     useEffect(() => {
         fetchData()
     }, [])
-   
+
     return (
         <>
             <TableContainer component={Paper}>
-                <Table className={classes.table} size="small" aria-label="a dense table">
+                <Table className={classes.table} size="small" aria-label="a dense table" >
                     <TableHead>
-                        <TableRow>
+                        <TableRow style={{ background: "#989898" }}>
                             <TableCell align="center"><h4>Project ID</h4></TableCell>
                             <TableCell align="center"><h4>Department</h4></TableCell>
                             <TableCell align="center"><h4>Status</h4></TableCell>
@@ -87,7 +87,7 @@ function SendAssignmentTable(props) {
                                                     props.search.length !== 0 ?
                                                         (data.project_id.toLowerCase().startsWith(props.search.toLowerCase()) ? ( //data.project_id data.project_id.toLowerCase().startsWith(props.search.toLowerCase()) ?
                                                             <>
-                                                                <TableRow key={data.id}>
+                                                                <TableRow key={data.id} style={{ background: "#DCDCDC", borderBottomWidth: 1, borderColor: "#989898", borderStyle: 'solid' }}>
                                                                     <TableCell component="th" scope="row" align="center">
                                                                         {data.project_id}
                                                                     </TableCell>
@@ -98,7 +98,7 @@ function SendAssignmentTable(props) {
                                                                             )))}
                                                                     {data.status === "Submitted" ? (<TableCell align="center"><FiberManualRecordIcon color="primary" /><medium className="d-inline">On time</medium></TableCell>
                                                                     ) : (
-                                                                        data.status === "SubmittedLate" ? (<TableCell align="center"><FiberManualRecordIcon color="secondary" /><medium className="d-inline">Late</medium></TableCell>) : (<></>))}
+                                                                            data.status === "SubmittedLate" ? (<TableCell align="center"><FiberManualRecordIcon color="secondary" /><medium className="d-inline">Late</medium></TableCell>) : (<></>))}
                                                                     <TableCell align="center">{}</TableCell>
                                                                     <TableCell align="center">
                                                                         <Buttons
@@ -112,7 +112,7 @@ function SendAssignmentTable(props) {
 
                                                         ) : (
                                                             <>
-                                                                <TableRow key={data.id}>
+                                                                <TableRow key={data.id} style={{ background: "#DCDCDC", borderBottomWidth: 1, borderColor: "#989898", borderStyle: 'solid' }}>
                                                                     <TableCell component="th" scope="row" align="center">
                                                                         {data.project_id}
                                                                     </TableCell>
@@ -123,7 +123,7 @@ function SendAssignmentTable(props) {
                                                                             )))}
                                                                     {data.status === "Submitted" ? (<TableCell align="center"><FiberManualRecordIcon color="primary" /><medium className="d-inline">On time</medium></TableCell>
                                                                     ) : (
-                                                                        data.status === "SubmittedLate" ? (<TableCell align="center"><FiberManualRecordIcon color="secondary" /><medium className="d-inline">Late</medium></TableCell>) : (<></>))}
+                                                                            data.status === "SubmittedLate" ? (<TableCell align="center"><FiberManualRecordIcon color="secondary" /><medium className="d-inline">Late</medium></TableCell>) : (<></>))}
                                                                     <TableCell align="center">{}</TableCell>
                                                                     <TableCell align="center">
                                                                         <Buttons
@@ -145,7 +145,7 @@ function SendAssignmentTable(props) {
                                                         props.search.length !== 0 ? (
                                                             data.project_id.toLowerCase().startsWith(props.search.toLowerCase()) ?
                                                                 (<>
-                                                                    <TableRow key={data.id}>
+                                                                    <TableRow key={data.id} style={{ background: "#DCDCDC", borderBottomWidth: 1, borderColor: "#989898", borderStyle: 'solid' }}>
                                                                         <TableCell component="th" scope="row" align="center">
                                                                             {data.project_id}
                                                                         </TableCell>
@@ -155,8 +155,8 @@ function SendAssignmentTable(props) {
                                                                                     data.project_department === "DSI" ? (<TableCell align="center">{"Digital Service Innovation"}</TableCell>) : (<></>)
                                                                                 )))}
                                                                         {data.status === "Submitted" ? (<TableCell align="center"><FiberManualRecordIcon color="primary" /><medium className="d-inline">On time</medium></TableCell>
-                                                                    ) : (
-                                                                        data.status === "SubmittedLate" ? (<TableCell align="center"><FiberManualRecordIcon color="secondary" /><medium className="d-inline">Late</medium></TableCell>) : (<></>))}
+                                                                        ) : (
+                                                                                data.status === "SubmittedLate" ? (<TableCell align="center"><FiberManualRecordIcon color="secondary" /><medium className="d-inline">Late</medium></TableCell>) : (<></>))}
                                                                         <TableCell align="center">{}</TableCell>
                                                                         <TableCell align="center">
                                                                             <Buttons
@@ -168,7 +168,7 @@ function SendAssignmentTable(props) {
                                                                 </>)
                                                                 : (<></>)
                                                         ) : (<>
-                                                            <TableRow key={data.id}>
+                                                            <TableRow key={data.id} style={{ background: "#DCDCDC", borderBottomWidth: 1, borderColor: "#989898", borderStyle: 'solid' }}>
                                                                 <TableCell component="th" scope="row" align="center">
                                                                     {data.project_id}
                                                                 </TableCell>
@@ -178,7 +178,7 @@ function SendAssignmentTable(props) {
                                                                             data.project_department === "DSI" ? (<TableCell align="center">{"Digital Service Innovation"}</TableCell>) : (<></>)
                                                                         )))}
                                                                 {data.status === "Submitted" ? (<TableCell align="center"><FiberManualRecordIcon color="primary" /><medium className="d-inline">On time</medium></TableCell>
-                                                                    ) : (
+                                                                ) : (
                                                                         data.status === "SubmittedLate" ? (<TableCell align="center"><FiberManualRecordIcon color="secondary" /><medium className="d-inline">Late</medium></TableCell>) : (<></>))}
                                                                 <TableCell align="center">{}</TableCell>
                                                                 <TableCell align="center">
@@ -203,7 +203,7 @@ function SendAssignmentTable(props) {
                                                         props.search.length !== 0 ? (
                                                             data.project_id.toLowerCase().startsWith(props.search.toLowerCase()) ?
                                                                 (<>
-                                                                    <TableRow key={data.id}>
+                                                                    <TableRow key={data.id} style={{ background: "#DCDCDC", borderBottomWidth: 1, borderColor: "#989898", borderStyle: 'solid' }}>
                                                                         <TableCell component="th" scope="row" align="center">
                                                                             {data.project_id}
                                                                         </TableCell>
@@ -212,9 +212,9 @@ function SendAssignmentTable(props) {
                                                                                 data.project_department === "SIT" ? (<TableCell align="center">{"School of Information Technology"}</TableCell>) : (
                                                                                     data.project_department === "DSI" ? (<TableCell align="center">{"Digital Service Innovation"}</TableCell>) : (<></>)
                                                                                 )))}
-                                                                       {data.status === "Submitted" ? (<TableCell align="center"><FiberManualRecordIcon color="primary" /><medium className="d-inline">On time</medium></TableCell>
-                                                                    ) : (
-                                                                        data.status === "SubmittedLate" ? (<TableCell align="center"><FiberManualRecordIcon color="secondary" /><medium className="d-inline">Late</medium></TableCell>) : (<></>))}
+                                                                        {data.status === "Submitted" ? (<TableCell align="center"><FiberManualRecordIcon color="primary" /><medium className="d-inline">On time</medium></TableCell>
+                                                                        ) : (
+                                                                                data.status === "SubmittedLate" ? (<TableCell align="center"><FiberManualRecordIcon color="secondary" /><medium className="d-inline">Late</medium></TableCell>) : (<></>))}
                                                                         <TableCell align="center">{}</TableCell>
                                                                         <TableCell align="center">
                                                                             <Buttons
@@ -226,7 +226,7 @@ function SendAssignmentTable(props) {
                                                                 </>)
                                                                 : (<></>)
                                                         ) : (<>
-                                                            <TableRow key={data.id}>
+                                                            <TableRow key={data.id} style={{ background: "#DCDCDC", borderBottomWidth: 1, borderColor: "#989898", borderStyle: 'solid' }}>
                                                                 <TableCell component="th" scope="row" align="center">
                                                                     {data.project_id}
                                                                 </TableCell>
@@ -236,7 +236,7 @@ function SendAssignmentTable(props) {
                                                                             data.project_department === "DSI" ? (<TableCell align="center">{"Digital Service Innovation"}</TableCell>) : (<></>)
                                                                         )))}
                                                                 {data.status === "Submitted" ? (<TableCell align="center"><FiberManualRecordIcon color="primary" /><medium className="d-inline">On time</medium></TableCell>
-                                                                    ) : (
+                                                                ) : (
                                                                         data.status === "SubmittedLate" ? (<TableCell align="center"><FiberManualRecordIcon color="secondary" /><medium className="d-inline">Late</medium></TableCell>) : (<></>))}
                                                                 <TableCell align="center">{}</TableCell>
                                                                 <TableCell align="center">
@@ -261,7 +261,7 @@ function SendAssignmentTable(props) {
                                                         props.search.length !== 0 ? (
                                                             data.project_id.toLowerCase().startsWith(props.search.toLowerCase()) ?
                                                                 (<>
-                                                                    <TableRow key={data.id}>
+                                                                    <TableRow key={data.id} style={{ background: "#DCDCDC", borderBottomWidth: 1, borderColor: "#989898", borderStyle: 'solid' }}>
                                                                         <TableCell component="th" scope="row" align="center">
                                                                             {data.project_id}
                                                                         </TableCell>
@@ -271,8 +271,8 @@ function SendAssignmentTable(props) {
                                                                                     data.project_department === "DSI" ? (<TableCell align="center">{"Digital Service Innovation"}</TableCell>) : (<></>)
                                                                                 )))}
                                                                         {data.status === "Submitted" ? (<TableCell align="center"><FiberManualRecordIcon color="primary" /><medium className="d-inline">On time</medium></TableCell>
-                                                                    ) : (
-                                                                        data.status === "SubmittedLate" ? (<TableCell align="center"><FiberManualRecordIcon color="secondary" /><medium className="d-inline">Late</medium></TableCell>) : (<></>))}
+                                                                        ) : (
+                                                                                data.status === "SubmittedLate" ? (<TableCell align="center"><FiberManualRecordIcon color="secondary" /><medium className="d-inline">Late</medium></TableCell>) : (<></>))}
                                                                         <TableCell align="center">{}</TableCell>
                                                                         <TableCell align="center">
                                                                             <Buttons
@@ -284,7 +284,7 @@ function SendAssignmentTable(props) {
                                                                 </>)
                                                                 : (<></>)
                                                         ) : (<>
-                                                            <TableRow key={data.id}>
+                                                            <TableRow key={data.id} style={{ background: "#DCDCDC", borderBottomWidth: 1, borderColor: "#989898", borderStyle: 'solid' }}>
                                                                 <TableCell component="th" scope="row" align="center">
                                                                     {data.project_id}
                                                                 </TableCell>
@@ -294,7 +294,7 @@ function SendAssignmentTable(props) {
                                                                             data.project_department === "DSI" ? (<TableCell align="center">{"Digital Service Innovation"}</TableCell>) : (<></>)
                                                                         )))}
                                                                 {data.status === "Submitted" ? (<TableCell align="center"><FiberManualRecordIcon color="primary" /><medium className="d-inline">On time</medium></TableCell>
-                                                                    ) : (
+                                                                ) : (
                                                                         data.status === "SubmittedLate" ? (<TableCell align="center"><FiberManualRecordIcon color="secondary" /><medium className="d-inline">Late</medium></TableCell>) : (<></>))}
                                                                 <TableCell align="center">{}</TableCell>
                                                                 <TableCell align="center">
@@ -319,7 +319,7 @@ function SendAssignmentTable(props) {
                                                         props.search.length !== 0 ? (
                                                             data.project_id.toLowerCase().startsWith(props.search.toLowerCase()) ?
                                                                 (<>
-                                                                    <TableRow key={data.id}>
+                                                                    <TableRow key={data.id} style={{ background: "#DCDCDC", borderBottomWidth: 1, borderColor: "#989898", borderStyle: 'solid' }}>
                                                                         <TableCell component="th" scope="row" align="center">
                                                                             {data.project_id}
                                                                         </TableCell>
@@ -328,9 +328,9 @@ function SendAssignmentTable(props) {
                                                                                 data.project_department === "SIT" ? (<TableCell align="center">{"School of Information Technology"}</TableCell>) : (
                                                                                     data.project_department === "DSI" ? (<TableCell align="center">{"Digital Service Innovation"}</TableCell>) : (<></>)
                                                                                 )))}
-                                                                       {data.status === "Submitted" ? (<TableCell align="center"><FiberManualRecordIcon color="primary" /><medium className="d-inline">On time</medium></TableCell>
-                                                                    ) : (
-                                                                        data.status === "SubmittedLate" ? (<TableCell align="center"><FiberManualRecordIcon color="secondary" /><medium className="d-inline">Late</medium></TableCell>) : (<></>))}
+                                                                        {data.status === "Submitted" ? (<TableCell align="center"><FiberManualRecordIcon color="primary" /><medium className="d-inline">On time</medium></TableCell>
+                                                                        ) : (
+                                                                                data.status === "SubmittedLate" ? (<TableCell align="center"><FiberManualRecordIcon color="secondary" /><medium className="d-inline">Late</medium></TableCell>) : (<></>))}
                                                                         <TableCell align="center">{}</TableCell>
                                                                         <TableCell align="center">
                                                                             <Buttons
@@ -342,7 +342,7 @@ function SendAssignmentTable(props) {
                                                                 </>)
                                                                 : (<></>)
                                                         ) : (<>
-                                                            <TableRow key={data.id}>
+                                                            <TableRow key={data.id} style={{ background: "#DCDCDC", borderBottomWidth: 1, borderColor: "#989898", borderStyle: 'solid' }}>
                                                                 <TableCell component="th" scope="row" align="center">
                                                                     {data.project_id}
                                                                 </TableCell>
@@ -352,7 +352,7 @@ function SendAssignmentTable(props) {
                                                                             data.project_department === "DSI" ? (<TableCell align="center">{"Digital Service Innovation"}</TableCell>) : (<></>)
                                                                         )))}
                                                                 {data.status === "Submitted" ? (<TableCell align="center"><FiberManualRecordIcon color="primary" /><medium className="d-inline">On time</medium></TableCell>
-                                                                    ) : (
+                                                                ) : (
                                                                         data.status === "SubmittedLate" ? (<TableCell align="center"><FiberManualRecordIcon color="secondary" /><medium className="d-inline">Late</medium></TableCell>) : (<></>))}
                                                                 <TableCell align="center">{}</TableCell>
                                                                 <TableCell align="center">

@@ -9,8 +9,11 @@ import { green } from '@material-ui/core/colors';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 import { Container, Row, Col } from 'reactstrap';
+import { UserContext } from "../UserContext"
 export default function EditRubric(props) {
 	let navigate = useNavigate()
+	const { user, setUser } = useContext(UserContext)
+
 	const [isPreFetch, setIsPreFetch] = useState(false)
 	const [rubricTitle, setRubricTitle] = useState("")
 	const [rubric, setRubric] = useState()
@@ -94,6 +97,17 @@ export default function EditRubric(props) {
 		fetchData()
 	}, [])
 
+	const checkRole = useCallback(() => {
+		if (user.role === "student") {
+		  alert(`You dont'have permission to go this page.`)
+		  navigate("/")
+		}
+	  })
+	
+	  useEffect(() => {
+		checkRole()
+	  }, [user])
+
 	function handleCriteriaName(event, index) {//type number
 		criterions[index].criteria_name = event.target.value
 	}
@@ -150,7 +164,6 @@ export default function EditRubric(props) {
 		let noti = false;
 		criterions.map((c) => {
 			c.criteria_detail.map((t) => {
-				console.log(t)
 				if (t.name == "" || t.value == null) { // ค่าช่องใดช่องหนึ่งมีค่า input ((t.name !== "" && t.value !== null) && (t.name === "" || t.value === null))
 					noti = true
 				}
@@ -179,7 +192,7 @@ export default function EditRubric(props) {
 			create_criterions
 		}
 		if (checkInput()) {
-			alert("Check input")
+			alert("It's not success, Please check your input !!!")
 
 		} else {
 			try {
@@ -275,7 +288,7 @@ export default function EditRubric(props) {
 																				<Inputtext
 																					id={criteria_detail.criteria_score_id}
 																					onChange={(event) => handleScoreValue(criteria_detail, event, index)}
-																					label={"Value"}
+																					label={"Score"}
 																					defaultValue={criteria_detail.value}
 																				/>
 

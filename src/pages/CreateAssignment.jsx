@@ -3,6 +3,7 @@ import BreadcrumbNavString from "../components/common/BreadcrumbNavString"
 import Inputtext from "../components/common/Inputtext"
 import Textarea from "../components/common/Textarea"
 import { Card } from "react-bootstrap"
+import IconButton from '@material-ui/core/IconButton';
 import Button from "@material-ui/core/Button"
 import Buttons from "../components/common/Buttons"
 import DueDate from "../components/common/DueDate"
@@ -20,9 +21,16 @@ import FolderIcon from "@material-ui/icons/Folder"
 import TimePicker from '../components/common/TimePicker';
 import { keys } from "@material-ui/core/styles/createBreakpoints"
 import dayjs from "dayjs"
+import { makeStyles } from '@material-ui/core/styles';
 import { Container, Row, Col } from 'reactstrap';
 // import { Router } from "@material-ui/icons"
+const useStyles = makeStyles((theme) => ({
+    margin: {
+        margin: theme.spacing(1),
+    },
+}));
 export default function CreateAssignment() {
+    const classes = useStyles();
     let navigate = useNavigate()
     const inputRef = useRef()
     const { user, setUser } = useContext(UserContext)
@@ -38,6 +46,7 @@ export default function CreateAssignment() {
     const [showAllRubric, setShowAllRubric] = useState([])
     const [rubric, setRubric] = useState("")
     const [isOpenDeleteRubric, setIsOpenDeleteRubric] = useState(false)
+
     const fetchData = useCallback(async () => {
         setIsPreFetch(true)
         const rub = await axios.get(`${process.env.REACT_APP_API_BE}/rubric`)
@@ -47,7 +56,16 @@ export default function CreateAssignment() {
     useEffect(() => {
         fetchData()
     }, [])
-
+    const checkRole = useCallback(() => {
+        if (user.role === "student") {
+          alert(`You dont'have permission to go this page.`)
+          navigate("/")
+        }
+      })
+    
+      useEffect(() => {
+        checkRole()
+      }, [user])
     const handleAssignmentName = (event) => {
         setAssignment_title(event.target.value)
     }
@@ -103,7 +121,7 @@ export default function CreateAssignment() {
         else (alert("No rubric for deleting !!"))
     }
 
-    function handleClickAdd(){
+    function handleClickAdd() {
         inputRef.current.click()
     }
 
@@ -138,7 +156,7 @@ export default function CreateAssignment() {
             const response = await axios.post(`${process.env.REACT_APP_API_BE}/assignments`, data)
             if (response.status === 200) {
                 alert("Create Success.")
-                navigate("/Assignments")
+                navigate("/assignments")
                 window.location.reload()
             }
         } catch (err) {
@@ -158,7 +176,7 @@ export default function CreateAssignment() {
                 <Row>
                     <Col xs={12} md={8}>
                         <BreadcrumbNavString
-                            pastref="/Assignments"
+                            pastref="/assignments"
                             past="All Assignment"
                             current="Create Assignment"
                         />
@@ -204,9 +222,20 @@ export default function CreateAssignment() {
                 <br />
 
                 <Row>
-                    <Col sm={1}>
+                    <Col sm={5} style={{ marginLeft: 3 }}>
                         Attachment:
                     </Col>
+                    <Col>
+                        <Buttons
+                            menu="Add"
+                            color="primary"
+                            onClick={() => handleClickAdd()}
+                        />
+                    </Col>
+                </Row>
+                <br />
+                <Row>
+                    <Col sm={1}></Col>
                     <Col sm={5}>
                         <Card style={{ marginLeft: 8 }}>
                             <Card.Body>
@@ -217,10 +246,6 @@ export default function CreateAssignment() {
                                             name="file"
                                             onChange={(e) => uploadFiles(e)}
                                             ref={inputRef}
-                                        />
-                                        <Buttons
-                                            menu="+ Add "
-                                            onClick={() => handleClickAdd()}
                                         />
                                     </div>
                                     <ul>
@@ -293,6 +318,9 @@ export default function CreateAssignment() {
                 <Row>
                     <Col sm={5} style={{ marginLeft: 3 }}>
                         Reviewer:
+                        <div style={{fontSize : '12px'}}>
+                        (ผู้ประเมินคะแนน)
+                        </div>
                     </Col>
 
                     <Col sm={2}>
@@ -337,13 +365,24 @@ export default function CreateAssignment() {
                     <Col sm={3}>
                         {rubric.rubric_id ? (
                             <>
-                                <button onClick={() => setEdit(rubric.rubric_id)}>
-                                    <EditIcon color="primary" />
-                                </button>
+                                <Button variant="outlined" size="small" className={classes.margin}>
+                                    <IconButton
+                                        aria-label="edit"
+                                        onClick={() => setEdit(rubric.rubric_id)}
+                                    >
+                                        <EditIcon />
+                                    </IconButton>
+                                </Button>
                         &nbsp;
-                        <button onClick={() => setModalDelete(true)}>
-                                    <DeleteIcon color="secondary" />
-                                </button>
+                                <Button variant="outlined" size="small" className={classes.margin}>
+                                    <IconButton
+                                        aria-label="delete"
+                                        
+                                        onClick={() => setModalDelete(true)}
+                                        color="secondary">
+                                        <DeleteIcon />
+                                    </IconButton>
+                                </Button>
                                 <ModalDeleteRubric
                                     isOpen={isOpenDeleteRubric}
                                     setIsOpen={setIsOpenDeleteRubric}
@@ -362,16 +401,15 @@ export default function CreateAssignment() {
                     height: .5,
                     borderColor: '#C8C8C8'
                 }} />
-                <div className="col-12 mx-auto">
+                <div className="col-12 mx-auto my-4">
                     <div className="row">
                         <div className="col-12 text-center">
-                            <Link className="mr-2" to="/Assignments">
+                            <Link className="mr-2" to="/assignments">
                                 <Buttons
                                     menu="Cancel"
-                                    color="secondary"
                                 />
                             </Link>
-
+                           
                             <Buttons
                                 menu="Create"
                                 color="primary"
@@ -381,7 +419,7 @@ export default function CreateAssignment() {
                         </div>
                     </div>
                 </div>
-                <br />
+
             </Container>
         </>
     )

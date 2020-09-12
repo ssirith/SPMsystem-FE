@@ -9,13 +9,17 @@ import { green } from '@material-ui/core/colors';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 import { Container, Row, Col } from 'reactstrap';
+import { UserContext } from "../UserContext"
 export default function CreateRubric() {
+	const { user, setUser } = useContext(UserContext)
 	let navigate = useNavigate()
 	const [rubricTitle, setRubricTitle] = useState()
 	const handleRubricTitle = (event) => {
 		setRubricTitle(event.target.value)
 	}
-	const [criterions, setCriterions] = useState([])
+	const [criterions, setCriterions] = useState([
+		{ criteria_name: "", criteria_detail: [{ name: "", value: null }] }
+	])
 	function handleCriteriaName(event, index) {
 		criterions[index].criteria_name = event.target.value
 	}
@@ -40,7 +44,16 @@ export default function CreateRubric() {
 		setCriterions([...criterions, { criteria_name: "", criteria_detail: [{ name: "", value: null }] }])
 
 	}
-
+	const checkRole = useCallback(() => {
+		if (user.role === "student" ) {
+		  alert(`You dont'have permission to go this page.`)
+		  navigate("/")
+		}
+	  })
+	
+	  useEffect(() => {
+		checkRole()
+	  }, [user])
 	function addDetailScore(index) {
 		let newCriterions = [...criterions]
 		for (let i = 0; i < newCriterions.length; i++) {
@@ -73,8 +86,7 @@ export default function CreateRubric() {
 		let noti = false;
 		criterions.map((c) => {
 			c.criteria_detail.map((t) => {
-				console.log(t)
-				if (t.name == "" || t.value == null) { // ค่าช่องใดช่องหนึ่งมีค่า input ((t.name !== "" && t.value !== null) && (t.name === "" || t.value === null))
+				if ((t.name == "" || t.value == null) || (typeof t.value === 'string')) {
 					noti = true
 				}
 			})
@@ -90,17 +102,15 @@ export default function CreateRubric() {
 			rubric_title,
 			criterions
 		}
-
 		if (checkInput()) {
-			alert("Check input")
-
+			alert("It's not success, Please check your input !!!")	
 		} else {
 			try {
 				const response = await axios.post(`${process.env.REACT_APP_API_BE}/rubric`, data)
 				if (response.status === 200) {
 					alert("Create Success.")
 					navigate("/createassignment")
-					window.location.reload()
+
 				}
 			} catch (err) {
 				alert("It's not success, Please check your input")
@@ -172,7 +182,7 @@ export default function CreateRubric() {
 																				<Inputtext
 																					id={criteria_detail.criteria_score_id}
 																					onChange={(event) => handleScoreValue(criteria_detail, event, index)}
-																					label={"Value"}
+																					label={"Score"}
 
 																				/>
 																			</div>
@@ -231,6 +241,11 @@ export default function CreateRubric() {
 						/>
 					</Col>
 				</Row>
+
+				<br />
+				<br />
+				<br />
+				<br />
 				<hr style={{
 					color: '#C8C8C8',
 					backgroundColor: '#C8C8C8',
@@ -251,11 +266,10 @@ export default function CreateRubric() {
 								color="primary"
 								onClick={(event) => handleSubmit(event)}
 							/>
-
 						</div>
 					</div>
 				</div>
-				<br />
+				{/* </div> */}
 			</div>
 		</>
 	)

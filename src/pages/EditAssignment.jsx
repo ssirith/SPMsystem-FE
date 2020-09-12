@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useEffect, useContext, useRef } from "react"
 import BreadcrumbNavString from "../components/common/BreadcrumbNavString"
 import Inputtext from "../components/common/Inputtext"
+import IconButton from '@material-ui/core/IconButton';
 import Textarea from "../components/common/Textarea"
 import { Card } from "react-bootstrap"
 import Button from "@material-ui/core/Button"
@@ -20,9 +21,16 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import TimePicker from '../components/common/TimePicker';
 import { keys } from "@material-ui/core/styles/createBreakpoints"
 import dayjs from "dayjs"
+import { makeStyles } from '@material-ui/core/styles';
 import { Container, Row, Col } from 'reactstrap';
+const useStyles = makeStyles((theme) => ({
+    margin: {
+        margin: theme.spacing(1),
+    },
+}));
 // import { Router } from "@material-ui/icons"
 export default function CreateAssignment(props) {
+    const classes = useStyles();
     let navigate = useNavigate()
     const inputRef = useRef()
     const { user, setUser } = useContext(UserContext)
@@ -72,9 +80,20 @@ export default function CreateAssignment(props) {
         })
         setIsPreFetch(false)
     }, [])
+    
     useEffect(() => {
         fetchData()
     }, [])
+    const checkRole = useCallback(() => {
+        if (user.role === "student") {
+          alert(`You dont'have permission to go this page.`)
+          navigate("/")
+        }
+      })
+    
+      useEffect(() => {
+        checkRole()
+      }, [user])
     const handleAssignmentName = (event) => {
         setAssignment_title(event.target.value)
     }
@@ -277,9 +296,20 @@ export default function CreateAssignment(props) {
                 <br />
 
                 <Row>
-                    <Col sm={1}>
+                    <Col sm={5} style={{ marginLeft: 3 }}>
                         Attachment:
                     </Col>
+                    <Col>
+                        <Buttons
+                            menu="Add"
+                            color="primary"
+                            onClick={() => handleClickAdd()}
+                        />
+                    </Col>
+                </Row>
+                <br />
+                <Row>
+                    <Col sm={1}></Col>
                     <Col sm={5}>
                         <Card style={{ marginLeft: 8 }}>
                             <Card.Body >
@@ -290,11 +320,6 @@ export default function CreateAssignment(props) {
                                             name="file"
                                             onChange={(e) => uploadFiles(e)}
                                             ref={inputRef}
-                                        />
-
-                                        <Buttons
-                                            menu="+Add"
-                                            onClick={() => handleClickAdd()}
                                         />
                                     </div>
                                     <ul>
@@ -394,6 +419,9 @@ export default function CreateAssignment(props) {
                 <Row>
                     <Col sm={5} style={{ marginLeft: 3 }}>
                         Reviewer:
+                        <div style={{fontSize : '12px'}}>
+                        (ผู้ประเมินคะแนน)
+                        </div>
                     </Col>
 
                     <Col sm={2}>
@@ -439,13 +467,30 @@ export default function CreateAssignment(props) {
                     <Col sm={3}>
                         {rubric.rubric_id ? (
                             <>
-                                <button onClick={() => setEdit(rubric.rubric_id)}>
+                                {/* <button onClick={() => setEdit(rubric.rubric_id)}>
                                     <EditIcon color="primary" />
-                                </button>
+                                </button> */}
+                                <Button variant="outlined" size="small" className={classes.margin}>
+                                    <IconButton
+                                        aria-label="edit"
+                                        onClick={() => setEdit(rubric.rubric_id)}
+                                    >
+                                        <EditIcon />
+                                    </IconButton>
+                                </Button>
                         &nbsp;
-                        <button onClick={() => setModalDelete(true)}>
+                        {/* <button onClick={() => setModalDelete(true)}>
                                     <DeleteIcon color="secondary" />
-                                </button>
+                                </button> */}
+                                <Button variant="outlined" size="small" className={classes.margin}>
+                                    <IconButton
+                                        aria-label="delete"
+
+                                        onClick={() => setModalDelete(true)}
+                                        color="secondary">
+                                        <DeleteIcon />
+                                    </IconButton>
+                                </Button>
                                 <ModalDeleteRubric
                                     isOpen={isOpenDeleteRubric}
                                     setIsOpen={setIsOpenDeleteRubric}
@@ -467,10 +512,9 @@ export default function CreateAssignment(props) {
                 <div className="col-12 mx-auto">
                     <div className="row">
                         <div className="col-12 text-center">
-                            <Link className="mr-2" to="/Assignments">
+                            <Link className="mr-2" to="/assignments">
                                 <Buttons
                                     menu="Cancel"
-                                    color="secondary"
                                 />
                             </Link>
 

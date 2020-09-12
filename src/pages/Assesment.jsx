@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect, useContext } from "react"
 import BreadcrumbNavStrings from "../components/common/BreadcrumbNavString"
-import { Link, useParams } from "@reach/router"
+import { Link, useParams,useNavigate } from "@reach/router"
 import Buttons from "../components/common/Buttons"
 import axios from "axios"
 import Inputtext from "../components/common/Inputtext"
@@ -8,9 +8,11 @@ import { UserContext } from "../UserContext"
 import { Card } from "react-bootstrap"
 import { CardHeader } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
+
 export default function Assesment(props) {
     const { user, setUser } = useContext(UserContext)
     const { id } = useParams()
+    let navigate = useNavigate()
     const useStyles = makeStyles({
         root: {
             position: "relative",
@@ -35,14 +37,23 @@ export default function Assesment(props) {
     useEffect(() => {
         fetchData()
     }, [])
-
+    const checkRole = useCallback(() => {
+        if (user.role === "student") {
+          alert(`You dont'have permission to go this page.`)
+          navigate("/")
+        }
+      })
+    
+      useEffect(() => {
+        checkRole()
+      }, [user])
     return (
         <>
             <div className="container">
                 <div className="row">
                     <div className="col-12 my-3">
                         <BreadcrumbNavStrings
-                            pastref="/Assignments"
+                            pastref="/assignments"
                             past="All Assignment"
                             pastsref={`/assignments/${props.id}`}
                             pasts={`Assignment ${props.id}`}
