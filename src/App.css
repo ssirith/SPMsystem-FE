@@ -1,3 +1,23 @@
+@font-face {
+  font-family: 'THSarabunNew';
+  font-style: normal;
+  font-weight: 400;
+  src: url('./fonts/THSarabunNew.ttf');
+}
+@font-face {
+  font-family: 'THSarabunNewBold';
+  font-style: normal;
+  font-weight: 400;
+  src: url('./fonts/THSarabunNew Bold.ttf');
+}
+.body{
+  font-family: 'THSarabunNew'!important;
+  font-size: 24px;
+}
+.header{
+  font-family: 'THSarabunNewBold'!important;
+  font-size: 28px;
+}
 .App {
   text-align: center;
   min-height: 100vh !important;
@@ -17,6 +37,9 @@
 }
 .warning {
   color: #ffba07;
+}
+.successStatus {
+  color:  #2fbb18 !important;
 }
 .bg {
   background-color: #336699 !important;

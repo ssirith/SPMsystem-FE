@@ -74,7 +74,7 @@ export default function Assignments() {
       {user.role === "student" && (
         <div className="container mt-5">
           <div className="d-inline my-auto">
-            <FiberManualRecordIcon color="primary" />
+            <FiberManualRecordIcon className="successStatus" />
             <small className="d-inline">Submitted</small>&nbsp;&nbsp;
             <FiberManualRecordIcon className='warning' />
             <small className="d-inline">Submitted Late</small>&nbsp;&nbsp;
