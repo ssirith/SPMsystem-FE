@@ -139,7 +139,7 @@ export default function AssignmentTable(props) {
   }
   async function handleToggle() {
     if (selectedFile.length == 0) {
-      alert("No File")
+      alert("No File selected, please select at least one file before submit")
     } else {
       try {
         var status = ""
@@ -211,14 +211,14 @@ export default function AssignmentTable(props) {
       {/* {console.log("rubric obj", rubric)} */}
       <tr key="main" onClick={toggleExpander}>
         <td className="uk-text-nowrap"></td>
-        <td>{`Assignment: ${props.index}`}</td>
+        <td width='15%'>{`Assignment: ${props.index}`}</td>
         <td>{props.assignment.assignment_title}</td>
         <td className="uk-text-nowrap"></td>
-        <td>
+        <td width='5%'>
 
           {assignment.status ? (
             assignment.status.status === "Submitted" ? (
-              <FiberManualRecordIcon color="primary" />
+              <FiberManualRecordIcon className='successStatus' />
             ) : (
                 <FiberManualRecordIcon className="warning" />
               )
@@ -230,7 +230,7 @@ export default function AssignmentTable(props) {
               />
             )}
         </td>{" "}
-        <td>{`Due ${dayjs(props.assignment.date_time).format(
+        <td width='30%'>{`Due ${dayjs(props.assignment.date_time).format(
           "YYYY MMMM, D / HH:mm A"
         )}`}</td>
         <td>
