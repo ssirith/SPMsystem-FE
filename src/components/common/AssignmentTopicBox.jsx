@@ -11,7 +11,7 @@ const useStyles = makeStyles({
     root: {
         position: "relative",
         minWidth: 275,
-    },
+    },  
     bullet: {
         display: "inline-block",
         margin: "0 2px",
@@ -27,8 +27,6 @@ const useStyles = makeStyles({
 export default function AssignmentTopicBox(props) {
     const { user, setUser } = useContext(UserContext)
     const classes = useStyles()
-    console.log(props.assignments)
-    console.log(props.responsible)
     function IsCheckFilter() {
         if (props.checkFilter === false) {
             return (
@@ -43,11 +41,13 @@ export default function AssignmentTopicBox(props) {
                                             <CardHeader title={`Assignment ${data.assignment_id} `} />
                                             <Card.Body>
                                                 <Card.Text>
-                                                    <div className="container col-12">
+                                                    <div className="container col-12 " style={{ 'fontSize': '20px' }}>
+
                                                         Assignment {data.assignment_id} : {data.assignment_title}<br />
                                                     By {data.teacher_name} on {` ${dayjs(data.due_date).format("MMMM DD, YYYY")}`}
+
                                                         <Link to={`/ assignments / ${data.assignment_id}`} className='d-flex justify-content-end m-2'>
-                                                            <Button size="small" color="primary">
+                                                        <Button variant="contained" size="large" color="primary">
                                                                 More
                                                         </Button>
                                                         </Link>
@@ -69,11 +69,12 @@ export default function AssignmentTopicBox(props) {
                                         <CardHeader title={`Assignment ${data.assignment_id} `} />
                                         <Card.Body>
                                             <Card.Text>
-                                                <div className="container col-12">
+                                                <div className="container col-12" style={{ 'fontSize': '20px' }}>
+
                                                     Assignment {data.assignment_id} : {data.assignment_title}<br />
                                             By {data.teacher_name} on {` ${dayjs(data.due_date).format("MMMM DD, YYYY")}`}
                                                     <Link to={`/assignments/${data.assignment_id}`} className='d-flex justify-content-end m-2'>
-                                                        <Button size="small" color="primary">
+                                                        <Button variant="contained" size="large" color="primary">
                                                             More
                                                 </Button>
                                                     </Link>
@@ -101,11 +102,13 @@ export default function AssignmentTopicBox(props) {
                                                 <CardHeader title={`Assignment ${data.assignment_id} `} />
                                                 <Card.Body>
                                                     <Card.Text>
-                                                        <div className="container col-12">
-                                                            Assignment {data.assignment_id} : {data.assignment_title}<br />
+                                                        <div className="container col-12" style={{ 'fontSize': '20px' }}>
+                                                            
+                                                                Assignment {data.assignment_id} : {data.assignment_title}<br />
                                                     By {data.teacher_name} on {` ${dayjs(data.due_date).format("MMMM DD, YYYY")}`}
+                                                            
                                                             <Link to={`/assignments/${data.assignment_id}`} className='d-flex justify-content-end m-2'>
-                                                                <Button size="small" color="primary">
+                                                            <Button variant="contained" size="large" color="primary">
                                                                     More
                                                         </Button>
                                                             </Link>
@@ -127,11 +130,13 @@ export default function AssignmentTopicBox(props) {
                                             <CardHeader title={`Assignment ${data.assignment_id} `} />
                                             <Card.Body>
                                                 <Card.Text>
-                                                    <div className="container col-12">
-                                                        Assignment {data.assignment_id} : {data.assignment_title}<br />
+                                                    <div className="container col-12" style={{ 'fontSize': '20px' }}>
+                                                    
+                                                            Assignment {data.assignment_id} : {data.assignment_title}<br />
                                             By {data.teacher_name} on {` ${dayjs(data.due_date).format("MMMM DD, YYYY")}`}
+                                                        
                                                         <Link to={`/assignments/${data.assignment_id}`} className='d-flex justify-content-end m-2'>
-                                                            <Button size="small" color="primary">
+                                                        <Button variant="contained" size="large" color="primary">
                                                                 More
                                                 </Button>
                                                         </Link>

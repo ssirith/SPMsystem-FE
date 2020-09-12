@@ -5,39 +5,31 @@ import Inputtext from "./Inputtext"
 import axios from "axios"
 import { useNavigate } from "@reach/router"
 export default function ModalDeleteRubric(props) {
-  let navigate=useNavigate()
-  function checkTodelete(){
-    if(!props.toDelete){
-      props.setIsOpen(false)
-      alert("No rubric to delete !!")
-    }
-  }
-   
+  let navigate = useNavigate()
+  
   async function deleteRubric() {
-    const idForDelete = {
-        rubric_id: props.toDelete.rubric_id
+    const rubric_id= props.toDelete.rubric_id;
+    const data ={
+      rubric_id 
+
     }
+    console.log(data)
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_API_BE}/rubric/delete`,
-        idForDelete
-      )
-      console.log(response)
+        `${process.env.REACT_APP_API_BE}/rubric/delete`,data)
       if (response.status === 200) {
         alert("Delete Success.")
-        setTimeout(()=>{
-          window.location.reload()
-        },1000)
+        navigate("/createassignment")
       }
     } catch (err) {
       console.log(err)
     }
   }
   return (
-    
+
     <Modal
       show={props.isOpen}
-      onHide={() => {props.setIsOpen(false)}}>
+      onHide={() => { props.setIsOpen(false) }}>
       <Modal.Header closeButton>
         <Modal.Title>{props.header}</Modal.Title>
       </Modal.Header>

@@ -19,9 +19,7 @@ export default function ModalDeleteAssignment(props) {
       
       if (response.status === 200) {
         alert("Delete Success.")
-        setTimeout(()=>{
-          window.location.reload()
-        },1000)
+        navigate("/assignments")
       }
     } catch (err) {
       console.log(err)

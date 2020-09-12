@@ -105,20 +105,20 @@ function Submission(props) {
                         search={search}
                     />
                 </div>
-                <br/>
-                <div className="col-12 mx-auto">
+                <br />
+                <div className="col-12 mx-auto my-4">
                     <div className="row">
                         <div className="col-12 text-center">
-                            <Link className="mr-2" to={`/Assignments`}>
+                            <Link className="mr-2" to={`/assignments`}>
                                 <Buttons
                                     menu="Back"
-                                    color="secondary"
                                 />
                             </Link>
                         </div>
                     </div>
                 </div>
             </div>
+            
         </>
     )
 }

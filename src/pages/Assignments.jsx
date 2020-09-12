@@ -63,8 +63,6 @@ export default function Assignments() {
   useEffect(() => {
     fetchData()
   }, [])
-  console.log(teacher_assignments)
-  console.log(responsible)
   if (isPrefetch) {
     return <></>
   }
@@ -84,10 +82,10 @@ export default function Assignments() {
             <small className="d-inline">Late</small>
           </div>
 
-          <table class="table" style={{outlineStyle:'solid',outlineWidth:'1px',outlineColor:'#C4C4C4'}}>
+          <table class="table" style={{ outlineStyle: 'solid', outlineWidth: '1px', outlineColor: '#C4C4C4' }}>
             <thead class="thead-primary">
               <tr>
-                <th colSpan="8" style={{fontSize:'20px'}}>Assignments</th>
+                <th colSpan="8" style={{ fontSize: '20px' }}>Assignments</th>
               </tr>
             </thead>
             <tbody>
@@ -103,7 +101,7 @@ export default function Assignments() {
           <div className="row">
             <div className="col-12 my-3">
               <div className="row">
-                <div className="col-8">
+                <div className="col-8 my-3">
                   <Inputtext
                     type="text"
                     placeholder="Search Assignment Topic"
@@ -112,16 +110,18 @@ export default function Assignments() {
                   />
                 </div>
                 <Link to="/createassignment">
-                  <div className="col-10">
-                    <br />
+                  <div className="col-10 my-4">
                     <Buttons
+                      style={{ backgroundColor: 'green' }}
+                      className="success"
                       menu="Create Assignment"
-                      color="primary"
                     />
-                  </div> 
+                  </div>
                 </Link>
               </div>
             </div>
+          </div>
+          <div className="row">
             <div className="col-12 my-3">
               <div className="row">
                 <div className="col-8">
@@ -138,7 +138,6 @@ export default function Assignments() {
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       )}

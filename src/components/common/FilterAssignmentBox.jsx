@@ -21,9 +21,9 @@ export default function AssignmentTopicBox(props) {
                     <Card style={{ width: '13rem' }}>
                     <div style={{display:"flex", justifyContent:"center"}}>
                         <CardContent>
-                            <RadioGroup aria-label="gender" name="gender1" defaultValue={"All Assignment"}>
-                                <FormControlLabel value="All Assignment" control={<Radio />} label="All Assignment" onChange={() => checkRedio()} />
-                                <FormControlLabel value="My Assignment" control={<Radio />} label="My Assignment" onChange={(e) => checkRedio(e)} />
+                            <RadioGroup aria-label="filter" name="filter" defaultValue={"All Assignment"}>
+                                <FormControlLabel value="All Assignment" control={<Radio color={"primary"}/>} label="All Assignment" onChange={() => checkRedio()} /> {/*label={<span style={{ fontWeight: 'bold' } }>{label}</span>}*/}
+                                <FormControlLabel value="My Assignment" control={<Radio color={"primary"}/>} label="My Assignment" onChange={(e) => checkRedio(e)} />
                             </RadioGroup>
                         </CardContent>
                         </div>

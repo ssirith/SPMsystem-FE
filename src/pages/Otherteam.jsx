@@ -32,7 +32,7 @@ export default function Otherteam(props) {
         <div className="col-12 my-3">
           {group && (
             <BreadcrumbNav
-              pastref="/AllProjects"
+              pastref="/allprojects"
               past="All Project"
               current={group.project}
             />
@@ -72,7 +72,7 @@ export default function Otherteam(props) {
                 />
               </Link>
             ) : (
-              <Link to="/AllProjects">
+              <Link to="/allprojects">
                 <Buttons
                   menu="Back"
                   color="secondary"

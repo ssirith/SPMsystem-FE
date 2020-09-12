@@ -50,7 +50,7 @@ export default function Sidebar(props) {
                   props.statusbar === 2 ? "bg-white" : "bg-light"
                   } rounded`}
               >
-                <Link to="/AllProjects">
+                <Link to="/allprojects">
                   <div className="nav-link">
                     <ListItemIcon>
                       <Business className='ml-3' />
@@ -64,7 +64,7 @@ export default function Sidebar(props) {
                   props.statusbar === 3 ? "bg-white" : "bg-light"
                   } rounded`}
               >
-                <Link to="/Assignments">
+                <Link to="/assignments">
                   <div className="nav-link">
                     <ListItemIcon>
                       <Assignment className='ml-3' />
@@ -78,7 +78,7 @@ export default function Sidebar(props) {
                   props.statusbar === 4 ? "bg-white" : "bg-light"
                   } rounded`}
               >
-                <Link to="/Appointments">
+                <Link to="/appointments">
                   <div className="nav-link">
                     <ListItemIcon>
                       <DateRange className='ml-3' />
@@ -92,7 +92,7 @@ export default function Sidebar(props) {
                   props.statusbar === 5 ? "bg-white" : "bg-light"
                   } rounded`}
               >
-                <Link to="/Annoucements">
+                <Link to="/annoucements">
                   <div className="nav-link">
                     <ListItemIcon>
                       <Speaker className='ml-3' />
@@ -156,7 +156,7 @@ export default function Sidebar(props) {
                   props.statusbar === 3 ? "bg-white" : "bg-light"
                   } rounded`}
               >
-                <Link to="/Assignments">
+                <Link to="/assignments">
                   <div className="nav-link">
                     <ListItemIcon>
                       <Assignment className='ml-3' />
@@ -170,7 +170,7 @@ export default function Sidebar(props) {
                   props.statusbar === 4 ? "bg-white" : "bg-light"
                   } rounded`}
               >
-                <Link to="/Appointments">
+                <Link to="/appointments">
                   <div className="nav-link">
                     <ListItemIcon>
                       <DateRange className='ml-3' />
@@ -184,7 +184,7 @@ export default function Sidebar(props) {
                   props.statusbar === 5 ? "bg-white" : "bg-light"
                   } rounded`}
               >
-                <Link to="/Annoucements">
+                <Link to="/annoucements">
                   <div className="nav-link">
                     <ListItemIcon>
                       <Speaker className='ml-3' />
@@ -234,7 +234,7 @@ export default function Sidebar(props) {
                   props.statusbar === 3 ? "bg-white" : "bg-light"
                   } rounded`}
               >
-                <Link to="/Assignments">
+                <Link to="/assignments">
                   <div className="nav-link">
                     <ListItemIcon>
                       <Assignment className='ml-3' />
@@ -248,7 +248,7 @@ export default function Sidebar(props) {
                   props.statusbar === 4 ? "bg-white" : "bg-light"
                   } rounded`}
               >
-                <Link to="/Appointments">
+                <Link to="/appointments">
                   <div className="nav-link">
                     <ListItemIcon>
                       <DateRange className='ml-3' />
@@ -262,7 +262,7 @@ export default function Sidebar(props) {
                   props.statusbar === 5 ? "bg-white" : "bg-light"
                   } rounded`}
               >
-                <Link to="/Annoucements">
+                <Link to="/annoucements">
                   <div className="nav-link">
                     <ListItemIcon>
                       <Speaker className='ml-3' />
