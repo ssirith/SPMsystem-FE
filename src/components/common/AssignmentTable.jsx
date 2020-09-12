@@ -137,65 +137,69 @@ export default function AssignmentTable(props) {
       Setexpanded(false)
     }
   }
-  async function handleToggle() {
-    if (selectedFile.length == 0) {
-      alert("No File selected, please select at least one file before submit")
-    } else {
-      try {
-        var status = ""
-        if (dayjs().isBefore(dueDate, thisDay)) {
-          status = "Submitted"
-          console.log('in if')
-        } else if ((dayjs().isAfter(thisDay, dueDate))) {
-          status = "SubmittedLate"
-          console.log('in else')
-        }
-        const formData = new FormData()
-        formData.append("assignment_id", assignment.assignment_id)
-        formData.append("student_id", props.user.id)
-        formData.append("status", status)
-        if (selectedFile.length != 0) {
-          for (const acceptFile of selectedFile) {
-            formData.append("send_file_assignment[]", acceptFile) // ทำไมต้องมี [] อันนี้5555 ตอนนั้ผมลองใช้ดูแล้วมันได้ครับ555 เพราะว่าformat ที่เพื่อนตั้งไว้คือarray ที่เป็นfileด้วย
-          }
-        } else {
-          console.log("no file to upload")
-          formData.append("send_file_assignment[]", [])
-        }
-        if (deleteSelectedFile.length != 0) {
-          for (const refuseFile of deleteSelectedFile) {
-            formData.append("delete_file_assignment[]", refuseFile)
-          }
-        } else {
-          console.log("no file to delete")
-          formData.append("delete_file_assignment[]", [])
-        }
-
-        // const formData = {
-        //   assignment_id: assignment.assignment_id,
-        //   student_id: props.user.id,
-        //   status: status,
-        //   send_file_assignment: selectedFile,
-        //   delete_file_assignment: deleteSelectedFile.map((file) => file),
-        // }
-
-        // console.log(formData.send_file_assignment, "formData");
-        // const formsnet = new FormData(formData)
-        // formsnet.append("send_file_assignment[]",selectedFile)
-        const response = await axios.post(
-          `${process.env.REACT_APP_API_BE}/send_assignment`,
-          formData
-        )
-        if (response.status === 200) {
-          alert("Success")
-          window.location.reload()
-        }
-      } catch (err) {
-        console.log(err)
+  async function upLoad() {
+    try {
+      var status = ""
+      if (dayjs().isBefore(dueDate, thisDay)) {
+        status = "Submitted"
+        console.log("in if")
+      } else if (dayjs().isAfter(thisDay, dueDate)) {
+        status = "SubmittedLate"
+        console.log("in else")
       }
+      const formData = new FormData()
+      formData.append("assignment_id", assignment.assignment_id)
+      formData.append("student_id", props.user.id)
+      formData.append("status", status)
+      if (selectedFile.length != 0) {
+        for (const acceptFile of selectedFile) {
+          formData.append("send_file_assignment[]", acceptFile) // ทำไมต้องมี [] อันนี้5555 ตอนนั้ผมลองใช้ดูแล้วมันได้ครับ555 เพราะว่าformat ที่เพื่อนตั้งไว้คือarray ที่เป็นfileด้วย
+        }
+      } else {
+        console.log("no file to upload")
+        formData.append("send_file_assignment[]", [])
+      }
+      if (deleteSelectedFile.length != 0) {
+        for (const refuseFile of deleteSelectedFile) {
+          formData.append("delete_file_assignment[]", refuseFile)
+        }
+      } else {
+        console.log("no file to delete")
+        formData.append("delete_file_assignment[]", [])
+      }
+
+      // const formData = {
+      //   assignment_id: assignment.assignment_id,
+      //   student_id: props.user.id,
+      //   status: status,
+      //   send_file_assignment: selectedFile,
+      //   delete_file_assignment: deleteSelectedFile.map((file) => file),
+      // }
+
+      // console.log(formData.send_file_assignment, "formData");
+      // const formsnet = new FormData(formData)
+      // formsnet.append("send_file_assignment[]",selectedFile)
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_BE}/send_assignment`,
+        formData
+      )
+      if (response.status === 200) {
+        alert("Success")
+        window.location.reload()
+      }
+    } catch (err) {
+      console.log(err)
     }
 
-
+  }
+  function handleToggle() {
+    if(selectedFile.length==0&&deleteSelectedFile.length!=0){
+      upLoad()
+    }else if(selectedFile.length!=0){
+      upLoad()
+    }else if(selectedFile.length==0){
+      alert("No File selected, please select at least one file before submit")
+    }
   }
 
   if (isPrefetch) {
@@ -204,41 +208,43 @@ export default function AssignmentTable(props) {
 
   return (
     <>
-      {console.log('this day is before duedate', dayjs().isBefore(thisDay, dueDate))}
+      {console.log(
+        "this day is before duedate",
+        dayjs().isBefore(thisDay, dueDate)
+      )}
       {/* {console.log('res assigment',response.data)} */}
       {/* {console.log("criterions", rubric.criterions)} */}
       {/* {console.log("sort criterions", newCriterions)} */}
       {/* {console.log("rubric obj", rubric)} */}
       <tr key="main" onClick={toggleExpander}>
         <td className="uk-text-nowrap"></td>
-        <td width='15%'>{`Assignment: ${props.index}`}</td>
+        <td width="15%">{`Assignment: ${props.index}`}</td>
         <td>{props.assignment.assignment_title}</td>
         <td className="uk-text-nowrap"></td>
-        <td width='5%'>
-
+        <td width="5%">
           {assignment.status ? (
             assignment.status.status === "Submitted" ? (
-              <FiberManualRecordIcon className='successStatus' />
+              <FiberManualRecordIcon className="successStatus" />
             ) : (
-                <FiberManualRecordIcon className="warning" />
-              )
+              <FiberManualRecordIcon className="warning" />
+            )
           ) : (
-              <FiberManualRecordIcon
-                color={
-                  dayjs().isBefore(dueDate, thisDay) ? "disabled" : "secondary"
-                }
-              />
-            )}
+            <FiberManualRecordIcon
+              color={
+                dayjs().isBefore(dueDate, thisDay) ? "disabled" : "secondary"
+              }
+            />
+          )}
         </td>{" "}
-        <td width='30%'>{`Due ${dayjs(props.assignment.date_time).format(
+        <td width="30%">{`Due ${dayjs(props.assignment.date_time).format(
           "YYYY MMMM, D / HH:mm A"
         )}`}</td>
         <td>
           {expanded ? (
             <RemoveIcon color="primary" />
           ) : (
-              <AddIcon color="primary" />
-            )}
+            <AddIcon color="primary" />
+          )}
         </td>
       </tr>
 
@@ -247,12 +253,13 @@ export default function AssignmentTable(props) {
           <td className="uk-background-muted" colSpan={7}>
             <div ref={expanderBody} className="inner uk-grid">
               <div className="uk-width-1-4 uk-text-center">
-                <small className="text-danger">{`by ${assignment.teacher.teacher_name
-                  } on ${dayjs(props.assignment.created_at).format(
-                    "MMMM DD, YYYY"
-                  )} At ${dayjs(props.assignment.created_at).format(
-                    "HH:mm A"
-                  )} `}</small>
+                <small className="text-danger">{`by ${
+                  assignment.teacher.teacher_name
+                } on ${dayjs(props.assignment.created_at).format(
+                  "MMMM DD, YYYY"
+                )} At ${dayjs(props.assignment.created_at).format(
+                  "HH:mm A"
+                )} `}</small>
               </div>
               <div className="container row">
                 <div className="col-8">
@@ -260,17 +267,15 @@ export default function AssignmentTable(props) {
                     <div className="col-2 p-0">
                       <p className="m-0">Due Date:&nbsp;</p>
                       <p className="m-0">Description:&nbsp;</p>
-
-
                     </div>
                     <div className="col-4 p-0">
                       <div className="d-flex">
                         &nbsp;
                         <p className="text-danger m-0">{` ${dayjs(
-                        props.assignment.due_date
-                      ).format("MMMM d, YYYY")} at ${dayjs(
-                        props.assignment.date_time
-                      ).format("HH:mm A")}`}</p>
+                          props.assignment.due_date
+                        ).format("MMMM d, YYYY")} at ${dayjs(
+                          props.assignment.date_time
+                        ).format("HH:mm A")}`}</p>
                       </div>
                       <p className="text-break">
                         {props.assignment.assignment_detail}
@@ -305,7 +310,7 @@ export default function AssignmentTable(props) {
                     </div>
                     &nbsp;&nbsp;&nbsp;
                     <p
-                      style={{ cursor: "pointer", color: '#3f51b5' }}
+                      style={{ cursor: "pointer", color: "#3f51b5" }}
                       className="linkRubric"
                       onClick={() => {
                         setIsOpenRubric(true)
@@ -411,7 +416,7 @@ export default function AssignmentTable(props) {
                   </div>
                   <div className=" float-right pt-3">
                     <Buttons
-                      style={{ backgroundColor: 'green' }}
+                      style={{ backgroundColor: "green" }}
                       className="success"
                       menu="Feedback"
                       onClick={() => setIsOpenFeedback(true)}
