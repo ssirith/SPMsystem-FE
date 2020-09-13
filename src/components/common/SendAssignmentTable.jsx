@@ -1,4 +1,5 @@
-import React, { useState, useCallback, useEffect } from "react"
+import React, { useState, useCallback, useEffect,useContext } from "react"
+import { UserContext } from "../../UserContext"
 import axios from "axios"
 import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord"
 import { makeStyles } from '@material-ui/core/styles';
@@ -25,12 +26,13 @@ function SendAssignmentTable(props) {
     const [temp, setTemp] = useState()
     const [checkFilterDepartment, setCheckFilterDepartment] = useState("All")
     const [score, setScore] = useState("")
+    const { user, setUser } = useContext(UserContext)
     const fetchData = useCallback(
         async () => {
             setIsPreFetch(true)
-            const res = await axios.get(`${process.env.REACT_APP_API_BE}/send_assignment/${props.id}`)
+            const res = await axios.get(`${process.env.REACT_APP_API_BE}/send_assignment/${props.id}/teacher/${user.id}`)
             let tempSend = [];
-            res.data.map(r => {
+            res.data.submission.map(r => {
                 {
                     r.project_id.length > 4 ? (
                         tempSend.push({

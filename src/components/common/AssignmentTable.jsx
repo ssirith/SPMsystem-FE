@@ -28,14 +28,14 @@ export default function AssignmentTable(props) {
   const [newCriterions, setNewCriterions] = useState([])
   var thisDay = dayjs(new Date()).format("YYYY-M-D HH:mm")
   var dueDate = props.assignment.date_time
-  const mockFeedback =[
+  const mockFeedback = [
     {
-      author:'Jame',
-      detail:'sadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasd'
+      author: 'Jame',
+      detail: 'sadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasd'
     },
     {
-      author:'Joel',
-      detail:'21321312321312313131231231'
+      author: 'Joel',
+      detail: '21321312321312313131231231'
     }
   ]
 
@@ -203,11 +203,9 @@ export default function AssignmentTable(props) {
 
   }
   function handleToggle() {
-    if(selectedFile.length==0&&deleteSelectedFile.length!=0){
+    if (selectedFile.length != 0) {
       upLoad()
-    }else if(selectedFile.length!=0){
-      upLoad()
-    }else if(selectedFile.length==0){
+    } else {
       alert("No File selected, please select at least one file before submit")
     }
   }
@@ -236,15 +234,15 @@ export default function AssignmentTable(props) {
             assignment.status.status === "Submitted" ? (
               <FiberManualRecordIcon className="successStatus" />
             ) : (
-              <FiberManualRecordIcon className="warning" />
-            )
+                <FiberManualRecordIcon className="warning" />
+              )
           ) : (
-            <FiberManualRecordIcon
-              color={
-                dayjs().isBefore(dueDate, thisDay) ? "disabled" : "secondary"
-              }
-            />
-          )}
+              <FiberManualRecordIcon
+                color={
+                  dayjs().isBefore(dueDate, thisDay) ? "disabled" : "secondary"
+                }
+              />
+            )}
         </td>{" "}
         <td width="30%">{`Due ${dayjs(props.assignment.date_time).format(
           "YYYY MMMM, D / HH:mm A"
@@ -253,8 +251,8 @@ export default function AssignmentTable(props) {
           {expanded ? (
             <RemoveIcon color="primary" />
           ) : (
-            <AddIcon color="primary" />
-          )}
+              <AddIcon color="primary" />
+            )}
         </td>
       </tr>
 
@@ -263,13 +261,12 @@ export default function AssignmentTable(props) {
           <td className="uk-background-muted" colSpan={7}>
             <div ref={expanderBody} className="inner uk-grid">
               <div className="uk-width-1-4 uk-text-center">
-                <small className="text-danger">{`by ${
-                  assignment.teacher.teacher_name
-                } on ${dayjs(props.assignment.created_at).format(
-                  "MMMM DD, YYYY"
-                )} At ${dayjs(props.assignment.created_at).format(
-                  "HH:mm A"
-                )} `}</small>
+                <small className="text-danger">{`by ${assignment.teacher.teacher_name
+                  } on ${dayjs(props.assignment.created_at).format(
+                    "MMMM DD, YYYY"
+                  )} At ${dayjs(props.assignment.created_at).format(
+                    "HH:mm A"
+                  )} `}</small>
               </div>
               <div className="container row">
                 <div className="col-8">
@@ -282,10 +279,10 @@ export default function AssignmentTable(props) {
                       <div className="d-flex">
                         &nbsp;
                         <p className="text-danger m-0">{` ${dayjs(
-                          props.assignment.due_date
-                        ).format("MMMM d, YYYY")} at ${dayjs(
-                          props.assignment.date_time
-                        ).format("HH:mm A")}`}</p>
+                        props.assignment.due_date
+                      ).format("MMMM d, YYYY")} at ${dayjs(
+                        props.assignment.date_time
+                      ).format("HH:mm A")}`}</p>
                       </div>
                       <p className="text-break">
                         {props.assignment.assignment_detail}

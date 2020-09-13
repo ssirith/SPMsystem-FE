@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect, useContext } from "react"
 import BreadcrumbNavStrings from "../components/common/BreadcrumbNavString"
-import { Link, useParams,useNavigate } from "@reach/router"
+import { Link, useParams, useNavigate } from "@reach/router"
 import Buttons from "../components/common/Buttons"
 import axios from "axios"
 import Inputtext from "../components/common/Inputtext"
@@ -39,16 +39,17 @@ export default function Assesment(props) {
     }, [])
     const checkRole = useCallback(() => {
         if (user.role === "student") {
-          alert(`You dont'have permission to go this page.`)
-          navigate("/")
+            alert(`You dont'have permission to go this page.`)
+            navigate("/")
         }
-      })
-    
-      useEffect(() => {
+    })
+
+    useEffect(() => {
         checkRole()
-      }, [user])
+    }, [user])
     return (
         <>
+            {user.role === "aa" ? (<></>) : (<></>)}
             <div className="container">
                 <div className="row">
                     <div className="col-12 my-3">
@@ -65,7 +66,7 @@ export default function Assesment(props) {
                     <div className="col-12  text-center">
                         <Card className={classes.root}>
                             <CardHeader
-                            title={`Assignment ${props.id} : Test 1 -> SITXX-XX`}
+                                title={`Assignment ${props.id} : Test 1 -> SITXX-XX`}
                             />
                         </Card>
                     </div>
@@ -77,8 +78,9 @@ export default function Assesment(props) {
                             Students Assignment
                         </div>
                     </div>
-                </div>             
+                </div>
             </div>
         </>
+
     )
 }
