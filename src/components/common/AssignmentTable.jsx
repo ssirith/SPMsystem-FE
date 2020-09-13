@@ -28,6 +28,16 @@ export default function AssignmentTable(props) {
   const [newCriterions, setNewCriterions] = useState([])
   var thisDay = dayjs(new Date()).format("YYYY-M-D HH:mm")
   var dueDate = props.assignment.date_time
+  const mockFeedback =[
+    {
+      author:'Jame',
+      detail:'sadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasd'
+    },
+    {
+      author:'Joel',
+      detail:'21321312321312313131231231'
+    }
+  ]
 
   const fetchData = useCallback(async () => {
     try {
@@ -424,6 +434,7 @@ export default function AssignmentTable(props) {
                     <ModalFeedback
                       isOpen={isOpenFeedback}
                       setIsOpen={setIsOpenFeedback}
+                      feedback={mockFeedback}
                     />
                   </div>
                 </div>
