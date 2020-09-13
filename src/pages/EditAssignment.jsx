@@ -267,9 +267,9 @@ export default function CreateAssignment(props) {
                 <br />
                 <Row style={{ alignItems: "center" }}>
                     <Col sm={1}>
-                        Title:
+                        Title:<span className="text-danger">*</span>
                     </Col>
-                    <Col sm={8}>
+                    <Col sm={8}  style={{ marginLeft: 5 }}> 
                         <Inputtext
                             id="assignmentname"
                             label="Input Assignment Name"
@@ -284,7 +284,7 @@ export default function CreateAssignment(props) {
                     <Col sm={1}>
                         Description:
                     </Col>
-                    <Col sm={8}>
+                    <Col sm={8}  style={{ marginLeft: 5 }}>
                         <Textarea
                             id="description"
                             label="Input Assignment Description"
@@ -311,7 +311,7 @@ export default function CreateAssignment(props) {
                 <Row>
                     <Col sm={1}></Col>
                     <Col sm={5}>
-                        <Card style={{ marginLeft: 8 }}>
+                        <Card style={{ marginLeft: 13}}>
                             <Card.Body >
                                 <div className="row">
                                     <div className="col-12 text-center m-2">
@@ -383,7 +383,7 @@ export default function CreateAssignment(props) {
 
                 <Row>
                     <Col sm={1.5} style={{ marginLeft: 15 }}>
-                        Due Date:
+                        Due Date:<span className="text-danger">*</span>
                     </Col>
                     <Col sm={6} style={{ marginLeft: 17 }}>
                         <DueDate
@@ -400,7 +400,7 @@ export default function CreateAssignment(props) {
                 <br />
                 <Row>
                     <Col sm={1.5} style={{ marginLeft: 15 }}>
-                        Due Time:
+                        Due Time:<span className="text-danger">*</span>
                     </Col>
                     <Col sm={6} style={{ marginLeft: 17 }}>
                         <TimePicker
@@ -418,7 +418,7 @@ export default function CreateAssignment(props) {
 
                 <Row>
                     <Col sm={5} style={{ marginLeft: 3 }}>
-                        Reviewer:
+                        Reviewer:<span className="text-danger">*</span>
                         <div style={{fontSize : '12px'}}>
                         (ผู้ประเมินคะแนน)
                         </div>
@@ -451,7 +451,7 @@ export default function CreateAssignment(props) {
 
                 <Row>
                     <Col sm={1}>
-                        Rubric:
+                        Rubric:<span className="text-danger">*</span>
                         </Col>
                     <Col sm={3} style={{ marginLeft: 3 }}>
                         <DropdownRubric

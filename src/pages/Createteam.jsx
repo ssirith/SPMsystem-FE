@@ -184,8 +184,6 @@ export default function Createteam() {
             <Link className="mr-2" to="/">
               <Buttons
                 menu="Cancel"
-                color="secondary"
-                onClick={() => console.log("Cancel")}
               />
             </Link>
 

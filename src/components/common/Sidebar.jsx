@@ -142,7 +142,7 @@ export default function Sidebar(props) {
                   props.statusbar === 2 ? "bg-white" : "bg-light"
                   } rounded`}
               >
-                <Link to="/AllProjects">
+                <Link to="/allprojects">
                   <div className="nav-link">
                     <ListItemIcon>
                       <Business className='ml-3' />

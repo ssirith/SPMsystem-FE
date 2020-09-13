@@ -51,7 +51,7 @@ export default function Myteam() {
   if (isPreFetch) {
     return <></>
   }
-
+  console.log(group)
   return (
     <>
 
@@ -165,7 +165,6 @@ export default function Myteam() {
       )}
       {user.role == "aa" && (
         <>
-          {group ? (
             <div className="container">
               <div className="row mt-5">
                 {group.map((data, index) => {
@@ -176,16 +175,7 @@ export default function Myteam() {
                   )
                 })}
               </div>
-            </div>
-          ) : (
-              <div className="container text-center my-auto">
-                <img src='/image/allproject.jpg' alt='Dashboard logo' className='img-fluid' width='50%' height='auto' />
-                <p>
-                  Oops, you don't have any project.
-              </p>
-              </div>
-            )}
-
+            </div>      
         </>
       )}
     </>

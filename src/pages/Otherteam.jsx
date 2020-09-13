@@ -64,26 +64,22 @@ export default function Otherteam(props) {
         <div className="row">
           <div className="col-12 text-center">
             {user.role == "aa" ? (
-              <Link to="/">
+              <Link to="/allprojects">
                 <Buttons
                   menu="Back"
-                  color="secondary"
-                  onClick={() => console.log("Back")}
                 />
               </Link>
             ) : (
               <Link to="/allprojects">
                 <Buttons
                   menu="Back"
-                  color="secondary"
-                  onClick={() => console.log("Back")}
-                />
+                /> 
               </Link>
             )}
 
             {user.role == "aa" && (
               <Link to={`/editteam/${id}`} className="mx-2">
-                <Buttons menu="Edit" />
+                <Buttons menu="Edit" color = "primary" />
               </Link>
             )}
           </div>

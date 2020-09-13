@@ -22,6 +22,7 @@ export default function ModalDeleteRubric(props) {
         navigate("/createassignment")
       }
     } catch (err) {
+      alert("This rubric is using on others assignment !!")
       console.log(err)
     }
   }

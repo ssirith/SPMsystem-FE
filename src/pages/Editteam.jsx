@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect,useContext } from "react"
+import React, { useState, useCallback, useEffect, useContext } from "react"
 import Inputtext from "../components/common/Inputtext"
 import Topicbox from "../components/common/Topicbox"
 import MembersboxEdit from "../components/common/MembersboxEdit"
@@ -82,7 +82,7 @@ export default function Editteam(props) {
     temp.push(value.teacher_id)
     setAdvisorForDelete(temp)
   }
-  
+
   const handleSubmit = async (event) => {
     const project_id = project.project_id;
     const group_id = member[0].group_id;
@@ -93,11 +93,11 @@ export default function Editteam(props) {
     const add_student_id = [];
     member.map(m => add_student_id.push(m.student_id));
     const value = students.find((std) => std.student_id === user.id)//no std.id
-    if(value){
-      add_student_id.push(value.student_id) 
+    if (value) {
+      add_student_id.push(value.student_id)
     }
     let add_student_id_unique = [...new Set(add_student_id)]
-    
+
     const add_teacher_id = [];
     advisor.map(a => add_teacher_id.push(a.teacher_id));
 
@@ -112,7 +112,7 @@ export default function Editteam(props) {
       add_teacher_id: add_teacher_id,
       project_detail: project_detail
     }
-    
+
     try {
       const response = await axios.
         put(`${process.env.REACT_APP_API_BE}/projects/edit/${project_id}`, dataForEdit)
@@ -123,7 +123,7 @@ export default function Editteam(props) {
       }
     } catch (err) {
       console.log(err)
-      alert("It's not success, Please check your input") 
+      alert("It's not success, Please check your input")
     }
 
   }
@@ -231,7 +231,7 @@ export default function Editteam(props) {
           <div className="col-12 text-center">
             <Link className='mr-2' to="/">
               <Buttons menu="Cancel"
-                color="secondary" />
+              />
             </Link>
             <Link to="/">
               <Buttons
