@@ -5,10 +5,13 @@ export default function BreadcrumbNavString(props) {
     <div>
       <Breadcrumb>
         <Breadcrumb.Item href={props.pastref}>{props.past}</Breadcrumb.Item>
-        <Breadcrumb.Item active>
-          {props.current}
-        </Breadcrumb.Item>
-       
+        {props.pastsref && props.pasts ? (
+          <Breadcrumb.Item href={props.pastsref}>{props.pasts}</Breadcrumb.Item>
+        ) : (
+          <></>
+        )}
+
+        <Breadcrumb.Item active>{props.current}</Breadcrumb.Item>
       </Breadcrumb>
     </div>
   )

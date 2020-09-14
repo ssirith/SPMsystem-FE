@@ -12,6 +12,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Buttons from "./Buttons";
+import { Link } from "@reach/router";
 
 function SendAssignmentTable(props) {
     const useStyles = makeStyles({
@@ -66,6 +67,7 @@ function SendAssignmentTable(props) {
 
     return (
         <>
+        {console.log('send ass',send_assignment)}
             <TableContainer component={Paper}>
                 <Table className={classes.table} size="small" aria-label="a dense table" >
                     <TableHead>
@@ -103,10 +105,13 @@ function SendAssignmentTable(props) {
                                                                             data.status === "SubmittedLate" ? (<TableCell align="center"><FiberManualRecordIcon color="secondary" /><medium className="d-inline">Late</medium></TableCell>) : (<></>))}
                                                                     <TableCell align="center">{}</TableCell>
                                                                     <TableCell align="center">
-                                                                        <Buttons
-                                                                            menu={"Assesment"}
-                                                                            color="primary"
-                                                                        />
+                                                                    {user.role==='teacher'?(<Buttons
+                                                                                menu={"Assesment"}
+                                                                                color="primary"
+                                                                            /> ):( <Link to ={`/assesment/${data.assignment_id}/${data.project_id}`}><Buttons
+                                                                                menu={"View"}
+                                                                                color="primary"
+                                                                            /></Link>)}
                                                                     </TableCell>
                                                                 </TableRow>
                                                             </>
@@ -128,10 +133,13 @@ function SendAssignmentTable(props) {
                                                                             data.status === "SubmittedLate" ? (<TableCell align="center"><FiberManualRecordIcon color="secondary" /><medium className="d-inline">Late</medium></TableCell>) : (<></>))}
                                                                     <TableCell align="center">{}</TableCell>
                                                                     <TableCell align="center">
-                                                                        <Buttons
-                                                                            menu={"Assesment"}
+                                                                    {user.role==='teacher'?(<Buttons
+                                                                                menu={"Assesment"}
+                                                                                color="primary"
+                                                                            /> ):( <Link to ={`/assesment/${data.assignment_id}/${data.project_id}`}><Buttons
+                                                                            menu={"View"}
                                                                             color="primary"
-                                                                        />
+                                                                        /></Link>)}
                                                                     </TableCell>
                                                                 </TableRow>
                                                             </>)
@@ -161,10 +169,13 @@ function SendAssignmentTable(props) {
                                                                                 data.status === "SubmittedLate" ? (<TableCell align="center"><FiberManualRecordIcon color="secondary" /><medium className="d-inline">Late</medium></TableCell>) : (<></>))}
                                                                         <TableCell align="center">{}</TableCell>
                                                                         <TableCell align="center">
-                                                                            <Buttons
+                                                                        {user.role==='teacher'?(<Buttons
                                                                                 menu={"Assesment"}
                                                                                 color="primary"
-                                                                            />
+                                                                            /> ):( <Link to ={`/assesment/${data.assignment_id}/${data.project_id}`}><Buttons
+                                                                            menu={"View"}
+                                                                            color="primary"
+                                                                        /></Link>)}
                                                                         </TableCell>
                                                                     </TableRow>
                                                                 </>)
@@ -184,10 +195,13 @@ function SendAssignmentTable(props) {
                                                                         data.status === "SubmittedLate" ? (<TableCell align="center"><FiberManualRecordIcon color="secondary" /><medium className="d-inline">Late</medium></TableCell>) : (<></>))}
                                                                 <TableCell align="center">{}</TableCell>
                                                                 <TableCell align="center">
-                                                                    <Buttons
-                                                                        menu={"Assesment"}
-                                                                        color="primary"
-                                                                    />
+                                                                {user.role==='teacher'?(<Buttons
+                                                                                menu={"Assesment"}
+                                                                                color="primary"
+                                                                            /> ):(<Link to ={`/assesment/${data.assignment_id}/${data.project_id}`}><Buttons
+                                                                            menu={"View"}
+                                                                            color="primary"
+                                                                        /></Link>)}
                                                                 </TableCell>
                                                             </TableRow>
                                                         </>)
@@ -219,10 +233,14 @@ function SendAssignmentTable(props) {
                                                                                 data.status === "SubmittedLate" ? (<TableCell align="center"><FiberManualRecordIcon color="secondary" /><medium className="d-inline">Late</medium></TableCell>) : (<></>))}
                                                                         <TableCell align="center">{}</TableCell>
                                                                         <TableCell align="center">
-                                                                            <Buttons
+                                                                            {user.role==='teacher'?( <Buttons
                                                                                 menu={"Assesment"}
                                                                                 color="primary"
-                                                                            />
+                                                                            />):( <Link to ={`/assesment/${data.assignment_id}/${data.project_id}`}><Buttons
+                                                                            menu={"View"}
+                                                                            color="primary"
+                                                                        /></Link>)}
+                                                                           
                                                                         </TableCell>
                                                                     </TableRow>
                                                                 </>)
@@ -242,10 +260,13 @@ function SendAssignmentTable(props) {
                                                                         data.status === "SubmittedLate" ? (<TableCell align="center"><FiberManualRecordIcon color="secondary" /><medium className="d-inline">Late</medium></TableCell>) : (<></>))}
                                                                 <TableCell align="center">{}</TableCell>
                                                                 <TableCell align="center">
-                                                                    <Buttons
-                                                                        menu={"Assesment"}
-                                                                        color="primary"
-                                                                    />
+                                                                {user.role==='teacher'?(<Buttons
+                                                                                menu={"Assesment"}
+                                                                                color="primary"
+                                                                            /> ):( <Link to ={`/assesment/${data.assignment_id}/${data.project_id}`}><Buttons
+                                                                            menu={"View"}
+                                                                            color="primary"
+                                                                        /></Link>)}
                                                                 </TableCell>
                                                             </TableRow>
                                                         </>)
@@ -277,10 +298,13 @@ function SendAssignmentTable(props) {
                                                                                 data.status === "SubmittedLate" ? (<TableCell align="center"><FiberManualRecordIcon color="secondary" /><medium className="d-inline">Late</medium></TableCell>) : (<></>))}
                                                                         <TableCell align="center">{}</TableCell>
                                                                         <TableCell align="center">
-                                                                            <Buttons
+                                                                        {user.role==='teacher'?( <Buttons
                                                                                 menu={"Assesment"}
                                                                                 color="primary"
-                                                                            />
+                                                                            />):( <Link to ={`/assesment/${data.assignment_id}/${data.project_id}`}><Buttons
+                                                                            menu={"View"}
+                                                                            color="primary"
+                                                                        /></Link>)}
                                                                         </TableCell>
                                                                     </TableRow>
                                                                 </>)
@@ -300,10 +324,13 @@ function SendAssignmentTable(props) {
                                                                         data.status === "SubmittedLate" ? (<TableCell align="center"><FiberManualRecordIcon color="secondary" /><medium className="d-inline">Late</medium></TableCell>) : (<></>))}
                                                                 <TableCell align="center">{}</TableCell>
                                                                 <TableCell align="center">
-                                                                    <Buttons
-                                                                        menu={"Assesment"}
-                                                                        color="primary"
-                                                                    />
+                                                                {user.role==='teacher'?(<Buttons
+                                                                                menu={"Assesment"}
+                                                                                color="primary"
+                                                                            /> ):( <Link to ={`/assesment/${data.assignment_id}/${data.project_id}`}><Buttons
+                                                                            menu={"View"}
+                                                                            color="primary"
+                                                                        /></Link>)}
                                                                 </TableCell>
                                                             </TableRow>
                                                         </>)
@@ -335,10 +362,13 @@ function SendAssignmentTable(props) {
                                                                                 data.status === "SubmittedLate" ? (<TableCell align="center"><FiberManualRecordIcon color="secondary" /><medium className="d-inline">Late</medium></TableCell>) : (<></>))}
                                                                         <TableCell align="center">{}</TableCell>
                                                                         <TableCell align="center">
-                                                                            <Buttons
+                                                                        {user.role==='teacher'?(<Buttons
                                                                                 menu={"Assesment"}
                                                                                 color="primary"
-                                                                            />
+                                                                            /> ):( <Link to ={`/assesment/${data.assignment_id}/${data.project_id}`}><Buttons
+                                                                            menu={"View"}
+                                                                            color="primary"
+                                                                        /></Link>)}
                                                                         </TableCell>
                                                                     </TableRow>
                                                                 </>)
@@ -358,10 +388,13 @@ function SendAssignmentTable(props) {
                                                                         data.status === "SubmittedLate" ? (<TableCell align="center"><FiberManualRecordIcon color="secondary" /><medium className="d-inline">Late</medium></TableCell>) : (<></>))}
                                                                 <TableCell align="center">{}</TableCell>
                                                                 <TableCell align="center">
-                                                                    <Buttons
-                                                                        menu={"Assesment"}
-                                                                        color="primary"
-                                                                    />
+                                                                {user.role==='teacher'?(<Buttons
+                                                                                menu={"Assesment"}
+                                                                                color="primary"
+                                                                            /> ):( <Link to ={`/assesment/${data.assignment_id}/${data.project_id}`}><Buttons
+                                                                            menu={"View"}
+                                                                            color="primary"
+                                                                        /></Link>)}
                                                                 </TableCell>
                                                             </TableRow>
                                                         </>)

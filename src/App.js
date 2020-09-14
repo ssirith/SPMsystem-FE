@@ -15,6 +15,7 @@ import EditAssignment from "./pages/EditAssignment"
 import CreateRubric from "./pages/CreateRubric"
 import EditRubric from "./pages/EditRubric"
 import Assesment from "./pages/Assesment"
+import ViewAssesment from "./pages/ViewAssesment"
 import Appointments from "./pages/Appointments"
 import Annoucements from "./pages/Annoucements"
 import Setting from "./pages/Setting"
@@ -38,8 +39,8 @@ function App() {
   const [user, setUser] = useState({
 
     id: "1", //เวลา demo  เปลี่ยนที่นี่
-    name: "Siam",
-    role: "teacher", //เวลา demo  เปลี่ยนที่นี่
+    name: "siam",
+    role: "aa", //เวลา demo  เปลี่ยนที่นี่
 
   })
  
@@ -115,6 +116,11 @@ function App() {
             <MainLayout
               path="/assignments/:id/assesment"
               component={Assesment}
+              statusbar={3}
+            />
+            <MainLayout
+              path="/assesment/:id/:project_id"
+              component={ViewAssesment}
               statusbar={3}
             />
             <MainLayout
