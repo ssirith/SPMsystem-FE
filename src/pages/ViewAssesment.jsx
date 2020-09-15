@@ -271,7 +271,7 @@ export default function ViewAssesment() {
                                                 ) {
                                                   newScore = score.score
                                                 }
-                                                return newScore > 0 ? (
+                                                return newScore >= 0 ? (
                                                   <input
                                                     key={index}
                                                     type="text"
