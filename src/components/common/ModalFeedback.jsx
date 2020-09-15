@@ -10,6 +10,7 @@ export default function ModalFeedback(props) {
       counter > props.feedback.length - 1 ||
       counter == props.feedback.length - 1
     ) {
+      setCounter(0)
       console.log("too much")
     } else if (counter < props.feedback.length - 1) {
       setCounter(counter + 1)
@@ -19,13 +20,14 @@ export default function ModalFeedback(props) {
     if (counter >= props.feedback.length - 1) {
       setCounter(counter - 1)
     } else if (counter == 0) {
+      setCounter(props.feedback.length - 1)
       console.log("already 0")
     }
   }
   return (
     <>
       {console.log("counter", counter)}
-      {console.log("length", props.feedback.length)}
+      {console.log("length", props.feedback)}
       <Modal
         show={props.isOpen}
         onHide={() => {
@@ -37,8 +39,8 @@ export default function ModalFeedback(props) {
       >
         <Modal.Header closeButton>
           <Modal.Title>
-            {`Feedback:   ${props.feedback[counter].author} `}
-            <ArrowBackOutlinedIcon
+            {`Feedback`}
+            <ArrowBackOutlinedIcon className='mx-2'
             fontSize='small'
               style={{ cursor: "pointer", backgroundColor:'#336699',borderRadius:'50%',color:'white'  }}
               onClick={() => {
@@ -55,7 +57,8 @@ export default function ModalFeedback(props) {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p className="text-break">{props.feedback[counter].detail}</p>
+          {props.feedback.length!=0&&(<p className="text-break">{props.feedback[counter].feedback_detail}</p>)}
+            
         </Modal.Body>
       </Modal>
     </>

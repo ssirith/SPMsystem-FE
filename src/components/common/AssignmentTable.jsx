@@ -24,7 +24,6 @@ export default function AssignmentTable(props) {
   const expanderBody = useRef()
   const uploadFileRef = useRef()
   const [isPrefetch, setIsPreFetch] = useState(false)
-  const [rubric, setRubric] = useState({})
   const [newCriterions, setNewCriterions] = useState([])
   var thisDay = dayjs(new Date()).format("YYYY-M-D HH:mm")
   var dueDate = props.assignment.date_time
@@ -331,6 +330,20 @@ export default function AssignmentTable(props) {
                       newCriterions={newCriterions}
                     />
                   </div>
+                  <div className="row">
+                    <div className="col-2 p-0">
+                      <p>Score:&nbsp;</p>
+                    </div>
+                    &nbsp;&nbsp;&nbsp;
+                    {assignment.status&&(
+                      <p>
+                      {assignment.status&&assignment.status.total_score!=null?(assignment.status.total_score):(<>-</>)}
+                    </p>
+                    )}
+                    
+                   
+                  </div>
+
                 </div>
 
                 <div className="col-4">
@@ -431,7 +444,7 @@ export default function AssignmentTable(props) {
                     <ModalFeedback
                       isOpen={isOpenFeedback}
                       setIsOpen={setIsOpenFeedback}
-                      feedback={mockFeedback}
+                      feedback={assignment.feedback}
                     />
                   </div>
                 </div>
