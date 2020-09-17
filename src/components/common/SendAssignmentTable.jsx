@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect,useContext } from "react"
+import React, { useState, useCallback, useEffect, useContext } from "react"
 import { UserContext } from "../../UserContext"
 import axios from "axios"
 import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord"
@@ -21,12 +21,9 @@ function SendAssignmentTable(props) {
         },
     });
     const classes = useStyles();
-    const [search, setSearch] = useState("")
     const [isPreFetch, setIsPreFetch] = useState(false)
+    const [permission, setPermission] = useState("")
     const [send_assignment, setSend_assignment] = useState()
-    const [temp, setTemp] = useState()
-    const [checkFilterDepartment, setCheckFilterDepartment] = useState("All")
-    const [score, setScore] = useState("")
     const { user, setUser } = useContext(UserContext)
     const fetchData = useCallback(
         async () => {
@@ -40,42 +37,45 @@ function SendAssignmentTable(props) {
                             assignment_id: r.assignment_id,
                             project_department: r.project_department,
                             project_id: r.project_id.substring(0, 3) + "60-" + r.project_id.substring(r.project_id.length - 2, r.project_id.length),
+                            project_id_BE:r.project_id,
                             status: r.status,
-                            total_score: r.total_score
+                            total_score: r.total_score,
+                            permission: r.permission
                         })
-                        // data.project_id.substring(0, 3) + "60-" + data.project_id.substring(data.project_id.length - 2, data.project_id.length)
                     ) : (
                             tempSend.push({
                                 assignment_id: r.assignment_id,
                                 project_department: r.project_department,
                                 project_id: r.project_id.substring(0, 2) + "60-" + r.project_id.substring(r.project_id.length - 2, r.project_id.length),
+                                project_id_BE:r.project_id,
                                 status: r.status,
-                                total_score: r.total_score
+                                total_score: r.total_score,
+                                permission: r.permission
                             })
 
                         )
                 }
             })
-
+          
+            setPermission(res.data.permission)
             setSend_assignment(tempSend)
             setIsPreFetch(false)
-        }, [])
-
+        }, []) 
+        console.log(send_assignment)
+        console.log(user.id)
     useEffect(() => {
         fetchData()
     }, [])
-
     return (
         <>
-        {console.log('send ass',send_assignment)}
             <TableContainer component={Paper}>
                 <Table className={classes.table} size="small" aria-label="a dense table" >
                     <TableHead>
-                        <TableRow style={{ background: "#989898" }}>
-                            <TableCell align="center"><h4>Project ID</h4></TableCell>
-                            <TableCell align="center"><h4>Department</h4></TableCell>
-                            <TableCell align="center"><h4>Status</h4></TableCell>
-                            <TableCell align="center"><h4>Score</h4></TableCell>
+                        <TableRow  style={{ background: "#989898" }}>
+                            <TableCell align="center"><h4 className="my-2">Project ID</h4></TableCell>
+                            <TableCell align="center"><h4 className="my-2">Department</h4></TableCell>
+                            <TableCell align="center"><h4 className="my-2">Status</h4></TableCell>
+                            <TableCell align="center"><h4  className="my-2">Score</h4></TableCell>
                             <TableCell align="center"></TableCell>
                         </TableRow>
                     </TableHead>
@@ -91,7 +91,7 @@ function SendAssignmentTable(props) {
                                                     props.search.length !== 0 ?
                                                         (data.project_id.toLowerCase().startsWith(props.search.toLowerCase()) ? ( //data.project_id data.project_id.toLowerCase().startsWith(props.search.toLowerCase()) ?
                                                             <>
-                                                                <TableRow key={data.id} style={{ background: "#DCDCDC", borderBottomWidth: 1, borderColor: "#989898", borderStyle: 'solid' }}>
+                                                                <TableRow key={data.id} style={{ background: "#DCDCDC" }}>
                                                                     <TableCell component="th" scope="row" align="center">
                                                                         {data.project_id}
                                                                     </TableCell>
@@ -100,18 +100,22 @@ function SendAssignmentTable(props) {
                                                                             data.project_department === "SIT" ? (<TableCell align="center">{"School of Information Technology"}</TableCell>) : (
                                                                                 data.project_department === "DSI" ? (<TableCell align="center">{"Digital Service Innovation"}</TableCell>) : (<></>)
                                                                             )))}
-                                                                    {data.status === "Submitted" ? (<TableCell align="center"><FiberManualRecordIcon color="primary" /><medium className="d-inline">On time</medium></TableCell>
+                                                                    {data.status === "Submitted" ? (<TableCell align="center"><FiberManualRecordIcon className="successStatus"/><medium className="d-inline">On time</medium></TableCell>
                                                                     ) : (
                                                                             data.status === "SubmittedLate" ? (<TableCell align="center"><FiberManualRecordIcon color="secondary" /><medium className="d-inline">Late</medium></TableCell>) : (<></>))}
-                                                                    <TableCell align="center">{}</TableCell>
+                                                                    <TableCell align="center">{data.total_score}</TableCell>
                                                                     <TableCell align="center">
-                                                                    {user.role==='teacher'?(<Buttons
+                                                                        {user.role === 'teacher' ? (
+                                                                            permission === "Have Permission" ? (<Link to={`/assesment/${data.assignment_id}/${data.project_id_BE}`}>
+                                                                            <Buttons
                                                                                 menu={"Assesment"}
                                                                                 color="primary"
-                                                                            /> ):( <Link to ={`/assesment/${data.assignment_id}/${data.project_id}`}><Buttons
-                                                                                menu={"View"}
-                                                                                color="primary"
-                                                                            /></Link>)}
+                                                                            />
+                                                                        </Link>): (<></>)
+                                                                        ) : (<Link to={`/assesment/${data.assignment_id}/${data.project_id_BE}`}><Buttons
+                                                                            menu={"View"}
+                                                                            color="primary"
+                                                                        /></Link>)}
                                                                     </TableCell>
                                                                 </TableRow>
                                                             </>
@@ -119,7 +123,7 @@ function SendAssignmentTable(props) {
 
                                                         ) : (
                                                             <>
-                                                                <TableRow key={data.id} style={{ background: "#DCDCDC", borderBottomWidth: 1, borderColor: "#989898", borderStyle: 'solid' }}>
+                                                                <TableRow key={data.id} style={{ background: "#DCDCDC" }}>
                                                                     <TableCell component="th" scope="row" align="center">
                                                                         {data.project_id}
                                                                     </TableCell>
@@ -128,15 +132,19 @@ function SendAssignmentTable(props) {
                                                                             data.project_department === "SIT" ? (<TableCell align="center">{"School of Information Technology"}</TableCell>) : (
                                                                                 data.project_department === "DSI" ? (<TableCell align="center">{"Digital Service Innovation"}</TableCell>) : (<></>)
                                                                             )))}
-                                                                    {data.status === "Submitted" ? (<TableCell align="center"><FiberManualRecordIcon color="primary" /><medium className="d-inline">On time</medium></TableCell>
+                                                                    {data.status === "Submitted" ? (<TableCell align="center"><FiberManualRecordIcon className="successStatus" /><medium className="d-inline">On time</medium></TableCell>
                                                                     ) : (
                                                                             data.status === "SubmittedLate" ? (<TableCell align="center"><FiberManualRecordIcon color="secondary" /><medium className="d-inline">Late</medium></TableCell>) : (<></>))}
-                                                                    <TableCell align="center">{}</TableCell>
+                                                                    <TableCell align="center">{data.total_score}</TableCell>
                                                                     <TableCell align="center">
-                                                                    {user.role==='teacher'?(<Buttons
+                                                                        {user.role === 'teacher' ? (
+                                                                            permission === "Have Permission" ? (<Link to={`/assesment/${data.assignment_id}/${data.project_id_BE}`}>
+                                                                            <Buttons
                                                                                 menu={"Assesment"}
                                                                                 color="primary"
-                                                                            /> ):( <Link to ={`/assesment/${data.assignment_id}/${data.project_id}`}><Buttons
+                                                                            />
+                                                                        </Link>): (<></>)
+                                                                        ) : (<Link to={`/assesment/${data.assignment_id}/${data.project_id_BE}`}><Buttons
                                                                             menu={"View"}
                                                                             color="primary"
                                                                         /></Link>)}
@@ -155,7 +163,7 @@ function SendAssignmentTable(props) {
                                                         props.search.length !== 0 ? (
                                                             data.project_id.toLowerCase().startsWith(props.search.toLowerCase()) ?
                                                                 (<>
-                                                                    <TableRow key={data.id} style={{ background: "#DCDCDC", borderBottomWidth: 1, borderColor: "#989898", borderStyle: 'solid' }}>
+                                                                    <TableRow key={data.id} style={{ background: "#DCDCDC" }}>
                                                                         <TableCell component="th" scope="row" align="center">
                                                                             {data.project_id}
                                                                         </TableCell>
@@ -164,24 +172,28 @@ function SendAssignmentTable(props) {
                                                                                 data.project_department === "SIT" ? (<TableCell align="center">{"School of Information Technology"}</TableCell>) : (
                                                                                     data.project_department === "DSI" ? (<TableCell align="center">{"Digital Service Innovation"}</TableCell>) : (<></>)
                                                                                 )))}
-                                                                        {data.status === "Submitted" ? (<TableCell align="center"><FiberManualRecordIcon color="primary" /><medium className="d-inline">On time</medium></TableCell>
+                                                                        {data.status === "Submitted" ? (<TableCell align="center"><FiberManualRecordIcon className="successStatus" /><medium className="d-inline">On time</medium></TableCell>
                                                                         ) : (
                                                                                 data.status === "SubmittedLate" ? (<TableCell align="center"><FiberManualRecordIcon color="secondary" /><medium className="d-inline">Late</medium></TableCell>) : (<></>))}
-                                                                        <TableCell align="center">{}</TableCell>
+                                                                        <TableCell align="center">{data.total_score}</TableCell>
                                                                         <TableCell align="center">
-                                                                        {user.role==='teacher'?(<Buttons
+                                                                        {user.role === 'teacher' ? (
+                                                                            permission === "Have Permission" ? (<Link to={`/assesment/${data.assignment_id}/${data.project_id_BE}`}>
+                                                                            <Buttons
                                                                                 menu={"Assesment"}
                                                                                 color="primary"
-                                                                            /> ):( <Link to ={`/assesment/${data.assignment_id}/${data.project_id}`}><Buttons
+                                                                            />
+                                                                        </Link>): (<></>)
+                                                                        ) : (<Link to={`/assesment/${data.assignment_id}/${data.project_id_BE}`}><Buttons
                                                                             menu={"View"}
                                                                             color="primary"
                                                                         /></Link>)}
-                                                                        </TableCell>
+                                                                    </TableCell>
                                                                     </TableRow>
                                                                 </>)
                                                                 : (<></>)
                                                         ) : (<>
-                                                            <TableRow key={data.id} style={{ background: "#DCDCDC", borderBottomWidth: 1, borderColor: "#989898", borderStyle: 'solid' }}>
+                                                            <TableRow key={data.id} style={{ background: "#DCDCDC" }}>
                                                                 <TableCell component="th" scope="row" align="center">
                                                                     {data.project_id}
                                                                 </TableCell>
@@ -190,19 +202,23 @@ function SendAssignmentTable(props) {
                                                                         data.project_department === "SIT" ? (<TableCell align="center">{"School of Information Technology"}</TableCell>) : (
                                                                             data.project_department === "DSI" ? (<TableCell align="center">{"Digital Service Innovation"}</TableCell>) : (<></>)
                                                                         )))}
-                                                                {data.status === "Submitted" ? (<TableCell align="center"><FiberManualRecordIcon color="primary" /><medium className="d-inline">On time</medium></TableCell>
+                                                                {data.status === "Submitted" ? (<TableCell align="center"><FiberManualRecordIcon className="successStatus" /><medium className="d-inline">On time</medium></TableCell>
                                                                 ) : (
                                                                         data.status === "SubmittedLate" ? (<TableCell align="center"><FiberManualRecordIcon color="secondary" /><medium className="d-inline">Late</medium></TableCell>) : (<></>))}
-                                                                <TableCell align="center">{}</TableCell>
+                                                                <TableCell align="center">{data.total_score}</TableCell>
                                                                 <TableCell align="center">
-                                                                {user.role==='teacher'?(<Buttons
+                                                                        {user.role === 'teacher' ? (
+                                                                            permission === "Have Permission" ? (<Link to={`/assesment/${data.assignment_id}/${data.project_id_BE}`}>
+                                                                            <Buttons
                                                                                 menu={"Assesment"}
                                                                                 color="primary"
-                                                                            /> ):(<Link to ={`/assesment/${data.assignment_id}/${data.project_id}`}><Buttons
+                                                                            />
+                                                                        </Link>): (<></>)
+                                                                        ) : (<Link to={`/assesment/${data.assignment_id}/${data.project_id_BE}`}><Buttons
                                                                             menu={"View"}
                                                                             color="primary"
                                                                         /></Link>)}
-                                                                </TableCell>
+                                                                    </TableCell>
                                                             </TableRow>
                                                         </>)
                                                     )
@@ -219,7 +235,7 @@ function SendAssignmentTable(props) {
                                                         props.search.length !== 0 ? (
                                                             data.project_id.toLowerCase().startsWith(props.search.toLowerCase()) ?
                                                                 (<>
-                                                                    <TableRow key={data.id} style={{ background: "#DCDCDC", borderBottomWidth: 1, borderColor: "#989898", borderStyle: 'solid' }}>
+                                                                    <TableRow key={data.id} style={{ background: "#DCDCDC" }}>
                                                                         <TableCell component="th" scope="row" align="center">
                                                                             {data.project_id}
                                                                         </TableCell>
@@ -228,25 +244,28 @@ function SendAssignmentTable(props) {
                                                                                 data.project_department === "SIT" ? (<TableCell align="center">{"School of Information Technology"}</TableCell>) : (
                                                                                     data.project_department === "DSI" ? (<TableCell align="center">{"Digital Service Innovation"}</TableCell>) : (<></>)
                                                                                 )))}
-                                                                        {data.status === "Submitted" ? (<TableCell align="center"><FiberManualRecordIcon color="primary" /><medium className="d-inline">On time</medium></TableCell>
+                                                                        {data.status === "Submitted" ? (<TableCell align="center"><FiberManualRecordIcon className="successStatus" /><medium className="d-inline">On time</medium></TableCell>
                                                                         ) : (
                                                                                 data.status === "SubmittedLate" ? (<TableCell align="center"><FiberManualRecordIcon color="secondary" /><medium className="d-inline">Late</medium></TableCell>) : (<></>))}
-                                                                        <TableCell align="center">{}</TableCell>
+                                                                        <TableCell align="center">{data.total_score}</TableCell>
                                                                         <TableCell align="center">
-                                                                            {user.role==='teacher'?( <Buttons
+                                                                        {user.role === 'teacher' ? (
+                                                                            permission === "Have Permission" ? (<Link to={`/assesment/${data.assignment_id}/${data.project_id_BE}`}>
+                                                                            <Buttons
                                                                                 menu={"Assesment"}
                                                                                 color="primary"
-                                                                            />):( <Link to ={`/assesment/${data.assignment_id}/${data.project_id}`}><Buttons
+                                                                            />
+                                                                        </Link>): (<></>)
+                                                                        ) : (<Link to={`/assesment/${data.assignment_id}/${data.project_id_BE}`}><Buttons
                                                                             menu={"View"}
                                                                             color="primary"
                                                                         /></Link>)}
-                                                                           
-                                                                        </TableCell>
+                                                                    </TableCell>
                                                                     </TableRow>
                                                                 </>)
                                                                 : (<></>)
                                                         ) : (<>
-                                                            <TableRow key={data.id} style={{ background: "#DCDCDC", borderBottomWidth: 1, borderColor: "#989898", borderStyle: 'solid' }}>
+                                                            <TableRow key={data.id} style={{ background: "#DCDCDC" }}>
                                                                 <TableCell component="th" scope="row" align="center">
                                                                     {data.project_id}
                                                                 </TableCell>
@@ -255,19 +274,23 @@ function SendAssignmentTable(props) {
                                                                         data.project_department === "SIT" ? (<TableCell align="center">{"School of Information Technology"}</TableCell>) : (
                                                                             data.project_department === "DSI" ? (<TableCell align="center">{"Digital Service Innovation"}</TableCell>) : (<></>)
                                                                         )))}
-                                                                {data.status === "Submitted" ? (<TableCell align="center"><FiberManualRecordIcon color="primary" /><medium className="d-inline">On time</medium></TableCell>
+                                                                {data.status === "Submitted" ? (<TableCell align="center"><FiberManualRecordIcon className="successStatus" /><medium className="d-inline">On time</medium></TableCell>
                                                                 ) : (
                                                                         data.status === "SubmittedLate" ? (<TableCell align="center"><FiberManualRecordIcon color="secondary" /><medium className="d-inline">Late</medium></TableCell>) : (<></>))}
-                                                                <TableCell align="center">{}</TableCell>
+                                                                <TableCell align="center">{data.total_score}</TableCell>
                                                                 <TableCell align="center">
-                                                                {user.role==='teacher'?(<Buttons
+                                                                        {user.role === 'teacher' ? (
+                                                                            permission === "Have Permission" ? (<Link to={`/assesment/${data.assignment_id}/${data.project_id_BE}`}>
+                                                                            <Buttons
                                                                                 menu={"Assesment"}
                                                                                 color="primary"
-                                                                            /> ):( <Link to ={`/assesment/${data.assignment_id}/${data.project_id}`}><Buttons
+                                                                            />
+                                                                        </Link>): (<></>)
+                                                                        ) : (<Link to={`/assesment/${data.assignment_id}/${data.project_id_BE}`}><Buttons
                                                                             menu={"View"}
                                                                             color="primary"
                                                                         /></Link>)}
-                                                                </TableCell>
+                                                                    </TableCell>
                                                             </TableRow>
                                                         </>)
                                                     )
@@ -284,7 +307,7 @@ function SendAssignmentTable(props) {
                                                         props.search.length !== 0 ? (
                                                             data.project_id.toLowerCase().startsWith(props.search.toLowerCase()) ?
                                                                 (<>
-                                                                    <TableRow key={data.id} style={{ background: "#DCDCDC", borderBottomWidth: 1, borderColor: "#989898", borderStyle: 'solid' }}>
+                                                                    <TableRow key={data.id} style={{ background: "#DCDCDC" }}>
                                                                         <TableCell component="th" scope="row" align="center">
                                                                             {data.project_id}
                                                                         </TableCell>
@@ -293,24 +316,28 @@ function SendAssignmentTable(props) {
                                                                                 data.project_department === "SIT" ? (<TableCell align="center">{"School of Information Technology"}</TableCell>) : (
                                                                                     data.project_department === "DSI" ? (<TableCell align="center">{"Digital Service Innovation"}</TableCell>) : (<></>)
                                                                                 )))}
-                                                                        {data.status === "Submitted" ? (<TableCell align="center"><FiberManualRecordIcon color="primary" /><medium className="d-inline">On time</medium></TableCell>
+                                                                        {data.status === "Submitted" ? (<TableCell align="center"><FiberManualRecordIcon className="successStatus" /><medium className="d-inline">On time</medium></TableCell>
                                                                         ) : (
                                                                                 data.status === "SubmittedLate" ? (<TableCell align="center"><FiberManualRecordIcon color="secondary" /><medium className="d-inline">Late</medium></TableCell>) : (<></>))}
-                                                                        <TableCell align="center">{}</TableCell>
+                                                                        <TableCell align="center">{data.total_score}</TableCell>
                                                                         <TableCell align="center">
-                                                                        {user.role==='teacher'?( <Buttons
+                                                                        {user.role === 'teacher' ? (
+                                                                            permission === "Have Permission" ? (<Link to={`/assesment/${data.assignment_id}/${data.project_id_BE}`}>
+                                                                            <Buttons
                                                                                 menu={"Assesment"}
                                                                                 color="primary"
-                                                                            />):( <Link to ={`/assesment/${data.assignment_id}/${data.project_id}`}><Buttons
+                                                                            />
+                                                                        </Link>): (<></>)
+                                                                        ) : (<Link to={`/assesment/${data.assignment_id}/${data.project_id_BE}`}><Buttons
                                                                             menu={"View"}
                                                                             color="primary"
                                                                         /></Link>)}
-                                                                        </TableCell>
+                                                                    </TableCell>
                                                                     </TableRow>
                                                                 </>)
                                                                 : (<></>)
                                                         ) : (<>
-                                                            <TableRow key={data.id} style={{ background: "#DCDCDC", borderBottomWidth: 1, borderColor: "#989898", borderStyle: 'solid' }}>
+                                                            <TableRow key={data.id} style={{ background: "#DCDCDC" }}>
                                                                 <TableCell component="th" scope="row" align="center">
                                                                     {data.project_id}
                                                                 </TableCell>
@@ -319,19 +346,23 @@ function SendAssignmentTable(props) {
                                                                         data.project_department === "SIT" ? (<TableCell align="center">{"School of Information Technology"}</TableCell>) : (
                                                                             data.project_department === "DSI" ? (<TableCell align="center">{"Digital Service Innovation"}</TableCell>) : (<></>)
                                                                         )))}
-                                                                {data.status === "Submitted" ? (<TableCell align="center"><FiberManualRecordIcon color="primary" /><medium className="d-inline">On time</medium></TableCell>
+                                                                {data.status === "Submitted" ? (<TableCell align="center"><FiberManualRecordIcon className="successStatus" /><medium className="d-inline">On time</medium></TableCell>
                                                                 ) : (
                                                                         data.status === "SubmittedLate" ? (<TableCell align="center"><FiberManualRecordIcon color="secondary" /><medium className="d-inline">Late</medium></TableCell>) : (<></>))}
-                                                                <TableCell align="center">{}</TableCell>
+                                                                <TableCell align="center">{data.total_score}</TableCell>
                                                                 <TableCell align="center">
-                                                                {user.role==='teacher'?(<Buttons
+                                                                        {user.role === 'teacher' ? (
+                                                                            permission === "Have Permission" ? (<Link to={`/assesment/${data.assignment_id}/${data.project_id_BE}`}>
+                                                                            <Buttons
                                                                                 menu={"Assesment"}
                                                                                 color="primary"
-                                                                            /> ):( <Link to ={`/assesment/${data.assignment_id}/${data.project_id}`}><Buttons
+                                                                            />
+                                                                        </Link>): (<></>)
+                                                                        ) : (<Link to={`/assesment/${data.assignment_id}/${data.project_id_BE}`}><Buttons
                                                                             menu={"View"}
                                                                             color="primary"
                                                                         /></Link>)}
-                                                                </TableCell>
+                                                                    </TableCell>
                                                             </TableRow>
                                                         </>)
                                                     )
@@ -348,7 +379,7 @@ function SendAssignmentTable(props) {
                                                         props.search.length !== 0 ? (
                                                             data.project_id.toLowerCase().startsWith(props.search.toLowerCase()) ?
                                                                 (<>
-                                                                    <TableRow key={data.id} style={{ background: "#DCDCDC", borderBottomWidth: 1, borderColor: "#989898", borderStyle: 'solid' }}>
+                                                                    <TableRow key={data.id} style={{ background: "#DCDCDC" }}>
                                                                         <TableCell component="th" scope="row" align="center">
                                                                             {data.project_id}
                                                                         </TableCell>
@@ -357,24 +388,28 @@ function SendAssignmentTable(props) {
                                                                                 data.project_department === "SIT" ? (<TableCell align="center">{"School of Information Technology"}</TableCell>) : (
                                                                                     data.project_department === "DSI" ? (<TableCell align="center">{"Digital Service Innovation"}</TableCell>) : (<></>)
                                                                                 )))}
-                                                                        {data.status === "Submitted" ? (<TableCell align="center"><FiberManualRecordIcon color="primary" /><medium className="d-inline">On time</medium></TableCell>
+                                                                        {data.status === "Submitted" ? (<TableCell align="center"><FiberManualRecordIcon className="successStatus" /><medium className="d-inline">On time</medium></TableCell>
                                                                         ) : (
                                                                                 data.status === "SubmittedLate" ? (<TableCell align="center"><FiberManualRecordIcon color="secondary" /><medium className="d-inline">Late</medium></TableCell>) : (<></>))}
-                                                                        <TableCell align="center">{}</TableCell>
+                                                                        <TableCell align="center">{data.total_score}</TableCell>
                                                                         <TableCell align="center">
-                                                                        {user.role==='teacher'?(<Buttons
+                                                                        {user.role === 'teacher' ? (
+                                                                            permission === "Have Permission" ? (<Link to={`/assesment/${data.assignment_id}/${data.project_id_BE}`}>
+                                                                            <Buttons
                                                                                 menu={"Assesment"}
                                                                                 color="primary"
-                                                                            /> ):( <Link to ={`/assesment/${data.assignment_id}/${data.project_id}`}><Buttons
+                                                                            />
+                                                                        </Link>): (<></>)
+                                                                        ) : (<Link to={`/assesment/${data.assignment_id}/${data.project_id_BE}`}><Buttons
                                                                             menu={"View"}
                                                                             color="primary"
                                                                         /></Link>)}
-                                                                        </TableCell>
+                                                                    </TableCell>
                                                                     </TableRow>
                                                                 </>)
                                                                 : (<></>)
                                                         ) : (<>
-                                                            <TableRow key={data.id} style={{ background: "#DCDCDC", borderBottomWidth: 1, borderColor: "#989898", borderStyle: 'solid' }}>
+                                                            <TableRow key={data.id} style={{ background: "#DCDCDC" }}>
                                                                 <TableCell component="th" scope="row" align="center">
                                                                     {data.project_id}
                                                                 </TableCell>
@@ -383,19 +418,23 @@ function SendAssignmentTable(props) {
                                                                         data.project_department === "SIT" ? (<TableCell align="center">{"School of Information Technology"}</TableCell>) : (
                                                                             data.project_department === "DSI" ? (<TableCell align="center">{"Digital Service Innovation"}</TableCell>) : (<></>)
                                                                         )))}
-                                                                {data.status === "Submitted" ? (<TableCell align="center"><FiberManualRecordIcon color="primary" /><medium className="d-inline">On time</medium></TableCell>
+                                                                {data.status === "Submitted" ? (<TableCell align="center"><FiberManualRecordIcon className="successStatus" /><medium className="d-inline">On time</medium></TableCell>
                                                                 ) : (
                                                                         data.status === "SubmittedLate" ? (<TableCell align="center"><FiberManualRecordIcon color="secondary" /><medium className="d-inline">Late</medium></TableCell>) : (<></>))}
-                                                                <TableCell align="center">{}</TableCell>
+                                                                <TableCell align="center">{data.total_score}</TableCell>
                                                                 <TableCell align="center">
-                                                                {user.role==='teacher'?(<Buttons
+                                                                        {user.role === 'teacher' ? (
+                                                                            permission === "Have Permission" ? (<Link to={`/assesment/${data.assignment_id}/${data.project_id_BE}`}>
+                                                                            <Buttons
                                                                                 menu={"Assesment"}
                                                                                 color="primary"
-                                                                            /> ):( <Link to ={`/assesment/${data.assignment_id}/${data.project_id}`}><Buttons
+                                                                            />
+                                                                        </Link>): (<></>)
+                                                                        ) : (<Link to={`/assesment/${data.assignment_id}/${data.project_id_BE}`}><Buttons
                                                                             menu={"View"}
                                                                             color="primary"
                                                                         /></Link>)}
-                                                                </TableCell>
+                                                                    </TableCell>
                                                             </TableRow>
                                                         </>)
                                                     )

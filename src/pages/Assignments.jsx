@@ -9,6 +9,7 @@ import axios from "axios"
 import Buttons from "../components/common/Buttons"
 import Inputtext from "../components/common/Inputtext"
 import AssignmentTopicBox from "../components/common/AssignmentTopicBox"
+import AssignmentTopicBoxAA from "../components/common/AssignmentTopicBoxAA"
 import FilterAssignmentBox from "../components/common/FilterAssignmentBox"
 export default function Assignments() {
   const useStyles = makeStyles({
@@ -36,6 +37,7 @@ export default function Assignments() {
   const [responsible, setResponsible] = useState()
   const [checkFilter, setCheckFilter] = useState(false)
   const [search, setSearch] = useState("")
+
   const fetchData = useCallback(async () => {
     try {
       setIsPreFetch(true)
@@ -98,6 +100,7 @@ export default function Assignments() {
       )}
       {user.role === "teacher" && (
         <div className="container">
+          <br/>
           <div className="row">
             <div className="col-12 my-3">
               <div className="row">
@@ -146,7 +149,7 @@ export default function Assignments() {
           <div className="row">
             <div className="col-12 my-3">
               <div className="row">
-                <div className="col-8">
+                <div className="col-8 my-3">
                   <Inputtext
                     type="text"
                     placeholder="Search Assignment Topic"
@@ -155,35 +158,34 @@ export default function Assignments() {
                   />
                 </div>
                 <Link to="/createassignment">
-                  <div className="col-10">
-                    <br />
+                  <div className="col-10 my-4">
                     <Buttons
+                      style={{ backgroundColor: 'green' }}
+                      className="success"
                       menu="Create Assignment"
-                      color="primary"
                     />
                   </div>
                 </Link>
               </div>
             </div>
+          </div>
+          <div className="row">
             <div className="col-12 my-3">
               <div className="row">
                 <div className="col-8">
-                  <AssignmentTopicBox
+                  <AssignmentTopicBoxAA
                     assignments={teacher_assignments}
+                    // responsible={responsible}
                     search={search}
-                    checkFilter={checkFilter}
+                    // checkFilter={checkFilter}
                   />
-                </div>
-                <div className="col-3">
-                  <FilterAssignmentBox
-                    setCheckFilter={setCheckFilter} />
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       )}
     </>
+  
   )
 }

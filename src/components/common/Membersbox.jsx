@@ -33,7 +33,8 @@ export default function Membersbox(props) {
         <CardHeader title={props.title} />
         <CardContent>
           <div className="container">
-            {user.id} {user.name}<br />
+            <p>{user.id} {user.name}</p>
+            
             {props.members &&
               props.members.map((std, index) => {
                 return (
@@ -45,7 +46,7 @@ export default function Membersbox(props) {
                 )
               })}
           </div>
-          <br />
+         
         </CardContent>
       </Card>
     </>

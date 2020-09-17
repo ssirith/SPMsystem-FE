@@ -23,25 +23,21 @@ export default function ModalEditReviewer(props) {
     setTeachers(res.data)
     setResnponsible_teacher(data.resnponsible)
     var newSave = [];
-    if(props){
-      res.data.map((t) => {
-        data.resnponsible.map((r) => {
-          if (t.teacher_id === r.resposible_teacher_id) {          
-            newSave.push(t)
-            setSave(newSave)
-          }
-        }
-        )
-      })
-    } 
+    res.data.map((t) => {
+      if (data.resnponsible.some((r) => r.responsible_teacher_id === t.teacher_id)){
+        newSave.push(t)
+        setSave(newSave)
+      }
+    })
     setIsPreFetch(false)
   }, [])
 
   useEffect(() => {
     fetchData()
   }, [])
+console.log(save)
+
   useEffect(() => {
-    
     const temp = [...teachers]
     if (save) {
       for (let i = 0; i < save.length; i++) {
@@ -50,7 +46,7 @@ export default function ModalEditReviewer(props) {
           temp.splice(index, 1)
         }
       }
-      
+
       setIsFilter(
         temp.filter(
           tch => tch.teacher_name.toLowerCase().includes(search.toLowerCase()))
@@ -129,7 +125,7 @@ export default function ModalEditReviewer(props) {
           onChange={(e) => setSearch(e.target.value)}
         />
         <table className="table table-striped">
-          <tbody>
+          <tbody style={{ cursor: 'pointer' }}>
             {isFilter.map((tch, idx) => (
               <tr className="text-center" key={idx} onClick={() => updateInput(tch)}>
                 <td>{tch.teacher_name}</td>

@@ -131,7 +131,7 @@ export default function ModalComponentMember(props) {
         />
 
         <table className="table table-striped">
-          <tbody>
+          <tbody style={{cursor: 'pointer'}}>
             {isFilter.map((ads, idx) => (
               <tr key={idx} onClick={() => updateInput(ads)}>
                 <td>{ads.student_id}</td>
@@ -148,7 +148,7 @@ export default function ModalComponentMember(props) {
             <div className="col-4">{user.id}</div>
             <div className="col-4">{user.name}</div>
           </div>
-          <br />
+          &nbsp;
           {save &&
             save.map((data, index) => {
               return (

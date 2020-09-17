@@ -157,7 +157,7 @@ export default function CreateAssignment() {
             if (response.status === 200) {
                 alert("Create Success.")
                 navigate("/assignments")
-                window.location.reload()
+                
             }
         } catch (err) {
             alert("It's not success, Please check your input")
@@ -253,12 +253,11 @@ export default function CreateAssignment() {
                                             if (f) {
                                                 return (
                                                     <>
-
                                                         <li key={index}>
                                                             &nbsp;
                                                             <FolderIcon className="primary" />
                                                             &nbsp;
-                                                            {f.name}
+                                                            {f.name.substring(0,30)}
                                                             &nbsp;
                                                             <button onClick={() => deleteFilesUpload(f, index)}>
                                                                 <DeleteIcon fontSize="small" color="error" />

@@ -54,8 +54,10 @@ export default function CreateAssignment(props) {
         setIsPreFetch(true)
         const rub = await axios.get(`${process.env.REACT_APP_API_BE}/rubric`)
         setShowAllRubric(rub.data)
-        const teacehr = await axios.get(`${process.env.REACT_APP_API_BE}/teachers`)
+        const teacher = await axios.get(`${process.env.REACT_APP_API_BE}/teachers`)
         const res = await axios.get(`${process.env.REACT_APP_API_BE}/assignments/${props.id}`)
+        console.log(teacher.data)
+        console.log(res.data)
         setAssignment(res.data)
         setAssignment_title(res.data.assignment_title)
         setAssignment_detail(res.data.assignment_detail)
@@ -63,15 +65,14 @@ export default function CreateAssignment(props) {
         setDue_time(res.data.due_time)
         setAttachmentFromBE(res.data.attachment)
         var newReviewer = []
-        teacehr.data.map((t) => {
-            res.data.resnponsible.map((r) => {
-                if (t.teacher_id === r.resposible_teacher_id) {
-                    newReviewer.push(t)
-                    setReviewer(newReviewer)
-                    setReviewerFromBE(newReviewer)
-                }
+        
+        teacher.data.map((t) => {
+            if(res.data.resnponsible.some(item => item.responsible_teacher_id === t.teacher_id)){     
+                        newReviewer.push(t)
+                        setReviewer(newReviewer)
+                        setReviewerFromBE(newReviewer)           
             }
-            )
+            
         })
         rub.data.map((r) => {
             if (r.rubric_id === res.data.rubric_id) {
@@ -80,10 +81,10 @@ export default function CreateAssignment(props) {
         })
         setIsPreFetch(false)
     }, [])
-    
     useEffect(() => {
         fetchData()
     }, [])
+
     const checkRole = useCallback(() => {
         if (user.role === "student") {
           alert(`You dont'have permission to go this page.`)
@@ -231,8 +232,7 @@ export default function CreateAssignment(props) {
             const response = await axios.post(`${process.env.REACT_APP_API_BE}/assignments/edit`, data)
             if (response.status === 200) {
                 alert("Edit Success.")
-                navigate(`assignments/${props.id}`)
-                window.location.reload()
+                navigate(`/assignments/${props.id}`)
             }
         } catch (err) {
             alert("It's not success, Please check your input")
@@ -467,21 +467,6 @@ export default function CreateAssignment(props) {
                     <Col sm={3}>
                         {rubric.rubric_id ? (
                             <>
-                                {/* <button onClick={() => setEdit(rubric.rubric_id)}>
-                                    <EditIcon color="primary" />
-                                </button> */}
-                                <Button variant="outlined" size="small" className={classes.margin}>
-                                    <IconButton
-                                        aria-label="edit"
-                                        onClick={() => setEdit(rubric.rubric_id)}
-                                    >
-                                        <EditIcon />
-                                    </IconButton>
-                                </Button>
-                        &nbsp;
-                        {/* <button onClick={() => setModalDelete(true)}>
-                                    <DeleteIcon color="secondary" />
-                                </button> */}
                                 <Button variant="outlined" size="small" className={classes.margin}>
                                     <IconButton
                                         aria-label="delete"

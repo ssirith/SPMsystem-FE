@@ -18,6 +18,7 @@ function Submission(props) {
     });
     const classes = useStyles();
     const [search, setSearch] = useState("")
+    
     const [isPreFetch, setIsPreFetch] = useState(false)
     const [send_assignment, setSend_assignment] = useState([])
     const [checkFilterDepartment, setCheckFilterDepartment] = useState("All")
@@ -29,7 +30,6 @@ function Submission(props) {
             setSend_assignment(res.data)
             setIsPreFetch(false)
         }, [])
-
     useEffect(() => {
         fetchData()
     }, [])

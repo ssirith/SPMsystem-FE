@@ -30,10 +30,11 @@ export default function Editteam(props) {
     async () => {
       setIsPreFetch(true)
       const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/projects/${props.id}`)
+      console.log(data)
       setProject(data.project)
       setMember(data.group)
       setAdvisor(data.teacher)
-      setDepartment(data.group[0].department)
+      setDepartment(data.project.project_department)
       const all = await axios.get(`${process.env.REACT_APP_API_BE}/students`)
       setStudents(all.data)
       setIsPreFetch(false)
@@ -43,7 +44,7 @@ export default function Editteam(props) {
   useEffect(() => {
     fetchData()
   }, [])
-
+  
   const handleProjectName = (event) => {
     setProject({
       ...project,

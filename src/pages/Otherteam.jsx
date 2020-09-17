@@ -46,10 +46,10 @@ export default function Otherteam(props) {
 
         <div className="col-12 my-3">
           <div className="row">
-            <div className="col-8">
+            <div className="col-7">
               <MyteamMember title="Members" members={group.group} />
             </div>
-            <div className="col-4">
+            <div className="col-5">
               <MyteamAdvisor title="Advisor" advisors={group.teacher} />
             </div>
           </div>

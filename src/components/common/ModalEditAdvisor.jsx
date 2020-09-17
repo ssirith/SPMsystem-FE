@@ -111,7 +111,7 @@ export default function ModalEditAdvisor(props) {
           onChange={(e) => setSearch(e.target.value)}
         />
         <table className="table table-striped">
-          <tbody>
+          <tbody style={{cursor: 'pointer'}}>
             {isFilter.map((ads, idx) => (
               <tr className="text-center" key={idx} onClick={() => updateInput(ads)}>
                 <td>{ads.teacher_name}</td>

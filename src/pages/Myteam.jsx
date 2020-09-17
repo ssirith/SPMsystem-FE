@@ -73,10 +73,10 @@ export default function Myteam() {
 
                     <div className="col-12 my-2">
                       <div className="row">
-                        <div className="col-8">
+                        <div className="col-7">
                           <MyteamMember title="Members" members={stdGroup.group} />
                         </div>
-                        <div className="col-4">
+                        <div className="col-5">
                           <MyteamAdvisor
                             title="Advisor"
                             advisors={stdGroup.teacher}
@@ -121,7 +121,6 @@ export default function Myteam() {
                       <Buttons
                         menu="Create"
                         color="primary"
-                        onClick={() => console.log("Create")}
                       />
                     </Link>
                   </div>

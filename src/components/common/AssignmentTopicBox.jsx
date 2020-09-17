@@ -32,7 +32,7 @@ export default function AssignmentTopicBox(props) {
             return (
                 <>
                     {props.assignments && props.assignments.map((data, index) => {
-
+                        
                         if (props.search.length !== 0) {
                             if (data.assignment_title.toLowerCase().startsWith(props.search.toLowerCase())) {
                                 return (
@@ -46,7 +46,7 @@ export default function AssignmentTopicBox(props) {
                                                         Assignment {data.assignment_id} : {data.assignment_title}<br />
                                                     By {data.teacher_name} on {` ${dayjs(data.due_date).format("MMMM DD, YYYY")}`}
 
-                                                        <Link to={`/ assignments / ${data.assignment_id}`} className='d-flex justify-content-end m-2'>
+                                                        <Link to={`/assignments/${data.assignment_id}`} className='d-flex justify-content-end m-2'>
                                                         <Button variant="contained" size="large" color="primary">
                                                                 More
                                                         </Button>

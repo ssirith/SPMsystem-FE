@@ -5,6 +5,7 @@ import { Link,useNavigate } from "@reach/router"
 import Buttons from "../components/common/Buttons"
 import { CardHeader } from "@material-ui/core"
 import axios from "axios"
+import { useParams } from "@reach/router"
 import { useEffect } from "react"
 import BreadcrumbNavString from "../components/common/BreadcrumbNavString"
 import ModalDeleteAssignment from "../components/common/ModalDeleteAssignment"
@@ -41,7 +42,6 @@ export default function Assignment(props) {
     const [assignment_title, setAssignment_Title] = useState()
     const [assignment_id, setAssignment_id] = useState()
     const [propject_department, setProject_department] = useState("")
-    const [project_id, setProject_id] = useState("")
     const [rubric, setRubric] = useState()
     const [isOpenDelete, setIsOpenDelete] = useState(false)
     const [isPreFetch, setIsPreFetch] = useState(false)
@@ -49,9 +49,11 @@ export default function Assignment(props) {
     const { user, setUser } = useContext(UserContext)
     let navigate = useNavigate()
     // const { user, setUser } = useContext(UserContext)
+    const {id} = useParams()//user.id
+    const {project_id} = useParams()//assignment_id
     const fetchData = useCallback(async () => {
         setIsPreFetch(true)
-        const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/assignments/${props.id}`)
+        const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/assignments/${props.id}`)//props.id == user.id
         setAssignment_Title(data.assignment_title)
         setAssignment_id(data.assignment_id)
         var criterions = [];
@@ -83,7 +85,6 @@ export default function Assignment(props) {
         setRubric(criterions)
         setIsPreFetch(false)
     }, [])
-
     useEffect(() => {
         fetchData()
     }, [])
