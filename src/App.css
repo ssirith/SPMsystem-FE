@@ -38,8 +38,14 @@
 .warning {
   color: #ffba07;
 }
+.grey {
+  color: #C4C4C4;
+}
 .successStatus {
   color:  #2fbb18 !important;
+}
+.danger {
+  color:  #EB5757 !important;
 }
 .bg {
   background-color: #336699 !important;
@@ -124,6 +130,11 @@
 }
 .filearea {
   background-color: #ffffff !important;
+  border-radius: 5px !important;
+  width: 50%;
+}
+.fileareaAA {
+  background-color: #EDEDED !important;
   border-radius: 5px !important;
   width: 50%;
 }

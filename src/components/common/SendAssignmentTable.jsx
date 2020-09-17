@@ -56,8 +56,7 @@ function SendAssignmentTable(props) {
                         )
                 }
             })
-          
-            setPermission(res.data.permission)
+
             setSend_assignment(tempSend)
             setIsPreFetch(false)
         }, []) 
@@ -68,6 +67,7 @@ function SendAssignmentTable(props) {
     }, [])
     return (
         <>
+        {console.log('send ass',send_assignment)}
             <TableContainer component={Paper}>
                 <Table className={classes.table} size="small" aria-label="a dense table" >
                     <TableHead>
@@ -100,7 +100,7 @@ function SendAssignmentTable(props) {
                                                                             data.project_department === "SIT" ? (<TableCell align="center">{"School of Information Technology"}</TableCell>) : (
                                                                                 data.project_department === "DSI" ? (<TableCell align="center">{"Digital Service Innovation"}</TableCell>) : (<></>)
                                                                             )))}
-                                                                    {data.status === "Submitted" ? (<TableCell align="center"><FiberManualRecordIcon className="successStatus"/><medium className="d-inline">On time</medium></TableCell>
+                                                                    {data.status === "Submitted" ? (<TableCell align="center"><FiberManualRecordIcon color="primary" /><medium className="d-inline">On time</medium></TableCell>
                                                                     ) : (
                                                                             data.status === "SubmittedLate" ? (<TableCell align="center"><FiberManualRecordIcon color="secondary" /><medium className="d-inline">Late</medium></TableCell>) : (<></>))}
                                                                     <TableCell align="center">{data.total_score}</TableCell>
@@ -142,9 +142,7 @@ function SendAssignmentTable(props) {
                                                                             <Buttons
                                                                                 menu={"Assesment"}
                                                                                 color="primary"
-                                                                            />
-                                                                        </Link>): (<></>)
-                                                                        ) : (<Link to={`/assesment/${data.assignment_id}/${data.project_id_BE}`}><Buttons
+                                                                            /> ):( <Link to ={`/assesment/${data.assignment_id}/${data.project_id}`}><Buttons
                                                                             menu={"View"}
                                                                             color="primary"
                                                                         /></Link>)}
@@ -182,9 +180,7 @@ function SendAssignmentTable(props) {
                                                                             <Buttons
                                                                                 menu={"Assesment"}
                                                                                 color="primary"
-                                                                            />
-                                                                        </Link>): (<></>)
-                                                                        ) : (<Link to={`/assesment/${data.assignment_id}/${data.project_id_BE}`}><Buttons
+                                                                            /> ):( <Link to ={`/assesment/${data.assignment_id}/${data.project_id}`}><Buttons
                                                                             menu={"View"}
                                                                             color="primary"
                                                                         /></Link>)}
@@ -212,9 +208,7 @@ function SendAssignmentTable(props) {
                                                                             <Buttons
                                                                                 menu={"Assesment"}
                                                                                 color="primary"
-                                                                            />
-                                                                        </Link>): (<></>)
-                                                                        ) : (<Link to={`/assesment/${data.assignment_id}/${data.project_id_BE}`}><Buttons
+                                                                            /> ):(<Link to ={`/assesment/${data.assignment_id}/${data.project_id}`}><Buttons
                                                                             menu={"View"}
                                                                             color="primary"
                                                                         /></Link>)}
@@ -254,9 +248,7 @@ function SendAssignmentTable(props) {
                                                                             <Buttons
                                                                                 menu={"Assesment"}
                                                                                 color="primary"
-                                                                            />
-                                                                        </Link>): (<></>)
-                                                                        ) : (<Link to={`/assesment/${data.assignment_id}/${data.project_id_BE}`}><Buttons
+                                                                            />):( <Link to ={`/assesment/${data.assignment_id}/${data.project_id}`}><Buttons
                                                                             menu={"View"}
                                                                             color="primary"
                                                                         /></Link>)}
@@ -284,9 +276,7 @@ function SendAssignmentTable(props) {
                                                                             <Buttons
                                                                                 menu={"Assesment"}
                                                                                 color="primary"
-                                                                            />
-                                                                        </Link>): (<></>)
-                                                                        ) : (<Link to={`/assesment/${data.assignment_id}/${data.project_id_BE}`}><Buttons
+                                                                            /> ):( <Link to ={`/assesment/${data.assignment_id}/${data.project_id}`}><Buttons
                                                                             menu={"View"}
                                                                             color="primary"
                                                                         /></Link>)}
@@ -326,9 +316,7 @@ function SendAssignmentTable(props) {
                                                                             <Buttons
                                                                                 menu={"Assesment"}
                                                                                 color="primary"
-                                                                            />
-                                                                        </Link>): (<></>)
-                                                                        ) : (<Link to={`/assesment/${data.assignment_id}/${data.project_id_BE}`}><Buttons
+                                                                            />):( <Link to ={`/assesment/${data.assignment_id}/${data.project_id}`}><Buttons
                                                                             menu={"View"}
                                                                             color="primary"
                                                                         /></Link>)}
@@ -356,9 +344,7 @@ function SendAssignmentTable(props) {
                                                                             <Buttons
                                                                                 menu={"Assesment"}
                                                                                 color="primary"
-                                                                            />
-                                                                        </Link>): (<></>)
-                                                                        ) : (<Link to={`/assesment/${data.assignment_id}/${data.project_id_BE}`}><Buttons
+                                                                            /> ):( <Link to ={`/assesment/${data.assignment_id}/${data.project_id}`}><Buttons
                                                                             menu={"View"}
                                                                             color="primary"
                                                                         /></Link>)}
@@ -398,9 +384,7 @@ function SendAssignmentTable(props) {
                                                                             <Buttons
                                                                                 menu={"Assesment"}
                                                                                 color="primary"
-                                                                            />
-                                                                        </Link>): (<></>)
-                                                                        ) : (<Link to={`/assesment/${data.assignment_id}/${data.project_id_BE}`}><Buttons
+                                                                            /> ):( <Link to ={`/assesment/${data.assignment_id}/${data.project_id}`}><Buttons
                                                                             menu={"View"}
                                                                             color="primary"
                                                                         /></Link>)}
@@ -428,9 +412,7 @@ function SendAssignmentTable(props) {
                                                                             <Buttons
                                                                                 menu={"Assesment"}
                                                                                 color="primary"
-                                                                            />
-                                                                        </Link>): (<></>)
-                                                                        ) : (<Link to={`/assesment/${data.assignment_id}/${data.project_id_BE}`}><Buttons
+                                                                            /> ):( <Link to ={`/assesment/${data.assignment_id}/${data.project_id}`}><Buttons
                                                                             menu={"View"}
                                                                             color="primary"
                                                                         /></Link>)}
