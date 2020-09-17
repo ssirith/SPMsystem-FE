@@ -153,7 +153,7 @@ export default function AssignmentTable(props) {
         status = "Submitted"
         console.log("in if")
       } else if (dayjs().isAfter(thisDay, dueDate)) {
-        status = "SubmittedLate"
+        status = "Submitted Late"
         console.log("in else")
       }
       const formData = new FormData()

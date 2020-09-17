@@ -132,15 +132,18 @@ export default function ViewAssesment() {
             </Card>
           </div>
         </div>
-        <div className="container" 
-        // style={{ border: "3px solid pink" }}
+        <div
+          className="container"
+          // style={{ border: "3px solid pink" }}
         >
-          <div className="col-12 mt-4" 
-          // style={{ border: "3px solid red" }}
+          <div
+            className="col-12 mt-4"
+            // style={{ border: "3px solid red" }}
           >
             <h2>Students Assignment</h2>
-            <div className="col-8" 
-            // style={{ border: "3px solid blue" }}
+            <div
+              className="col-8"
+              // style={{ border: "3px solid blue" }}
             >
               <p>
                 {`Assignment Submission Status: `}
@@ -192,8 +195,9 @@ export default function ViewAssesment() {
             </div>
 
             <hr />
-            <div className="col" 
-            // style={{ border: "3px solid lime" }}
+            <div
+              className="col"
+              // style={{ border: "3px solid lime" }}
             >
               <h2>Assessment</h2>
               <Table striped bordered hover responsive="sm">
@@ -227,8 +231,9 @@ export default function ViewAssesment() {
               </Table>
             </div>
 
-            <div className="col-12 my-2" 
-            // style={{ border: "3px solid gold" }}
+            <div
+              className="col-12 my-2"
+              // style={{ border: "3px solid gold" }}
             >
               {assessment.responsible_assignment &&
                 assessment.responsible_assignment.map((responsible, index) => {
@@ -248,8 +253,16 @@ export default function ViewAssesment() {
                           >
                             {rubric &&
                               rubric.map((criteria, index) => {
+                                let newscore = assessment.assessment.find(
+                                  (score) =>
+                                    score.criteria_id ===
+                                      criteria.criteria_id &&
+                                    score.responsible_assignment_id ===
+                                      responsible.id
+                                )
                                 return (
                                   <>
+                                    {console.log("new", newscore)}
                                     <div className="row ">
                                       <p className="mr-5">
                                         {criteria.criteria_name}
@@ -259,7 +272,7 @@ export default function ViewAssesment() {
                                         // style={{ border: "3px solid orange" }}
                                       >
                                         <div className="d-flex">
-                                          {assessment.assessment &&
+                                          {/* {assessment.assessment &&
                                             assessment.assessment.map(
                                               (score) => {
                                                 let newScore
@@ -271,20 +284,32 @@ export default function ViewAssesment() {
                                                 ) {
                                                   newScore = score.score
                                                 }
-                                                return newScore >= 0 ? (
-                                                  <input
-                                                    key={index}
-                                                    type="text"
-                                                    id="scoreOfcriteria"
-                                                    defaultValue={newScore}
-                                                    size="4"
-                                                    disabled
-                                                  />
-                                                ) : (
-                                                  <></>
-                                                )
-                                              }
-                                            )}
+                                                return newScore >= 0 ? ( */}
+                                          {newscore ? (
+                                            <input
+                                              key={index}
+                                              type="text"
+                                              id="scoreOfcriteria"
+                                              defaultValue={newscore.score}
+                                              size="4"
+                                              disabled
+                                            />
+                                          ) : (
+                                            <input
+                                              key={index}
+                                              type="text"
+                                              id="scoreOfcriteria"
+                                              defaultValue=""
+                                              size="4"
+                                              disabled
+                                            />
+                                          )}
+
+                                          {/* ) : (
+                                                   <></>
+                                                 ) */}
+                                          {/* } */}
+                                          {/* )} */}
                                         </div>
                                       </div>
                                     </div>

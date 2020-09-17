@@ -40,7 +40,9 @@ export default function ModalFeedback(props) {
         <Modal.Header closeButton>
           <Modal.Title>
             {`Feedback`}
-            <ArrowBackOutlinedIcon className='mx-2'
+            {props.feedback.length>1&&
+            <>
+             <ArrowBackOutlinedIcon className='mx-2'
             fontSize='small'
               style={{ cursor: "pointer", backgroundColor:'#336699',borderRadius:'50%',color:'white'  }}
               onClick={() => {
@@ -54,6 +56,9 @@ export default function ModalFeedback(props) {
                 nextFeedback()
               }}
             />
+            </>
+            }
+           
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>

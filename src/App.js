@@ -39,7 +39,7 @@ function App() {
   const [user, setUser] = useState({
 
     id: "11", //เวลา demo  เปลี่ยนที่นี่
-    name: "AA",
+    name: "aa",
     role: "aa", //เวลา demo  เปลี่ยนที่นี่
 
   })
