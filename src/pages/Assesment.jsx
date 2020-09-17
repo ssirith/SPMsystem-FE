@@ -225,7 +225,7 @@ export default function Assesment(props) {
 
                             <Row>
                                 <Col sm={4} style={{ marginLeft: 60 }}>
-                                    <Card style={{ marginLeft: 13 }}>
+                                    <Card className="fileareaAA" style={{ marginLeft: 13 }}>
                                         <Card.Body>
                                             {isAssesment.send_assignment.map((a, index) => {
                                                 return (

@@ -106,7 +106,7 @@ function SendAssignmentTable(props) {
                                                                     <TableCell align="center">{data.total_score}</TableCell>
                                                                     <TableCell align="center">
                                                                         {user.role === 'teacher' ? (
-                                                                            permission === "Have Permission" ? (<Link to={`/assesment/${data.assignment_id}/${data.project_id_BE}`}>
+                                                                            permission === "Have Permission" ? (<Link to={`/send_assignment/${data.assignment_id}/teacher/${data.project_id_BE}`}>
                                                                             <Buttons
                                                                                 menu={"Assesment"}
                                                                                 color="primary"
@@ -138,7 +138,7 @@ function SendAssignmentTable(props) {
                                                                     <TableCell align="center">{data.total_score}</TableCell>
                                                                     <TableCell align="center">
                                                                         {user.role === 'teacher' ? (
-                                                                            permission === "Have Permission" ? (<Link to={`/assesment/${data.assignment_id}/${data.project_id_BE}`}>
+                                                                            permission === "Have Permission" ? (<Link to={`/send_assignment/${data.assignment_id}/teacher/${data.project_id_BE}`}>
                                                                             <Buttons
                                                                                 menu={"Assesment"}
                                                                                 color="primary"
@@ -178,7 +178,7 @@ function SendAssignmentTable(props) {
                                                                         <TableCell align="center">{data.total_score}</TableCell>
                                                                         <TableCell align="center">
                                                                         {user.role === 'teacher' ? (
-                                                                            permission === "Have Permission" ? (<Link to={`/assesment/${data.assignment_id}/${data.project_id_BE}`}>
+                                                                            permission === "Have Permission" ? (<Link to={`/send_assignment/${data.assignment_id}/teacher/${data.project_id_BE}`}>
                                                                             <Buttons
                                                                                 menu={"Assesment"}
                                                                                 color="primary"
@@ -208,7 +208,7 @@ function SendAssignmentTable(props) {
                                                                 <TableCell align="center">{data.total_score}</TableCell>
                                                                 <TableCell align="center">
                                                                         {user.role === 'teacher' ? (
-                                                                            permission === "Have Permission" ? (<Link to={`/assesment/${data.assignment_id}/${data.project_id_BE}`}>
+                                                                            permission === "Have Permission" ? (<Link to={`/send_assignment/${data.assignment_id}/teacher/${data.project_id_BE}`}>
                                                                             <Buttons
                                                                                 menu={"Assesment"}
                                                                                 color="primary"
@@ -250,7 +250,7 @@ function SendAssignmentTable(props) {
                                                                         <TableCell align="center">{data.total_score}</TableCell>
                                                                         <TableCell align="center">
                                                                         {user.role === 'teacher' ? (
-                                                                            permission === "Have Permission" ? (<Link to={`/assesment/${data.assignment_id}/${data.project_id_BE}`}>
+                                                                            permission === "Have Permission" ? (<Link to={`/send_assignment/${data.assignment_id}/teacher/${data.project_id_BE}`}>
                                                                             <Buttons
                                                                                 menu={"Assesment"}
                                                                                 color="primary"
@@ -280,7 +280,7 @@ function SendAssignmentTable(props) {
                                                                 <TableCell align="center">{data.total_score}</TableCell>
                                                                 <TableCell align="center">
                                                                         {user.role === 'teacher' ? (
-                                                                            permission === "Have Permission" ? (<Link to={`/assesment/${data.assignment_id}/${data.project_id_BE}`}>
+                                                                            permission === "Have Permission" ? (<Link to={`/send_assignment/${data.assignment_id}/teacher/${data.project_id_BE}`}>
                                                                             <Buttons
                                                                                 menu={"Assesment"}
                                                                                 color="primary"
@@ -322,7 +322,7 @@ function SendAssignmentTable(props) {
                                                                         <TableCell align="center">{data.total_score}</TableCell>
                                                                         <TableCell align="center">
                                                                         {user.role === 'teacher' ? (
-                                                                            permission === "Have Permission" ? (<Link to={`/assesment/${data.assignment_id}/${data.project_id_BE}`}>
+                                                                            permission === "Have Permission" ? (<Link to={`/send_assignment/${data.assignment_id}/teacher/${data.project_id_BE}`}>
                                                                             <Buttons
                                                                                 menu={"Assesment"}
                                                                                 color="primary"
@@ -352,7 +352,7 @@ function SendAssignmentTable(props) {
                                                                 <TableCell align="center">{data.total_score}</TableCell>
                                                                 <TableCell align="center">
                                                                         {user.role === 'teacher' ? (
-                                                                            permission === "Have Permission" ? (<Link to={`/assesment/${data.assignment_id}/${data.project_id_BE}`}>
+                                                                            permission === "Have Permission" ? (<Link to={`/send_assignment/${data.assignment_id}/teacher/${data.project_id_BE}`}>
                                                                             <Buttons
                                                                                 menu={"Assesment"}
                                                                                 color="primary"
@@ -394,7 +394,7 @@ function SendAssignmentTable(props) {
                                                                         <TableCell align="center">{data.total_score}</TableCell>
                                                                         <TableCell align="center">
                                                                         {user.role === 'teacher' ? (
-                                                                            permission === "Have Permission" ? (<Link to={`/assesment/${data.assignment_id}/${data.project_id_BE}`}>
+                                                                            permission === "Have Permission" ? (<Link to={`/send_assignment/${data.assignment_id}/teacher/${data.project_id_BE}`}>
                                                                             <Buttons
                                                                                 menu={"Assesment"}
                                                                                 color="primary"
@@ -424,7 +424,7 @@ function SendAssignmentTable(props) {
                                                                 <TableCell align="center">{data.total_score}</TableCell>
                                                                 <TableCell align="center">
                                                                         {user.role === 'teacher' ? (
-                                                                            permission === "Have Permission" ? (<Link to={`/assesment/${data.assignment_id}/${data.project_id_BE}`}>
+                                                                            permission === "Have Permission" ? (<Link to={`/send_assignment/${data.assignment_id}/teacher/${data.project_id_BE}`}>
                                                                             <Buttons
                                                                                 menu={"Assesment"}
                                                                                 color="primary"

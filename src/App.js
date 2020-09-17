@@ -17,6 +17,7 @@ import EditRubric from "./pages/EditRubric"
 import Assesment from "./pages/Assesment"
 import Appointments from "./pages/Appointments"
 import Annoucements from "./pages/Annoucements"
+import ViewAssesment from "./pages/ViewAssesment"
 import Setting from "./pages/Setting"
 import dayjs from 'dayjs';
 import { SettingYearContext } from "./SettingYearContext"
@@ -37,9 +38,9 @@ function App() {
   )
   const [user, setUser] = useState({
 
-    id: "11", //เวลา demo  เปลี่ยนที่นี่
-    name: "AA",
-    role: "aa", //เวลา demo  เปลี่ยนที่นี่
+    id: "1", //เวลา demo  เปลี่ยนที่นี่
+    name: "siam",
+    role: "teacher", //เวลา demo  เปลี่ยนที่นี่
 
   })
  
@@ -113,8 +114,13 @@ function App() {
               statusbar={3}
             />
             <MainLayout
-              path="/assesment/:assignment_id/:id"
+              path = "/send_assignment/:assignment_id/teacher/:id"
               component={Assesment}
+              statusbar={3}
+            />
+            <MainLayout
+              path="/assesment/:id/:project_id"
+              component={ViewAssesment}
               statusbar={3}
             />
             <MainLayout
