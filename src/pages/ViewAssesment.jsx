@@ -10,7 +10,7 @@ import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord"
 import FolderIcon from "@material-ui/icons/Folder"
 import axios from "axios"
 import Buttons from "../components/common/Buttons"
-
+import { Container, Row, Col } from 'reactstrap';
 export default function ViewAssesment() {
   const { user, setUser } = useContext(UserContext)
   const [assessment, SetAssessment] = useState({})
@@ -104,9 +104,6 @@ export default function ViewAssesment() {
   }
   return (
     <>
-      {/* {console.log("responsible", assessment.responsible_assignment)} */}
-      {/* {console.log('responsible',assessment.submission.status)} */}
-      {console.log("rubric", rubric)}
       <div className="container">
         <div className="row">
           <div className="col-12 my-3">
@@ -123,156 +120,171 @@ export default function ViewAssesment() {
           <div className="col-12  text-center">
             <Card className={classes.root}>
               <CardHeader
-                title={`Assignment ${id} : ${assessment.assignment_title} -> ${
-                  project_id.substring(0, 3) +
+                title={`Assignment ${id} : ${assessment.assignment_title} -> ${project_id.substring(0, 3) +
                   "60-" +
                   project_id.substring(project_id.length - 2, project_id.length)
-                }`}
+                  }`}
               />
             </Card>
           </div>
         </div>
-        <div
-          className="container"
-          // style={{ border: "3px solid pink" }}
-        >
-          <div
-            className="col-12 mt-4"
-            // style={{ border: "3px solid red" }}
-          >
-            <h2>Students Assignment</h2>
-            <div
-              className="col-8"
-              // style={{ border: "3px solid blue" }}
-            >
-              <p>
-                {`Assignment Submission Status: `}
-                <FiberManualRecordIcon
-                  className={
-                    assessment.submission &&
+        <Row style={{ alignItems: "center" }, { marginLeft: 20 }}>
+          <Col  >
+            <br />
+            <h4>
+              Student Assignment
+                                             </h4>
+            <br />
+          </Col>
+        </Row>
+
+        <Row>
+          <Col sm={3.5}>
+            <p style={{ marginLeft: 90 }}>
+              Assignment Submission Status:
+                                            </p>
+          </Col>
+          <Col sm={2}>
+            <p>
+
+              <FiberManualRecordIcon
+                className={
+                  assessment.submission &&
                     assessment.submission.status === "Submitted"
-                      ? "successStatus"
-                      : "danger"
-                  }
-                />
-                {assessment.submission &&
+                    ? "successStatus"
+                    : "danger"
+                }
+              />
+              {assessment.submission &&
                 assessment.submission.status &&
                 assessment.submission.status === "Submitted" ? (
                   <>{`On Time`}</>
                 ) : (
                   <>Late</>
                 )}
-              </p>
+            </p>
+          </Col>
+        </Row>
 
-              <div
-                className=" col-8 fileareaAA"
-                // style={{ border: "3px solid Black" }}
-              >
-                <div className="fileContent ">
-                  <ul className="list-unstyled">
-                    {filefromBE.map((file, index) => {
-                      if (file) {
-                        return (
-                          <>
-                            <li key={index} className="li-Content">
-                              {" "}
-                              <FolderIcon className="primary" />
+        <Row>
+          <Col sm={4} style={{ marginLeft: 60 }}>
+            <Card className="fileareaAA" style={{ marginLeft: 13 }}>
+              <Card.Body>
+                {filefromBE.map((file, index) => {
+                  if (file) {
+                    return (
+                      <>
+                        <a>
+                          <FolderIcon className="primary" />
                               &nbsp;
                               <span>
-                                {file.send_assignment_name.substring(0, 20)}{" "}
+                            {file.send_assignment_name.substring(0, 20)}{" "}
                                 &nbsp;{"..."}
-                              </span>
-                            </li>
-                          </>
-                        )
-                      } else {
-                        return <></>
-                      }
-                    })}
-                  </ul>
-                </div>
-              </div>
-            </div>
+                          </span>
+                        </a>
+                      </>
+                    )
+                  } else {
+                    return <></>
+                  }
+                })}
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+        <br />
+        <hr />
 
-            <hr />
-            <div
-              className="col"
-              // style={{ border: "3px solid lime" }}
-            >
-              <h2>Assessment</h2>
-              <Table striped bordered hover responsive="sm">
-                <tbody>
-                  {rubric &&
-                    rubric.map((data, index) => {
-                      return (
-                        <tr>
-                          <td className="table-active" style={{ width: "20%" }}>
-                            {data.criteria_name}
-                          </td>
-                          {data.score.map((s, pos) => {
+        <Row style={{ alignItems: "center" }, { marginLeft: 25 }}>
+          <Col  >
+            <br />
+            <h4>
+              Assessment
+                                             </h4>
+            <br />
+          </Col>
+        </Row>
+        <Row>
+          <Col sm={10} style={{ marginLeft: 60 }}>
+            <Card style={{ marginLeft: 13 }}>
+              <Card.Body>
+                <Table striped bordered hover responsive="sm">
+                  <tbody>
+                    {rubric &&
+                      rubric.map((data, index) => {
+                        return (
+                          <tr>
+                            <td className="table-active" style={{ width: "20%" }}>
+                              {data.criteria_name}
+                            </td>
+                            {data.score.map((s, pos) => {
+                              return (
+                                <>
+                                  <td
+                                    key={pos}
+                                    className="text-center table-light"
+                                    style={{ width: "15%" }}
+                                  >
+                                    {s.value}
+                                    <br />
+                                    {s.name}
+                                  </td>
+                                </>
+                              )
+                            })}
+                          </tr>
+                        )
+                      })}
+                  </tbody>
+                </Table>
+              </Card.Body>
+            </Card>
+            <br />
+          </Col>
+        </Row>
+
+        <div
+          className="col-12 my-2"
+        // style={{ border: "3px solid gold" }}
+        >
+          {assessment.responsible_assignment &&
+            assessment.responsible_assignment.map((responsible, index) => {
+              return (
+                <>
+                  <div
+                    className="col-12"
+                  // style={{ border: "3px solid purple" }}
+                  >
+                    <div className="row my-2">
+                      <b>{responsible.teacher_name}</b>
+                    </div>
+                    <div className="row">
+                      <div
+                        className=" col-6 ml-4"
+                      // style={{ border: "3px solid violet" }}
+                      >
+                        {rubric &&
+                          rubric.map((criteria, index) => {
+                            let newscore = assessment.assessment.find(
+                              (score) =>
+                                score.criteria_id ===
+                                criteria.criteria_id &&
+                                score.responsible_assignment_id ===
+                                responsible.id
+                            )
                             return (
                               <>
-                                <td
-                                  key={pos}
-                                  className="text-center table-light"
-                                  style={{ width: "15%" }}
-                                >
-                                  {s.value}
-                                  <br />
-                                  {s.name}
-                                </td>
-                              </>
-                            )
-                          })}
-                        </tr>
-                      )
-                    })}
-                </tbody>
-              </Table>
-            </div>
-
-            <div
-              className="col-12 my-2"
-              // style={{ border: "3px solid gold" }}
-            >
-              {assessment.responsible_assignment &&
-                assessment.responsible_assignment.map((responsible, index) => {
-                  return (
-                    <>
-                      <div
-                        className="col-12"
-                        // style={{ border: "3px solid purple" }}
-                      >
-                        <div className="row my-2">
-                          <b>{responsible.teacher_name}</b>
-                        </div>
-                        <div className="row">
-                          <div
-                            className=" col-6 ml-4"
-                            // style={{ border: "3px solid violet" }}
-                          >
-                            {rubric &&
-                              rubric.map((criteria, index) => {
-                                let newscore = assessment.assessment.find(
-                                  (score) =>
-                                    score.criteria_id ===
-                                      criteria.criteria_id &&
-                                    score.responsible_assignment_id ===
-                                      responsible.id
-                                )
-                                return (
-                                  <>
-                                    {console.log("new", newscore)}
-                                    <div className="row ">
-                                      <p className="mr-5">
-                                        {criteria.criteria_name}
-                                      </p>
-                                      <div
-                                        className="col-sm-auto row "
-                                        // style={{ border: "3px solid orange" }}
-                                      >
-                                        <div className="d-flex">
-                                          {/* {assessment.assessment &&
+                                {console.log("new", newscore)}
+                                <div className="row ">
+                                  <p className="mr-5">
+                                    {criteria.criteria_name}
+                                  </p>
+                                  <div
+                                    className="col-sm-auto row "
+                                  // style={{ border: "3px solid orange" }}
+                                  >
+                                    <div className="d-flex">
+                                      {/* {assessment.assessment &&
                                             assessment.assessment.map(
                                               (score) => {
                                                 let newScore
@@ -285,52 +297,53 @@ export default function ViewAssesment() {
                                                   newScore = score.score
                                                 }
                                                 return newScore >= 0 ? ( */}
-                                          {newscore ? (
-                                            <input
-                                              key={index}
-                                              type="text"
-                                              id="scoreOfcriteria"
-                                              defaultValue={newscore.score}
-                                              size="4"
-                                              disabled
-                                            />
-                                          ) : (
-                                            <input
-                                              key={index}
-                                              type="text"
-                                              id="scoreOfcriteria"
-                                              defaultValue=""
-                                              size="4"
-                                              disabled
-                                            />
-                                          )}
+                                      {newscore ? (
+                                        <input
+                                          key={index}
+                                          type="text"
+                                          id="scoreOfcriteria"
+                                          defaultValue={newscore.score}
+                                          size="4"
+                                          disabled
+                                        />
+                                      ) : (
+                                          <input
+                                            key={index}
+                                            type="text"
+                                            id="scoreOfcriteria"
+                                            defaultValue=""
+                                            size="4"
+                                            disabled
+                                          />
+                                        )}
 
-                                          {/* ) : (
+                                      {/* ) : (
                                                    <></>
                                                  ) */}
-                                          {/* } */}
-                                          {/* )} */}
-                                        </div>
-                                      </div>
+                                      {/* } */}
+                                      {/* )} */}
                                     </div>
-                                  </>
-                                )
-                              })}
-                          </div>
-                        </div>
+                                  </div>
+                                </div>
+                              </>
+                            )
+                          })}
                       </div>
-                    </>
-                  )
-                })}
-            </div>
-            <hr />
-            <div className="row justify-content-center">
-              <Link to={`/assignments/${id}`}>
-                <Buttons className="grey" menu="Back" />
-              </Link>
-            </div>
-          </div>
+                    </div>
+                  </div>
+                </>
+              )
+            })}
         </div>
+
+        <hr />
+        <div className="row justify-content-center">
+          <Link to={`/assignments/${id}`}>
+            <Buttons className="grey" menu="Back" />
+          </Link>
+        </div>
+
+        <br />
       </div>
     </>
   )

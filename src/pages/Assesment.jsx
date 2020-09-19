@@ -106,7 +106,7 @@ export default function Assesment(props) {
     console.log(assesmentScore)
     console.log(feedback)
     const checkRole = useCallback(() => {
-        if (user.role === "student") {
+        if (user.role === "student"|| user.role === "aa") {
             alert(`You dont'have permission to go this page.`)
             navigate("/")
         }
@@ -171,8 +171,6 @@ export default function Assesment(props) {
 
     return (
         <>
-            {user.role === "aa" ? (<></>) : (<></>)}
-
             {user.role === "teacher" && (
                 <>
 
