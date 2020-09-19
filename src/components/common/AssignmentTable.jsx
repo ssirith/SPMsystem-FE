@@ -29,13 +29,14 @@ export default function AssignmentTable(props) {
   var dueDate = props.assignment.date_time
   const mockFeedback = [
     {
-      author: 'Jame',
-      detail: 'sadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasd'
+      author: "Jame",
+      detail:
+        "sadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasd",
     },
     {
-      author: 'Joel',
-      detail: '21321312321312313131231231'
-    }
+      author: "Joel",
+      detail: "21321312321312313131231231",
+    },
   ]
 
   const fetchData = useCallback(async () => {
@@ -199,7 +200,6 @@ export default function AssignmentTable(props) {
     } catch (err) {
       console.log(err)
     }
-
   }
   function handleToggle() {
     if (selectedFile.length != 0) {
@@ -233,15 +233,15 @@ export default function AssignmentTable(props) {
             assignment.status.status === "Submitted" ? (
               <FiberManualRecordIcon className="successStatus" />
             ) : (
-                <FiberManualRecordIcon className="warning" />
-              )
+              <FiberManualRecordIcon className="warning" />
+            )
           ) : (
-              <FiberManualRecordIcon
-                color={
-                  dayjs().isBefore(dueDate, thisDay) ? "disabled" : "secondary"
-                }
-              />
-            )}
+            <FiberManualRecordIcon
+              color={
+                dayjs().isBefore(dueDate, thisDay) ? "disabled" : "secondary"
+              }
+            />
+          )}
         </td>{" "}
         <td width="30%">{`Due ${dayjs(props.assignment.date_time).format(
           "YYYY MMMM, D / HH:mm A"
@@ -250,8 +250,8 @@ export default function AssignmentTable(props) {
           {expanded ? (
             <RemoveIcon color="primary" />
           ) : (
-              <AddIcon color="primary" />
-            )}
+            <AddIcon color="primary" />
+          )}
         </td>
       </tr>
 
@@ -260,12 +260,13 @@ export default function AssignmentTable(props) {
           <td className="uk-background-muted" colSpan={7}>
             <div ref={expanderBody} className="inner uk-grid">
               <div className="uk-width-1-4 uk-text-center">
-                <small className="text-danger">{`by ${assignment.teacher.teacher_name
-                  } on ${dayjs(props.assignment.created_at).format(
-                    "MMMM DD, YYYY"
-                  )} At ${dayjs(props.assignment.created_at).format(
-                    "HH:mm A"
-                  )} `}</small>
+                <small className="text-danger">{`by ${
+                  assignment.teacher.teacher_name
+                } on ${dayjs(props.assignment.created_at).format(
+                  "MMMM DD, YYYY"
+                )} At ${dayjs(props.assignment.created_at).format(
+                  "HH:mm A"
+                )} `}</small>
               </div>
               <div className="container row">
                 <div className="col-8">
@@ -278,10 +279,10 @@ export default function AssignmentTable(props) {
                       <div className="d-flex">
                         &nbsp;
                         <p className="text-danger m-0">{` ${dayjs(
-                        props.assignment.due_date
-                      ).format("MMMM d, YYYY")} at ${dayjs(
-                        props.assignment.date_time
-                      ).format("HH:mm A")}`}</p>
+                          props.assignment.due_date
+                        ).format("MMMM d, YYYY")} at ${dayjs(
+                          props.assignment.date_time
+                        ).format("HH:mm A")}`}</p>
                       </div>
                       <p className="text-break">
                         {props.assignment.assignment_detail}
@@ -335,15 +336,17 @@ export default function AssignmentTable(props) {
                       <p>Score:&nbsp;</p>
                     </div>
                     &nbsp;&nbsp;&nbsp;
-                    {assignment.status&&(
+                    {assignment.status && (
                       <p>
-                      {assignment.status&&assignment.status.total_score!=null?(assignment.status.total_score):(<>-</>)}
-                    </p>
+                        {assignment.status &&
+                        assignment.status.total_score != null ? (
+                          assignment.status.total_score
+                        ) : (
+                          <>-</>
+                        )}
+                      </p>
                     )}
-                    
-                   
                   </div>
-
                 </div>
 
                 <div className="col-4">
@@ -451,11 +454,15 @@ export default function AssignmentTable(props) {
               </div>
             </div>
             <div className="col-12 text-center mb-3">
-              <Buttons
-                color="primary"
-                menu="Submit"
-                onClick={() => handleToggle()}
-              />
+              {assignment.status && assignment.status.total_score == null ? (
+                <Buttons
+                  color="primary"
+                  menu="Submit"
+                  onClick={() => handleToggle()}
+                />
+              ) : (
+                <Buttons className="bg-light" menu="Submit" disabled />
+              )}
             </div>
           </td>
         </tr>

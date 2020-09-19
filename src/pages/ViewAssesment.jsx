@@ -174,13 +174,16 @@ export default function ViewAssesment() {
                   if (file) {
                     return (
                       <>
-                        <a>
+                        <a
+                         href={`http://127.0.0.1:8000/storage/${file.send_assignment}`}
+                         download
+                         target="_blank">
                           <FolderIcon className="primary" />
                               &nbsp;
-                              <span>
-                            {file.send_assignment_name.substring(0, 20)}{" "}
-                                &nbsp;{"..."}
-                          </span>
+                              
+                            {file.send_assignment_name.substring(0, 30)}
+                            <br />  <br />
+                          
                         </a>
                       </>
                     )

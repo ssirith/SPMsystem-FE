@@ -25,8 +25,8 @@ export default function Sidebar(props) {
               </div>
               <div className="row text-center">
                 <div className="mx-auto">
-                  <p style={{border:'2px solid blue'}}>{user.name}</p>
-                  <p style={{border:'2px solid red'}}>{user.role}</p>
+                  <p>{user.name}</p>
+                  <p>{user.role}</p>
                 </div>
               </div>
             </div>
@@ -69,20 +69,6 @@ export default function Sidebar(props) {
                     <ListItemIcon>
                       <Assignment className='ml-3' />
                       <p className="mb-0 ml-4 text">Assignments</p>
-                    </ListItemIcon>
-                  </div>
-                </Link>
-              </li>
-              <li
-                className={`nav-item ${
-                  props.statusbar === 4 ? "bg-white" : "bg-light"
-                  } rounded`}
-              >
-                <Link to="/appointments">
-                  <div className="nav-link">
-                    <ListItemIcon>
-                      <DateRange className='ml-3' />
-                      <p className="mb-0 ml-4 text">Appointments</p>
                     </ListItemIcon>
                   </div>
                 </Link>
@@ -172,20 +158,6 @@ export default function Sidebar(props) {
               </li>
               <li
                 className={`nav-item ${
-                  props.statusbar === 4 ? "bg-white" : "bg-light"
-                  } rounded`}
-              >
-                <Link to="/appointments">
-                  <div className="nav-link">
-                    <ListItemIcon>
-                      <DateRange className='ml-3' />
-                      <p className="mb-0 ml-4 text">Appointments</p>
-                    </ListItemIcon>
-                  </div>
-                </Link>
-              </li>
-              <li
-                className={`nav-item ${
                   props.statusbar === 5 ? "bg-white" : "bg-light"
                   } rounded`}
               >
@@ -244,20 +216,6 @@ export default function Sidebar(props) {
                     <ListItemIcon>
                       <Assignment className='ml-3' />
                       <p className="mb-0 ml-4 text">Assignments</p>
-                    </ListItemIcon>
-                  </div>
-                </Link>
-              </li>
-              <li
-                className={`nav-item ${
-                  props.statusbar === 4 ? "bg-white" : "bg-light"
-                  } rounded`}
-              >
-                <Link to="/appointments">
-                  <div className="nav-link">
-                    <ListItemIcon>
-                      <DateRange className='ml-3' />
-                      <p className="mb-0 ml-4 text">Appointments</p>
                     </ListItemIcon>
                   </div>
                 </Link>

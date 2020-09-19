@@ -40,8 +40,13 @@ export default function ModalFeedback(props) {
         <Modal.Header closeButton>
           <Modal.Title>
             {`Feedback`}
-            {props.feedback.length>1&&
-            <>
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {props.feedback.length!=0&&(<p className="text-break">{props.feedback[counter].feedback_detail}</p>)}
+            <hr/>
+          {props.feedback.length>1&&
+            <div className='text-center'>
              <ArrowBackOutlinedIcon className='mx-2'
             fontSize='small'
               style={{ cursor: "pointer", backgroundColor:'#336699',borderRadius:'50%',color:'white'  }}
@@ -56,14 +61,8 @@ export default function ModalFeedback(props) {
                 nextFeedback()
               }}
             />
-            </>
+            </div>
             }
-           
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          {props.feedback.length!=0&&(<p className="text-break">{props.feedback[counter].feedback_detail}</p>)}
-            
         </Modal.Body>
       </Modal>
     </>
