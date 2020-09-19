@@ -25,8 +25,8 @@ export default function Sidebar(props) {
               </div>
               <div className="row text-center">
                 <div className="mx-auto">
-                  <p>{user.name}</p>
-                  <p>{user.role}</p>
+                  <p style={{border:'2px solid blue'}}>{user.name}</p>
+                  <p style={{border:'2px solid red'}}>{user.role}</p>
                 </div>
               </div>
             </div>
@@ -117,8 +117,13 @@ export default function Sidebar(props) {
               </div>
               <div className="row">
                 <div className="mx-auto">
-                  <p>{user.name}</p>
-                  <p>{user.role}</p>
+                  <div className='row'>
+                    <p style={{border:'2px solid blue'}}>{user.name}</p>
+                  </div>
+                  <div className='row justify-content-center'>
+                    <p style={{border:'2px solid red'}}>{user.role}</p>
+                  </div>
+                  
                 </div>
               </div>
             </div>
