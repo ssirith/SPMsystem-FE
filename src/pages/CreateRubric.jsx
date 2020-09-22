@@ -102,6 +102,7 @@ export default function CreateRubric() {
 			rubric_title,
 			criterions
 		}
+		console.log(data)
 		if (checkInput()) {
 			alert("It's not success, Please check your input !!!")	
 		} else {

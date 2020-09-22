@@ -23,7 +23,7 @@ export default function Annoucements() {
       topic: "topic 4",
       detail: "dsfsdfsdfsdfdsfdsjfsdkljfklsdjfklsdjfklsdjlfkjsdl"
     },
-    
+
   ])
   const [isPrefetch, setIsPreFetch] = useState(false)
   return (
@@ -43,6 +43,35 @@ export default function Annoucements() {
                 <th colSpan="8" style={{ fontSize: "20px" }}>
                   Annoucements
                 </th>
+              </tr>
+            </thead>
+            <tbody>
+              {annoucements.map((annoucement, index) => (
+                <AnnoucementTable
+                  annoucement={annoucement}
+                  user={user}
+                  index={index + 1}
+                />
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+      {user.role === "teacher" || user.role === "aa" && (
+        <div className="container mt-5">
+          <table
+            class="table"
+            style={{
+              outlineStyle: "solid",
+              outlineWidth: "1px",
+              outlineColor: "#C4C4C4",
+            }}
+          >
+            <thead class="thead-primary">
+              <tr>
+                <th colSpan="8" style={{ fontSize: "20px" }}>
+                  Annoucements
+              </th>
               </tr>
             </thead>
             <tbody>

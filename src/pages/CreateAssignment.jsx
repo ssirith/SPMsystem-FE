@@ -23,6 +23,7 @@ import { keys } from "@material-ui/core/styles/createBreakpoints"
 import dayjs from "dayjs"
 import { makeStyles } from '@material-ui/core/styles';
 import { Container, Row, Col } from 'reactstrap';
+import { Table } from "react-bootstrap"
 // import { Router } from "@material-ui/icons"
 const useStyles = makeStyles((theme) => ({
     margin: {
@@ -44,6 +45,7 @@ export default function CreateAssignment() {
     const [due_time, setDue_time] = useState("")
     const [reviewer, setReviewer] = useState([])
     const [showAllRubric, setShowAllRubric] = useState([])
+    const [criterion, setCriterion] = useState()
     const [rubric, setRubric] = useState("")
     const [isOpenDeleteRubric, setIsOpenDeleteRubric] = useState(false)
 
@@ -53,19 +55,59 @@ export default function CreateAssignment() {
         setShowAllRubric(rub.data)// ได้ array ของ rubric ทั้งหมด
         setIsPreFetch(false)
     }, [])
+
     useEffect(() => {
         fetchData()
     }, [])
+
+    useEffect(() => {
+        var criterions = [];
+        showAllRubric.map((a) => {
+            if (a.rubric_id === rubric.rubric_id) {
+                async function refreshCriterion() {
+                    const temp = await axios.get(`${process.env.REACT_APP_API_BE}/rubric/${rubric.rubric_id}`)
+                    temp.data.criterions.map((c, index) => {
+                        let idx = criterions.findIndex(item => item.criteria_id === c.criteria_id)
+                        if (idx !== -1) {//0
+                            criterions[idx].score.push(
+                                {
+                                    name: c.criteria_detail,
+                                    value: c.criteria_score
+                                }
+                            )
+                        } else {
+                            criterions.push(
+                                {
+                                    criteria_id: c.criteria_id,
+                                    criteria_name: c.criteria_name,
+                                    score: [
+                                        {
+                                            name: c.criteria_detail,
+                                            value: c.criteria_score
+                                        }
+                                    ]
+                                }
+                            )
+                        }
+                    })
+                    setCriterion(criterions)
+                }
+                refreshCriterion()
+            }
+
+        })
+    }, [rubric])
+    
     const checkRole = useCallback(() => {
         if (user.role === "student") {
-          alert(`You dont'have permission to go this page.`)
-          navigate("/")
+            alert(`You dont'have permission to go this page.`)
+            navigate("/")
         }
-      })
-    
-      useEffect(() => {
+    })
+
+    useEffect(() => {
         checkRole()
-      }, [user])
+    }, [user])
     const handleAssignmentName = (event) => {
         setAssignment_title(event.target.value)
     }
@@ -157,7 +199,7 @@ export default function CreateAssignment() {
             if (response.status === 200) {
                 alert("Create Success.")
                 navigate("/assignments")
-                
+
             }
         } catch (err) {
             alert("It's not success, Please check your input")
@@ -192,9 +234,9 @@ export default function CreateAssignment() {
                 <br />
                 <Row style={{ alignItems: "center" }}>
                     <Col sm={1}>
-                    TiTle: <span className="text-danger">*</span>
+                        TiTle: <span className="text-danger">*</span>
                     </Col>
-                    <Col sm={8}  style={{ marginLeft: 5 }}>
+                    <Col sm={8} style={{ marginLeft: 5 }}>
                         <Inputtext
                             id="assignmentname"
                             label="Input Assignment Name"
@@ -209,7 +251,7 @@ export default function CreateAssignment() {
                     <Col sm={1} >
                         Description:
                     </Col>
-                    <Col sm={8}  style={{ marginLeft: 5}}>
+                    <Col sm={8} style={{ marginLeft: 5 }}>
                         <Textarea
                             id="description"
                             label="Input Assignment Description"
@@ -237,7 +279,7 @@ export default function CreateAssignment() {
                 <Row>
                     <Col sm={1}></Col>
                     <Col sm={5}>
-                        <Card style={{ marginLeft: 13}}>
+                        <Card style={{ marginLeft: 13 }}>
                             <Card.Body>
                                 <div className="row">
                                     <div className="col-12 text-center m-2">
@@ -257,7 +299,7 @@ export default function CreateAssignment() {
                                                             &nbsp;
                                                             <FolderIcon className="primary" />
                                                             &nbsp;
-                                                            {f.name.substring(0,30)}
+                                                            {f.name.substring(0, 30)}
                                                             &nbsp;
                                                             <button onClick={() => deleteFilesUpload(f, index)}>
                                                                 <DeleteIcon fontSize="small" color="error" />
@@ -317,8 +359,8 @@ export default function CreateAssignment() {
                 <Row>
                     <Col sm={5} style={{ marginLeft: 3 }}>
                         Reviewer:<span className="text-danger">*</span>
-                        <div style={{fontSize : '12px'}}>
-                        (ผู้ประเมินคะแนน)
+                        <div style={{ fontSize: '12px' }}>
+                            (ผู้ประเมินคะแนน)
                         </div>
                     </Col>
 
@@ -350,7 +392,7 @@ export default function CreateAssignment() {
                 <Row>
                     <Col sm={1}>
                         Rubric:<span className="text-danger">*</span>
-                        </Col>
+                    </Col>
                     <Col sm={3} style={{ marginLeft: 6 }}>
                         <DropdownRubric
                             rubricList={showAllRubric}
@@ -376,7 +418,7 @@ export default function CreateAssignment() {
                                 <Button variant="outlined" size="small" className={classes.margin}>
                                     <IconButton
                                         aria-label="delete"
-                                        
+
                                         onClick={() => setModalDelete(true)}
                                         color="secondary">
                                         <DeleteIcon />
@@ -390,6 +432,45 @@ export default function CreateAssignment() {
                                 />
                             </>
                         ) : <></>}
+
+                    </Col>
+                </Row>
+                <br />
+                <Row>
+                    <Col sm={1}></Col>
+                    <Col sm={8}>
+                        {criterion ? (
+                            <Card style={{ marginLeft: 13 }}>
+                                <Card.Body>
+                                    <Table striped bordered hover responsive="sm">
+                                        <tbody>
+                                            {criterion && criterion.map((data, index) => {
+                                                return (
+                                                    <>
+                                                        <tr>
+                                                            <td className='table-active' style={{ width: '20%' }}>{data.criteria_name}</td>
+                                                            {data.score.map((s, pos) => {
+                                                                return (
+                                                                    <>
+                                                                        <td className="text-center table-light" style={{ width: '15%' }}>
+                                                                            {s.value}
+                                                                            <br />
+                                                                            {s.name}
+                                                                        </td>
+                                                                    </>
+                                                                )
+                                                            })}
+                                                        </tr>
+                                                    </>
+
+                                                )
+                                            })}
+                                        </tbody>
+                                    </Table>
+                                </Card.Body>
+                            </Card>
+                        ) : (<></>)}
+
 
                     </Col>
                 </Row>
@@ -408,7 +489,7 @@ export default function CreateAssignment() {
                                     menu="Cancel"
                                 />
                             </Link>
-                           
+
                             <Buttons
                                 menu="Create"
                                 color="primary"
