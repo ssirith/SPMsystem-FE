@@ -104,10 +104,10 @@ export default function Sidebar(props) {
               <div className="row">
                 <div className="mx-auto">
                   <div className='row'>
-                    <p style={{border:'2px solid blue'}}>{user.name}</p>
+                    <p >{user.name}</p>
                   </div>
                   <div className='row justify-content-center'>
-                    <p style={{border:'2px solid red'}}>{user.role}</p>
+                    <p >{user.role}</p>
                   </div>
                   
                 </div>

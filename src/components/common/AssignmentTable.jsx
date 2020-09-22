@@ -71,7 +71,7 @@ export default function AssignmentTable(props) {
   useEffect(() => {
     fetchData()
   }, [])
-
+  console.log(assignment)
   function uploadFile(event) {
     // function นี้ป่ะ อันนี้คือuploadครับ ใช่ครับ
     if (event.target.files[0]) {
@@ -178,6 +178,7 @@ export default function AssignmentTable(props) {
         formData.append("delete_file_assignment[]", [])
       }
 
+
       // const formData = {
       //   assignment_id: assignment.assignment_id,
       //   student_id: props.user.id,
@@ -233,15 +234,15 @@ export default function AssignmentTable(props) {
             assignment.status.status === "Submitted" ? (
               <FiberManualRecordIcon className="successStatus" />
             ) : (
-              <FiberManualRecordIcon className="warning" />
-            )
+                <FiberManualRecordIcon className="warning" />
+              )
           ) : (
-            <FiberManualRecordIcon
-              color={
-                dayjs().isBefore(dueDate, thisDay) ? "disabled" : "secondary"
-              }
-            />
-          )}
+              <FiberManualRecordIcon
+                color={
+                  dayjs().isBefore(dueDate, thisDay) ? "disabled" : "secondary"
+                }
+              />
+            )}
         </td>{" "}
         <td width="30%">{`Due ${dayjs(props.assignment.date_time).format(
           "YYYY MMMM, D / HH:mm A"
@@ -250,8 +251,8 @@ export default function AssignmentTable(props) {
           {expanded ? (
             <RemoveIcon color="primary" />
           ) : (
-            <AddIcon color="primary" />
-          )}
+              <AddIcon color="primary" />
+            )}
         </td>
       </tr>
 
@@ -260,13 +261,12 @@ export default function AssignmentTable(props) {
           <td className="uk-background-muted" colSpan={7}>
             <div ref={expanderBody} className="inner uk-grid">
               <div className="uk-width-1-4 uk-text-center">
-                <small className="text-danger">{`by ${
-                  assignment.teacher.teacher_name
-                } on ${dayjs(props.assignment.created_at).format(
-                  "MMMM DD, YYYY"
-                )} At ${dayjs(props.assignment.created_at).format(
-                  "HH:mm A"
-                )} `}</small>
+                <small className="text-danger">{`by ${assignment.teacher.teacher_name
+                  } on ${dayjs(props.assignment.created_at).format(
+                    "MMMM DD, YYYY"
+                  )} At ${dayjs(props.assignment.created_at).format(
+                    "HH:mm A"
+                  )} `}</small>
               </div>
               <div className="container row">
                 <div className="col-8">
@@ -279,10 +279,10 @@ export default function AssignmentTable(props) {
                       <div className="d-flex">
                         &nbsp;
                         <p className="text-danger m-0">{` ${dayjs(
-                          props.assignment.due_date
-                        ).format("MMMM d, YYYY")} at ${dayjs(
-                          props.assignment.date_time
-                        ).format("HH:mm A")}`}</p>
+                        props.assignment.due_date
+                      ).format("MMMM d, YYYY")} at ${dayjs(
+                        props.assignment.date_time
+                      ).format("HH:mm A")}`}</p>
                       </div>
                       <p className="text-break">
                         {props.assignment.assignment_detail}
@@ -336,14 +336,19 @@ export default function AssignmentTable(props) {
                       <p>Score:&nbsp;</p>
                     </div>
                     &nbsp;&nbsp;&nbsp;
-                    {assignment.status && (
+                    {console.log(assignment.assessment)}
+
+                    {assignment && (
                       <p>
-                        {assignment.status &&
-                        assignment.status.total_score != null ? (
-                          assignment.status.total_score
+                        {assignment.status !== null ? (
+                          assignment.assessment.length == 0 ? (
+                            <></>
+                          ) : (
+                              assignment.status.total_score !== null ? (assignment.status.total_score) : (<div className="text-danger">Waitng for assessment</div>)
+                            )
                         ) : (
-                          <>-</>
-                        )}
+                            <></>
+                          )}
                       </p>
                     )}
                   </div>
@@ -454,19 +459,42 @@ export default function AssignmentTable(props) {
               </div>
             </div>
             <div className="col-12 text-center mb-3">
-              {assignment.status && assignment.status.total_score == null ? (
+              {assignment.status !== null ? (
+                assignment.assessment.length == 0 ? (
+                  <Buttons
+                    color="primary"
+                    menu="Submit"
+                    onClick={() => handleToggle()}
+                  />
+                ) : (
+                    assignment.status.total_score !== null ? (<Buttons className="bg-light" menu="Submit" disabled />) : (<Buttons className="bg-light" menu="Submit" disabled />)
+                  )
+              ) : (
+                  <Buttons
+                    color="primary"
+                    menu="Submit"
+                    onClick={() => handleToggle()}
+                  />
+                )}
+              {/* {assignment && assignment.status === null ? (
                 <Buttons
                   color="primary"
                   menu="Submit"
                   onClick={() => handleToggle()}
                 />
               ) : (
-                <Buttons className="bg-light" menu="Submit" disabled />
-              )}
+                  assignment.status.total_score === null ? (<Buttons
+                    color="primary"
+                    menu="Submit"
+                    onClick={() => handleToggle()}
+                  />) : (<Buttons className="bg-light" menu="Submit" disabled />)
+
+                )} */}
             </div>
           </td>
         </tr>
-      )}
+      )
+      }
     </>
   )
 }
