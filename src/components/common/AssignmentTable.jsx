@@ -342,12 +342,12 @@ export default function AssignmentTable(props) {
                       <p>
                         {assignment.status !== null ? (
                           assignment.assessment.length == 0 ? (
-                            <></>
+                            <div className="text-danger">Waitng for assessment</div>
                           ) : (
                               assignment.status.total_score !== null ? (assignment.status.total_score) : (<div className="text-danger">Waitng for assessment</div>)
                             )
                         ) : (
-                            <></>
+                          <div className="text-danger">Waitng for assessment</div>
                           )}
                       </p>
                     )}
