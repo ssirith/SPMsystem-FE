@@ -90,6 +90,9 @@ export default function CreateAssignment(props) {
                         value: c.criteria_score
                     }
                 )
+                criterions[idx].score.sort((a, b) => {
+                    return a.value - b.value
+                })
             } else {
                 criterions.push(
                     {
@@ -117,7 +120,7 @@ export default function CreateAssignment(props) {
     useEffect(() => {
         fetchData()
     }, [])
- 
+
     useEffect(() => {
         var criterions = [];
         showAllRubric.map((a) => {
@@ -133,6 +136,9 @@ export default function CreateAssignment(props) {
                                     value: c.criteria_score
                                 }
                             )
+                            criterions[idx].score.sort((a, b) => {
+                                return a.value - b.value
+                            })
                         } else {
                             criterions.push(
                                 {

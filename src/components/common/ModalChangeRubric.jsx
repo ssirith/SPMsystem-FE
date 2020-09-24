@@ -93,7 +93,7 @@ export default function ModalChangeRubric(props) {
                     <Buttons
                         color="primary"
                         onClick={(event) => handleSubmit(event)}
-                        menu="Save"
+                        menu="Confirm"
                     />
                 </div>
             </Modal.Footer>

@@ -59,7 +59,8 @@ export default function CreateAssignment() {
     useEffect(() => {
         fetchData()
     }, [])
-
+    console.log(showAllRubric)
+    console.log(rubric)
     useEffect(() => {
         var criterions = [];
         showAllRubric.map((a) => {
@@ -75,6 +76,10 @@ export default function CreateAssignment() {
                                     value: c.criteria_score
                                 }
                             )
+                            criterions[idx].score.sort((a, b) => {
+                                return a.value - b.value
+                            })
+                            
                         } else {
                             criterions.push(
                                 {
@@ -90,14 +95,16 @@ export default function CreateAssignment() {
                             )
                         }
                     })
+
                     setCriterion(criterions)
                 }
                 refreshCriterion()
+                console.log(criterions)
             }
 
         })
     }, [rubric])
-    
+
     const checkRole = useCallback(() => {
         if (user.role === "student") {
             alert(`You dont'have permission to go this page.`)

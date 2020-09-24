@@ -54,6 +54,7 @@ export default function CreateRubric() {
 	  useEffect(() => {
 		checkRole()
 	  }, [user])
+	  
 	function addDetailScore(index) {
 		let newCriterions = [...criterions]
 		for (let i = 0; i < newCriterions.length; i++) {
@@ -94,7 +95,7 @@ export default function CreateRubric() {
 		return noti;
 
 	}
-
+	
 	const handleSubmit = async (event) => {
 
 		const rubric_title = rubricTitle;
