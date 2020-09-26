@@ -124,6 +124,9 @@ export default function AssignmentTable(props) {
           detail: criterion.criteria_detail,
           score: criterion.criteria_score,
         })
+        tempCriterions[idx].criteria_detail.sort((a, b) => {
+          return a.score - b.score
+      })
       } else {
         tempCriterions.push({
           criteria_id: criterion.criteria_id,

@@ -1,7 +1,7 @@
-import React, { useState, useCallback,useContext } from "react"
+import React, { useState, useCallback, useContext } from "react"
 import { makeStyles } from "@material-ui/core/styles"
 import { Card } from "react-bootstrap"
-import { Link,useNavigate } from "@reach/router"
+import { Link, useNavigate } from "@reach/router"
 import Buttons from "../components/common/Buttons"
 import { CardHeader } from "@material-ui/core"
 import axios from "axios"
@@ -49,8 +49,8 @@ export default function Assignment(props) {
     const { user, setUser } = useContext(UserContext)
     let navigate = useNavigate()
     // const { user, setUser } = useContext(UserContext)
-    const {id} = useParams()//user.id
-    const {project_id} = useParams()//assignment_id
+    const { id } = useParams()//user.id
+    const { project_id } = useParams()//assignment_id
     const fetchData = useCallback(async () => {
         setIsPreFetch(true)
         const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/assignments/${props.id}`)//props.id == user.id
@@ -66,6 +66,9 @@ export default function Assignment(props) {
                         value: c.criteria_score
                     }
                 )
+                criterions[idx].score.sort((a, b) => {
+                    return a.value - b.value
+                })
             } else {
                 criterions.push(
                     {
@@ -90,14 +93,14 @@ export default function Assignment(props) {
     }, [])
     const checkRole = useCallback(() => {
         if (user.role === "student") {
-          alert(`You dont'have permission to go this page.`)
-          navigate("/")
+            alert(`You dont'have permission to go this page.`)
+            navigate("/")
         }
-      })
-    
-      useEffect(() => {
+    })
+
+    useEffect(() => {
         checkRole()
-      }, [user])
+    }, [user])
     if (isPreFetch) {
         return <></>
     }
@@ -128,11 +131,11 @@ export default function Assignment(props) {
                                     return (
                                         <>
                                             <tr>
-                                                <td  className='table-active' style={{width:'20%'}}>{data.criteria_name}</td>
+                                                <td className='table-active' style={{ width: '20%' }}>{data.criteria_name}</td>
                                                 {data.score.map((s, pos) => {
                                                     return (
                                                         <>
-                                                            <td className="text-center table-light" style={{width:'15%'}}>
+                                                            <td className="text-center table-light" style={{ width: '15%' }}>
                                                                 {s.value}
                                                                 <br />
                                                                 {s.name}
@@ -179,7 +182,7 @@ export default function Assignment(props) {
                     <div className="row">
                         <div className="col">
                             <h4>
-                            Submission:
+                                Submission:
                             </h4>
                         </div>
                         <Submission
