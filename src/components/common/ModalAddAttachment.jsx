@@ -7,7 +7,7 @@ import axios from "axios"
 import { useEffect } from "react"
 import Button from "@material-ui/core/Button"
 
-export default function ModalComponentAdvisor(props) {
+export default function ModalAddAttachment(props) {
   const [save, setSave] = useState() //เอาค่ามาจาก axios
   const [teachers, setTeachers] = useState([])
   const [isFilter, setIsFilter] = useState([])
@@ -109,9 +109,9 @@ export default function ModalComponentAdvisor(props) {
           onChange={(e) => setSearch(e.target.value)}
         />
         <table className="table table-striped">
-          <tbody style={{cursor: 'pointer'}}>
+          <tbody>
             {isFilter.map((tch, idx) => (
-              <tr className="text-center" key={idx} onClick={() => updateInput(tch)}>
+              <tr key={idx} onClick={() => updateInput(tch)}>
                 <td>{tch.teacher_name}</td>
               </tr>
             ))}
@@ -123,8 +123,8 @@ export default function ModalComponentAdvisor(props) {
           {save &&
             save.map((data, index) => {
               return (
-                <div className="row my-2 text-center ml-4" key={index}>
-                  <div className="col-7 ">{data.teacher_name}</div>
+                <div className="row my-2" key={index}>
+                  <div className="col-4">{data.teacher_name}</div>
                   <button
                     className="btn btn-danger"
                     onClick={() => deleteAdvisor(data)}

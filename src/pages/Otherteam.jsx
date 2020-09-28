@@ -15,7 +15,6 @@ import { UserContext } from "../UserContext"
 export default function Otherteam(props) {
   const { user, setUser } = useContext(UserContext)
   const { id } = useParams()
-  console.log({ id })
   const [group, setGroup] = useState({})
   const fetchData = useCallback(async () => {
     const data = await axios.get(
@@ -26,14 +25,14 @@ export default function Otherteam(props) {
   useEffect(() => {
     fetchData()
   }, [])
-  console.log(group)
+  
   return (
     <div className="container">
       <div className="row">
         <div className="col-12 my-3">
           {group && (
             <BreadcrumbNav
-              pastref="/AllProjects"
+              pastref="/allprojects"
               past="All Project"
               current={group.project}
             />
@@ -47,10 +46,10 @@ export default function Otherteam(props) {
 
         <div className="col-12 my-3">
           <div className="row">
-            <div className="col-8">
+            <div className="col-7">
               <MyteamMember title="Members" members={group.group} />
             </div>
-            <div className="col-4">
+            <div className="col-5">
               <MyteamAdvisor title="Advisor" advisors={group.teacher} />
             </div>
           </div>
@@ -60,30 +59,27 @@ export default function Otherteam(props) {
           <Boxitem title="Detail" detail={group.project} />
         </div>
       </div>
+
       <div className="col-12 mx-auto">
         <div className="row">
           <div className="col-12 text-center">
             {user.role == "aa" ? (
-              <Link to="/">
+              <Link to="/allprojects">
                 <Buttons
                   menu="Back"
-                  color="secondary"
-                  onClick={() => console.log("Back")}
                 />
               </Link>
             ) : (
-              <Link to="/AllProjects">
+              <Link to="/allprojects">
                 <Buttons
                   menu="Back"
-                  color="secondary"
-                  onClick={() => console.log("Back")}
-                />
+                /> 
               </Link>
             )}
 
             {user.role == "aa" && (
               <Link to={`/editteam/${id}`} className="mx-2">
-                <Buttons menu="Edit" />
+                <Buttons menu="Edit" color = "primary" />
               </Link>
             )}
           </div>

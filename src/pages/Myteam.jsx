@@ -51,7 +51,7 @@ export default function Myteam() {
   if (isPreFetch) {
     return <></>
   }
-
+  console.log(group)
   return (
     <>
 
@@ -73,10 +73,10 @@ export default function Myteam() {
 
                     <div className="col-12 my-2">
                       <div className="row">
-                        <div className="col-8">
+                        <div className="col-7">
                           <MyteamMember title="Members" members={stdGroup.group} />
                         </div>
-                        <div className="col-4">
+                        <div className="col-5">
                           <MyteamAdvisor
                             title="Advisor"
                             advisors={stdGroup.teacher}
@@ -121,7 +121,6 @@ export default function Myteam() {
                       <Buttons
                         menu="Create"
                         color="primary"
-                        onClick={() => console.log("Create")}
                       />
                     </Link>
                   </div>
@@ -139,7 +138,7 @@ export default function Myteam() {
 
       {user.role === "teacher" && (
         <>
-          {stdGroup.project ? (
+          {group && group.length > 0 ? (
             <div className="container">
               <div className="row mt-5">
                 {group.map((data, index) => {
@@ -156,6 +155,7 @@ export default function Myteam() {
                 <img src='/image/myproject.jpg' alt='Dashboard logo' className='img-fluid' width='50%' height='auto' />
                 <p>
                   Oops, you don't have any project.
+                  
               </p>
               </div>
             )}
@@ -164,7 +164,6 @@ export default function Myteam() {
       )}
       {user.role == "aa" && (
         <>
-          {stdGroup.project ? (
             <div className="container">
               <div className="row mt-5">
                 {group.map((data, index) => {
@@ -175,16 +174,7 @@ export default function Myteam() {
                   )
                 })}
               </div>
-            </div>
-          ) : (
-              <div className="container text-center my-auto">
-                <img src='/image/allproject.jpg' alt='Dashboard logo' className='img-fluid' width='50%' height='auto' />
-                <p>
-                  Oops, you don't have any project.
-              </p>
-              </div>
-            )}
-
+            </div>      
         </>
       )}
     </>

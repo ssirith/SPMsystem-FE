@@ -135,7 +135,7 @@ export default function ModalEditMember(props) {
         />
 
         <table className="table table-striped">
-          <tbody>
+          <tbody style={{cursor: 'pointer'}}>
             {isFilter && isFilter.map((ads, idx) => (
               <tr key={idx} onClick={() => updateInput(ads)}>
                 <td>{ads.student_id}</td>

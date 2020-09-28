@@ -111,9 +111,9 @@ export default function ModalEditAdvisor(props) {
           onChange={(e) => setSearch(e.target.value)}
         />
         <table className="table table-striped">
-          <tbody>
+          <tbody style={{cursor: 'pointer'}}>
             {isFilter.map((ads, idx) => (
-              <tr key={idx} onClick={() => updateInput(ads)}>
+              <tr className="text-center" key={idx} onClick={() => updateInput(ads)}>
                 <td>{ads.teacher_name}</td>
               </tr>
             ))}
@@ -125,8 +125,8 @@ export default function ModalEditAdvisor(props) {
           {save &&
             save.map((data, index) => {
               return (
-                <div className="row my-2" key={index}>
-                  <div className="col-4">{data.teacher_name}</div>
+                <div className="row my-2 text-center ml-4" key={index}>
+                  <div className="col-7">{data.teacher_name}</div>
                   <button
                     className="btn btn-danger"
                     onClick={() => deleteAdvisor(data)}
