@@ -64,6 +64,7 @@ export default function CreateRubric() {
 		}
 		setCriterions(newCriterions)
 	}
+
 	function removeDetailScore(index, pos) {
 		let newCriterions = [...criterions]
 		for (let i = 0; i < newCriterions.length; i++) {
@@ -78,9 +79,15 @@ export default function CreateRubric() {
 		setCriterions(newCriterions)
 	}
 
-	function handleRemove(index) {
-		criterions.splice(index, 1)
-		setCriterions([...criterions])
+	function handleRemove(event,data, index) {
+		let newCriterions = [...criterions]
+		for (let i = 0; i < newCriterions.length; i++) {
+			if(index === i){
+				newCriterions.splice(i,1)
+			}
+			
+		}
+		setCriterions(newCriterions)
 	}
 
 	function checkInput() {
@@ -121,7 +128,7 @@ export default function CreateRubric() {
 		}
 
 	}
-
+console.log(criterions)
 
 	return (
 		<>
@@ -224,7 +231,7 @@ export default function CreateRubric() {
 										<Buttons
 											menu="Delete Criterion"
 											color="secondary"
-											onClick={(event) => handleRemove(event, index)}
+											onClick={(event) => handleRemove(event,data, index)}
 										/>
 									</Col>
 								</Row>

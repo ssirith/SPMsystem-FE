@@ -155,9 +155,14 @@ export default function EditRubric(props) {
 	}
 
 	function handleRemoveTable(data, index) {
-		criterions.splice(index, 1)
-		setCriterions([...criterions])
-		delete_criteria.push(data)
+		let newCriterions = [...criterions]
+		for (let i = 0; i < newCriterions.length; i++) {
+			if(index === i){
+				newCriterions.splice(i,1)
+			}
+			
+		}
+		setCriterions(newCriterions)
 	}
 
 	function checkInput() {

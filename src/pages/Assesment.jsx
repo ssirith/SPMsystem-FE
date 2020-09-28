@@ -92,10 +92,10 @@ export default function Assesment(props) {
 
         if (res.data.feedback.length !== 0) {
             let newFeedback = res.data.feedback.find((f) => f.teacher_id === user.id)
-            if(newFeedback){
+            if (newFeedback) {
                 setFeedback([newFeedback])//[]
             }
-            
+
         }
 
     }, [])
@@ -106,7 +106,7 @@ export default function Assesment(props) {
     console.log(assesmentScore)
     console.log(feedback)
     const checkRole = useCallback(() => {
-        if (user.role === "student"|| user.role === "aa") {
+        if (user.role === "student" || user.role === "aa") {
             alert(`You dont'have permission to go this page.`)
             navigate("/")
         }
@@ -126,47 +126,52 @@ export default function Assesment(props) {
             setAssesmentScore([...assesmentScore, { criteria_id: data.criteria_id, score: parseInt(event.target.value) }])
         }
     }
- 
+
     function handleFeedback(event, index) {
         let newFeedback = [];
         newFeedback.push(event.target.value)
         setFeedback(newFeedback)
     }
 
-
+    console.log(assesmentScore)
+    console.log(criterions)
     async function handleSubmit() {
-        let teacher = isAssesment.responsible_assignment.find(t => t.teacher_id === user.id)//teacher.id ===2         
-        let assessment = []
-        assesmentScore.map((item) => {
-            if (item.responsible_assignment_id === teacher.id) {
-                assessment.push({ criteria_id: item.criteria_id, score: parseInt(item.score) })
+        if (assesmentScore.length === criterions.length) {
+            let teacher = isAssesment.responsible_assignment.find(t => t.teacher_id === user.id)//teacher.id ===2         
+            let assessment = []
+            assesmentScore.map((item) => {
+                if (item.responsible_assignment_id === teacher.id) {
+                    assessment.push({ criteria_id: item.criteria_id, score: parseInt(item.score) })
+                }
+            })
+
+            let responsible_assignment_id = "";
+            if (isAssesment.responsible_assignment.length !== 0) {
+                responsible_assignment_id = isAssesment.responsible_assignment.find(item => item.responsible_teacher_id === user.id)
             }
-        })
-        
-        let responsible_assignment_id = "";
-        if (isAssesment.responsible_assignment.length !== 0) {
-            responsible_assignment_id = isAssesment.responsible_assignment.find(item => item.responsible_teacher_id === user.id)
+
+            const data = {
+                assignment_id: parseInt(assignment_id),
+                project_id: id,
+                rubric_id: isAssesment.rubric_id,
+                responsible_assignment: responsible_assignment_id.id + "",
+                assessment: assesmentScore,
+                feedback: feedback[0]
+            }
+            try {
+                const response = await axios.post(`${process.env.REACT_APP_API_BE}/assessment`, data)
+                if (response.status === 200) {
+                    alert("Success.")
+                    navigate(`/assignments/${assignment_id}`)
+                }
+            } catch (err) {
+                alert("It's not success, Please check your input")
+                console.error(err)
+            }
+        }else{
+            alert("Check your input!!")
         }
 
-        const data = {
-            assignment_id: parseInt(assignment_id),
-            project_id: id,
-            rubric_id: isAssesment.rubric_id,
-            responsible_assignment: responsible_assignment_id.id + "",
-            assessment: assesmentScore,
-            feedback: feedback[0]
-        }
-        console.log(data)
-        try {
-            const response = await axios.post(`${process.env.REACT_APP_API_BE}/assessment`, data)
-            if (response.status === 200) {
-                alert("Success.")
-                navigate(`/assignments/${assignment_id}`)
-            }
-        } catch (err) {
-            alert("It's not success, Please check your input")
-            console.error(err)
-        }
     }
 
     return (
@@ -251,7 +256,7 @@ export default function Assesment(props) {
                             <Row style={{ alignItems: "center" }, { marginLeft: 25 }}>
                                 <Col  >
                                     <br />
-                                    <h4> 
+                                    <h4>
                                         Assessment
                                              </h4>
                                     <br />
@@ -295,17 +300,17 @@ export default function Assesment(props) {
                             {criterions && criterions.map((data, index) => {
                                 let teacher = isAssesment.responsible_assignment.find(t => t.teacher_id === user.id)
                                 let temp = assesmentScore.find(item => (item.criteria_id === data.criteria_id) && (item.responsible_assignment_id === teacher.id)) // (item.responsible_assignment_id === teacher.id)
-                                console.log(temp)
+
                                 return (
                                     <Row style={{ alignItems: "center" }}>
-                                        <Col sm={2} style={{ marginLeft: 78 }}>
-                                            <div key={index}> {`Score Of ${data.criteria_name} : `}</div>
+                                        <Col sm={3} style={{ marginLeft: 78 }}>
+                                            <div key={index} > {`Score Of ${data.criteria_name}`}<span className="text-danger">*</span></div>
                                         </Col>
-                                        <Col sm={1} style={{ marginTop: 25 }}>
+                                        <Col sm={2} style={{ marginTop: 25 }}>
                                             {temp ? (
-                                                <div key={index}><input type="text" size="4" defaultValue={temp.score} onChange={(event) => handleAssesment(event, index, data)} /></div>
+                                                <div key={index}>{`:`}&nbsp;<input type="text" size="4" defaultValue={temp.score} onChange={(event) => handleAssesment(event, index, data)} /></div>
                                             ) : (
-                                                    <div key={index}><input type="text" size="4" onChange={(event) => handleAssesment(event, index, data)} /></div>
+                                                    <div key={index}>{": "}&nbsp;<input type="text" size="4" onChange={(event) => handleAssesment(event, index, data)} /></div>
                                                 )}
                                             <br />
                                         </Col>
@@ -324,7 +329,7 @@ export default function Assesment(props) {
                             </Row>
                             <Row>
 
-                                
+
                                 {feedback.length === 0 ? (
                                     <Col sm={8} style={{ marginLeft: 70 }}>
                                         <Textarea
@@ -335,18 +340,18 @@ export default function Assesment(props) {
                                     </Col>
                                 ) : (
                                         feedback.map((f, index) => {
-                                            
-                                                return (
-                                                    <Col sm={8} style={{ marginLeft: 70 }}>
-                                                        <Textarea
-                                                            id="feedback"
-                                                            label="Input feedback"
-                                                            defaultValue={f.feedback_detail}
-                                                            onChange={(event) => handleFeedback(event, index)}
-                                                        />
-                                                    </Col>
-                                                )
-                                            
+
+                                            return (
+                                                <Col sm={8} style={{ marginLeft: 70 }}>
+                                                    <Textarea
+                                                        id="feedback"
+                                                        label="Input feedback"
+                                                        defaultValue={f.feedback_detail}
+                                                        onChange={(event) => handleFeedback(event, index)}
+                                                    />
+                                                </Col>
+                                            )
+
                                         })
                                     )}
                             </Row>

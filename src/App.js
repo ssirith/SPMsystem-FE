@@ -1,4 +1,4 @@
-import React, { useState, useMemo,useEffect, useCallback } from "react"
+import React, { useState, useMemo, useEffect, useCallback } from "react"
 import "./App.css"
 import { UserContext } from "./UserContext"
 import { Router } from "@reach/router"
@@ -24,53 +24,56 @@ import { SettingContext } from "./SettingContext"
 import axios from "axios"
 
 function App() {
-  const [settingYearContext, setSettingYearContext] = useState(dayjs().format('YYYY')-1)// อิงตาม ปฏิทิน 2020
+  const [settingYearContext, setSettingYearContext] = useState(dayjs().format('YYYY') - 1)// อิงตาม ปฏิทิน 2020
   // const [settingYearContext, setSettingYearContext] = useState(dayjs().format('2019'))
-  const [settingContext,setSettingContext] =useState({})
+  const [settingContext, setSettingContext] = useState({})
   const settingYearValue = useMemo(
     () => ({ settingYearContext, setSettingYearContext }),
     [settingYearContext, setSettingYearContext]
   )
   const settingValue = useMemo(
-    () => ({ settingContext,setSettingContext }),
-    [settingContext,setSettingContext]
+    () => ({ settingContext, setSettingContext }),
+    [settingContext, setSettingContext]
   )
   const [user, setUser] = useState({
 
-    id: "11", //เวลา demo  เปลี่ยนที่นี่
-    name: "AA",
-    role: "aa", //เวลา demo  เปลี่ยนที่นี่
+    id: "2", //เวลา demo  เปลี่ยนที่นี่
+    name: "Umaporn Supasitthimethee",
+    role: "teacher", //เวลา demo  เปลี่ยนที่นี่
 
+    //1 Siam Yamsaengsung
+    //2 Umaporn Supasitthimethee
+    //9 Pichet Limvachiranan
   })
- 
+
   const userValue = useMemo(() => ({ user, setUser }), [user, setUser])
 
-  const fetchData = useCallback(async ()=>{
-    try{
+  const fetchData = useCallback(async () => {
+    try {
       const response = await axios.get(`${process.env.REACT_APP_API_BE}/config/${settingYearContext}`)
       // console.log('response true false from database',response.data.student_one_more_group)
       // setSettingContext(response.data)
       if (parseInt(response.data.student_one_more_group)) {
         // console.log('In if')
         setSettingContext({ ...response.data, student_one_more_group: true })
-      } else  {
+      } else {
         // console.log('In else')
         setSettingContext({ ...response.data, student_one_more_group: false })
       }
-    }catch(err){
+    } catch (err) {
       console.log(err)
     }
   })
-//  console.log('app',settingContext)
-  useEffect(()=>{
+  //  console.log('app',settingContext)
+  useEffect(() => {
     fetchData()
-  },[settingYearContext])
-  
+  }, [settingYearContext])
+
   return (
     <SettingYearContext.Provider value={settingYearValue}>
-    <SettingContext.Provider value={settingValue}>
-      <UserContext.Provider value={userValue}>
-        <Router>
+      <SettingContext.Provider value={settingValue}>
+        <UserContext.Provider value={userValue}>
+          <Router>
             <MainLayout
               path="/"
               component={Myteam}
@@ -113,7 +116,7 @@ function App() {
               statusbar={3}
             />
             <MainLayout
-              path = "/send_assignment/:assignment_id/teacher/:id"
+              path="/send_assignment/:assignment_id/teacher/:id"
               component={Assesment}
               statusbar={3}
             />
@@ -139,8 +142,8 @@ function App() {
             />
             <MainLayout path="/Setting" component={Setting} statusbar={6} />
           </Router>
-      </UserContext.Provider>
-    </SettingContext.Provider>
+        </UserContext.Provider>
+      </SettingContext.Provider>
     </SettingYearContext.Provider>
   )
 }

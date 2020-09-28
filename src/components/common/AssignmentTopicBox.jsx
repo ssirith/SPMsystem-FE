@@ -38,7 +38,7 @@ export default function AssignmentTopicBox(props) {
                                 return (
                                     <div key={index}>
                                         <Card className={classes.root}>
-                                            <CardHeader title={`Assignment ${data.assignment_id} `} />
+                                            <CardHeader title={`${data.assignment_title} `} />
                                             <Card.Body>
                                                 <Card.Text>
                                                     <div className="container col-12 " style={{ 'fontSize': '20px' }}>
@@ -66,7 +66,7 @@ export default function AssignmentTopicBox(props) {
                             return (
                                 <div key={index}>
                                     <Card className={classes.root}>
-                                        <CardHeader title={`Assignment ${data.assignment_id} `} />
+                                        <CardHeader title={`${data.assignment_title} `} />
                                         <Card.Body>
                                             <Card.Text>
                                                 <div className="container col-12" style={{ 'fontSize': '20px' }}>
@@ -99,7 +99,7 @@ export default function AssignmentTopicBox(props) {
                                     return (
                                         <div key={index}>
                                             <Card className={classes.root}>
-                                                <CardHeader title={`Assignment ${data.assignment_id} `} />
+                                                <CardHeader title={`${data.assignment_title} `} />
                                                 <Card.Body>
                                                     <Card.Text>
                                                         <div className="container col-12" style={{ 'fontSize': '20px' }}>
@@ -127,7 +127,7 @@ export default function AssignmentTopicBox(props) {
                                 return (
                                     <div key={index}>
                                         <Card className={classes.root}>
-                                            <CardHeader title={`Assignment ${data.assignment_id} `} />
+                                            <CardHeader title={`${data.assignment_title} `} />
                                             <Card.Body>
                                                 <Card.Text>
                                                     <div className="container col-12" style={{ 'fontSize': '20px' }}>
