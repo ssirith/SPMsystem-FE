@@ -12,6 +12,7 @@ import { UserContext } from "../UserContext"
 import { SettingContext } from '../SettingContext'
 import ModalWindowProfileStudent from "../components/common/ModalWindowProfileStudent"
 import Carditem from "../components/common/Carditem"
+import Loading from "../components/common/Loading"
 export default function Myteam() {
   const { user, setUser } = useContext(UserContext) //Mock data user context
   const { settingContext, setSettingContext } = useContext(SettingContext)
@@ -49,7 +50,7 @@ export default function Myteam() {
   }, [])
 
   if (isPreFetch) {
-    return <></>
+    return <><Loading open={isPreFetch}/></>
   }
   console.log(group)
   return (

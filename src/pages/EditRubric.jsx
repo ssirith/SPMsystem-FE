@@ -10,6 +10,7 @@ import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 import { Container, Row, Col } from 'reactstrap';
 import { UserContext } from "../UserContext"
+import Loading from "../components/common/Loading"
 export default function EditRubric(props) {
 	let navigate = useNavigate()
 	const { user, setUser } = useContext(UserContext)
@@ -215,6 +216,9 @@ export default function EditRubric(props) {
 			}
 
 		}
+	}
+	if(isPreFetch){
+		return<><Loading open={isPreFetch}/></>
 	}
 	return (
 		<>

@@ -1,16 +1,23 @@
 import React, { useState, useCallback, useEffect } from "react"
 import Carditem from "../components/common/Carditem"
 import axios from "axios"
+import Loading from "../components/common/Loading"
 
 export default function Teams() {
   const [group, setGroup] = useState([])
+  const [isPrefetch,setIsPreFetch]=useState(false)
   const fetchData = useCallback(async () => {
+    setIsPreFetch(true)
     const data = await axios.get(`http://127.0.0.1:8000/api/projects`) //[]
     setGroup(data.data) // AllProject
+    setIsPreFetch(false)
   }, [])
   useEffect(() => {
     fetchData()
   }, [])
+  if(isPrefetch){
+    return<><Loading open={isPrefetch}/></>
+  }
 
   return (
     <>
