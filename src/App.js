@@ -15,7 +15,9 @@ import EditAssignment from "./pages/EditAssignment"
 import CreateRubric from "./pages/CreateRubric"
 import EditRubric from "./pages/EditRubric"
 import Assesment from "./pages/Assesment"
-import Annoucements from "./pages/Annoucements"
+import Announcements from "./pages/Announcements"
+import CreateAnnouncement from "./pages/CreateAnnouncement"
+import EditAnnouncement from "./pages/EditAnnouncement"
 import ViewAssesment from "./pages/ViewAssesment"
 import Setting from "./pages/Setting"
 import dayjs from 'dayjs';
@@ -37,9 +39,17 @@ function App() {
   )
   const [user, setUser] = useState({
 
-    id: "2", //เวลา demo  เปลี่ยนที่นี่
-    name: "Umaporn Supasitthimethee",
-    role: "teacher", //เวลา demo  เปลี่ยนที่นี่
+    id: "1", 
+    name: "Siam Yamsaengsung", 
+    role: "teacher",
+
+    // id: "11", 
+    // name: "Pornthip", 
+    // role: "aa",
+
+    // id: "60130500082", 
+    // name: "Watunyu Panmun",
+    // role: "student", 
 
     //1 Siam Yamsaengsung
     //2 Umaporn Supasitthimethee
@@ -136,8 +146,18 @@ function App() {
               statusbar={3}
             />
             <MainLayout
-              path="/annoucements"
-              component={Annoucements}
+              path="/announcements"
+              component={Announcements}
+              statusbar={5}
+            />
+            <MainLayout
+              path="/createannouncement"
+              component={CreateAnnouncement}
+              statusbar={5}
+            />
+            <MainLayout
+              path="/editannouncement/:id"
+              component={EditAnnouncement}
               statusbar={5}
             />
             <MainLayout path="/Setting" component={Setting} statusbar={6} />

@@ -9,7 +9,6 @@ import { Card } from "react-bootstrap"
 import { CardHeader } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord"
-import TableCell from '@material-ui/core/TableCell';
 import FolderIcon from "@material-ui/icons/Folder"
 import { Table } from "react-bootstrap"
 import { Container, Row, Col } from 'reactstrap';
@@ -56,6 +55,9 @@ export default function Assesment(props) {
                     value: c.criteria_score
                 }
                 )
+                criterions[idx].criteria_detail.sort((a, b) => {
+                    return a.value - b.value
+                })
             } else {
                 criterions.push(
                     {
@@ -91,20 +93,23 @@ export default function Assesment(props) {
 
 
         if (res.data.feedback.length !== 0) {
-            let newFeedback = res.data.feedback.find((f) => f.teacher_id === user.id)
-            if (newFeedback) {
-                setFeedback([newFeedback])//[]
+            let checkFeedback = res.data.feedback.find((f) => f.teacher_id === user.id)
+            if (checkFeedback) {
+                setFeedback(checkFeedback.feedback_detail)//[]
             }
-
+        } else {
+            setFeedback("")
         }
 
     }, [])
 
+    console.log("feedback", feedback)
+    console.log("assignment", isAssesment)
+
     useEffect(() => {
         fetchData()
     }, [])
-    console.log(assesmentScore)
-    console.log(feedback)
+
     const checkRole = useCallback(() => {
         if (user.role === "student" || user.role === "aa") {
             alert(`You dont'have permission to go this page.`)
@@ -128,13 +133,9 @@ export default function Assesment(props) {
     }
 
     function handleFeedback(event, index) {
-        let newFeedback = [];
-        newFeedback.push(event.target.value)
-        setFeedback(newFeedback)
+        setFeedback(event.target.value)
     }
 
-    console.log(assesmentScore)
-    console.log(criterions)
     async function handleSubmit() {
         if (assesmentScore.length === criterions.length) {
             let teacher = isAssesment.responsible_assignment.find(t => t.teacher_id === user.id)//teacher.id ===2         
@@ -150,14 +151,27 @@ export default function Assesment(props) {
                 responsible_assignment_id = isAssesment.responsible_assignment.find(item => item.responsible_teacher_id === user.id)
             }
 
-            const data = {
-                assignment_id: parseInt(assignment_id),
-                project_id: id,
-                rubric_id: isAssesment.rubric_id,
-                responsible_assignment: responsible_assignment_id.id + "",
-                assessment: assesmentScore,
-                feedback: feedback[0]
+            let data;
+            if (feedback === "") {
+                data = {
+                    assignment_id: parseInt(assignment_id),
+                    project_id: id,
+                    rubric_id: isAssesment.rubric_id,
+                    responsible_assignment: responsible_assignment_id.id + "",
+                    assessment: assesmentScore,
+                    feedback: "-"
+                }
+            }else{
+                data = {
+                    assignment_id: parseInt(assignment_id),
+                    project_id: id,
+                    rubric_id: isAssesment.rubric_id,
+                    responsible_assignment: responsible_assignment_id.id + "",
+                    assessment: assesmentScore,
+                    feedback: feedback
+                }
             }
+            console.log(data)
             try {
                 const response = await axios.post(`${process.env.REACT_APP_API_BE}/assessment`, data)
                 if (response.status === 200) {
@@ -168,7 +182,7 @@ export default function Assesment(props) {
                 alert("It's not success, Please check your input")
                 console.error(err)
             }
-        }else{
+        } else {
             alert("Check your input!!")
         }
 
@@ -240,7 +254,7 @@ export default function Assesment(props) {
                                                     >
                                                         <FolderIcon className="primary" />
                                                             &nbsp;&nbsp;
-                                                        {a.send_assignment_name.substring(0, 30)}
+                                                        {a.send_assignment_name.substring(0, 25)}
                                                         <br />  <br />
                                                     </a>
 
@@ -253,7 +267,7 @@ export default function Assesment(props) {
                             <br />
                             <hr />
 
-                            <Row style={{ alignItems: "center" }, { marginLeft: 25 }}>
+                            <Row style={{ alignItems: "center" , marginLeft: 25 }}>
                                 <Col  >
                                     <br />
                                     <h4>
@@ -328,32 +342,14 @@ export default function Assesment(props) {
                                 </Col>
                             </Row>
                             <Row>
-
-
-                                {feedback.length === 0 ? (
-                                    <Col sm={8} style={{ marginLeft: 70 }}>
-                                        <Textarea
-                                            id="feedback"
-                                            label="Input feedback"
-                                            onChange={(event) => handleFeedback(event)}
-                                        />
-                                    </Col>
-                                ) : (
-                                        feedback.map((f, index) => {
-
-                                            return (
-                                                <Col sm={8} style={{ marginLeft: 70 }}>
-                                                    <Textarea
-                                                        id="feedback"
-                                                        label="Input feedback"
-                                                        defaultValue={f.feedback_detail}
-                                                        onChange={(event) => handleFeedback(event, index)}
-                                                    />
-                                                </Col>
-                                            )
-
-                                        })
-                                    )}
+                                <Col sm={8} style={{ marginLeft: 70 }}>
+                                    <Textarea
+                                        id="feedback"
+                                        defaultValue={feedback}
+                                        label="Input feedback"
+                                        onChange={(event) => handleFeedback(event)}
+                                    />
+                                </Col>
                             </Row>
 
                             <br />

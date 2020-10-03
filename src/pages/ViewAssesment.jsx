@@ -175,15 +175,15 @@ export default function ViewAssesment() {
                     return (
                       <>
                         <a
-                         href={`http://127.0.0.1:8000/storage/${file.send_assignment}`}
-                         download
-                         target="_blank">
+                          href={`http://127.0.0.1:8000/storage/${file.send_assignment}`}
+                          download
+                          target="_blank">
                           <FolderIcon className="primary" />
                               &nbsp;
-                              
-                            {file.send_assignment_name.substring(0, 30)}
-                            <br />  <br />
-                          
+
+                            {file.send_assignment_name.substring(0, 25)}
+                          <br />  <br />
+
                         </a>
                       </>
                     )
@@ -254,86 +254,75 @@ export default function ViewAssesment() {
             assessment.responsible_assignment.map((responsible, index) => {
               return (
                 <>
-                  <div
+                  <Row>
+                    <Col sm={3} style={{ marginLeft: 50 }}>
+                      <b>{responsible.teacher_name}</b>
+                    </Col>
+                  </Row>
+                  <br/>
+                  {/* <div
                     className="col-12"
                   // style={{ border: "3px solid purple" }}
-                  >
-                    <div className="row my-2">
+                  > */}
+                  {/* <div className="row my-2">
                       <b>{responsible.teacher_name}</b>
-                    </div>
-                    <div className="row">
-                      <div
+                    </div> */}
+                  {/* <div className="row"> */}
+                  {/* <div
                         className=" col-6 ml-4"
-                      // style={{ border: "3px solid violet" }}
-                      >
-                        {rubric &&
-                          rubric.map((criteria, index) => {
-                            let newscore = assessment.assessment.find(
-                              (score) =>
-                                score.criteria_id ===
-                                criteria.criteria_id &&
-                                score.responsible_assignment_id ===
-                                responsible.id
-                            )
-                            return (
-                              <>
-                                {console.log("new", newscore)}
-                                <div className="row ">
-                                  <p className="mr-5">
-                                    {criteria.criteria_name}
-                                  </p>
-                                  <div
-                                    className="col-sm-auto row "
-                                  // style={{ border: "3px solid orange" }}
-                                  >
-                                    <div className="d-flex">
-                                      {/* {assessment.assessment &&
-                                            assessment.assessment.map(
-                                              (score) => {
-                                                let newScore
-                                                if (
-                                                  score.criteria_id ===
-                                                    criteria.criteria_id &&
-                                                  score.responsible_assignment_id ===
-                                                    responsible.id
-                                                ) {
-                                                  newScore = score.score
-                                                }
-                                                return newScore >= 0 ? ( */}
-                                      {newscore ? (
-                                        <input
-                                          key={index}
-                                          type="text"
-                                          id="scoreOfcriteria"
-                                          defaultValue={newscore.score}
-                                          size="4"
-                                          disabled
-                                        />
-                                      ) : (
-                                          <input
-                                            key={index}
-                                            type="text"
-                                            id="scoreOfcriteria"
-                                            defaultValue=""
-                                            size="4"
-                                            disabled
-                                          />
-                                        )}
-
-                                      {/* ) : (
-                                                   <></>
-                                                 ) */}
-                                      {/* } */}
-                                      {/* )} */}
-                                    </div>
-                                  </div>
+                     style={{ border: "3px solid violet" }}
+                      > */}
+                  {rubric &&
+                    rubric.map((criteria, index) => {
+                      let newscore = assessment.assessment.find(
+                        (score) =>
+                          score.criteria_id ===
+                          criteria.criteria_id &&
+                          score.responsible_assignment_id ===
+                          responsible.id
+                      )
+                      return (
+                        <>
+                          <Row  style={{ marginLeft: 78 }}>
+                            <Col sm={3}  style={{ marginTop: 4 }}>
+                              <div>
+                                <p>{criteria.criteria_name}</p>
+                              </div>
+                            </Col>
+                            <Col sm={2}>
+                              {/* {console.log("new", newscore)} */}
+                              {newscore ? (
+                                <div key={index}>
+                                  {`:`}&nbsp;
+                                  <input
+                                    type="text"
+                                    id="scoreOfcriteria"
+                                    defaultValue={newscore.score}
+                                    size="4"
+                                    disabled
+                                  />
                                 </div>
-                              </>
-                            )
-                          })}
-                      </div>
-                    </div>
-                  </div>
+                              ) : (
+                                  <div key={index}>
+                                    {`:`}&nbsp;
+                                    <input
+                                      type="text"
+                                      id="scoreOfcriteria"
+                                      defaultValue=""
+                                      size="4"
+                                      disabled
+                                    />
+                                  </div>
+                                )}
+                            </Col>
+                          </Row>
+
+                        </>
+                      )
+                    })}
+                  {/* </div> */}
+                  {/* </div>
+                  </div> */}
                 </>
               )
             })}
@@ -351,3 +340,53 @@ export default function ViewAssesment() {
     </>
   )
 }
+{/* <div className="row ">
+<p className="mr-5">
+  {criteria.criteria_name}
+</p>
+<div
+  className="col-sm-auto row "
+ style={{ border: "3px solid orange" }}
+>
+  <div className="d-flex"> */}
+{/* {assessment.assessment &&
+          assessment.assessment.map(
+            (score) => {
+              let newScore
+              if (
+                score.criteria_id ===
+                  criteria.criteria_id &&
+                score.responsible_assignment_id ===
+                  responsible.id
+              ) {
+                newScore = score.score
+              }
+              return newScore >= 0 ? ( */}
+// {newscore ? (
+//   <input
+//     key={index}
+//     type="text"
+//     id="scoreOfcriteria"
+//     defaultValue={newscore.score}
+//     size="4"
+//     disabled
+//   />
+// ) : (
+//     <input
+//       key={index}
+//       type="text"
+//       id="scoreOfcriteria"
+//       defaultValue=""
+//       size="4"
+//       disabled
+//     />
+//   )}
+
+{/* ) : (
+                 <></>
+               ) */}
+{/* } */ }
+{/* )} */ }
+//   </div>
+// </div>
+// </div>

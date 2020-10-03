@@ -78,7 +78,7 @@ export default function Sidebar(props) {
                   props.statusbar === 5 ? "bg-white" : "bg-light"
                   } rounded`}
               >
-                <Link to="/annoucements">
+                <Link to="/announcements">
                   <div className="nav-link">
                     <ListItemIcon>
                       <Speaker className='ml-3' />
@@ -161,7 +161,7 @@ export default function Sidebar(props) {
                   props.statusbar === 5 ? "bg-white" : "bg-light"
                   } rounded`}
               >
-                <Link to="/annoucements">
+                <Link to="/announcements">
                   <div className="nav-link">
                     <ListItemIcon>
                       <Speaker className='ml-3' />
@@ -225,7 +225,7 @@ export default function Sidebar(props) {
                   props.statusbar === 5 ? "bg-white" : "bg-light"
                   } rounded`}
               >
-                <Link to="/annoucements">
+                <Link to="/announcements">
                   <div className="nav-link">
                     <ListItemIcon>
                       <Speaker className='ml-3' />

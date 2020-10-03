@@ -63,7 +63,7 @@ export default function Createteam() {
     const student_id = []//array
     member.map((m) => student_id.push(m.student_id))
     const value = students.find((std) => std.student_id === user.id)//no std.id
-    if(value){
+    if (value) {
       student_id.push(value.student_id)
     }
     const teacher_id = []
@@ -100,7 +100,7 @@ export default function Createteam() {
           />
         </div>
         <div className="col-12 my-3">
-          <p>Senior Project Topic</p>
+          <b>Senior Project Topic</b>
         </div>
       </div>
       <div className="row">
@@ -168,7 +168,7 @@ export default function Createteam() {
           </div>
         </div>
       </div>
-
+      <br />
       <div className="col-12 my-3">
         <Textarea
           id="projectdetail"
@@ -197,6 +197,7 @@ export default function Createteam() {
           </div>
         </div>
       </div>
+      <br />
     </div>
   )
 }

@@ -59,8 +59,7 @@ export default function CreateAssignment() {
     useEffect(() => {
         fetchData()
     }, [])
-    console.log(showAllRubric)
-    console.log(rubric)
+
     useEffect(() => {
         var criterions = [];
         showAllRubric.map((a) => {

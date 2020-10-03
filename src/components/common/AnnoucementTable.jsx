@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback } from "react"
+import React, { useState, useRef, useEffect, useCallback, useContext } from "react"
 import { Link } from "@reach/router"
 import dayjs from "dayjs"
 import Buttons from "./Buttons"
@@ -9,15 +9,18 @@ import DeleteIcon from "@material-ui/icons/Delete"
 import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord"
 import AddIcon from "@material-ui/icons/Add"
 import RemoveIcon from "@material-ui/icons/Remove"
+import ModalDeleteAnnouncement from "./ModalDeleteAnnouncement"
 import ModalFeedback from "./ModalFeedback"
 import ModalRubric from "./ModalRubric"
 import axios from "axios"
-
+import userEvent from "@testing-library/user-event"
+import { UserContext } from "../../UserContext"
 export default function AssignmentTable(props) {
   const [expanded, Setexpanded] = useState(false)
   const expanderBody = useRef()
   const [isPrefetch, setIsPreFetch] = useState(false)
-
+  const { user, setUser } = useContext(UserContext)
+  const [isOpenDelete, setIsOpenDelete] = useState(false)
   // const fetchData = useCallback(async () => {
   //   try {
   //     setIsPreFetch(true)
@@ -57,11 +60,11 @@ export default function AssignmentTable(props) {
   if (isPrefetch) {
     return <></>
   }
-
+  console.log(props.announcements)
   return (
     <>
       <tr key="main" onClick={toggleExpander}>
-        <td className='pl-5'>{props.annoucement.topic}</td>
+        <td className='pl-5'>{props.announcements.announcement_title}</td>
         <td className="uk-text-nowrap"></td>
         <td className="uk-text-nowrap"></td>
         <td className="uk-text-nowrap"></td>
@@ -70,26 +73,71 @@ export default function AssignmentTable(props) {
         <td>
           <div className='float-right'>
             {expanded ? (
-            <RemoveIcon color="primary" />
-          ) : (
-            <AddIcon color="primary" />
-          )}
+              <RemoveIcon color="primary" />
+            ) : (
+                <AddIcon color="primary" />
+              )}
           </div>
-          
+
         </td>
       </tr>
+      {user.role === "student" ? (
+        <>
+          {expanded && (
+            <tr className="expandable" key="tr-expander">
+              <td className="uk-background-muted" colSpan={7}>
+                <div ref={expanderBody} className="inner uk-grid">
+                  <div className="uk-width-1-4 uk-text-center text-break">
+                    <p>{props.announcements.announcement_detail}</p>
+                  </div>
+                </div>
+              </td>
+            </tr>
 
-      {expanded && (
-        <tr className="expandable" key="tr-expander">
-          <td className="uk-background-muted" colSpan={7}>
-            <div ref={expanderBody} className="inner uk-grid">
-              <div className="uk-width-1-4 uk-text-center text-break">
-                <p>{props.annoucement.detail}</p>
-              </div>
-            </div>
-          </td>
-        </tr>
-      )}
+          )}
+        </>
+      ) : (
+          <>
+            {expanded && (
+              <tr className="expandable" key="tr-expander">
+                <td className="uk-background-muted" colSpan={7}>
+                  <div ref={expanderBody} className="inner uk-grid">
+                    <div className="uk-width-1-4 uk-text-center text-break">
+                      <p>{props.announcements.announcement_detail}</p>
+                    </div>
+                  </div>
+
+                  <div className="col-12 mx-auto my-4">
+                    <div className="row">
+                      <div className="col-12 text-center">
+                        <Link className="mr-2" to={`/editannouncement/${props.announcements.announcement_id}`}>
+                          <Buttons
+                            menu="Edit"
+                          />
+                        </Link>
+                        <Buttons
+                          menu="Delete"
+                          color="secondary"
+                          onClick={() => setIsOpenDelete(true)}
+                        />
+                        <ModalDeleteAnnouncement
+                          isOpen={isOpenDelete}
+                          setIsOpen={setIsOpenDelete}
+                          header="Confirmation"
+                          toDelete={props.announcements.announcement_id}
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                </td>
+              </tr>
+
+            )}
+          </>
+        )}
+
+
     </>
   )
 }

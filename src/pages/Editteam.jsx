@@ -143,7 +143,7 @@ export default function Editteam(props) {
           />
         </div>
         <div className="col-12 my-3">
-          <p>Senior Project Topic</p>
+          <b>Senior Project Topic</b>
         </div>
       </div>
       <div className="row">
@@ -216,6 +216,7 @@ export default function Editteam(props) {
         </div>
       </div>
       {/*Detail */}
+      <br />
       <div className="col-12 my-3">
         {project &&
           <Textarea
@@ -245,6 +246,7 @@ export default function Editteam(props) {
           </div>
         </div>
       </div>
+      <br/>
     </div>
   )
 }
