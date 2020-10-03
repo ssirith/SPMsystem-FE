@@ -11,21 +11,27 @@ import Inputtext from "../components/common/Inputtext"
 import MyteamMember from "../components/common/MyteamMember"
 import MyteamAdvisor from "../components/common/MyteamAdvisor"
 import { UserContext } from "../UserContext"
+import Loading from "../components/common/Loading"
 
 export default function Otherteam(props) {
   const { user, setUser } = useContext(UserContext)
+  const [isPrefetch,setIsPreFetch]=useState(false)
   const { id } = useParams()
   const [group, setGroup] = useState({})
   const fetchData = useCallback(async () => {
+    setIsPreFetch(true)
     const data = await axios.get(
       `${process.env.REACT_APP_API_BE}/projects/${id}`
     )
     setGroup(data.data)
+    setIsPreFetch(false)
   }, [])
   useEffect(() => {
     fetchData()
   }, [])
-  
+  if(isPrefetch){
+    return<><Loading open={isPrefetch}/></>
+  }
   return (
     <div className="container">
       <div className="row">

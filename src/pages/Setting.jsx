@@ -12,6 +12,7 @@ import Buttons from "../components/common/Buttons"
 import AutocompleteText from "../components/common/AutocompleteText"
 import axios from "axios"
 import { SettingContext } from "../SettingContext"
+import Loading from "../components/common/Loading"
 
 export default function Setting() {
   const { user, setUser } = useContext(UserContext)
@@ -109,7 +110,7 @@ export default function Setting() {
     }
   }
   if (isPrefetch) {
-    return <></>
+    return <><Loading open={isPrefetch}/></>
   }
   return (
     <div className="container">

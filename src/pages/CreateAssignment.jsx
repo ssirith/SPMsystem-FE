@@ -24,6 +24,7 @@ import dayjs from "dayjs"
 import { makeStyles } from '@material-ui/core/styles';
 import { Container, Row, Col } from 'reactstrap';
 import { Table } from "react-bootstrap"
+import Loading from "../components/common/Loading"
 // import { Router } from "@material-ui/icons"
 const useStyles = makeStyles((theme) => ({
     margin: {
@@ -215,7 +216,7 @@ export default function CreateAssignment() {
     }
 
     if (isPreFetch) {
-        return <></>
+        return <><Loading open={isPreFetch}/></>
     }
 
     return (

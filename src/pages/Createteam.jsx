@@ -11,6 +11,7 @@ import { Link, useNavigate } from "@reach/router"
 import BreadcrumbNavString from "../components/common/BreadcrumbNavString"
 import Textarea from "../components/common/Textarea"
 import { UserContext } from "../UserContext"
+import Loading from "../components/common/Loading"
 export default function Createteam() {
   const { user, setUser } = useContext(UserContext)
   let navigate = useNavigate()
@@ -87,7 +88,7 @@ export default function Createteam() {
     }
   }
   if (isPreFetch) {
-    return <></>
+    return <><Loading open={isPreFetch}/></>
   }
   return (
     <div className="container">

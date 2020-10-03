@@ -37,9 +37,9 @@ function App() {
   )
   const [user, setUser] = useState({
 
-    id: "2", //เวลา demo  เปลี่ยนที่นี่
-    name: "Umaporn Supasitthimethee",
-    role: "teacher", //เวลา demo  เปลี่ยนที่นี่
+    id: "60130500114", //เวลา demo  เปลี่ยนที่นี่
+    name: "Suthiwat Sirithanakom",
+    role: "student", //เวลา demo  เปลี่ยนที่นี่
 
     //1 Siam Yamsaengsung
     //2 Umaporn Supasitthimethee

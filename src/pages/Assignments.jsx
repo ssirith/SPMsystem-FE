@@ -11,6 +11,7 @@ import Inputtext from "../components/common/Inputtext"
 import AssignmentTopicBox from "../components/common/AssignmentTopicBox"
 import AssignmentTopicBoxAA from "../components/common/AssignmentTopicBoxAA"
 import FilterAssignmentBox from "../components/common/FilterAssignmentBox"
+import Loading from "../components/common/Loading"
 export default function Assignments() {
   const useStyles = makeStyles({
     root: {
@@ -66,7 +67,9 @@ export default function Assignments() {
     fetchData()
   }, [])
   if (isPrefetch) {
-    return <></>
+    return <>
+    <Loading open={isPrefetch}/>
+    </>
   }
 
   return (

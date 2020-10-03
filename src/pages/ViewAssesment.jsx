@@ -11,6 +11,7 @@ import FolderIcon from "@material-ui/icons/Folder"
 import axios from "axios"
 import Buttons from "../components/common/Buttons"
 import { Container, Row, Col } from 'reactstrap';
+import Loading from "../components/common/Loading"
 export default function ViewAssesment() {
   const { user, setUser } = useContext(UserContext)
   const [assessment, SetAssessment] = useState({})
@@ -100,7 +101,7 @@ export default function ViewAssesment() {
     checkRole()
   }, [user])
   if (isPrefetch) {
-    return <></>
+    return <><Loading open={isPrefetch}/>/</>
   }
   return (
     <>

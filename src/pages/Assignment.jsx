@@ -12,6 +12,7 @@ import ModalDeleteAssignment from "../components/common/ModalDeleteAssignment"
 import Submission from "../components/common/Submission"
 import { Table } from "react-bootstrap"
 import { UserContext } from "../UserContext"
+import Loading from "../components/common/Loading"
 const useStyles = makeStyles(
     {
         root: {
@@ -102,7 +103,7 @@ export default function Assignment(props) {
         checkRole()
     }, [user])
     if (isPreFetch) {
-        return <></>
+        return <><Loading open={isPreFetch}/></>
     }
 
     return (

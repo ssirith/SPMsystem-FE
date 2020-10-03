@@ -13,6 +13,7 @@ import { Link, useParams } from "@reach/router"
 import BreadcrumbNavString from "../components/common/BreadcrumbNavString"
 import Textarea from "../components/common/Textarea"
 import { UserContext } from "../UserContext"
+import Loading from "../components/common/Loading"
 export default function Editteam(props) {
   const { user, setUser } = useContext(UserContext)
   const [departmentList, setDepartmentList] = useState(["SIT", "IT", "CS", "DSI"])
@@ -129,7 +130,7 @@ export default function Editteam(props) {
 
   }
   if (isPreFetch) {
-    return <></>
+    return <><Loading open={isPreFetch}/></>
   }
 
   return (

@@ -14,9 +14,11 @@ import FolderIcon from "@material-ui/icons/Folder"
 import { Table } from "react-bootstrap"
 import { Container, Row, Col } from 'reactstrap';
 import Textarea from "../components/common/Textarea"
+import Loading from "../components/common/Loading"
 
 export default function Assesment(props) {
     const { user, setUser } = useContext(UserContext)
+    const [isPreFetch,setIsPreFetch]=useState(false)
     const { assignment_id } = useParams()
     const { id } = useParams()
     const [assesmentScore, setAssesmentScore] = useState([])
@@ -45,6 +47,7 @@ export default function Assesment(props) {
     const classes = useStyles()
 
     const fetchData = useCallback(async () => {
+        setIsPreFetch(true)
         const res = await axios.get(`${process.env.REACT_APP_API_BE}/assessment/${assignment_id}/${id}`)
         var criterions = [];
         res.data.criterions.map((c, index) => {
@@ -97,7 +100,7 @@ export default function Assesment(props) {
             }
 
         }
-
+        setIsPreFetch(false)
     }, [])
 
     useEffect(() => {
@@ -173,7 +176,9 @@ export default function Assesment(props) {
         }
 
     }
-
+    if(isPreFetch){
+        return<><Loading open={isPreFetch}/></>
+    }
     return (
         <>
             {user.role === "teacher" && (
