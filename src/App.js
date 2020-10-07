@@ -39,9 +39,9 @@ function App() {
   )
   const [user, setUser] = useState({
 
-    id: "1", 
-    name: "Siam Yamsaengsung", 
-    role: "teacher",
+    id: "60130500114", 
+    name: "Suthiwat Sirithanakom", 
+    role: "student",
 
     // id: "11", 
     // name: "Pornthip", 

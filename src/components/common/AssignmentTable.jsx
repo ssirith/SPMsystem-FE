@@ -27,17 +27,7 @@ export default function AssignmentTable(props) {
   const [newCriterions, setNewCriterions] = useState([])
   var thisDay = dayjs(new Date()).format("YYYY-M-D HH:mm")
   var dueDate = props.assignment.date_time
-  const mockFeedback = [
-    {
-      author: "Jame",
-      detail:
-        "sadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasd",
-    },
-    {
-      author: "Joel",
-      detail: "21321312321312313131231231",
-    },
-  ]
+
 
   const fetchData = useCallback(async () => {
     try {
@@ -52,10 +42,10 @@ export default function AssignmentTable(props) {
       SetAssignment(response.data)
       // console.log('file from be',response.data.file_assignment)
       setFilefromBE(response.data.file_assignment)
-      console.log(
-        response.data.file_assignment,
-        "response.data.file_assignment"
-      )
+      // console.log(
+      //   response.data.file_assignment,
+      //   "response.data.file_assignment"
+      // )
       // console.log("rubric from BE ", response.data)
       // setRubric(response.data.rubric)
       loopCriterions(response.data.rubric)
@@ -71,7 +61,7 @@ export default function AssignmentTable(props) {
   useEffect(() => {
     fetchData()
   }, [])
-  console.log(assignment)
+  // console.log(assignment)
   function uploadFile(event) {
     // function นี้ป่ะ อันนี้คือuploadครับ ใช่ครับ
     if (event.target.files[0]) {

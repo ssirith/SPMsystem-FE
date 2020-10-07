@@ -33,6 +33,7 @@ export default function Assignments() {
   const classes = useStyles()
   const { user, setUser } = useContext(UserContext)
   const [assignments, setAssignments] = useState([])
+  const [sortassignments, setSortAssignments] = useState([])
   const [isPrefetch, setIsPreFetch] = useState(false)
   const [teacher_assignments, setTeacher_Assignments] = useState()
   const [responsible, setResponsible] = useState()
@@ -47,12 +48,12 @@ export default function Assignments() {
       )
       // console.log('res data',response.data)
       const temp = []
-
       response.data.map((data, index) => {
         temp.push({ ...data, data })
         // console.log('temp',temp)
       })
       setAssignments(temp)
+      // sortAssignments(temp)
       const ass = await axios.get(`${process.env.REACT_APP_API_BE}/assignments`)
       const tch = await axios.get(`${process.env.REACT_APP_API_BE}/assignments/responsible/teacher/${user.id}`)
       setTeacher_Assignments(ass.data)
@@ -62,7 +63,12 @@ export default function Assignments() {
       console.log(err)
     }
   }, [])
-
+  // function sortAssignments(assignments){
+  //   let newAssignment=assignments
+  //   newAssignment.sort((a,b)=>{return a.created_at-b.created_at})
+  //   setSortAssignments(newAssignment)
+  // }
+ 
   useEffect(() => {
     fetchData()
   }, [])
@@ -74,6 +80,7 @@ export default function Assignments() {
 
   return (
     <>
+    {console.log('sort',sortassignments)}
       {user.role === "student" && (
         <div className="container mt-5">
           <div className="d-inline my-auto">
