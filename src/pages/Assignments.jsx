@@ -32,7 +32,6 @@ export default function Assignments() {
   })
   const classes = useStyles()
   const { user, setUser } = useContext(UserContext)
-  const [assignments, setAssignments] = useState([])
   const [sortassignments, setSortAssignments] = useState([])
   const [isPrefetch, setIsPreFetch] = useState(false)
   const [teacher_assignments, setTeacher_Assignments] = useState()
@@ -52,8 +51,7 @@ export default function Assignments() {
         temp.push({ ...data, data })
         // console.log('temp',temp)
       })
-      setAssignments(temp)
-      // sortAssignments(temp)
+      sortAssignments(temp)
       const ass = await axios.get(`${process.env.REACT_APP_API_BE}/assignments`)
       const tch = await axios.get(`${process.env.REACT_APP_API_BE}/assignments/responsible/teacher/${user.id}`)
       setTeacher_Assignments(ass.data)
@@ -63,11 +61,11 @@ export default function Assignments() {
       console.log(err)
     }
   }, [])
-  // function sortAssignments(assignments){
-  //   let newAssignment=assignments
-  //   newAssignment.sort((a,b)=>{return a.created_at-b.created_at})
-  //   setSortAssignments(newAssignment)
-  // }
+  function sortAssignments(assignments){
+    let newAssignment=assignments
+    newAssignment.sort((a,b)=> (dayjs(b.date_time).isBefore(a.date_time)?1:-1))
+    setSortAssignments(newAssignment)
+  }
  
   useEffect(() => {
     fetchData()
@@ -101,7 +99,7 @@ export default function Assignments() {
               </tr>
             </thead>
             <tbody>
-              {assignments.map((assignment, index) => (
+              {sortassignments.map((assignment, index) => (
                 <AssignmentTable assignment={assignment} user={user} index={index + 1} />
               ))}
             </tbody>

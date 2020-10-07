@@ -14,7 +14,7 @@ export default function Announcements() {
   const fetchData = useCallback(async () => {
     setIsPreFetch(true)
     const resposne = await axios.get(`${process.env.REACT_APP_API_BE}/announcement`)
-    setAnnouncements(resposne.data)// ได้ array ของ rubric ทั้งหมด
+    setAnnouncements(resposne.data)
     setIsPreFetch(false)
   }, [])
 
