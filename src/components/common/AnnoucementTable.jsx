@@ -15,29 +15,28 @@ import ModalDeleteAnnouncement from "./ModalDeleteAnnouncement"
 import FolderIcon from "@material-ui/icons/Folder"
 import { UserContext } from "../../UserContext"
 export default function AssignmentTable(props) {
-  const [announcement,SetAnnouncement]=useState({})
+  const [announcement, SetAnnouncement] = useState({})
   const [expanded, Setexpanded] = useState(false)
   const expanderBody = useRef()
   const [isPrefetch, setIsPreFetch] = useState(false)
   const { user, setUser } = useContext(UserContext)
   const [isOpenDelete, setIsOpenDelete] = useState(false)
 
-
-  const fetchData = useCallback(async()=>{
-    try{
+  const fetchData = useCallback(async () => {
+    try {
       setIsPreFetch(true)
-      const response = await axios.get(`${process.env.REACT_APP_API_BE}/announcement/${props.announcement.announcement_id}`)
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_BE}/announcement/${props.announcement.announcement_id}`
+      )
       SetAnnouncement(response.data)
       setIsPreFetch(false)
-    }catch(err){
+    } catch (err) {
       console.log(err)
     }
   })
-  useEffect(()=>{
+  useEffect(() => {
     fetchData()
-  },[])
-
-  
+  }, [])
 
   function toggleExpander(e) {
     if (!expanded) {
@@ -53,7 +52,6 @@ export default function AssignmentTable(props) {
   // console.log(props.announcements)
   return (
     <>
-
       <tr key="main" onClick={toggleExpander}>
         <td className="pl-5">{props.announcement.announcement_title}</td>
         <td className="uk-text-nowrap"></td>
@@ -66,8 +64,8 @@ export default function AssignmentTable(props) {
             {expanded ? (
               <RemoveIcon color="primary" />
             ) : (
-                <AddIcon color="primary" />
-              )}
+              <AddIcon color="primary" />
+            )}
           </div>
         </td>
       </tr>
@@ -80,12 +78,14 @@ export default function AssignmentTable(props) {
                   <div className="container">
                     <div
                       className="uk-width-1-4 uk-text-center text-break"
-                      style={{ border: "red 1px solid" }}
+                      // style={{ border: "red 1px solid" }}
                     >
                       <p>{props.announcement.announcement_detail}</p>
                     </div>
                     <div className="row pl-3">
-                      <div style={{ border: "green 1px solid" }}>
+                      <div
+                      // style={{ border: "green 1px solid" }}
+                      >
                         <p>Attachment:&nbsp;</p>
                       </div>
                       {props.announcement && (
@@ -93,7 +93,8 @@ export default function AssignmentTable(props) {
                           {announcement.attachment.map((att, index) => {
                             return (
                               <>
-                              <FolderIcon className="primary" />&nbsp;
+                                <FolderIcon className="primary" />
+                                &nbsp;
                                 <a
                                   href={`http://127.0.0.1:8000/storage/${att.announcement_file}`}
                                   download
@@ -115,72 +116,73 @@ export default function AssignmentTable(props) {
           )}
         </>
       ) : (
-          <>
-            {expanded && (
-              <tr className="expandable" key="tr-expander">
-                <td className="uk-background-muted" colSpan={7}>
-                  <div ref={expanderBody} className="inner uk-grid">
-                    <div className="container">
-                      <div className="uk-width-1-4 uk-text-center text-break">
-                        <p>{props.announcement.announcement_detail}</p>
+        <>
+          {expanded && (
+            <tr className="expandable" key="tr-expander">
+              <td className="uk-background-muted" colSpan={7}>
+                <div ref={expanderBody} className="inner uk-grid">
+                  <div className="container">
+                    <div className="uk-width-1-4 uk-text-center text-break">
+                      <p>{props.announcement.announcement_detail}</p>
+                    </div>
+
+                    <div className="row pl-3">
+                      <div>
+                        <p>Attachment:&nbsp;</p>
                       </div>
 
-                      <div className="row pl-3">
+                      {announcement && (
                         <div>
-                          <p>Attachment:&nbsp;</p>
+                          {announcement.attachment.map((att, index) => {
+                            return (
+                              <div key={index}>
+                                <FolderIcon className="primary" />
+                                &nbsp;
+                                {console.log(att.announcement)}
+                                <a
+                                  href={`http://127.0.0.1:8000/storage/${att.announcement_file}`}
+                                  download
+                                  target="_blank"
+                                >
+                                  {att.announcement_file_name.substring(0, 25)}
+                                  <br></br>
+                                </a>
+                              </div>
+                            )
+                          })}
                         </div>
-
-                        {announcement && (
-                          <div>
-                            {announcement.attachment.map((att, index) => {
-                              return (
-                                <div key={index}>
-                                  <FolderIcon className="primary" />&nbsp;
-                                  {console.log(att.announcement)}
-                                  <a
-                                    href={`http://127.0.0.1:8000/storage/${att.announcement_file}`}
-                                    download
-                                    target="_blank"
-                                  >
-                                    {att.announcement_file_name.substring(0, 25)}
-                                    <br></br>
-                                  </a>
-                                </div>
-                              )
-                            })}
-                          </div>
-                        )}
-                      </div>
-                      <div className="col-12 mx-auto my-4">
-                        <div className="row">
-                          <div className="col-12 text-center">
-                            <Link
-                              className="mr-2"
-                              to={`/editannouncement/${props.announcement.announcement_id}`}
-                            >
-                              <Buttons menu="Edit" />
-                            </Link>
-                            <Buttons
-                              menu="Delete"
-                              color="secondary"
-                              onClick={() => setIsOpenDelete(true)}
-                            />
-                            <ModalDeleteAnnouncement
-                              isOpen={isOpenDelete}
-                              setIsOpen={setIsOpenDelete}
-                              header="Confirmation"
-                              toDelete={props.announcement.announcement_id}
-                            />
-                          </div>
+                      )}
+                    </div>
+                    <div className="col-12 mx-auto my-4">
+                      <div className="row">
+                        <div className="col-12 text-center">
+                          <Link
+                            className="mr-2"
+                            to={`/editannouncement/${props.announcement.announcement_id}`}
+                          >
+                            <Buttons menu="Edit" />
+                          </Link>
+                          <Buttons
+                            menu="Delete"
+                            color="secondary"
+                            onClick={() => setIsOpenDelete(true)}
+                          />
+                          <ModalDeleteAnnouncement
+                            isOpen={isOpenDelete}
+                            setIsOpen={setIsOpenDelete}
+                            header="Confirmation"
+                            toDelete={props.announcement.announcement_id}
+                          />
                         </div>
                       </div>
                     </div>
                   </div>
-                </td>
-              </tr>
-            )}
-          </>
-        )}
+                </div>
+              </td>
+            </tr>
+          )}
+        </>
+      )}
     </>
   )
 }
