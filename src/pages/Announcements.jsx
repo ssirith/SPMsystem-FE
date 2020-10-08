@@ -72,11 +72,11 @@ export default function Announcements() {
             <Col sm={10} >
             </Col>
             <Col sm={2}>
-            <Link to="/createannouncement">
-              <Buttons
-                menu="Create Annoucement"
-                className="success"
-              />
+              <Link to="/createannouncement">
+                <Buttons
+                  menu="Create Annoucement"
+                  className="success"
+                />
               </Link>
             </Col>
           </Row>
@@ -154,51 +154,51 @@ export default function Announcements() {
       )}
       {user.role === "aa" && (
         <Container>
-        <br />
-        <Row >
-          <Col sm={10} >
-          </Col>
-          <Col sm={2}>
-          <Link to="/createannouncement">
-            <Buttons
-              menu="Create Annoucement"
-              className="success"
-            />
-            </Link>
-          </Col>
-        </Row>
-        <br />
-        <Row>
-          <Col>
-            <table
-              class="table"
-              style={{
-                outlineStyle: "solid",
-                outlineWidth: "1px",
-                outlineColor: "#C4C4C4",
-              }}
-            >
-              <thead class="thead-primary">
-                <tr>
-                  <th colSpan="8" style={{ fontSize: "20px" }}>
-                    Annoucements
-            </th>
-                </tr>
-              </thead>
-              <tbody>
-                {announcements && announcements.map((announcements, index) => (
-                  <AnnoucementTable
-                    announcements={announcements}
-                    user={user}
-                    index={index + 1}
-                  />
-                ))}
-              </tbody>
-            </table>
-          </Col>
+          <br />
+          <Row >
+            <Col sm={10} >
+            </Col>
+            <Col sm={2}>
+              <Link to="/createannouncement">
+                <Buttons
+                  menu="Create Annoucement"
+                  className="success"
+                />
+              </Link>
+            </Col>
+          </Row>
+          <br />
+          <Row>
+            <Col>
+              <table
+                class="table"
+                style={{
+                  outlineStyle: "solid",
+                  outlineWidth: "1px",
+                  outlineColor: "#C4C4C4",
+                }}
+              >
+                <thead class="thead-primary">
+                  <tr>
+                    <th colSpan="8" style={{ fontSize: "20px" }}>
+                      Annoucements
+               </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {announcements && announcements.map((announcements, index) => (
+                    <AnnoucementTable
+                      announcements={announcements}
+                      user={user}
+                      index={index + 1}
+                    />
+                  ))}
+                </tbody>
+              </table>
+            </Col>
 
-        </Row>
-      </Container>
+          </Row>
+        </Container>
         // <div className="container mt-5">
         //   <div className="row">
         //     <div className="col-12 my-3">

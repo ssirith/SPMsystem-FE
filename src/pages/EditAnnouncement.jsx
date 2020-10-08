@@ -10,7 +10,8 @@ import Buttons from "../components/common/Buttons"
 import { Link, useNavigate, Redirect, Router, useParams } from "@reach/router"
 import { UserContext } from "../UserContext"
 import DeleteIcon from '@material-ui/icons/Delete';
-import FolderIcon from "@material-ui/icons/Folder"
+import FolderIcon from "@material-ui/icons/Folder";
+import dayjs from "dayjs";
 const useStyles = makeStyles({
     root: {
         position: "relative",
@@ -35,6 +36,7 @@ export default function CreateAnnouncement() {
     const { id } = useParams()
     const { user, setUser } = useContext(UserContext)
     const [announcement, setAnnouncement] = useState()
+    const [today, setDate] = useState(new Date())
     const [attachmentFromBE, setAttachmentFromBE] = useState([])
     const [selectAttachment, setSelectAttachment] = useState([])
     const [delete_attachment, setDelete_attachment] = useState([])
@@ -71,8 +73,7 @@ export default function CreateAnnouncement() {
     function handleAnnouncementTitle(event) {
         setAnnoucement_Title(event.target.value)
     }
-    console.log(announcement_Title)
-    console.log(announcement_Description)
+  
     function handleDescription(event) {
         setAnnoucement_Description(event.target.value)
     }
@@ -92,25 +93,28 @@ export default function CreateAnnouncement() {
         selectAttachment.splice(index, 1)
         setSelectAttachment([...selectAttachment])
     }
+   
     function deleteFilesFromBE(data) {
         const newDeleteSeletedFile = [...delete_attachment]
         const newAttachmentFromBE = [...attachmentFromBE]
 
-        newDeleteSeletedFile.push(data.attachment_id) // del fileFromBE
+        newDeleteSeletedFile.push(data.announcement_file_id) // del fileFromBE
         const seletedFile = newAttachmentFromBE.filter(
-            (files) => files.attachment_id !== data.attachment_id
+            (files) => files.announcement_file_id !== data.announcement_file_id
         )
 
         setAttachmentFromBE(seletedFile) //แทนที่ค่าเก่าใน BE ด้วยค่า selectfile ใหม่
         setDelete_attachment(newDeleteSeletedFile)
     }
-    console.log(typeof id)
+ 
     async function handleSubmit() {
         const data = new FormData();
         data.append("announcement_id", parseInt(id))
         data.append("announcement_title", announcement_Title)
         data.append("announcement_detail", announcement_Description)
-      
+        var date = dayjs(today).format('YYYY-MM-DD');
+        setDate(date)
+        data.append("announcement_date", date)
         if (selectAttachment.length !== 0) {//selectAttachment
             for (const acceptFile of selectAttachment) {
                 data.append('attachment[]', acceptFile)
@@ -231,7 +235,7 @@ export default function CreateAnnouncement() {
                                                                 &nbsp;
                                                         <FolderIcon className="primary" />
                                                         &nbsp;
-                                                        {f.announcement_file_name.substring(0, 30)}
+                                                        {f.announcement_file_name.substring(0, 25)}
                                                         &nbsp;
                                                         <button onClick={() => deleteFilesFromBE(f, index)}>
                                                                     <DeleteIcon fontSize="small" color="error" />
@@ -252,7 +256,7 @@ export default function CreateAnnouncement() {
                                                             &nbsp;
                                                             <FolderIcon className="primary" />
                                                             &nbsp;
-                                                            {file.name.substring(0, 30)}
+                                                            {file.name.substring(0, 25)}
                                                             &nbsp;
                                                             <button
                                                                 onClick={() => {

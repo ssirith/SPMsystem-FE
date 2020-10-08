@@ -306,7 +306,7 @@ export default function CreateAssignment() {
                                                             &nbsp;
                                                             <FolderIcon className="primary" />
                                                             &nbsp;
-                                                            {f.name.substring(0, 30)}
+                                                            {f.name.substring(0, 25)}
                                                             &nbsp;
                                                             <button onClick={() => deleteFilesUpload(f, index)}>
                                                                 <DeleteIcon fontSize="small" color="error" />

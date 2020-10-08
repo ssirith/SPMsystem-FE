@@ -10,7 +10,8 @@ import Buttons from "../components/common/Buttons"
 import { Link, useNavigate, Redirect, Router } from "@reach/router"
 import { UserContext } from "../UserContext"
 import DeleteIcon from '@material-ui/icons/Delete';
-import FolderIcon from "@material-ui/icons/Folder"
+import FolderIcon from "@material-ui/icons/Folder";
+import dayjs from "dayjs"
 const useStyles = makeStyles({
     root: {
         position: "relative",
@@ -36,6 +37,7 @@ export default function CreateAnnouncement() {
     const [announcement_Title, setAnnoucement_Title] = useState()
     const [announcement_Description, setAnnoucement_Description] = useState()
     const [attachment, setAttachment] = useState([])
+    const [today, setDate] = useState(new Date())
     const checkRole = useCallback(() => {
         if (user.role === "student") {
             alert(`You dont'have permission to go this page.`)
@@ -66,12 +68,14 @@ export default function CreateAnnouncement() {
         attachment.splice(index, 1)
         setAttachment([...attachment])
     }
-    console.log(typeof user.id)
-    console.log(user.role)
+    
     async function handleSubmit() {
+        var date = dayjs(today).format('YYYY-MM-DD');
+        setDate(date)
         const data = new FormData();
         data.append("announcement_title", announcement_Title)
         data.append("announcement_detail", announcement_Description)
+        data.append("announcement_date", date)
         if (user.role === "teacher") {
             data.append("teacher_id", user.id)
             data.append("aa_id", "")

@@ -409,7 +409,7 @@ export default function CreateAssignment(props) {
                                                             &nbsp;
                                                             <FolderIcon className="primary" />
                                                             &nbsp;
-                                                            {f.attachment_name.substring(0, 30)}
+                                                            {f.attachment_name.substring(0, 25)}
                                                             &nbsp;
                                                             <button onClick={() => deleteFilesFromBE(f, index)}>
                                                                 <DeleteIcon fontSize="small" color="error" />
@@ -430,7 +430,7 @@ export default function CreateAssignment(props) {
                                                             &nbsp;
                                                             <FolderIcon className="primary" />
                                                             &nbsp;
-                                                            {file.name.substring(0, 30)}
+                                                            {file.name.substring(0, 25)}
                                                             &nbsp;
                                                             <button
                                                                 onClick={() => {

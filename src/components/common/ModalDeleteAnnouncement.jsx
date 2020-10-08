@@ -5,10 +5,11 @@ import Inputtext from "./Inputtext"
 import axios from "axios"
 import { useNavigate } from "@reach/router"
 export default function ModalDeleteAnnouncement(props) {
-  let navigate=useNavigate()  
+  let navigate = useNavigate()
   async function deleteAssignment() {
+    console.log(props.toDelete)
     const idForDelete = {
-        announcement_id: props.toDelete
+      announcement_id: props.toDelete
     }
 
     try {
@@ -16,7 +17,7 @@ export default function ModalDeleteAnnouncement(props) {
         `${process.env.REACT_APP_API_BE}/announcement/delete`,
         idForDelete
       )
-      
+
       if (response.status === 200) {
         alert("Delete Success.")
         window.location.reload()
@@ -26,10 +27,10 @@ export default function ModalDeleteAnnouncement(props) {
     }
   }
   return (
-    
+
     <Modal
       show={props.isOpen}
-      onHide={() => {props.setIsOpen(false)}}>
+      onHide={() => { props.setIsOpen(false) }}>
       <Modal.Header closeButton>
         <Modal.Title>{props.header}</Modal.Title>
       </Modal.Header>
