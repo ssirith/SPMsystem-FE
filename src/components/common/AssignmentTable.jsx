@@ -292,7 +292,7 @@ export default function AssignmentTable(props) {
                         return (
                           <>
                             <a
-                              href={`http://127.0.0.1:8000/storage/${a.attachment}`}
+                              href={`http://127.0.0.1:8000/storage/${a.announcement_file}`}
                               download
                               target="_blank"
                             >
