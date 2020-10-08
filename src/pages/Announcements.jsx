@@ -99,9 +99,9 @@ export default function Announcements() {
                   </tr>
                 </thead>
                 <tbody>
-                  {announcements && announcements.map((announcements, index) => (
+                  {announcements && announcements.map((announcement, index) => (
                     <AnnoucementTable
-                      announcements={announcements}
+                      announcement={announcement}
                       user={user}
                       index={index + 1}
                     />

@@ -14,22 +14,14 @@ import RemoveIcon from "@material-ui/icons/Remove"
 import ModalDeleteAnnouncement from "./ModalDeleteAnnouncement"
 import FolderIcon from "@material-ui/icons/Folder"
 import { UserContext } from "../../UserContext"
-import Loading from "./Loading"
-import axios from "axios"
 export default function AssignmentTable(props) {
   const [announcement,SetAnnouncement]=useState({})
   const [expanded, Setexpanded] = useState(false)
   const expanderBody = useRef()
   const [isPrefetch, setIsPreFetch] = useState(false)
-  const [announcement, setAnnouncement] = useState()
   const { user, setUser } = useContext(UserContext)
   const [isOpenDelete, setIsOpenDelete] = useState(false)
-  const fetchData = useCallback(async () => {
-    setIsPreFetch(true)
-    const resposne = await axios.get(`${process.env.REACT_APP_API_BE}/announcement/${props.announcements.announcement_id}`)
-    setAnnouncement(resposne.data)
-    setIsPreFetch(false)
-  }, [])
+
 
   const fetchData = useCallback(async()=>{
     try{
@@ -101,6 +93,7 @@ export default function AssignmentTable(props) {
                           {announcement.attachment.map((att, index) => {
                             return (
                               <>
+                              <FolderIcon className="primary" />&nbsp;
                                 <a
                                   href={`http://127.0.0.1:8000/storage/${att.announcement_file}`}
                                   download
@@ -129,7 +122,7 @@ export default function AssignmentTable(props) {
                   <div ref={expanderBody} className="inner uk-grid">
                     <div className="container">
                       <div className="uk-width-1-4 uk-text-center text-break">
-                        <p>{props.announcements.announcement_detail}</p>
+                        <p>{props.announcement.announcement_detail}</p>
                       </div>
 
                       <div className="row pl-3">
@@ -163,7 +156,7 @@ export default function AssignmentTable(props) {
                           <div className="col-12 text-center">
                             <Link
                               className="mr-2"
-                              to={`/editannouncement/${props.announcements.announcement_id}`}
+                              to={`/editannouncement/${props.announcement.announcement_id}`}
                             >
                               <Buttons menu="Edit" />
                             </Link>
@@ -176,7 +169,7 @@ export default function AssignmentTable(props) {
                               isOpen={isOpenDelete}
                               setIsOpen={setIsOpenDelete}
                               header="Confirmation"
-                              toDelete={props.announcements.announcement_id}
+                              toDelete={props.announcement.announcement_id}
                             />
                           </div>
                         </div>

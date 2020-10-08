@@ -291,8 +291,9 @@ export default function AssignmentTable(props) {
                       {assignment.attachment.map((a, index) => {
                         return (
                           <>
+                          <FolderIcon className="primary" />&nbsp;
                             <a
-                              href={`http://127.0.0.1:8000/storage/${a.announcement_file}`}
+                              href={`http://127.0.0.1:8000/storage/${a.attachment}`}
                               download
                               target="_blank"
                             >
