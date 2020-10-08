@@ -14,13 +14,31 @@ import RemoveIcon from "@material-ui/icons/Remove"
 import ModalDeleteAnnouncement from "./ModalDeleteAnnouncement"
 
 import { UserContext } from "../../UserContext"
+import Loading from "./Loading"
+import axios from "axios"
 export default function AssignmentTable(props) {
+  const [announcement,SetAnnouncement]=useState({})
   const [expanded, Setexpanded] = useState(false)
   const expanderBody = useRef()
   const [isPrefetch, setIsPreFetch] = useState(false)
   const { user, setUser } = useContext(UserContext)
   const [isOpenDelete, setIsOpenDelete] = useState(false)
 
+  const fetchData = useCallback(async()=>{
+    try{
+      setIsPreFetch(true)
+      const response = await axios.get(`${process.env.REACT_APP_API_BE}/announcement/${props.announcement.announcement_id}`)
+      SetAnnouncement(response.data)
+      setIsPreFetch(false)
+    }catch(err){
+      console.log(err)
+    }
+  })
+  useEffect(()=>{
+    fetchData()
+  },[])
+
+  
 
   function toggleExpander(e) {
     if (!expanded) {
@@ -33,12 +51,12 @@ export default function AssignmentTable(props) {
   if (isPrefetch) {
     return <></>
   }
-  console.log(props.announcements)
+  // console.log(props.announcements)
   return (
     <>
-    
+
       <tr key="main" onClick={toggleExpander}>
-        <td className="pl-5">{props.announcements.announcement_title}</td>
+        <td className="pl-5">{props.announcement.announcement_title}</td>
         <td className="uk-text-nowrap"></td>
         <td className="uk-text-nowrap"></td>
         <td className="uk-text-nowrap"></td>
@@ -65,23 +83,23 @@ export default function AssignmentTable(props) {
                       className="uk-width-1-4 uk-text-center text-break"
                       style={{ border: "red 1px solid" }}
                     >
-                      <p>{props.announcements.announcement_detail}</p>
+                      <p>{props.announcement.announcement_detail}</p>
                     </div>
                     <div className="row pl-3">
                       <div style={{ border: "green 1px solid" }}>
                         <p>Attachment:&nbsp;</p>
                       </div>
-                      {props.Announcement && (
+                      {props.announcement && (
                         <div>
-                          {props.Announcement.attachment.map((att, index) => {
+                          {announcement.attachment.map((att, index) => {
                             return (
                               <>
                                 <a
-                                  href={`http://127.0.0.1:8000/storage/${att.attachment}`}
+                                  href={`http://127.0.0.1:8000/storage/${att.announcement_file}`}
                                   download
                                   target="_blank"
                                 >
-                                  {att.attachment_name}
+                                  {att.announcement_file_name}
                                   <br></br>
                                 </a>
                               </>

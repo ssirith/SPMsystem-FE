@@ -7,6 +7,8 @@ import Buttons from "../components/common/Buttons"
 import axios from "axios"
 // import { Container} from "@material-ui/core"
 import { Container, Row, Col } from 'reactstrap';
+import Loading from "../components/common/Loading"
+import dayjs from "dayjs"
 export default function Announcements() {
   const { user, setUser } = useContext(UserContext)
   const [announcements, setAnnouncements] = useState()
@@ -14,15 +16,23 @@ export default function Announcements() {
   const fetchData = useCallback(async () => {
     setIsPreFetch(true)
     const resposne = await axios.get(`${process.env.REACT_APP_API_BE}/announcement`)
-    setAnnouncements(resposne.data)
+    sortAnnouncement(resposne.data)
     setIsPreFetch(false)
   }, [])
 
   useEffect(() => {
     fetchData()
   }, [])
+
+  function sortAnnouncement(announcements){
+    let newAnnouncements=announcements
+    newAnnouncements.sort((a,b)=>dayjs(a.announcement_date).isBefore(dayjs(b.announcement_date))?1:-1)
+    console.log('sort announce',newAnnouncements)
+    setAnnouncements(newAnnouncements)
+  }
+
   if (isPrefetch) {
-    return <></>
+    return <><Loading open={isPrefetch}/></>
   }
   return (
     <>
@@ -44,9 +54,9 @@ export default function Announcements() {
               </tr>
             </thead>
             <tbody>
-              {announcements && announcements.map((announcements, index) => (
+              {announcements && announcements.map((announcement, index) => (
                 <AnnoucementTable
-                  announcements={announcements}
+                  announcement={announcement}
                   user={user}
                   index={index + 1}
                 />

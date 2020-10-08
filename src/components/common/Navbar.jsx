@@ -23,6 +23,9 @@ export default function Navbars() {
           </Nav>
           <Nav>
             <ul className="navbar-nav px-3">
+            <li className="nav-item text-nowrap">
+                <NotificationsIcon />
+              </li>
               <NavDropdown title={user.name} id="collasible-nav-dropdown">
                 <DropdownItem onClick={() => setIsOpenWindow(true)}>
                   Edit Profile
@@ -33,9 +36,7 @@ export default function Navbars() {
                 />
                 <DropdownItem >Logout</DropdownItem>
               </NavDropdown>
-              <li className="nav-item text-nowrap">
-                <NotificationsIcon />
-              </li>
+              
             </ul>
           </Nav>
         </Navbar>
