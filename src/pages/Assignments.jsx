@@ -78,7 +78,7 @@ export default function Assignments() {
 
   return (
     <>
-    {console.log('sort',sortassignments)}
+    {/* {console.log('sort',sortassignments)} */}
       {user.role === "student" && (
         <div className="container mt-5">
           <div className="d-inline my-auto">

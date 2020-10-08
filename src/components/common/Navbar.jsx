@@ -24,9 +24,12 @@ export default function Navbars() {
     setIsOpenNotiStd(!isOpenNotiStd)
     tempNotiStudent.filter((unread) => unread.notification_id_fk === null)
     tempNotiStudent.map((t, index) => readNotification.push(t.notification_id))
-    // console.log("read noti", readNotification)
-    filterReadnotification = filterReadNotification(readNotification)
-    // console.log("filter read", filterReadnotification)
+    console.log("read noti", readNotification)
+    filterReadnotification = filterReadNotification(
+      readNotification,
+      tempNotiStudent
+    )
+    console.log("filter read", filterReadnotification)
     const alreadyReadNotification = {
       notification_id: filterReadnotification,
       student_id: user.id,
@@ -37,7 +40,7 @@ export default function Navbars() {
         alreadyReadNotification
       )
       if (response.status === 200) {
-        console.log("Already read")
+        console.log(response)
         readNotification = []
         console.log("clear read noti", readNotification)
       }
@@ -45,9 +48,10 @@ export default function Navbars() {
       console.log(err)
     }
   }
-  function filterReadNotification(data) {
-     let filter =data.filter((value, index) => data.indexOf(value) === index)
-     return filter
+  function filterReadNotification(data, notiFromBE) {
+    let filter = data.filter((value, index) => data.indexOf(value) === index)
+    //  notiFromBE.foreEach()
+    return filter
   }
   const fetchData = useCallback(async () => {
     try {
@@ -89,8 +93,20 @@ export default function Navbars() {
                     style={{ cursor: "pointer" }}
                   />
                 </Badge>
-                <Dropdown show={isOpenNotiStd} menuAlign={{ lg: "left" }}>
-                  <Dropdown.Menu>
+                <Dropdown
+                  className="mr-12"
+                  show={isOpenNotiStd}
+                  menuAlign={{ lg: "left" }}
+                >
+                  <div
+                    className="position-absolute bg-light rounded"
+                    style={{
+                      zIndex: 99,
+                      right: 0,
+                      display: isOpenNotiStd ? "" : "none",
+                      width:'400px'
+                    }}
+                  >
                     {notiStudent.notification &&
                       notiStudent.notification.map((notification, index) => (
                         <DropdownNotiStudent
@@ -99,7 +115,7 @@ export default function Navbars() {
                           isOpenNotiStd={isOpenNotiStd}
                         />
                       ))}
-                  </Dropdown.Menu>
+                  </div>
                 </Dropdown>
               </li>
               <NavDropdown title={user.name} id="collasible-nav-dropdown">
