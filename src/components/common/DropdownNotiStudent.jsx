@@ -16,10 +16,10 @@ export default function DropdownNotiStudent(props) {
         <div
           className={`row text-break ${
             !props.notification.notification_id_fk
-              ? "font-weight-normal"
-              : "font-weight-bold"
+              ? "font-weight-bold"
+              : "font-weight-normal"
           } flex-md-nowrap
-          ${!props.notification.notification_id_fk? "": "primary"}`}
+          primary `}
           style={{
             width: "50%",
             height: "100%",
@@ -30,15 +30,16 @@ export default function DropdownNotiStudent(props) {
           {!props.notification.assignment_id ? (
             <Speaker
               className="primary "
-              style={{ height: "35%", width: "30%" }}
+              style={{ height: "35%", width: "30%",marginTop: 17 }}
             />
           ) : (
             <Assignment
               className="primary"
-              style={{ height: "35%", width: "30%" }}
+              style={{ height: "35%", width: "30%",marginTop: 17 }}
             />
           )}
           <p className="p-2" onClick={() => navigation()}>
+            {`${props.notification.notification_creater}`}<br/>
             {`${props.notification.notification_detail.substring(0, 35)}...`}
           </p>
         </div>

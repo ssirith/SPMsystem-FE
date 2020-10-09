@@ -11,11 +11,36 @@ import ModalWindowProfileStudent from "./ModalWindowProfileStudent"
 import ModalWindowProfileTeacher from "./ModalWindowProfileTeacher"
 import axios from "axios"
 import DropdownNotiStudent from "./DropdownNotiStudent"
+import DropdownNotiTeacher from "./DropdownNotiTeacher"
+import DropdownNotiAA from "./DropdownNotiAA"
 export default function Navbars() {
   const { user, setUser } = useContext(UserContext)
   const [isOpenWindow, setIsOpenWindow] = useState(false)
   const [isOpenNotiStd, setIsOpenNotiStd] = useState(false)
   const [notiStudent, setNotiStudent] = useState({})
+  const [notiTeacher, setNotiTeacher] = useState({})
+  const [notiAA, setNotiAA] = useState({})
+  const [isPrefetch, setIsPreFetch] = useState(false)
+
+  const fetchData = useCallback(async () => {
+    setIsPreFetch(true)
+    if(user.role==="student"){
+      const response = await axios.get(`${process.env.REACT_APP_API_BE}/notification/student/${user.id}`)
+      setNotiStudent(response.data)
+    }else if(user.role==="teacher"){
+      const responseTeacher = await axios.get(`${process.env.REACT_APP_API_BE}/notification/teacher/${user.id}`)
+    setNotiTeacher(responseTeacher.data)
+    }else{
+      const responseAA = await axios.get(`${process.env.REACT_APP_API_BE}/notification/aa/${user.id}`)
+      setNotiAA(responseAA.data)
+    }
+   
+    setIsPreFetch(false)
+  }, [])
+  useEffect(() => {
+    fetchData()
+  }, [])
+  
 
   async function readNotification(notiStudent) {
     let tempNotiStudent = notiStudent.notification
@@ -36,7 +61,40 @@ export default function Navbars() {
     }
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_API_BE}/notification`,
+        `${process.env.REACT_APP_API_BE}/notification/student`,
+        alreadyReadNotification
+      )
+      if (response.status === 200) {
+        console.log(response)
+        readNotification = []
+        console.log("clear read noti", readNotification)
+      }
+    } catch (err) {
+      console.log(err)
+    }
+    
+  }
+
+  async function readNotificationTeacher(notiTeacher) {
+    let tempNotiTeacher = notiTeacher.notification
+    let readNotification = []
+    let filterReadnotification = []
+    setIsOpenNotiStd(!isOpenNotiStd)
+    tempNotiTeacher.filter((unread) => unread.notification_id_fk === null)
+    tempNotiTeacher.map((t, index) => readNotification.push(t.notification_id))
+    console.log("read noti", readNotification)
+    filterReadnotification = filterReadNotification(
+      readNotification,
+      tempNotiTeacher
+    )
+    console.log("filter read", filterReadnotification)
+    const alreadyReadNotification = {
+      notification_id: filterReadnotification,
+      teacher_id: user.id,
+    }
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_BE}/notification/teacher`,
         alreadyReadNotification
       )
       if (response.status === 200) {
@@ -48,28 +106,51 @@ export default function Navbars() {
       console.log(err)
     }
   }
+  async function readNotificationAA(notiAA) {
+    let tempNotiAA= notiAA.notification
+    let readNotification = []
+    let filterReadnotification = []
+    setIsOpenNotiStd(!isOpenNotiStd)
+    tempNotiAA.filter((unread) => unread.notification_id_fk === null)
+    tempNotiAA.map((t, index) => readNotification.push(t.notification_id))
+    console.log("read noti", readNotification)
+    filterReadnotification = filterReadNotification(
+      readNotification,
+      tempNotiAA
+    )
+    console.log("filter read", filterReadnotification)
+    const alreadyReadNotification = {
+      notification_id: filterReadnotification,
+      aa_id: user.id,
+    }
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_BE}/notification/aa`,
+        alreadyReadNotification
+      )
+      if (response.status === 200) {
+        console.log(response)
+        readNotification = []
+        console.log("clear read noti", readNotification)
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   function filterReadNotification(data, notiFromBE) {
     let filter = data.filter((value, index) => data.indexOf(value) === index)
     //  notiFromBE.foreEach()
     return filter
   }
-  const fetchData = useCallback(async () => {
-    try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_API_BE}/notification/${user.id}`
-      )
-      setNotiStudent(response.data)
-    } catch (err) {
-      console.log(err)
-    }
-  })
 
-  useEffect(() => {
-    fetchData()
-  }, [])
+
+  if (isPrefetch) {
+    return <></>
+  }
   return (
     <>
-      {console.log("noti std", notiStudent)}
+      {/* {console.log("noti std", notiStudent)} */}
       {user.role == "student" && (
         <Navbar className="navbar navbar-dark sticky-top bg flex-md-nowrap p-0 ">
           <Link to="/">
@@ -104,7 +185,7 @@ export default function Navbars() {
                       zIndex: 99,
                       right: 0,
                       display: isOpenNotiStd ? "" : "none",
-                      width:'400px'
+                      width: '400px'
                     }}
                   >
                     {notiStudent.notification &&
@@ -142,6 +223,44 @@ export default function Navbars() {
           <Nav className="mr-auto"></Nav>
           <Nav>
             <ul className="navbar-nav px-3">
+              <li className="nav-item text-nowrap mr-4">
+                <Badge
+                  badgeContent={notiTeacher.num_of_unread_notification}
+                  invisible={
+                    notiTeacher.num_of_unread_notification != 0 ? false : true
+                  }
+                  color="secondary"
+                >
+                  <NotificationsIcon
+                    onClick={() => readNotificationTeacher(notiTeacher)}
+                    style={{ cursor: "pointer" }}
+                  />
+                </Badge>
+                <Dropdown
+                  className="mr-12"
+                  show={isOpenNotiStd}
+                  menuAlign={{ lg: "left" }}
+                >
+                  <div
+                    className="position-absolute bg-light rounded"
+                    style={{
+                      zIndex: 99,
+                      right: 0,
+                      display: isOpenNotiStd ? "" : "none",
+                      width: '400px'
+                    }}
+                  >
+                    {notiTeacher.notification &&
+                      notiTeacher.notification.map((notification, index) => (
+                        <DropdownNotiTeacher
+                          key={index}
+                          notification={notification}
+                          isOpenNotiStd={isOpenNotiStd}
+                        />
+                      ))}
+                  </div>
+                </Dropdown>
+              </li>
               <NavDropdown title={user.name} id="collasible-nav-dropdown">
                 <DropdownItem onClick={() => setIsOpenWindow(true)}>
                   Edit Profile
@@ -152,9 +271,6 @@ export default function Navbars() {
                 />
                 <DropdownItem>Logout</DropdownItem>
               </NavDropdown>
-              <li className="nav-item text-nowrap">
-                <NotificationsIcon />
-              </li>
             </ul>
           </Nav>
         </Navbar>
@@ -169,6 +285,44 @@ export default function Navbars() {
           <Nav className="mr-auto"></Nav>
           <Nav>
             <ul className="navbar-nav px-3">
+            <li className="nav-item text-nowrap mr-4">
+                <Badge
+                  badgeContent={notiAA.num_of_unread_notification}
+                  invisible={
+                    notiAA.num_of_unread_notification != 0 ? false : true
+                  }
+                  color="secondary"
+                >
+                  <NotificationsIcon
+                    onClick={() => readNotificationAA(notiAA)}
+                    style={{ cursor: "pointer" }}
+                  />
+                </Badge>
+                <Dropdown
+                  className="mr-12"
+                  show={isOpenNotiStd}
+                  menuAlign={{ lg: "left" }}
+                >
+                  <div
+                    className="position-absolute bg-light rounded"
+                    style={{
+                      zIndex: 99,
+                      right: 0,
+                      display: isOpenNotiStd ? "" : "none",
+                      width: '400px'
+                    }}
+                  >
+                    {notiAA.notification &&
+                      notiAA.notification.map((notification, index) => (
+                        <DropdownNotiAA
+                          key={index}
+                          notification={notification}
+                          isOpenNotiStd={isOpenNotiStd}
+                        />
+                      ))}
+                  </div>
+                </Dropdown>
+              </li>
               <NavDropdown title={user.name} id="collasible-nav-dropdown">
                 <DropdownItem onClick={() => setIsOpenWindow(true)}>
                   Edit Profile
@@ -179,9 +333,6 @@ export default function Navbars() {
                 />
                 <DropdownItem>Logout</DropdownItem>
               </NavDropdown>
-              <li className="nav-item text-nowrap">
-                <NotificationsIcon />
-              </li>
             </ul>
           </Nav>
         </Navbar>

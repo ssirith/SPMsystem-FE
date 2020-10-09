@@ -14,7 +14,7 @@ import RemoveIcon from "@material-ui/icons/Remove"
 import ModalDeleteAnnouncement from "./ModalDeleteAnnouncement"
 import FolderIcon from "@material-ui/icons/Folder"
 import { UserContext } from "../../UserContext"
-export default function AssignmentTable(props) {
+export default function AnnouncementTable(props) {
   const [announcement, SetAnnouncement] = useState({})
   const [expanded, Setexpanded] = useState(false)
   const expanderBody = useRef()
@@ -52,6 +52,7 @@ export default function AssignmentTable(props) {
   // console.log(props.announcements)
   return (
     <>
+    
       <tr key="main" onClick={toggleExpander}>
         <td className="pl-5">{props.announcement.announcement_title}</td>
         <td className="uk-text-nowrap"></td>
@@ -123,6 +124,7 @@ export default function AssignmentTable(props) {
                 <div ref={expanderBody} className="inner uk-grid">
                   <div className="container">
                     <div className="uk-width-1-4 uk-text-center text-break">
+                      {console.log(props.announcement)}
                       <p>{props.announcement.announcement_detail}</p>
                     </div>
 

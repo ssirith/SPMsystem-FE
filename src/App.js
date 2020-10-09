@@ -39,17 +39,17 @@ function App() {
   )
   const [user, setUser] = useState({
 
-    // id: "60130500082", 
-    // name: "Watunyu Panmun", 
-    // role: "student",
+    // id: "1", 
+    // name: "Siam Yamsaengsung", 
+    // role: "teacher",
 
-    // id: "11", 
-    // name: "Pornthip", 
-    // role: "aa",
+    id: "11", 
+    name: "Pornthip", 
+    role: "aa",
 
-    id: "60130500114", 
-    name: "Suthiwat Sirithanakom",
-    role: "student", 
+    // id: "60130500114", 
+    // name: "Suthiwat Sirithanakom",
+    // role: "student", 
 
     //1 Siam Yamsaengsung
     //2 Umaporn Supasitthimethee

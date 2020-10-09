@@ -24,15 +24,15 @@ export default function Announcements() {
     fetchData()
   }, [])
 
-  function sortAnnouncement(announcements){
-    let newAnnouncements=announcements
-    newAnnouncements.sort((a,b)=>dayjs(a.announcement_date).isBefore(dayjs(b.announcement_date))?1:-1)
-    console.log('sort announce',newAnnouncements)
+  function sortAnnouncement(announcements) {
+    let newAnnouncements = announcements
+    newAnnouncements.sort((a, b) => dayjs(a.announcement_date).isBefore(dayjs(b.announcement_date)) ? 1 : -1)
+    console.log('sort announce', newAnnouncements)
     setAnnouncements(newAnnouncements)
   }
 
   if (isPrefetch) {
-    return <><Loading open={isPrefetch}/></>
+    return <><Loading open={isPrefetch} /></>
   }
   return (
     <>
@@ -112,45 +112,6 @@ export default function Announcements() {
 
           </Row>
         </Container>
-        // <div className="container mt-5">
-        //   <div className="row">
-        //     <Link to="/createannouncement">
-        //       <div className="col-15 ml-20">
-        //         <Buttons
-        //           style={{ backgroundColor: 'green' }}
-        //           className="success"
-        //           menu="Create Annoucement"
-        //         />
-        //       </div>
-        //     </Link>
-        //   </div>
-        //   <br/>
-        //   <table
-        //     class="table"
-        //     style={{
-        //       outlineStyle: "solid",
-        //       outlineWidth: "1px",
-        //       outlineColor: "#C4C4C4",
-        //     }}
-        //   >
-        //     <thead class="thead-primary">
-        //       <tr>
-        //         <th colSpan="8" style={{ fontSize: "20px" }}>
-        //           Annoucements
-        //       </th>
-        //       </tr>
-        //     </thead>
-        //     <tbody>
-        //       {announcements && announcements.map((announcements, index) => (
-        //         <AnnoucementTable
-        //           announcements={announcements}
-        //           user={user}
-        //           index={index + 1}
-        //         />
-        //       ))}
-        //     </tbody>
-        //   </table>
-        // </div>
       )}
       {user.role === "aa" && (
         <Container>
@@ -186,9 +147,9 @@ export default function Announcements() {
                   </tr>
                 </thead>
                 <tbody>
-                  {announcements && announcements.map((announcements, index) => (
+                  {announcements && announcements.map((announcement, index) => (
                     <AnnoucementTable
-                      announcements={announcements}
+                      announcement={announcement}
                       user={user}
                       index={index + 1}
                     />
@@ -199,6 +160,10 @@ export default function Announcements() {
 
           </Row>
         </Container>
+      )}
+    </>
+  )
+}
         // <div className="container mt-5">
         //   <div className="row">
         //     <div className="col-12 my-3">
@@ -241,7 +206,3 @@ export default function Announcements() {
         //     </tbody>
         //   </table>
         // </div>
-      )}
-    </>
-  )
-}

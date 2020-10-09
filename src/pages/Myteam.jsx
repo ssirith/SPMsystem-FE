@@ -52,7 +52,7 @@ export default function Myteam() {
   if (isPreFetch) {
     return <><Loading open={isPreFetch}/></>
   }
-  console.log(group)
+ 
   return (
     <>
 
