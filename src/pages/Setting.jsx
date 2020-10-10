@@ -37,7 +37,7 @@ export default function Setting() {
   const checkRole = useCallback(() => {
     if (user.role === "student" || user.role === "teacher") {
       alert(`You dont'have permission to go this page.`)
-      navigate("/")
+      navigate("/main")
     }
   })
 
@@ -101,7 +101,7 @@ export default function Setting() {
       if (response.status === 200) {
         setSettingYearContext(settingDisplay.year_of_study)
         alert("The setting has been Updated.")
-        navigate("/")
+        navigate("/main")
 
       }
     } catch (err) {

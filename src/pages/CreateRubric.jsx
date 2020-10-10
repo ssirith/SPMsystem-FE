@@ -47,7 +47,7 @@ export default function CreateRubric() {
 	const checkRole = useCallback(() => {
 		if (user.role === "student" ) {
 		  alert(`You dont'have permission to go this page.`)
-		  navigate("/")
+		  navigate("/main")
 		}
 	  })
 	

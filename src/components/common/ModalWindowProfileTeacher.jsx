@@ -70,7 +70,7 @@ export default function ModalWindowProfileProfileTeacher(props) {
                 if (res.status === 200) {
                     alert("Edit Profile Success.")
                     window.location.reload()
-                    navigate("/")
+                    navigate("/main")
                     props.setIsOpen(false)
                 }
             }
@@ -88,7 +88,7 @@ export default function ModalWindowProfileProfileTeacher(props) {
                 if (res.status === 200) {
                     alert("Edit Profile Success.")
                     window.location.reload()
-                    navigate("/")
+                    navigate("/main")
                     props.setIsOpen(false)
                 }
             }

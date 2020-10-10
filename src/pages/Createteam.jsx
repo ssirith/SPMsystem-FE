@@ -79,7 +79,7 @@ export default function Createteam() {
       })
       if (response.status === 200) {
         alert("Create Success.")
-        navigate("/")
+        navigate("/main")
         window.location.reload()
       }
     } catch (err) {

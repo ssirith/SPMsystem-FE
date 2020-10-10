@@ -93,7 +93,7 @@ export default function ViewAssesment() {
   const checkRole = useCallback(() => {
     if (user.role === "student" || user.role === "teacher") {
       alert(`You dont'have permission to go this page.`)
-      navigate("/")
+      navigate("/main")
     }
   })
 

@@ -3,6 +3,7 @@ import "./App.css"
 import { UserContext } from "./UserContext"
 import { Router } from "@reach/router"
 import MainLayout from "./components/MainLayout"
+import Landing from './pages/Landing'
 import Myteam from "./pages/Myteam"
 import Teams from "./pages/Teams"
 import Editteam from "./pages/Editteam"
@@ -43,13 +44,13 @@ function App() {
     // name: "Siam Yamsaengsung", 
     // role: "teacher",
 
-    id: "11", 
-    name: "Pornthip", 
-    role: "aa",
+    // id: "11", 
+    // name: "Pornthip", 
+    // role: "aa",
 
-    // id: "60130500114", 
-    // name: "Suthiwat Sirithanakom",
-    // role: "student", 
+    id: "60130500114", 
+    name: "Suthiwat Sirithanakom",
+    role: "student", 
 
     //1 Siam Yamsaengsung
     //2 Umaporn Supasitthimethee
@@ -84,8 +85,10 @@ function App() {
       <SettingContext.Provider value={settingValue}>
         <UserContext.Provider value={userValue}>
           <Router>
+            <Landing
+            path="/"/>
             <MainLayout
-              path="/"
+              path="/main"
               component={Myteam}
               statusbar={1} />
             <MainLayout

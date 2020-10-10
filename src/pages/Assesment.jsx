@@ -116,7 +116,7 @@ export default function Assesment(props) {
     const checkRole = useCallback(() => {
         if (user.role === "student" || user.role === "aa") {
             alert(`You dont'have permission to go this page.`)
-            navigate("/")
+            navigate("/main")
         }
     })
     useEffect(() => {

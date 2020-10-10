@@ -236,7 +236,7 @@ export default function Editteam(props) {
               <Buttons menu="Cancel"
               />
             </Link>
-            <Link to="/">
+            <Link to="/main">
               <Buttons
                 menu="Save"
                 color="primary"

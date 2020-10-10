@@ -153,7 +153,7 @@ export default function Navbars() {
       {/* {console.log("noti std", notiStudent)} */}
       {user.role == "student" && (
         <Navbar className="navbar navbar-dark sticky-top bg flex-md-nowrap p-0 ">
-          <Link to="/">
+          <Link to="/main">
             <p className="navbar-brand col-sm-3 col-md-2 p-0 ml-3 mt-3">
               SPM System
             </p>
@@ -215,7 +215,7 @@ export default function Navbars() {
       )}
       {user.role == "teacher" && (
         <Navbar className="navbar navbar-dark sticky-top bg flex-md-nowrap p-0 ">
-          <Link to="/">
+          <Link to="/main">
             <p className="navbar-brand col-sm-3 col-md-2 p-0 ml-3 mt-3">
               SPM System
             </p>
@@ -277,7 +277,7 @@ export default function Navbars() {
       )}
       {user.role == "aa" && (
         <Navbar className="navbar navbar-dark sticky-top bg flex-md-nowrap p-0 ">
-          <Link to="/">
+          <Link to="/main">
             <p className="navbar-brand col-sm-3 col-md-2 p-0 ml-3 mt-3">
               SPM System
             </p>

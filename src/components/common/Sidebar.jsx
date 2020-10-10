@@ -36,7 +36,7 @@ export default function Sidebar(props) {
                   props.statusbar === 1 ? "bg-white" : "bg-light"
                   } rounded`}
               >
-                <Link to="/">
+                <Link to="/main">
                   <div className="nav-link">
                     <ListItemIcon className='ml-3' >
                       <Group />
@@ -119,7 +119,7 @@ export default function Sidebar(props) {
                   props.statusbar === 1 ? "bg-white" : "bg-light"
                   } rounded`}
               >
-                <Link to="/">
+                <Link to="/main">
                   <div className="nav-link">
                     <ListItemIcon>
                       <Group className='ml-3' />
@@ -197,7 +197,7 @@ export default function Sidebar(props) {
                   props.statusbar === 1 ? "bg-white" : "bg-light"
                   } rounded`}
               >
-                <Link to="/">
+                <Link to="/main">
                   <div className="nav-link">
                     <ListItemIcon>
                       <Business className='ml-3' />
