@@ -7,6 +7,7 @@ import { DropdownButton } from "react-bootstrap"
 import Badge from "@material-ui/core/Badge"
 import { DropdownItem } from "react-bootstrap"
 import { Navbar, Nav, NavDropdown } from "react-bootstrap"
+// import Navbar from 'react-bootstrap/Navbar'
 import ModalWindowProfileStudent from "./ModalWindowProfileStudent"
 import ModalWindowProfileTeacher from "./ModalWindowProfileTeacher"
 import axios from "axios"
@@ -24,23 +25,23 @@ export default function Navbars() {
 
   const fetchData = useCallback(async () => {
     setIsPreFetch(true)
-    if(user.role==="student"){
+    if (user.role === "student") {
       const response = await axios.get(`${process.env.REACT_APP_API_BE}/notification/student/${user.id}`)
       setNotiStudent(response.data)
-    }else if(user.role==="teacher"){
+    } else if (user.role === "teacher") {
       const responseTeacher = await axios.get(`${process.env.REACT_APP_API_BE}/notification/teacher/${user.id}`)
-    setNotiTeacher(responseTeacher.data)
-    }else{
+      setNotiTeacher(responseTeacher.data)
+    } else {
       const responseAA = await axios.get(`${process.env.REACT_APP_API_BE}/notification/aa/${user.id}`)
       setNotiAA(responseAA.data)
     }
-   
+
     setIsPreFetch(false)
   }, [])
   useEffect(() => {
     fetchData()
   }, [])
-  
+
 
   async function readNotification(notiStudent) {
     let tempNotiStudent = notiStudent.notification
@@ -72,7 +73,7 @@ export default function Navbars() {
     } catch (err) {
       console.log(err)
     }
-    
+
   }
 
   async function readNotificationTeacher(notiTeacher) {
@@ -107,7 +108,7 @@ export default function Navbars() {
     }
   }
   async function readNotificationAA(notiAA) {
-    let tempNotiAA= notiAA.notification
+    let tempNotiAA = notiAA.notification
     let readNotification = []
     let filterReadnotification = []
     setIsOpenNotiStd(!isOpenNotiStd)
@@ -160,56 +161,60 @@ export default function Navbars() {
           </Link>
           <Nav className="mr-auto"></Nav>
           <Nav>
-            <ul className="navbar-nav px-3">
-              <li className="nav-item text-nowrap mr-4">
-                <Badge
-                  badgeContent={notiStudent.num_of_unread_notification}
-                  invisible={
-                    notiStudent.num_of_unread_notification != 0 ? false : true
-                  }
-                  color="secondary"
-                >
-                  <NotificationsIcon
-                    onClick={() => readNotification(notiStudent)}
-                    style={{ cursor: "pointer" }}
-                  />
-                </Badge>
-                <Dropdown
-                  className="mr-12"
-                  show={isOpenNotiStd}
-                  menuAlign={{ lg: "left" }}
-                >
-                  <div
-                    className="position-absolute bg-light rounded"
-                    style={{
-                      zIndex: 99,
-                      right: 0,
-                      display: isOpenNotiStd ? "" : "none",
-                      width: '400px'
-                    }}
-                  >
-                    {notiStudent.notification &&
-                      notiStudent.notification.map((notification, index) => (
-                        <DropdownNotiStudent
-                          key={index}
-                          notification={notification}
-                          isOpenNotiStd={isOpenNotiStd}
-                        />
-                      ))}
-                  </div>
-                </Dropdown>
-              </li>
-              <NavDropdown title={user.name} id="collasible-nav-dropdown">
-                <DropdownItem onClick={() => setIsOpenWindow(true)}>
-                  Edit Profile
+            <div style={{ marginRight: 42 }}>
+              <ul className="navbar-nav px-3">
+                <div style={{ marginTop: 7 }}>
+                  <li className="nav-item text-nowrap mr-4">
+                    <Badge
+                      badgeContent={notiStudent.num_of_unread_notification}
+                      invisible={
+                        notiStudent.num_of_unread_notification != 0 ? false : true
+                      }
+                      color="secondary"
+                    >
+                      <NotificationsIcon
+                        onClick={() => readNotification(notiStudent)}
+                        style={{ cursor: "pointer", color: "white" }}
+                      />
+                    </Badge>
+                    <Dropdown
+                      className="mr-12"
+                      show={isOpenNotiStd}
+                      menuAlign={{ lg: "left" }}
+                    >
+                      <div
+                        className="position-absolute bg-light rounded"
+                        style={{
+                          zIndex: 99,
+                          right: 0,
+                          display: isOpenNotiStd ? "" : "none",
+                          width: '400px'
+                        }}
+                      >
+                        {notiStudent.notification &&
+                          notiStudent.notification.map((notification, index) => (
+                            <DropdownNotiStudent
+                              key={index}
+                              notification={notification}
+                              isOpenNotiStd={isOpenNotiStd}
+                            />
+                          ))}
+                      </div>
+                    </Dropdown>
+                  </li>
+                </div>
+                <NavDropdown title={user.name} id="collasible-nav-dropdown">
+                  <DropdownItem onClick={() => setIsOpenWindow(true)}>
+                    Edit Profile
                 </DropdownItem>
-                <ModalWindowProfileStudent
-                  isOpen={isOpenWindow}
-                  setIsOpen={setIsOpenWindow}
-                />
-                <DropdownItem>Logout</DropdownItem>
-              </NavDropdown>
-            </ul>
+                  <ModalWindowProfileStudent
+                    isOpen={isOpenWindow}
+                    setIsOpen={setIsOpenWindow}
+                  />
+                  <DropdownItem>Logout</DropdownItem>
+                </NavDropdown>
+              </ul>
+            </div>
           </Nav>
         </Navbar>
       )}
@@ -222,56 +227,60 @@ export default function Navbars() {
           </Link>
           <Nav className="mr-auto"></Nav>
           <Nav>
-            <ul className="navbar-nav px-3">
-              <li className="nav-item text-nowrap mr-4">
-                <Badge
-                  badgeContent={notiTeacher.num_of_unread_notification}
-                  invisible={
-                    notiTeacher.num_of_unread_notification != 0 ? false : true
-                  }
-                  color="secondary"
-                >
-                  <NotificationsIcon
-                    onClick={() => readNotificationTeacher(notiTeacher)}
-                    style={{ cursor: "pointer" }}
-                  />
-                </Badge>
-                <Dropdown
-                  className="mr-12"
-                  show={isOpenNotiStd}
-                  menuAlign={{ lg: "left" }}
-                >
-                  <div
-                    className="position-absolute bg-light rounded"
-                    style={{
-                      zIndex: 99,
-                      right: 0,
-                      display: isOpenNotiStd ? "" : "none",
-                      width: '400px'
-                    }}
-                  >
-                    {notiTeacher.notification &&
-                      notiTeacher.notification.map((notification, index) => (
-                        <DropdownNotiTeacher
-                          key={index}
-                          notification={notification}
-                          isOpenNotiStd={isOpenNotiStd}
-                        />
-                      ))}
-                  </div>
-                </Dropdown>
-              </li>
-              <NavDropdown title={user.name} id="collasible-nav-dropdown">
-                <DropdownItem onClick={() => setIsOpenWindow(true)}>
-                  Edit Profile
+            <div style={{ marginRight: 42 }}>
+              <ul className="navbar-nav px-3">
+                <div style={{ marginTop: 7 }}>
+                  <li className="nav-item text-nowrap mr-4">
+                    <Badge
+                      badgeContent={notiTeacher.num_of_unread_notification}
+                      invisible={
+                        notiTeacher.num_of_unread_notification != 0 ? false : true
+                      }
+                      color="secondary"
+                    >
+                      <NotificationsIcon
+                        onClick={() => readNotificationTeacher(notiTeacher)}
+                        style={{ cursor: "pointer", color: "white" }}
+                      />
+                    </Badge>
+                    <Dropdown
+                      className="mr-12"
+                      show={isOpenNotiStd}
+                      menuAlign={{ lg: "left" }}
+                    >
+                      <div
+                        className="position-absolute bg-light rounded"
+                        style={{
+                          zIndex: 99,
+                          right: 0,
+                          display: isOpenNotiStd ? "" : "none",
+                          width: '400px'
+                        }}
+                      >
+                        {notiTeacher.notification &&
+                          notiTeacher.notification.map((notification, index) => (
+                            <DropdownNotiTeacher
+                              key={index}
+                              notification={notification}
+                              isOpenNotiStd={isOpenNotiStd}
+                            />
+                          ))}
+                      </div>
+                    </Dropdown>
+                  </li>
+                </div>
+                <NavDropdown title={user.name} id="collasible-nav-dropdown">
+                  <DropdownItem onClick={() => setIsOpenWindow(true)}>
+                    Edit Profile
                 </DropdownItem>
-                <ModalWindowProfileTeacher
-                  isOpen={isOpenWindow}
-                  setIsOpen={setIsOpenWindow}
-                />
-                <DropdownItem>Logout</DropdownItem>
-              </NavDropdown>
-            </ul>
+                  <ModalWindowProfileTeacher
+                    isOpen={isOpenWindow}
+                    setIsOpen={setIsOpenWindow}
+                  />
+                  <DropdownItem>Logout</DropdownItem>
+                </NavDropdown>
+              </ul>
+            </div>
           </Nav>
         </Navbar>
       )}
@@ -284,56 +293,62 @@ export default function Navbars() {
           </Link>
           <Nav className="mr-auto"></Nav>
           <Nav>
-            <ul className="navbar-nav px-3">
-            <li className="nav-item text-nowrap mr-4">
-                <Badge
-                  badgeContent={notiAA.num_of_unread_notification}
-                  invisible={
-                    notiAA.num_of_unread_notification != 0 ? false : true
-                  }
-                  color="secondary"
-                >
-                  <NotificationsIcon
-                    onClick={() => readNotificationAA(notiAA)}
-                    style={{ cursor: "pointer" }}
-                  />
-                </Badge>
-                <Dropdown
-                  className="mr-12"
-                  show={isOpenNotiStd}
-                  menuAlign={{ lg: "left" }}
-                >
-                  <div
-                    className="position-absolute bg-light rounded"
-                    style={{
-                      zIndex: 99,
-                      right: 0,
-                      display: isOpenNotiStd ? "" : "none",
-                      width: '400px'
-                    }}
-                  >
-                    {notiAA.notification &&
-                      notiAA.notification.map((notification, index) => (
-                        <DropdownNotiAA
-                          key={index}
-                          notification={notification}
-                          isOpenNotiStd={isOpenNotiStd}
-                        />
-                      ))}
-                  </div>
-                </Dropdown>
-              </li>
-              <NavDropdown title={user.name} id="collasible-nav-dropdown">
-                <DropdownItem onClick={() => setIsOpenWindow(true)}>
-                  Edit Profile
+            <div style={{ marginRight: 42 }}>
+              <ul className="navbar-nav px-3">
+                <div style={{ marginTop: 7 }}>
+                  <li className="nav-item text-nowrap mr-4">
+                    <Badge
+                      badgeContent={notiAA.num_of_unread_notification}
+                      invisible={
+                        notiAA.num_of_unread_notification != 0 ? false : true
+                      }
+                      color="secondary"
+                    >
+                      <NotificationsIcon
+                        onClick={() => readNotificationAA(notiAA)}
+                        style={{ cursor: "pointer", color: "white" }}
+                      />
+                    </Badge>
+                    <Dropdown
+                      className="mr-12"
+                      show={isOpenNotiStd}
+                      menuAlign={{ lg: "left" }}
+                    >
+                      <div
+                        className="position-absolute bg-light rounded"
+                        style={{
+                          zIndex: 99,
+                          right: 0,
+                          display: isOpenNotiStd ? "" : "none",
+                          width: '400px'
+                        }}
+                      >
+                        {notiAA.notification &&
+                          notiAA.notification.map((notification, index) => (
+                            <DropdownNotiAA
+                              key={index}
+                              notification={notification}
+                              isOpenNotiStd={isOpenNotiStd}
+                            />
+                          ))}
+                      </div>
+                    </Dropdown>
+                  </li>
+                </div>
+                <NavDropdown title={user.name} id="collasible-nav-dropdown">
+                  <DropdownItem onClick={() => setIsOpenWindow(true)}>
+                    Edit Profile
                 </DropdownItem>
-                <ModalWindowProfileTeacher
-                  isOpen={isOpenWindow}
-                  setIsOpen={setIsOpenWindow}
-                />
-                <DropdownItem>Logout</DropdownItem>
-              </NavDropdown>
-            </ul>
+                  <ModalWindowProfileTeacher
+                    isOpen={isOpenWindow}
+                    setIsOpen={setIsOpenWindow}
+                  />
+                  <NavDropdown.Divider />
+                  <DropdownItem>Logout</DropdownItem>
+
+                </NavDropdown>
+              </ul>
+            </div>
           </Nav>
         </Navbar>
       )}
