@@ -1,10 +1,16 @@
 import React from "react"
+import Cookie from "js-cookie"
 import { Modal } from "react-bootstrap"
 import Buttons from "./Buttons"
 import Inputtext from "./Inputtext"
 import axios from "axios"
 import { useNavigate } from "@reach/router"
 export default function ModalDeleteRubric(props) {
+  const headers = {
+    Authorization: `Bearer ${Cookie.get("jwt")}`,
+    "Content-Type": "application/json",
+    accept: "application/json",
+  }
   let navigate = useNavigate()
   
   async function deleteRubric() {
@@ -16,7 +22,7 @@ export default function ModalDeleteRubric(props) {
     console.log(data)
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_API_BE}/rubric/delete`,data)
+        `${process.env.REACT_APP_API_BE}/rubric/delete`,data,{headers})
       if (response.status === 200) {
         alert("Delete Success.")
         navigate("/createassignment")

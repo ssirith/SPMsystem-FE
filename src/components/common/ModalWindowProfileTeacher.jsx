@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useContext, useEffect } from "react"
+import Cookie from "js-cookie"
 import { Modal } from "react-bootstrap"
 import axios from "axios"
 import Image from "react-bootstrap/Image"
@@ -8,6 +9,11 @@ import Dropdown from "./Dropdown"
 import DropdownEdit from "./DropdownEdit"
 import { UserContext } from "../../UserContext"
 export default function ModalWindowProfileProfileTeacher(props) {
+    const headers = {
+        Authorization: `Bearer ${Cookie.get("jwt")}`,
+        "Content-Type": "application/json",
+        accept: "application/json",
+      }
     const [image, setImage] = useState("")
     const [checkDepartment, setCheckDepartment] = useState()
     const [checkImage, setCheckImage] = useState()
@@ -18,11 +24,11 @@ export default function ModalWindowProfileProfileTeacher(props) {
     const fetchData = useCallback(async () => {
         setIsPreFetch(true)
         if (user.role === "teacher") {
-            const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/teachers`)
+            const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/teachers`,{headers})
             const check = data.find((temp) => temp.teacher_id === user.id)
             setCheckImage(check.image)
         } else {
-            const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/aas`)
+            const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/aas`,{headers})
             const check = data.find((temp) => temp.aa_id === user.id)
             setCheckImage(check.image)
         }
@@ -66,7 +72,7 @@ export default function ModalWindowProfileProfileTeacher(props) {
                 const data = new FormData();//craete form
                 data.append("image", image)
                 data.append("teacher_id", teacher_id)
-                const res = await axios.post(`${process.env.REACT_APP_API_BE}/student/edit/profile/teacher`, data)
+                const res = await axios.post(`${process.env.REACT_APP_API_BE}/student/edit/profile/teacher`, data,{headers})
                 if (res.status === 200) {
                     alert("Edit Profile Success.")
                     window.location.reload()
@@ -84,7 +90,7 @@ export default function ModalWindowProfileProfileTeacher(props) {
                 const data = new FormData();//craete form
                 data.append("image", image)
                 data.append("aa_id", aa_id)
-                const res = await axios.post(`${process.env.REACT_APP_API_BE}/student/edit/profile/aa`, data)
+                const res = await axios.post(`${process.env.REACT_APP_API_BE}/student/edit/profile/aa`, data,{headers})
                 if (res.status === 200) {
                     alert("Edit Profile Success.")
                     window.location.reload()

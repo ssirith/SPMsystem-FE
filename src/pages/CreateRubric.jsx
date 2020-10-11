@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback, useContext } from "react"
+import Cookie from 'js-cookie'
 import Inputtext from "../components/common/Inputtext"
 import { Table } from "react-bootstrap"
 import Buttons from "../components/common/Buttons"
@@ -11,6 +12,11 @@ import RemoveIcon from '@material-ui/icons/Remove';
 import { Container, Row, Col } from 'reactstrap';
 import { UserContext } from "../UserContext"
 export default function CreateRubric() {
+	const headers = {
+		Authorization: `Bearer ${Cookie.get("jwt")}`,
+		"Content-Type": "application/json",
+		accept: "application/json",
+	  }
 	const { user, setUser } = useContext(UserContext)
 	let navigate = useNavigate()
 	const [rubricTitle, setRubricTitle] = useState()
@@ -115,7 +121,7 @@ export default function CreateRubric() {
 			alert("It's not success, Please check your input !!!")	
 		} else {
 			try {
-				const response = await axios.post(`${process.env.REACT_APP_API_BE}/rubric`, data)
+				const response = await axios.post(`${process.env.REACT_APP_API_BE}/rubric`, data,{headers})
 				if (response.status === 200) {
 					alert("Create Success.")
 					navigate("/createassignment")

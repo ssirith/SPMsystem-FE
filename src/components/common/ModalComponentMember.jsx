@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useContext } from "react"
+import Cookie from "js-cookie"
 import { Modal } from "react-bootstrap"
 import Buttons from "./Buttons"
 import Inputtext from "./Inputtext"
@@ -9,6 +10,11 @@ import { useParams } from "@reach/router"
 import { SettingContext } from "../../SettingContext"
 import { UserContext } from "../../UserContext"
 export default function ModalComponentMember(props) {
+  const headers = {
+    Authorization: `Bearer ${Cookie.get("jwt")}`,
+    "Content-Type": "application/json",
+    accept: "application/json",
+  }
   const { user, setUser } = useContext(UserContext)
   const [isPreFetch, setIsPreFetch] = useState(false)
   const [save, setSave] = useState() //เอาค่ามาจาก axios array
@@ -20,13 +26,13 @@ export default function ModalComponentMember(props) {
   const fetchData = useCallback(async () => {
     setIsPreFetch(true)
     if (settingContext.student_one_more_group === false) {//false 0
-      const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/projects/${id}`)
-      const all = await axios.get(`${process.env.REACT_APP_API_BE}/students/nogroup`)
+      const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/projects/${id}`,{headers})
+      const all = await axios.get(`${process.env.REACT_APP_API_BE}/students/nogroup`,{headers})
       setStudents(all.data) //{group[{},{},{},project{},teacher{[],}]
       setSave(data.group)
     } else if (settingContext.student_one_more_group === true) {//true 1
-      const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/projects/${id}`)
-      const all = await axios.get(`${process.env.REACT_APP_API_BE}/students`)
+      const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/projects/${id}`,{headers})
+      const all = await axios.get(`${process.env.REACT_APP_API_BE}/students`,{headers})
       setStudents(all.data) //{group[{},{},{},project{},teacher{[],}]
       setSave(data.group)
     }
@@ -112,6 +118,7 @@ export default function ModalComponentMember(props) {
   }
 
   return (
+    
     <Modal
       show={props.isOpen}
       onHide={() => {
@@ -119,6 +126,7 @@ export default function ModalComponentMember(props) {
       }}
       scrollable='true'
     >
+      {console.log('std',students)}
       <Modal.Header closeButton>
         <Modal.Title>{props.header}</Modal.Title>
       </Modal.Header>

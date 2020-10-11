@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useContext, useEffect } from "react"
+import Cookie from "js-cookie"
 import { Modal } from "react-bootstrap"
 import axios from "axios"
 import Image from "react-bootstrap/Image"
@@ -9,6 +10,11 @@ import DropdownEdit from "./DropdownEdit"
 import { UserContext } from "../../UserContext"
 import { Avatar } from "@material-ui/core"
 export default function ModalWindowProfile(props) {
+  const headers = {
+    Authorization: `Bearer ${Cookie.get("jwt")}`,
+    "Content-Type": "application/json",
+    accept: "application/json",
+  }
   const [image, setImage] = useState("")
   const [departmentList, setDepartmentList] = useState(["IT", "CS", "DSI"])
   const [department, setDepartment] = useState()
@@ -20,7 +26,7 @@ export default function ModalWindowProfile(props) {
   let navigate = useNavigate()
   const fetchData = useCallback(async () => {
     setIsPreFetch(true)
-    const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/students`)
+    const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/students`,{headers})
     const check = data.find((temp) => temp.student_id === user.id)
     setCheckDepartment(check.department)//ค่าจาก db
     setCheckImage(check.image)
@@ -65,7 +71,7 @@ export default function ModalWindowProfile(props) {
         data.append("image", image)
         data.append("student_id", student_id)
         data.append("department", department)
-        const res = await axios.post(`${process.env.REACT_APP_API_BE}/student/edit/profile/student`, data)
+        const res = await axios.post(`${process.env.REACT_APP_API_BE}/student/edit/profile/student`, data,{headers})
         if (res.status === 200) {
           alert("Edit Profile Success.")
           window.location.reload()
@@ -83,7 +89,7 @@ export default function ModalWindowProfile(props) {
         data.append("image", image)
         data.append("student_id", student_id)
         data.append("department", checkDepartment)
-        const res = await axios.post(`${process.env.REACT_APP_API_BE}/student/edit/profile/student`, data)
+        const res = await axios.post(`${process.env.REACT_APP_API_BE}/student/edit/profile/student`, data,{headers})
         if (res.status === 200) {
           alert("Edit Profile Success.")
           props.setIsOpen(false)

@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from "react"
+import Cookie from "js-cookie"
 import {useParams} from "@reach/router"
 import { Modal } from "react-bootstrap"
 import Buttons from "./Buttons"
@@ -8,14 +9,19 @@ import { useEffect } from "react"
 import Button from "@material-ui/core/Button"
 
 export default function ModalComponentAdvisor(props) {
+  const headers = {
+    Authorization: `Bearer ${Cookie.get("jwt")}`,
+    "Content-Type": "application/json",
+    accept: "application/json",
+  }
   const [save, setSave] = useState() //เอาค่ามาจาก axios
   const [teachers, setTeachers] = useState([])
   const [isFilter, setIsFilter] = useState([])
   const [search, setSearch] = useState("")
   const { id } = useParams()
   const fetchData = useCallback(async () => {
-    const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/projects/${id}`)
-    const all = await axios.get(`${process.env.REACT_APP_API_BE}/teachers`)
+    const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/projects/${id}`,{headers})
+    const all = await axios.get(`${process.env.REACT_APP_API_BE}/teachers`,{headers})
     console.log(all)
     setTeachers(all.data) //[{group[{},{},{},project{},teacher{[],}]
     setSave(data.teacher)

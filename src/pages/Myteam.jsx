@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useEffect, useContext } from "react"
+import Cookie from 'js-cookie'
 import { Link } from "@reach/router"
 import Boxitem from "../components/common/Boxitem"
 import Inputtext from "../components/common/Inputtext"
@@ -14,7 +15,13 @@ import ModalWindowProfileStudent from "../components/common/ModalWindowProfileSt
 import Carditem from "../components/common/Carditem"
 import Loading from "../components/common/Loading"
 export default function Myteam() {
+  const headers = {
+    Authorization: `Bearer ${Cookie.get("jwt")}`,
+    "Content-Type": "application/json",
+    accept: "application/json",
+  }
   const { user, setUser } = useContext(UserContext) //Mock data user context
+  const  [userStorage, setUserStorage ] = useState(JSON.parse(localStorage.getItem('user'))) //Mock data user context
   const { settingContext, setSettingContext } = useContext(SettingContext)
   const [stdGroup, setStdGroup] = useState({}) // กลุ่มของนศ.ถูกเก็บเป็น object
   const [group, setGroup] = useState([])
@@ -26,19 +33,19 @@ export default function Myteam() {
     setIsPreFetch(true)
 
     if (user.role === "student") {
-      const dat = await axios.get(`http://127.0.0.1:8000/api/group/${user.id}`)//[]http://127.0.0.1:8000/api/projects
+      const dat = await axios.get(`http://127.0.0.1:8000/api/group/${user.id}`,{headers})//[]http://127.0.0.1:8000/api/projects
       setStdGroup(dat.data)
-      const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/students`)
+      const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/students`,{headers})
       const dep = data.find((a) => a.student_id === user.id)
       setCheckDepartment(dep.department)
     } else if (user.role === "teacher") {
       const data = await axios.get(
-        `${process.env.REACT_APP_API_BE}/projects/response/teacher/${user.id}`
+        `${process.env.REACT_APP_API_BE}/projects/response/teacher/${user.id}`,{headers}
       )
       setGroup(data.data)
     } else if (user.role === "aa") {
       const data = await axios.get(
-        `${process.env.REACT_APP_API_BE}/projects/response/aa/${user.id}`
+        `${process.env.REACT_APP_API_BE}/projects/response/aa/${user.id}`,{headers}
       )
       setGroup(data.data)
     }
@@ -55,7 +62,7 @@ export default function Myteam() {
  
   return (
     <>
-
+{console.log('user storage',userStorage)}
       {user.role === "student" && (
         <>
           {checkDepartment ? (

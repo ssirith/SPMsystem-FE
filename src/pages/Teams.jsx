@@ -1,14 +1,20 @@
 import React, { useState, useCallback, useEffect } from "react"
+import Cookie from 'js-cookie'
 import Carditem from "../components/common/Carditem"
 import axios from "axios"
 import Loading from "../components/common/Loading"
 
 export default function Teams() {
+  const headers = {
+    Authorization: `Bearer ${Cookie.get("jwt")}`,
+    "Content-Type": "application/json",
+    accept: "application/json",
+  }
   const [group, setGroup] = useState([])
   const [isPrefetch,setIsPreFetch]=useState(false)
   const fetchData = useCallback(async () => {
     setIsPreFetch(true)
-    const data = await axios.get(`http://127.0.0.1:8000/api/projects`) //[]
+    const data = await axios.get(`http://127.0.0.1:8000/api/projects`,{headers}) //[]
     setGroup(data.data) // AllProject
     setIsPreFetch(false)
   }, [])

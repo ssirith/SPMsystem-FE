@@ -1,4 +1,5 @@
 import React, { useState, useContext, useCallback, useEffect } from "react"
+import Cookie from 'js-cookie'
 import AnnoucementTable from "../components/common/AnnoucementTable"
 import { UserContext } from "../UserContext"
 import { Link, useParams } from "@reach/router"
@@ -11,11 +12,16 @@ import Loading from "../components/common/Loading"
 import dayjs from "dayjs"
 export default function Announcements() {
   const { user, setUser } = useContext(UserContext)
+  const headers = {
+    Authorization: `Bearer ${Cookie.get("jwt")}`,
+    "Content-Type": "application/json",
+    accept: "application/json",
+  }
   const [announcements, setAnnouncements] = useState()
   const [isPrefetch, setIsPreFetch] = useState(false)
   const fetchData = useCallback(async () => {
     setIsPreFetch(true)
-    const resposne = await axios.get(`${process.env.REACT_APP_API_BE}/announcement`)
+    const resposne = await axios.get(`${process.env.REACT_APP_API_BE}/announcement`,{headers})
     sortAnnouncement(resposne.data)
     setIsPreFetch(false)
   }, [])

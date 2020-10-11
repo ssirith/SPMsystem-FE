@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useEffect, useContext, useRef } from "react"
+import Cookie from 'js-cookie'
 import BreadcrumbNavString from "../components/common/BreadcrumbNavString"
 import Inputtext from "../components/common/Inputtext"
 import Textarea from "../components/common/Textarea"
@@ -32,6 +33,11 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 export default function CreateAssignment() {
+    const headers = {
+        Authorization: `Bearer ${Cookie.get("jwt")}`,
+        "Content-Type": "application/json",
+        accept: "application/json",
+      }
     const classes = useStyles();
     let navigate = useNavigate()
     const inputRef = useRef()
@@ -52,7 +58,7 @@ export default function CreateAssignment() {
 
     const fetchData = useCallback(async () => {
         setIsPreFetch(true)
-        const rub = await axios.get(`${process.env.REACT_APP_API_BE}/rubric`)
+        const rub = await axios.get(`${process.env.REACT_APP_API_BE}/rubric`,{headers})
         setShowAllRubric(rub.data)// ได้ array ของ rubric ทั้งหมด
         setIsPreFetch(false)
     }, [])
@@ -66,7 +72,7 @@ export default function CreateAssignment() {
         showAllRubric.map((a) => {
             if (a.rubric_id === rubric.rubric_id) {
                 async function refreshCriterion() {
-                    const temp = await axios.get(`${process.env.REACT_APP_API_BE}/rubric/${rubric.rubric_id}`)
+                    const temp = await axios.get(`${process.env.REACT_APP_API_BE}/rubric/${rubric.rubric_id}`,{headers})
                     temp.data.criterions.map((c, index) => {
                         let idx = criterions.findIndex(item => item.criteria_id === c.criteria_id)
                         if (idx !== -1) {//0
@@ -202,7 +208,7 @@ export default function CreateAssignment() {
         }
 
         try {
-            const response = await axios.post(`${process.env.REACT_APP_API_BE}/assignments`, data)
+            const response = await axios.post(`${process.env.REACT_APP_API_BE}/assignments`, data,{headers})
             if (response.status === 200) {
                 alert("Create Success.")
                 navigate("/assignments")

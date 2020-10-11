@@ -1,10 +1,16 @@
 import React from "react"
+import Cookie from "js-cookie"
 import { Modal } from "react-bootstrap"
 import Buttons from "./Buttons"
 import Inputtext from "./Inputtext"
 import axios from "axios"
 import { useNavigate } from "@reach/router"
 export default function ModalDeleteAnnouncement(props) {
+  const headers = {
+    Authorization: `Bearer ${Cookie.get("jwt")}`,
+    "Content-Type": "application/json",
+    accept: "application/json",
+  }
   let navigate = useNavigate()
   async function deleteAssignment() {
     console.log(props.toDelete)
@@ -15,7 +21,7 @@ export default function ModalDeleteAnnouncement(props) {
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_API_BE}/announcement/delete`,
-        idForDelete
+        idForDelete,{headers}
       )
 
       if (response.status === 200) {

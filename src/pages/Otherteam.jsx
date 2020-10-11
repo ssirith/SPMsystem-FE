@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useEffect, useContext } from "react"
+import Cookie from 'js-cookie'
 import BreadcrumbNav from "../components/common/BreadcrumbNav"
 import { Link, useParams } from "@reach/router"
 import Boxitem from "../components/common/Boxitem"
@@ -14,6 +15,11 @@ import { UserContext } from "../UserContext"
 import Loading from "../components/common/Loading"
 
 export default function Otherteam(props) {
+  const headers = {
+    Authorization: `Bearer ${Cookie.get("jwt")}`,
+    "Content-Type": "application/json",
+    accept: "application/json",
+  }
   const { user, setUser } = useContext(UserContext)
   const [isPrefetch,setIsPreFetch]=useState(false)
   const { id } = useParams()
@@ -21,7 +27,7 @@ export default function Otherteam(props) {
   const fetchData = useCallback(async () => {
     setIsPreFetch(true)
     const data = await axios.get(
-      `${process.env.REACT_APP_API_BE}/projects/${id}`
+      `${process.env.REACT_APP_API_BE}/projects/${id}`,{headers}
     )
     setGroup(data.data)
     setIsPreFetch(false)

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback, useContext, useRef } from "react"
+import Cookie from 'js-cookie'
 import { makeStyles } from "@material-ui/core/styles"
 import Inputtext from "../components/common/Inputtext"
 import BreadcrumbNavStrings from "../components/common/BreadcrumbNavString"
@@ -30,6 +31,11 @@ const useStyles = makeStyles({
     },
 })
 export default function CreateAnnouncement() {
+    const headers = {
+        Authorization: `Bearer ${Cookie.get("jwt")}`,
+        "Content-Type": "application/json",
+        accept: "application/json",
+      }
     const classes = useStyles()
     const inputRef = useRef()
     let navigate = useNavigate()
@@ -94,7 +100,7 @@ export default function CreateAnnouncement() {
             console.log(value);
         }
         try {
-            const response = await axios.post(`${process.env.REACT_APP_API_BE}/announcement`, data)
+            const response = await axios.post(`${process.env.REACT_APP_API_BE}/announcement`, data,{headers})
             if (response.status === 200) {
                 alert("Create Success.")
                 navigate("/announcements")

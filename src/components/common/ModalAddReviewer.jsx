@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useContext } from "react"
+import Cookie from "js-cookie"
 import { useParams } from "@reach/router"
 import { Modal } from "react-bootstrap"
 import Buttons from "./Buttons"
@@ -8,6 +9,11 @@ import { useEffect } from "react"
 import Button from "@material-ui/core/Button"
 import { UserContext } from "../../UserContext"
 export default function ModalAddReviewer(props) {
+  const headers = {
+    Authorization: `Bearer ${Cookie.get("jwt")}`,
+    "Content-Type": "application/json",
+    accept: "application/json",
+  }
   const [save, setSave] = useState([]) //เอาค่ามาจาก axios
   const [teachers, setTeachers] = useState([])
   const [isFilter, setIsFilter] = useState([])
@@ -18,7 +24,7 @@ export default function ModalAddReviewer(props) {
 
   const fetchData = useCallback(async () => {
     setIsPreFetch(true)
-    const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/teachers`)
+    const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/teachers`,{headers})
     setTeachers(data)
     var newSave = [];
     if (props) {

@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from "react"
+import Cookie from "js-cookie"
 import { Link } from "@reach/router"
 import dayjs from "dayjs"
 import Buttons from "./Buttons"
@@ -14,6 +15,11 @@ import ModalRubric from "./ModalRubric"
 import axios from "axios"
 
 export default function AssignmentTable(props) {
+  const headers = {
+    Authorization: `Bearer ${Cookie.get("jwt")}`,
+    "Content-Type": "application/json",
+    accept: "application/json",
+  }
   const [selectedFile, setSelectedFile] = useState([])
   const [filefromBE, setFilefromBE] = useState([])
   const [deleteSelectedFile, setDeleteSelectedFile] = useState([])
@@ -38,7 +44,7 @@ export default function AssignmentTable(props) {
       // ) อันนี้คือตอนดึงข้อมูลของ assignmentครับ แล้วอันไหนที่่ดึง file ที่เราอัพโหลด
       const response = await axios.get(
         `${process.env.REACT_APP_API_BE}/assignments/${props.assignment.assignment_id}/${props.user.id}`
-      )
+      ,{headers})
       SetAssignment(response.data)
       // console.log('file from be',response.data.file_assignment)
       setFilefromBE(response.data.file_assignment)
@@ -185,7 +191,7 @@ export default function AssignmentTable(props) {
       // formsnet.append("send_file_assignment[]",selectedFile)
       const response = await axios.post(
         `${process.env.REACT_APP_API_BE}/send_assignment`,
-        formData
+        formData,{headers}
       )
       if (response.status === 200) {
         alert("Success")

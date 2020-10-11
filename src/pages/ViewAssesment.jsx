@@ -1,4 +1,5 @@
 import React, { useCallback, useContext, useEffect, useState } from "react"
+import Cookie from 'js-cookie'
 import BreadcrumbNavStrings from "../components/common/BreadcrumbNavString"
 import { Link, useParams, useNavigate } from "@reach/router"
 import { UserContext } from "../UserContext"
@@ -13,6 +14,11 @@ import Buttons from "../components/common/Buttons"
 import { Container, Row, Col } from 'reactstrap';
 import Loading from "../components/common/Loading"
 export default function ViewAssesment() {
+  const headers = {
+    Authorization: `Bearer ${Cookie.get("jwt")}`,
+    "Content-Type": "application/json",
+    accept: "application/json",
+  }
   const { user, setUser } = useContext(UserContext)
   const [assessment, SetAssessment] = useState({})
   const [filefromBE, SetFilefromBE] = useState([])
@@ -44,7 +50,7 @@ export default function ViewAssesment() {
     try {
       setIsPreFetch(true)
       const response = await axios.get(
-        `${process.env.REACT_APP_API_BE}/assessment/${id}/${project_id}`
+        `${process.env.REACT_APP_API_BE}/assessment/${id}/${project_id}`,{headers}
       )
       console.log("response", response.data)
       if (response.status === 200) {

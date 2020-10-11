@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect, useCallback } from "react"
+import Cookie from "js-cookie"
 import NotificationsIcon from "@material-ui/icons/Notifications"
 import { Link } from "@reach/router"
 import { UserContext } from "../../UserContext"
@@ -15,6 +16,11 @@ import DropdownNotiStudent from "./DropdownNotiStudent"
 import DropdownNotiTeacher from "./DropdownNotiTeacher"
 import DropdownNotiAA from "./DropdownNotiAA"
 export default function Navbars() {
+  const headers = {
+    Authorization: `Bearer ${Cookie.get("jwt")}`,
+    "Content-Type": "application/json",
+    accept: "application/json",
+  }
   const { user, setUser } = useContext(UserContext)
   const [isOpenWindow, setIsOpenWindow] = useState(false)
   const [isOpenNotiStd, setIsOpenNotiStd] = useState(false)
@@ -26,13 +32,13 @@ export default function Navbars() {
   const fetchData = useCallback(async () => {
     setIsPreFetch(true)
     if (user.role === "student") {
-      const response = await axios.get(`${process.env.REACT_APP_API_BE}/notification/student/${user.id}`)
+      const response = await axios.get(`${process.env.REACT_APP_API_BE}/notification/student/${user.id}`,{headers})
       setNotiStudent(response.data)
     } else if (user.role === "teacher") {
-      const responseTeacher = await axios.get(`${process.env.REACT_APP_API_BE}/notification/teacher/${user.id}`)
+      const responseTeacher = await axios.get(`${process.env.REACT_APP_API_BE}/notification/teacher/${user.id}`,{headers})
       setNotiTeacher(responseTeacher.data)
     } else {
-      const responseAA = await axios.get(`${process.env.REACT_APP_API_BE}/notification/aa/${user.id}`)
+      const responseAA = await axios.get(`${process.env.REACT_APP_API_BE}/notification/aa/${user.id}`,{headers})
       setNotiAA(responseAA.data)
     }
 
@@ -63,7 +69,7 @@ export default function Navbars() {
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_API_BE}/notification/student`,
-        alreadyReadNotification
+        alreadyReadNotification,{headers}
       )
       if (response.status === 200) {
         console.log(response)
@@ -96,7 +102,7 @@ export default function Navbars() {
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_API_BE}/notification/teacher`,
-        alreadyReadNotification
+        alreadyReadNotification,{headers}
       )
       if (response.status === 200) {
         console.log(response)
@@ -127,7 +133,7 @@ export default function Navbars() {
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_API_BE}/notification/aa`,
-        alreadyReadNotification
+        alreadyReadNotification,{headers}
       )
       if (response.status === 200) {
         console.log(response)
@@ -155,7 +161,7 @@ export default function Navbars() {
       {user.role == "student" && (
         <Navbar className="navbar navbar-dark sticky-top bg flex-md-nowrap p-0 ">
           <Link to="/main">
-            <p className="navbar-brand col-sm-3 col-md-2 p-0 ml-3 mt-3">
+            <p className="header navbar-brand col-sm-3 col-md-2 p-0 ml-3 mt-3">
               SPM System
             </p>
           </Link>

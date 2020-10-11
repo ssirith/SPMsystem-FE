@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback, useContext } from "react"
+import Cookie from 'js-cookie'
 import Inputtext from "../components/common/Inputtext"
 import { Table } from "react-bootstrap"
 import Buttons from "../components/common/Buttons"
@@ -14,7 +15,11 @@ import Loading from "../components/common/Loading"
 export default function EditRubric(props) {
 	let navigate = useNavigate()
 	const { user, setUser } = useContext(UserContext)
-
+	const headers = {
+		Authorization: `Bearer ${Cookie.get("jwt")}`,
+		"Content-Type": "application/json",
+		accept: "application/json",
+	  }
 	const [isPreFetch, setIsPreFetch] = useState(false)
 	const [rubricTitle, setRubricTitle] = useState("")
 	const [rubric, setRubric] = useState()
@@ -30,7 +35,7 @@ export default function EditRubric(props) {
 	const fetchData = useCallback(
 		async () => {
 			setIsPreFetch(true)
-			const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/rubric/${props.id}`)
+			const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/rubric/${props.id}`,{headers})
 			setRubricTitle(data.rubric_title)
 			var criterions = [];
 			data.criterions.map((c, index) => {
@@ -202,7 +207,7 @@ export default function EditRubric(props) {
 
 		} else {
 			try {
-				const response = await axios.post(`${process.env.REACT_APP_API_BE}/rubric/edit`, data)
+				const response = await axios.post(`${process.env.REACT_APP_API_BE}/rubric/edit`, data,{headers})
 				if (response.status === 200) {
 					alert("Edit Success.")
 					navigate("/createassignment")

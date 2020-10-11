@@ -1,4 +1,5 @@
 import React, { useState, useContext, useCallback, useEffect } from "react"
+import Cookie from 'js-cookie'
 import AssignmentTable from "../components/common/AssignmentTable"
 import { UserContext } from "../UserContext"
 import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord"
@@ -13,6 +14,11 @@ import AssignmentTopicBoxAA from "../components/common/AssignmentTopicBoxAA"
 import FilterAssignmentBox from "../components/common/FilterAssignmentBox"
 import Loading from "../components/common/Loading"
 export default function Assignments() {
+  const headers = {
+    Authorization: `Bearer ${Cookie.get("jwt")}`,
+    "Content-Type": "application/json",
+    accept: "application/json",
+  }
   const useStyles = makeStyles({
     root: {
       position: "relative",
@@ -43,7 +49,7 @@ export default function Assignments() {
     try {
       setIsPreFetch(true)
       const response = await axios.get(
-        `${process.env.REACT_APP_API_BE}/assignments`
+        `${process.env.REACT_APP_API_BE}/assignments`,{headers}
       )
       // console.log('res data',response.data)
       const temp = []
@@ -52,8 +58,8 @@ export default function Assignments() {
         // console.log('temp',temp)
       })
       sortAssignments(temp)
-      const ass = await axios.get(`${process.env.REACT_APP_API_BE}/assignments`)
-      const tch = await axios.get(`${process.env.REACT_APP_API_BE}/assignments/responsible/teacher/${user.id}`)
+      const ass = await axios.get(`${process.env.REACT_APP_API_BE}/assignments`,{headers})
+      const tch = await axios.get(`${process.env.REACT_APP_API_BE}/assignments/responsible/teacher/${user.id}`,{headers})
       setTeacher_Assignments(ass.data)
       setResponsible(tch.data)
       setIsPreFetch(false)

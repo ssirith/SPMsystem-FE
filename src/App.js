@@ -25,6 +25,7 @@ import dayjs from 'dayjs';
 import { SettingYearContext } from "./SettingYearContext"
 import { SettingContext } from "./SettingContext"
 import axios from "axios"
+import CallbackFromSSO from "./pages/CallbackFromSSO"
 
 function App() {
   const [settingYearContext, setSettingYearContext] = useState(dayjs().format('YYYY') - 1)// อิงตาม ปฏิทิน 2020
@@ -40,17 +41,17 @@ function App() {
   )
   const [user, setUser] = useState({
 
-    id: "1", 
-    name: "Siam Yamsaengsung", 
-    role: "teacher",
+    // id: "1", 
+    // name: "Siam Yamsaengsung", 
+    // role: "teacher",
 
     // id: "11", 
     // name: "Pornthip Yamsaengsung", 
     // role: "aa",
 
-    // id: "60130500114", 
-    // name: "Suthiwat Sirithanakom",
-    // role: "student", 
+    id: "60130500114", 
+    name: "Suthiwat Sirithanakom",
+    role: "student", 
 
     //1 Siam Yamsaengsung
     //2 Umaporn Supasitthimethee
@@ -85,6 +86,7 @@ function App() {
       <SettingContext.Provider value={settingValue}>
         <UserContext.Provider value={userValue}>
           <Router>
+            <CallbackFromSSO path='/checkAuth'/>
             <Landing
             path="/"/>
             <MainLayout

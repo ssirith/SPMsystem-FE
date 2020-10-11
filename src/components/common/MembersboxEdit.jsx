@@ -1,10 +1,10 @@
 import React, { useState, useCallback,useContext } from "react"
+import Cookie from "js-cookie"
 import { makeStyles } from "@material-ui/core/styles"
 import Card from "@material-ui/core/Card"
 import CardContent from "@material-ui/core/CardContent"
 import Buttons from "./Buttons"
 import { CardHeader } from "@material-ui/core"
-import axios from "axios"
 import { useEffect } from "react"
 import { UserContext } from "../../UserContext"
 const useStyles = makeStyles({

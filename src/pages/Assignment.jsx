@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useContext } from "react"
+import Cookie from 'js-cookie'
 import { makeStyles } from "@material-ui/core/styles"
 import { Card } from "react-bootstrap"
 import { Link, useNavigate } from "@reach/router"
@@ -40,6 +41,11 @@ const useStyles = makeStyles(
 )
 export default function Assignment(props) {
     const classes = useStyles()
+    const headers = {
+        Authorization: `Bearer ${Cookie.get("jwt")}`,
+        "Content-Type": "application/json",
+        accept: "application/json",
+      }
     const [assignment_title, setAssignment_Title] = useState()
     const [assignment_id, setAssignment_id] = useState()
     const [propject_department, setProject_department] = useState("")
@@ -54,7 +60,7 @@ export default function Assignment(props) {
     const { project_id } = useParams()//assignment_id
     const fetchData = useCallback(async () => {
         setIsPreFetch(true)
-        const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/assignments/${props.id}`)//props.id == user.id
+        const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/assignments/${props.id}`,{headers})//props.id == user.id
         setAssignment_Title(data.assignment_title)
         setAssignment_id(data.assignment_id)
         var criterions = [];

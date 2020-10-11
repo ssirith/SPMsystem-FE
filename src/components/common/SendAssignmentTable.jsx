@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useEffect, useContext } from "react"
+import Cookie from 'js-cookie'
 import { UserContext } from "../../UserContext"
 import axios from "axios"
 import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord"
@@ -20,6 +21,11 @@ function SendAssignmentTable(props) {
             minWidth: 650,
         },
     });
+    const headers = {
+        Authorization: `Bearer ${Cookie.get("jwt")}`,
+        "Content-Type": "application/json",
+        accept: "application/json",
+      }
     const classes = useStyles();
     const [isPreFetch, setIsPreFetch] = useState(false)
     const [permission, setPermission] = useState("")
@@ -28,7 +34,7 @@ function SendAssignmentTable(props) {
     const fetchData = useCallback(
         async () => {
             setIsPreFetch(true)
-            const res = await axios.get(`${process.env.REACT_APP_API_BE}/send_assignment/${props.id}/teacher/${user.id}`)
+            const res = await axios.get(`${process.env.REACT_APP_API_BE}/send_assignment/${props.id}/teacher/${user.id}`,{headers})
             let tempSend = [];
             res.data.submission.map(r => {
                 {

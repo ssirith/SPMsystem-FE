@@ -5,6 +5,7 @@ import React, {
   useCallback,
   useContext,
 } from "react"
+import Cookie from "js-cookie"
 import { Link } from "@reach/router"
 import dayjs from "dayjs"
 import Buttons from "./Buttons"
@@ -21,13 +22,17 @@ export default function AnnouncementTable(props) {
   const [isPrefetch, setIsPreFetch] = useState(false)
   const { user, setUser } = useContext(UserContext)
   const [isOpenDelete, setIsOpenDelete] = useState(false)
-
+  const headers = {
+    Authorization: `Bearer ${Cookie.get("jwt")}`,
+    "Content-Type": "application/json",
+    accept: "application/json",
+  }
   const fetchData = useCallback(async () => {
     try {
       setIsPreFetch(true)
       const response = await axios.get(
         `${process.env.REACT_APP_API_BE}/announcement/${props.announcement.announcement_id}`
-      )
+      ,{headers})
       SetAnnouncement(response.data)
       setIsPreFetch(false)
     } catch (err) {

@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useEffect, useContext } from "react"
+import Cookie from 'js-cookie'
 import Inputtext from "../components/common/Inputtext"
 import Topicbox from "../components/common/Topicbox"
 import MembersboxEdit from "../components/common/MembersboxEdit"
@@ -15,6 +16,11 @@ import Textarea from "../components/common/Textarea"
 import { UserContext } from "../UserContext"
 import Loading from "../components/common/Loading"
 export default function Editteam(props) {
+  const headers = {
+    Authorization: `Bearer ${Cookie.get("jwt")}`,
+    "Content-Type": "application/json",
+    accept: "application/json",
+  }
   const { user, setUser } = useContext(UserContext)
   const [departmentList, setDepartmentList] = useState(["SIT", "IT", "CS", "DSI"])
   const [department, setDepartment] = useState([])
@@ -30,13 +36,13 @@ export default function Editteam(props) {
   const fetchData = useCallback(
     async () => {
       setIsPreFetch(true)
-      const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/projects/${props.id}`)
+      const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/projects/${props.id}`,{headers})
       console.log(data)
       setProject(data.project)
       setMember(data.group)
       setAdvisor(data.teacher)
       setDepartment(data.project.project_department)
-      const all = await axios.get(`${process.env.REACT_APP_API_BE}/students`)
+      const all = await axios.get(`${process.env.REACT_APP_API_BE}/students`,{headers})
       setStudents(all.data)
       setIsPreFetch(false)
     },
@@ -117,7 +123,7 @@ export default function Editteam(props) {
 
     try {
       const response = await axios.
-        put(`${process.env.REACT_APP_API_BE}/projects/edit/${project_id}`, dataForEdit)
+        put(`${process.env.REACT_APP_API_BE}/projects/edit/${project_id}`, dataForEdit,{headers})
       console.log(response)
       if (response.status === 200) {
         alert("Edit Success.")

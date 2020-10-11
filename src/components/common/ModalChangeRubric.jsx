@@ -1,4 +1,5 @@
 import React from "react"
+import Cookie from "js-cookie"
 import { Modal } from "react-bootstrap"
 import Buttons from "./Buttons"
 import Inputtext from "./Inputtext"
@@ -17,6 +18,11 @@ export default function ModalChangeRubric(props) {
                 }
             })
         }
+        const headers = {
+            Authorization: `Bearer ${Cookie.get("jwt")}`,
+            "Content-Type": "application/json",
+            accept: "application/json",
+          }
         const teacher_id = props.userId
         const rubric_id = props.rubric.rubric_id
 
@@ -63,7 +69,7 @@ export default function ModalChangeRubric(props) {
         data.append('rubric_id', rubric_id)//rubric_id
 
         try {
-            const response = await axios.post(`${process.env.REACT_APP_API_BE}/assignments/edit`, data)
+            const response = await axios.post(`${process.env.REACT_APP_API_BE}/assignments/edit`, data,{headers})
             if (response.status === 200) {
                 alert("Edit Success.")
                 navigate(`/assignments/${props.id}`)

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback, useContext } from "react"
+import Cookie from 'js-cookie'
 import Inputtext from "../components/common/Inputtext"
 import Membersbox from "../components/common/Membersbox"
 import Advisorbox from "../components/common/Advisorbox"
@@ -13,6 +14,11 @@ import Textarea from "../components/common/Textarea"
 import { UserContext } from "../UserContext"
 import Loading from "../components/common/Loading"
 export default function Createteam() {
+  const headers = {
+    Authorization: `Bearer ${Cookie.get("jwt")}`,
+    "Content-Type": "application/json",
+    accept: "application/json",
+  }
   const { user, setUser } = useContext(UserContext)
   let navigate = useNavigate()
   const [isPreFetch, setIsPreFetch] = useState(false)
@@ -29,7 +35,7 @@ export default function Createteam() {
   const [advisor, setAdvisor] = useState([])
   const fetchData = useCallback(async () => {
     setIsPreFetch(true)
-    const all = await axios.get(`${process.env.REACT_APP_API_BE}/students`)
+    const all = await axios.get(`${process.env.REACT_APP_API_BE}/students`,{headers})
     setStudents(all.data)
     setIsPreFetch(false)
   }, [])
@@ -76,7 +82,7 @@ export default function Createteam() {
         student_id,
         teacher_id,
         department,
-      })
+      },{headers})
       if (response.status === 200) {
         alert("Create Success.")
         navigate("/main")

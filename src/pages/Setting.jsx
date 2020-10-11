@@ -5,6 +5,7 @@ import React, {
   useEffect,
   useMemo,
 } from "react"
+import Cookie from 'js-cookie'
 import { navigate } from "@reach/router"
 import { UserContext } from "../UserContext"
 import { SettingYearContext } from "../SettingYearContext"
@@ -15,6 +16,11 @@ import { SettingContext } from "../SettingContext"
 import Loading from "../components/common/Loading"
 
 export default function Setting() {
+  const headers = {
+    Authorization: `Bearer ${Cookie.get("jwt")}`,
+    "Content-Type": "application/json",
+    accept: "application/json",
+  }
   const { user, setUser } = useContext(UserContext)
   const { settingYearContext, setSettingYearContext } = useContext(
     SettingYearContext
@@ -44,7 +50,7 @@ export default function Setting() {
   const fetchData = useCallback(async () => {
     try {
       setIsPreFetch(true)
-      const response = await axios.get(`${process.env.REACT_APP_API_BE}/config`)
+      const response = await axios.get(`${process.env.REACT_APP_API_BE}/config`,{headers})
       console.log('arrya from be',response.data)
       // setSettingList(data.data)
       setSettingDisplay(settingContext)
@@ -96,7 +102,7 @@ export default function Setting() {
       // console.log(setting)
       const response = await axios.post(
         `${process.env.REACT_APP_API_BE}/config`,
-        settingDisplay
+        settingDisplay,{headers}
       )
       if (response.status === 200) {
         setSettingYearContext(settingDisplay.year_of_study)

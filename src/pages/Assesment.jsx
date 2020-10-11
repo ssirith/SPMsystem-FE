@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useEffect, useContext } from "react"
+import Cookie from 'js-cookie'
 import BreadcrumbNavStrings from "../components/common/BreadcrumbNavString"
 import { Link, useParams, useNavigate } from "@reach/router"
 import Buttons from "../components/common/Buttons"
@@ -17,6 +18,11 @@ import Loading from "../components/common/Loading"
 
 export default function Assesment(props) {
     const { user, setUser } = useContext(UserContext)
+    const headers = {
+        Authorization: `Bearer ${Cookie.get("jwt")}`,
+        "Content-Type": "application/json",
+        accept: "application/json",
+      }
     const [isPreFetch,setIsPreFetch]=useState(false)
     const { assignment_id } = useParams()
     const { id } = useParams()
@@ -47,7 +53,7 @@ export default function Assesment(props) {
 
     const fetchData = useCallback(async () => {
         setIsPreFetch(true)
-        const res = await axios.get(`${process.env.REACT_APP_API_BE}/assessment/${assignment_id}/${id}`)
+        const res = await axios.get(`${process.env.REACT_APP_API_BE}/assessment/${assignment_id}/${id}`,{headers})
         var criterions = [];
         res.data.criterions.map((c, index) => {
             let idx = criterions.findIndex(item => item.criteria_id === c.criteria_id)

@@ -1,10 +1,16 @@
 import React from "react"
+import Cookie from "js-cookie"
 import { Modal } from "react-bootstrap"
 import Buttons from "./Buttons"
 import Inputtext from "./Inputtext"
 import axios from "axios"
 import { useNavigate } from "@reach/router"
 export default function ModalComponentDelete(props) {
+  const headers = {
+    Authorization: `Bearer ${Cookie.get("jwt")}`,
+    "Content-Type": "application/json",
+    accept: "application/json",
+  }
   let navigate=useNavigate()
   async function deleteProject(value) {
     
@@ -15,7 +21,7 @@ export default function ModalComponentDelete(props) {
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_API_BE}/projects/delete`,
-        idForDelete
+        idForDelete,{headers}
       )
       console.log(response)
       if (response.status === 200) {

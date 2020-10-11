@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useEffect } from "react"
+import Cookie from 'js-cookie'
 import axios from "axios"
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from "@reach/router"
@@ -11,6 +12,11 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 function Submission(props) {
+    const headers = {
+        Authorization: `Bearer ${Cookie.get("jwt")}`,
+        "Content-Type": "application/json",
+        accept: "application/json",
+      }
     const useStyles = makeStyles({
         table: {
             minWidth: 650,
@@ -26,7 +32,7 @@ function Submission(props) {
     const fetchData = useCallback(
         async () => {
             setIsPreFetch(true)
-            const res = await axios.get(`${process.env.REACT_APP_API_BE}/send_assignment/${props.id}`)
+            const res = await axios.get(`${process.env.REACT_APP_API_BE}/send_assignment/${props.id}`,{headers})
             setSend_assignment(res.data)
             setIsPreFetch(false)
         }, [])
