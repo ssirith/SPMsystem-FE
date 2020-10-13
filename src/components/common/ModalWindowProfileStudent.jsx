@@ -15,6 +15,8 @@ export default function ModalWindowProfile(props) {
     "Content-Type": "application/json",
     accept: "application/json",
   }
+  // const userBeforeParse=JSON.parse(localStorage.getItem('user'))
+  // const  [user, setUser ] = useState(userBeforeParse)
   const [image, setImage] = useState("")
   const [departmentList, setDepartmentList] = useState(["IT", "CS", "DSI"])
   const [department, setDepartment] = useState()
@@ -23,11 +25,12 @@ export default function ModalWindowProfile(props) {
   const { id } = useParams()
   const [isPreFetch, setIsPreFetch] = useState(false)
   const { user, setUser } = useContext(UserContext)
+  
   let navigate = useNavigate()
   const fetchData = useCallback(async () => {
     setIsPreFetch(true)
     const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/students`,{headers})
-    const check = data.find((temp) => temp.student_id === user.id)
+    const check = data.find((temp) => temp.student_id === user.user_id)
     setCheckDepartment(check.department)//ค่าจาก db
     setCheckImage(check.image)
     setIsPreFetch(false)
@@ -39,7 +42,7 @@ export default function ModalWindowProfile(props) {
 
   function imageHandler(){
     if(checkImage){
-      return (`http://127.0.0.1:8000/storage/images/${user.id}.jpg`)
+      return (`http://127.0.0.1:8000/storage/images/${user.user_id}.jpg`)
     }else{
       return (`/image/userimage.png`)
     }
@@ -64,7 +67,7 @@ export default function ModalWindowProfile(props) {
     }
   }
   async function handleSave(e) {
-    const student_id = user.id;
+    const student_id = user.user_id;
     if (department) {
       try {
         const data = new FormData();//craete form

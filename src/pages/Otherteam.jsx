@@ -18,9 +18,11 @@ export default function Otherteam(props) {
   const headers = {
     Authorization: `Bearer ${Cookie.get("jwt")}`,
     "Content-Type": "application/json",
-    accept: "application/json",
+    accept: "application/json",  
   }
   const { user, setUser } = useContext(UserContext)
+  // const userBeforeParse=JSON.parse(localStorage.getItem('user'))
+  // const  [user, setUser ] = useState(userBeforeParse)
   const [isPrefetch,setIsPreFetch]=useState(false)
   const { id } = useParams()
   const [group, setGroup] = useState({})
@@ -75,7 +77,7 @@ export default function Otherteam(props) {
       <div className="col-12 mx-auto">
         <div className="row">
           <div className="col-12 text-center">
-            {user.role == "aa" ? (
+            {user&&user.user_type == "AA" ? (
               <Link to="/allprojects">
                 <Buttons
                   menu="Back"
@@ -89,7 +91,7 @@ export default function Otherteam(props) {
               </Link>
             )}
 
-            {user.role == "aa" && (
+            {user&&user.user_type == "AA" && (
               <Link to={`/editteam/${id}`} className="mx-2">
                 <Buttons menu="Edit" color = "primary" />
               </Link>

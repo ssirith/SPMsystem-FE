@@ -12,7 +12,7 @@ export default function ModalWindowProfileProfileTeacher(props) {
     const headers = {
         Authorization: `Bearer ${Cookie.get("jwt")}`,
         "Content-Type": "application/json",
-        accept: "application/json",
+        accept: "application/json",      
       }
     const [image, setImage] = useState("")
     const [checkDepartment, setCheckDepartment] = useState()
@@ -20,16 +20,18 @@ export default function ModalWindowProfileProfileTeacher(props) {
     const { id } = useParams()
     const [isPreFetch, setIsPreFetch] = useState(false)
     const { user, setUser } = useContext(UserContext)
+//     const userBeforeParse=JSON.parse(localStorage.getItem('user'))
+//   const  [user, setUser ] = useState(userBeforeParse)
     let navigate = useNavigate()
     const fetchData = useCallback(async () => {
         setIsPreFetch(true)
-        if (user.role === "teacher") {
+        if (user.user_type === "Teacher") {
             const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/teachers`,{headers})
-            const check = data.find((temp) => temp.teacher_id === user.id)
+            const check = data.find((temp) => temp.teacher_id === user.user_id)
             setCheckImage(check.image)
         } else {
             const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/aas`,{headers})
-            const check = data.find((temp) => temp.aa_id === user.id)
+            const check = data.find((temp) => temp.aa_id === user.user_id)
             setCheckImage(check.image)
         }
         setIsPreFetch(false)
@@ -41,7 +43,7 @@ export default function ModalWindowProfileProfileTeacher(props) {
 
     function imageHandler() {
         if (checkImage) {
-            return (`http://127.0.0.1:8000/storage/images/${user.id}.jpg`)
+            return (`http://127.0.0.1:8000/storage/images/${user.user_id}.jpg`)
         } else {
             return (`/image/userimage.png`)
         }
@@ -66,8 +68,8 @@ export default function ModalWindowProfileProfileTeacher(props) {
         }
     }
     async function handleSave(e) {
-        if (user.role === "teacher") {
-            const teacher_id = user.id;
+        if (user.user_type === "Teacher") {
+            const teacher_id = user.user_id;
             try {
                 const data = new FormData();//craete form
                 data.append("image", image)
@@ -85,7 +87,7 @@ export default function ModalWindowProfileProfileTeacher(props) {
                 console.log(err)
             }
         } else {
-            const aa_id = user.id;
+            const aa_id = user.user_id;
             try {
                 const data = new FormData();//craete form
                 data.append("image", image)

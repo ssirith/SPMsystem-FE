@@ -12,7 +12,7 @@ export default function ModalComponentAdvisor(props) {
   const headers = {
     Authorization: `Bearer ${Cookie.get("jwt")}`,
     "Content-Type": "application/json",
-    accept: "application/json",
+    accept: "application/json", 
   }
   const [save, setSave] = useState() //เอาค่ามาจาก axios
   const [teachers, setTeachers] = useState([])

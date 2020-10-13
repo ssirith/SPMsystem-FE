@@ -15,7 +15,7 @@ function Submission(props) {
     const headers = {
         Authorization: `Bearer ${Cookie.get("jwt")}`,
         "Content-Type": "application/json",
-        accept: "application/json",
+        accept: "application/json",    
       }
     const useStyles = makeStyles({
         table: {

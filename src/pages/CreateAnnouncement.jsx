@@ -40,12 +40,14 @@ export default function CreateAnnouncement() {
     const inputRef = useRef()
     let navigate = useNavigate()
     const { user, setUser } = useContext(UserContext)
+//     const userBeforeParse=JSON.parse(localStorage.getItem('user'))
+//   const  [user, setUser ] = useState(userBeforeParse)
     const [announcement_Title, setAnnoucement_Title] = useState()
     const [announcement_Description, setAnnoucement_Description] = useState()
     const [attachment, setAttachment] = useState([])
     const [today, setDate] = useState(new Date())
     const checkRole = useCallback(() => {
-        if (user.role === "student") {
+        if (user&&user.user_type === "Student") {
             alert(`You dont'have permission to go this page.`)
             navigate("/main")
         }
@@ -82,12 +84,12 @@ export default function CreateAnnouncement() {
         data.append("announcement_title", announcement_Title)
         data.append("announcement_detail", announcement_Description)
         data.append("announcement_date", date)
-        if (user.role === "teacher") {
-            data.append("teacher_id", user.id)
+        if (user.user_type === "Teacher") {
+            data.append("teacher_id", user.user_id)
             data.append("aa_id", "")
         } else {
             data.append("teacher_id", "")
-            data.append("aa_id", user.id)
+            data.append("aa_id", user.user_id)
         }
         if (attachment.length !== 0) {
             for (const acceptFile of attachment) {
@@ -100,7 +102,7 @@ export default function CreateAnnouncement() {
             console.log(value);
         }
         try {
-            const response = await axios.post(`${process.env.REACT_APP_API_BE}/announcement`, data,{headers})
+            const response = await axios.post(`${process.env.REACT_APP_API_BE}/announcement`, data,{ headers })
             if (response.status === 200) {
                 alert("Create Success.")
                 navigate("/announcements")

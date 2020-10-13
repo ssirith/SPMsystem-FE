@@ -42,6 +42,8 @@ export default function CreateAssignment() {
     let navigate = useNavigate()
     const inputRef = useRef()
     const { user, setUser } = useContext(UserContext)
+//     const userBeforeParse=JSON.parse(localStorage.getItem('user'))
+//   const  [user, setUser ] = useState(userBeforeParse)
     const [attachment, setAttachment] = useState([])
     const [isOpenAttachment, setIsOpenAttachment] = useState(false)
     const [isPreFetch, setIsPreFetch] = useState(false)
@@ -112,7 +114,7 @@ export default function CreateAssignment() {
     }, [rubric])
 
     const checkRole = useCallback(() => {
-        if (user.role === "student") {
+        if (user&&user.user_type === "Student") {
             alert(`You dont'have permission to go this page.`)
             navigate("/main")
         }
@@ -183,7 +185,7 @@ export default function CreateAssignment() {
     async function handleSubmit() {
         const responsible_teacher = []
         reviewer.map((r, index) => responsible_teacher.push(r.teacher_id))
-        const teacher_id = user.id
+        const teacher_id = user.user_id
         const rubric_id = rubric.rubric_id
         const data = new FormData();
         data.append('assignment_title', assignment_title)

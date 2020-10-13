@@ -21,6 +21,8 @@ export default function ModalAddReviewer(props) {
   const { id } = useParams()
   const [isPreFetch, setIsPreFetch] = useState(false)
   const { user, setUser } = useContext(UserContext)
+  // const userBeforeParse=JSON.parse(localStorage.getItem('user'))
+  // const  [user, setUser ] = useState(userBeforeParse)
 
   const fetchData = useCallback(async () => {
     setIsPreFetch(true)
@@ -29,7 +31,7 @@ export default function ModalAddReviewer(props) {
     var newSave = [];
     if (props) {
       data.map((t) => {
-        if (t.teacher_id === user.id) {
+        if (user&&t.teacher_id === user.user_id) {
           newSave.push(t)
           setSave(newSave)
           props.addReviewer(save)

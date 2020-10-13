@@ -53,14 +53,15 @@ export default function Assignment(props) {
     const [isOpenDelete, setIsOpenDelete] = useState(false)
     const [isPreFetch, setIsPreFetch] = useState(false)
     const [search, setSearch] = useState("")
-    const { user, setUser } = useContext(UserContext)
+//     const userBeforeParse=JSON.parse(localStorage.getItem('user'))
+//   const  [user, setUser ] = useState(userBeforeParse)
     let navigate = useNavigate()
-    // const { user, setUser } = useContext(UserContext)
-    const { id } = useParams()//user.id
+    const { user, setUser } = useContext(UserContext)
+    const { id } = useParams()//user.user_id
     const { project_id } = useParams()//assignment_id
     const fetchData = useCallback(async () => {
         setIsPreFetch(true)
-        const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/assignments/${props.id}`,{headers})//props.id == user.id
+        const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/assignments/${props.id}`,{headers})//props.id == user.user_id
         setAssignment_Title(data.assignment_title)
         setAssignment_id(data.assignment_id)
         var criterions = [];
@@ -99,7 +100,7 @@ export default function Assignment(props) {
         fetchData()
     }, [])
     const checkRole = useCallback(() => {
-        if (user.role === "student") {
+        if (user&&user.user_type === "Student") {
             alert(`You dont'have permission to go this page.`)
             navigate("/main")
         }

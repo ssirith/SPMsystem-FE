@@ -20,6 +20,8 @@ export default function ViewAssesment() {
     accept: "application/json",
   }
   const { user, setUser } = useContext(UserContext)
+  // const userBeforeParse=JSON.parse(localStorage.getItem('user'))
+  // const  [user, setUser ] = useState(userBeforeParse)
   const [assessment, SetAssessment] = useState({})
   const [filefromBE, SetFilefromBE] = useState([])
   const { id } = useParams()
@@ -97,7 +99,7 @@ export default function ViewAssesment() {
   }
 
   const checkRole = useCallback(() => {
-    if (user.role === "student" || user.role === "teacher") {
+    if (user.user_type === "Student" || user.user_type === "Teacher") {
       alert(`You dont'have permission to go this page.`)
       navigate("/main")
     }

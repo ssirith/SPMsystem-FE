@@ -22,6 +22,8 @@ export default function Editteam(props) {
     accept: "application/json",
   }
   const { user, setUser } = useContext(UserContext)
+  // const userBeforeParse=JSON.parse(localStorage.getItem('user'))
+  // const  [user, setUser ] = useState(userBeforeParse)
   const [departmentList, setDepartmentList] = useState(["SIT", "IT", "CS", "DSI"])
   const [department, setDepartment] = useState([])
   const [isOpenStudent, setIsOpenStudent] = useState(false);
@@ -100,7 +102,7 @@ export default function Editteam(props) {
     const delete_teacher_id = advisorForDelete;
     const add_student_id = [];
     member.map(m => add_student_id.push(m.student_id));
-    const value = students.find((std) => std.student_id === user.id)//no std.id
+    const value = students.find((std) => std.student_id === user.user_id)//no std.id
     if (value) {
       add_student_id.push(value.student_id)
     }

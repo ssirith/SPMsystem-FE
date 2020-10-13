@@ -37,12 +37,14 @@ export default function CreateAssignment(props) {
     const headers = {
         Authorization: `Bearer ${Cookie.get("jwt")}`,
         "Content-Type": "application/json",
-        accept: "application/json",
+        accept: "application/json",       
       }
     const classes = useStyles();
     let navigate = useNavigate()
     const inputRef = useRef()
     const { user, setUser } = useContext(UserContext)
+//     const userBeforeParse=JSON.parse(localStorage.getItem('user'))
+//   const  [user, setUser ] = useState(userBeforeParse)
     const [assignment, setAssignment] = useState({})
     const [attachmentFromBE, setAttachmentFromBE] = useState([])
     const [selectAttachment, setSelectAttachment] = useState([])
@@ -170,7 +172,7 @@ export default function CreateAssignment(props) {
     }, [rubric])
 
     const checkRole = useCallback(() => {
-        if (user.role === "student") {
+        if (user.user_type === "Student") {
             alert(`You dont'have permission to go this page.`)
             navigate("/main")
         }
@@ -262,7 +264,7 @@ export default function CreateAssignment(props) {
                     }
                 })
             }
-            const teacher_id = user.id
+            const teacher_id = user.user_id
             const rubric_id = rubric.rubric_id
 
             const data = new FormData();
@@ -632,7 +634,7 @@ export default function CreateAssignment(props) {
                                 header="Confirmation"
                                 assignment={assignment}
                                 reviewerFromBE={reviewerFromBE}
-                                userId={user.id}
+                                userId={user.user_id}
                                 rubric={rubric}
                                 delete_responsible_teacher={delete_responsible_teacher}
                                 selectAttachment={selectAttachment}

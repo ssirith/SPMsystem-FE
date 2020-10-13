@@ -11,7 +11,7 @@ export default function CallbackFromSSO(props) {
         "Content-Type": "application/json",
         accept: "application/json",
       }
-  const fetchUerData = useCallback(async () => {
+  const fetchUserData = useCallback(async () => {
     const queryParams = queryString.parse(props.location.search)
     // console.log('queryParams',queryParams)
     try {
@@ -31,8 +31,8 @@ export default function CallbackFromSSO(props) {
   }, [props.location.search])
 
   useEffect(() => {
-    fetchUerData()
-  }, [fetchUerData])
+    fetchUserData()
+  }, [fetchUserData])
 
   return (
     <div className='text-center vh-100'>

@@ -43,7 +43,7 @@ export default function AssignmentTable(props) {
       //   `${process.env.REACT_APP_API_BE}/rubric/${props.assignment.rubric_id}`
       // ) อันนี้คือตอนดึงข้อมูลของ assignmentครับ แล้วอันไหนที่่ดึง file ที่เราอัพโหลด
       const response = await axios.get(
-        `${process.env.REACT_APP_API_BE}/assignments/${props.assignment.assignment_id}/${props.user.id}`
+        `${process.env.REACT_APP_API_BE}/assignments/${props.assignment.assignment_id}/${props.user.user_id}`
       ,{headers})
       SetAssignment(response.data)
       // console.log('file from be',response.data.file_assignment)
@@ -158,7 +158,7 @@ export default function AssignmentTable(props) {
       }
       const formData = new FormData()
       formData.append("assignment_id", assignment.assignment_id)
-      formData.append("student_id", props.user.id)
+      formData.append("student_id", props.user.user_id)
       formData.append("status", status)
       if (selectedFile.length != 0) {
         for (const acceptFile of selectedFile) {
@@ -180,7 +180,7 @@ export default function AssignmentTable(props) {
 
       // const formData = {
       //   assignment_id: assignment.assignment_id,
-      //   student_id: props.user.id,
+      //   student_id: props.user.user_id,
       //   status: status,
       //   send_file_assignment: selectedFile,
       //   delete_file_assignment: deleteSelectedFile.map((file) => file),

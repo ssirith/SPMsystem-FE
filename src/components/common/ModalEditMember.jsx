@@ -23,6 +23,8 @@ export default function ModalEditMember(props) {
   const { id } = useParams()
   const { settingContext, setSettingContext } = useContext(SettingContext)
   const { user, setUser } = useContext(UserContext)
+  // const userBeforeParse=JSON.parse(localStorage.getItem('user'))
+  // const  [user, setUser ] = useState(userBeforeParse)
   const fetchData = useCallback(async () => {
     setIsPreFetch(true)
     if (settingContext.student_one_more_group === false) {//false 0
@@ -54,7 +56,7 @@ export default function ModalEditMember(props) {
       }
     }
     // if(save){
-    //   const filterUser = save.findIndex(save => save.student_id === user.id)
+    //   const filterUser = save.findIndex(save => save.student_id === user.user_id)
     //   if (filterUser > -1) {
     //     save.splice(filterUser, 1)
     //   }
@@ -155,7 +157,7 @@ export default function ModalEditMember(props) {
       <Modal.Footer>
         <div className="container">
           {/* <div className="row my-2" >
-            <div className="col-4">{user.id}</div>
+            <div className="col-4">{user.user_id}</div>
             <div className="col-4">{user.name}</div>
           </div>
           <br /> */}
@@ -165,7 +167,7 @@ export default function ModalEditMember(props) {
                 <div className="row my-2" key={index}>
                   <div className="col-4">{data.student_id}</div>
                   <div className="col-4">{data.student_name}</div>
-                  {data.student_id !== user.id ?
+                  {data.student_id !== user.user_id ?
                     <button
                       className="btn btn-danger"
                       onClick={() => deleteMember(data)}

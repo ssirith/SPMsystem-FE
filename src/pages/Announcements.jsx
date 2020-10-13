@@ -12,6 +12,8 @@ import Loading from "../components/common/Loading"
 import dayjs from "dayjs"
 export default function Announcements() {
   const { user, setUser } = useContext(UserContext)
+  // const userBeforeParse=JSON.parse(localStorage.getItem('user'))
+  // const  [user, setUser ] = useState(userBeforeParse)
   const headers = {
     Authorization: `Bearer ${Cookie.get("jwt")}`,
     "Content-Type": "application/json",
@@ -42,7 +44,7 @@ export default function Announcements() {
   }
   return (
     <>
-      {user.role === "student" && (
+      {user&&user.user_type === "Student" && (
         <div className="container mt-5">
           <table
             class="table"
@@ -71,7 +73,7 @@ export default function Announcements() {
           </table>
         </div>
       )}
-      {user.role === "teacher" && (
+      {user&&user.user_type === "Teacher" && (
         <Container>
           <br />
           <Row >
@@ -119,7 +121,7 @@ export default function Announcements() {
           </Row>
         </Container>
       )}
-      {user.role === "aa" && (
+      {user&&user.user_type === "AA" && (
         <Container>
           <br />
           <Row >

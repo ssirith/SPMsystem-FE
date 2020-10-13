@@ -3,7 +3,7 @@ import Cookie from 'js-cookie'
 import AssignmentTable from "../components/common/AssignmentTable"
 import { UserContext } from "../UserContext"
 import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord"
-import { Link, useParams } from "@reach/router"
+import { Link, navigate, useParams } from "@reach/router"
 import { makeStyles } from "@material-ui/core/styles"
 import dayjs from "dayjs"
 import axios from "axios"
@@ -38,6 +38,8 @@ export default function Assignments() {
   })
   const classes = useStyles()
   const { user, setUser } = useContext(UserContext)
+  // const userBeforeParse=JSON.parse(localStorage.getItem('user'))
+  // const  [user, setUser ] = useState(userBeforeParse)
   const [sortassignments, setSortAssignments] = useState([])
   const [isPrefetch, setIsPreFetch] = useState(false)
   const [teacher_assignments, setTeacher_Assignments] = useState()
@@ -47,6 +49,7 @@ export default function Assignments() {
 
   const fetchData = useCallback(async () => {
     try {
+      
       setIsPreFetch(true)
       const response = await axios.get(
         `${process.env.REACT_APP_API_BE}/assignments`,{headers}
@@ -59,12 +62,13 @@ export default function Assignments() {
       })
       sortAssignments(temp)
       const ass = await axios.get(`${process.env.REACT_APP_API_BE}/assignments`,{headers})
-      const tch = await axios.get(`${process.env.REACT_APP_API_BE}/assignments/responsible/teacher/${user.id}`,{headers})
+      const tch = await axios.get(`${process.env.REACT_APP_API_BE}/assignments/responsible/teacher/${user.user_id}`,{headers})
       setTeacher_Assignments(ass.data)
       setResponsible(tch.data)
       setIsPreFetch(false)
     } catch (err) {
       console.log(err)
+      navigate('/main')
     }
   }, [])
   function sortAssignments(assignments){
@@ -75,7 +79,7 @@ export default function Assignments() {
  
   useEffect(() => {
     fetchData()
-  }, [])
+  }, [user])
   if (isPrefetch) {
     return <>
     <Loading open={isPrefetch}/>
@@ -85,7 +89,7 @@ export default function Assignments() {
   return (
     <>
     {/* {console.log('sort',sortassignments)} */}
-      {user.role === "student" && (
+      {user&&user.user_type === "Student" && (
         <div className="container mt-5">
           <div className="d-inline my-auto">
             <FiberManualRecordIcon className="successStatus" />
@@ -112,7 +116,7 @@ export default function Assignments() {
           </table>
         </div>
       )}
-      {user.role === "teacher" && (
+      {user&&user.user_type === "Teacher" && (
         <div className="container">
           <br/>
           <div className="row">
@@ -158,7 +162,7 @@ export default function Assignments() {
           </div>
         </div>
       )}
-      {user.role === "aa" && (
+      {user&&user.user_type === "AA" && (
         <div className="container">
           <div className="row">
             <div className="col-12 my-3">

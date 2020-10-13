@@ -26,6 +26,8 @@ const useStyles = makeStyles({
 })
 export default function MembersboxEdit(props) {
   const { user, setUser } = useContext(UserContext)
+  // const userBeforeParse=JSON.parse(localStorage.getItem('user'))
+  // const  [user, setUser ] = useState(userBeforeParse)
   const classes = useStyles()
   return (
     <>

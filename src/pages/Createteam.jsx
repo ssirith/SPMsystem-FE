@@ -20,6 +20,8 @@ export default function Createteam() {
     accept: "application/json",
   }
   const { user, setUser } = useContext(UserContext)
+  // const userBeforeParse=JSON.parse(localStorage.getItem('user'))
+  // const  [user, setUser ] = useState(userBeforeParse)
   let navigate = useNavigate()
   const [isPreFetch, setIsPreFetch] = useState(false)
   const [departmentList, setDepartmentList] = useState(["SIT", "IT", "CS", "DSI"])
@@ -69,7 +71,7 @@ export default function Createteam() {
     const project_detail = mygroup.detail
     const student_id = []//array
     member.map((m) => student_id.push(m.student_id))
-    const value = students.find((std) => std.student_id === user.id)//no std.id
+    const value = students.find((std) => std.student_id === user.user_id)//no std.id
     if (value) {
       student_id.push(value.student_id)
     }

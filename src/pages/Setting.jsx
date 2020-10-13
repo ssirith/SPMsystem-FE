@@ -22,6 +22,8 @@ export default function Setting() {
     accept: "application/json",
   }
   const { user, setUser } = useContext(UserContext)
+  // const userBeforeParse=JSON.parse(localStorage.getItem('user'))
+  // const  [user, setUser ] = useState(userBeforeParse)
   const { settingYearContext, setSettingYearContext } = useContext(
     SettingYearContext
   )
@@ -41,7 +43,7 @@ export default function Setting() {
     }
   }
   const checkRole = useCallback(() => {
-    if (user.role === "student" || user.role === "teacher") {
+    if (user.user_type === "Student" || user.user_type === "Teacher") {
       alert(`You dont'have permission to go this page.`)
       navigate("/main")
     }

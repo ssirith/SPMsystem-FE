@@ -15,10 +15,12 @@ import Loading from "../components/common/Loading"
 export default function EditRubric(props) {
 	let navigate = useNavigate()
 	const { user, setUser } = useContext(UserContext)
+// 	const userBeforeParse=JSON.parse(localStorage.getItem('user'))
+//   const  [user, setUser ] = useState(userBeforeParse)
 	const headers = {
 		Authorization: `Bearer ${Cookie.get("jwt")}`,
 		"Content-Type": "application/json",
-		accept: "application/json",
+		accept: "application/json",		
 	  }
 	const [isPreFetch, setIsPreFetch] = useState(false)
 	const [rubricTitle, setRubricTitle] = useState("")
@@ -104,7 +106,7 @@ export default function EditRubric(props) {
 	}, [])
 
 	const checkRole = useCallback(() => {
-		if (user.role === "student") {
+		if (user.user_type === "Student") {
 		  alert(`You dont'have permission to go this page.`)
 		  navigate("/main")
 		}

@@ -22,6 +22,8 @@ export default function ModalEditReviewer(props) {
   const [isPreFetch, setIsPreFetch] = useState(false)
   const { id } = useParams()
   const { user, setUser } = useContext(UserContext)
+  // const userBeforeParse=JSON.parse(localStorage.getItem('user'))
+  // const  [user, setUser ] = useState(userBeforeParse)
   const fetchData = useCallback(async () => {
     setIsPreFetch(true)
     const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/assignments/${id}`,{headers})

@@ -15,9 +15,11 @@ export default function CreateRubric() {
 	const headers = {
 		Authorization: `Bearer ${Cookie.get("jwt")}`,
 		"Content-Type": "application/json",
-		accept: "application/json",
+		accept: "application/json",	
 	  }
 	const { user, setUser } = useContext(UserContext)
+// 	const userBeforeParse=JSON.parse(localStorage.getItem('user'))
+//   const  [user, setUser ] = useState(userBeforeParse)
 	let navigate = useNavigate()
 	const [rubricTitle, setRubricTitle] = useState()
 	const handleRubricTitle = (event) => {
@@ -51,7 +53,7 @@ export default function CreateRubric() {
 
 	}
 	const checkRole = useCallback(() => {
-		if (user.role === "student" ) {
+		if (user.user_type === "Student" ) {
 		  alert(`You dont'have permission to go this page.`)
 		  navigate("/main")
 		}

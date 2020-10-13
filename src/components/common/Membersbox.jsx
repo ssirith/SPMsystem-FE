@@ -26,6 +26,8 @@ const useStyles = makeStyles({
 })
 export default function Membersbox(props) {
   const { user, setUser } = useContext(UserContext)
+  // const userBeforeParse=JSON.parse(localStorage.getItem('user'))
+  // const  [user, setUser ] = useState(userBeforeParse)
   const classes = useStyles()
   return (
     <>
@@ -33,7 +35,7 @@ export default function Membersbox(props) {
         <CardHeader title={props.title} />
         <CardContent>
           <div className="container">
-            <p>{user.id} {user.name}</p>
+            <p>{user.user_id} {user.name}</p>
             
             {props.members &&
               props.members.map((std, index) => {

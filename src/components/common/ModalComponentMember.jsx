@@ -16,6 +16,8 @@ export default function ModalComponentMember(props) {
     accept: "application/json",
   }
   const { user, setUser } = useContext(UserContext)
+  // const userBeforeParse=JSON.parse(localStorage.getItem('user'))
+  // const  [user, setUser ] = useState(userBeforeParse)
   const [isPreFetch, setIsPreFetch] = useState(false)
   const [save, setSave] = useState() //เอาค่ามาจาก axios array
   const [students, setStudents] = useState([])
@@ -54,7 +56,7 @@ export default function ModalComponentMember(props) {
         }
       }
     }
-    const filterUser = temp.findIndex(temp => temp.student_id === user.id)
+    const filterUser = temp.findIndex(temp => temp.student_id === user.user_id)
     if (filterUser > -1) {
       temp.splice(filterUser, 1)
     }
@@ -153,7 +155,7 @@ export default function ModalComponentMember(props) {
       <Modal.Footer>
         <div className="container">
           <div className="row my-2" >
-            <div className="col-4">{user.id}</div>
+            <div className="col-4">{user.user_id}</div>
             <div className="col-4">{user.name}</div>
           </div>
           &nbsp;

@@ -41,6 +41,8 @@ export default function CreateAnnouncement() {
     let navigate = useNavigate()
     const { id } = useParams()
     const { user, setUser } = useContext(UserContext)
+//     const userBeforeParse=JSON.parse(localStorage.getItem('user'))
+//   const  [user, setUser ] = useState(userBeforeParse)
     const [announcement, setAnnouncement] = useState()
     const [today, setDate] = useState(new Date())
     const [attachmentFromBE, setAttachmentFromBE] = useState([])
@@ -66,7 +68,7 @@ export default function CreateAnnouncement() {
     }, [])
     console.log(announcement)
     const checkRole = useCallback(() => {
-        if (user.role === "student") {
+        if (user.user_type === "Student") {
             alert(`You dont'have permission to go this page.`)
             navigate("/main")
         }

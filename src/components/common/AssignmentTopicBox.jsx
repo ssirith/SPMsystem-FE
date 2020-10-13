@@ -26,6 +26,8 @@ const useStyles = makeStyles({
 })
 export default function AssignmentTopicBox(props) {
     const { user, setUser } = useContext(UserContext)
+//     const userBeforeParse=JSON.parse(localStorage.getItem('user'))
+//   const  [user, setUser ] = useState(userBeforeParse)
     const classes = useStyles()
     function IsCheckFilter() {
         if (props.checkFilter === false) {

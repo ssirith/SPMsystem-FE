@@ -39,8 +39,10 @@ function App() {
     () => ({ settingContext, setSettingContext }),
     [settingContext, setSettingContext]
   )
-  const [user, setUser] = useState({
-
+  // const { user, setUser } = useContext(UserContext) 
+  const [user, setUser] = useState(null
+  
+  
     // id: "1", 
     // name: "Siam Yamsaengsung", 
     // role: "teacher",
@@ -49,14 +51,14 @@ function App() {
     // name: "Pornthip Yamsaengsung", 
     // role: "aa",
 
-    id: "60130500114", 
-    name: "Suthiwat Sirithanakom",
-    role: "student", 
+    // id: "60130500114", 
+    // name: "Suthiwat Sirithanakom",
+    // role: "Student", 
 
-    //1 Siam Yamsaengsung
-    //2 Umaporn Supasitthimethee
-    //9 Pichet Limvachiranan
-  })
+    // 1 Siam Yamsaengsung
+    // 2 Umaporn Supasitthimethee
+    // 9 Pichet Limvachiranan
+  )
 
   const userValue = useMemo(() => ({ user, setUser }), [user, setUser])
 

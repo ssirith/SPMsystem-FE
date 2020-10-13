@@ -21,11 +21,13 @@ export default function AnnouncementTable(props) {
   const expanderBody = useRef()
   const [isPrefetch, setIsPreFetch] = useState(false)
   const { user, setUser } = useContext(UserContext)
+  // const userBeforeParse=JSON.parse(localStorage.getItem('user'))
+  // const  [user, setUser ] = useState(userBeforeParse)
   const [isOpenDelete, setIsOpenDelete] = useState(false)
   const headers = {
     Authorization: `Bearer ${Cookie.get("jwt")}`,
     "Content-Type": "application/json",
-    accept: "application/json",
+    accept: "application/json",    
   }
   const fetchData = useCallback(async () => {
     try {
@@ -75,7 +77,7 @@ export default function AnnouncementTable(props) {
           </div>
         </td>
       </tr>
-      {user.role === "student" ? (
+      {user&&user.user_type === "Student" ? (
         <>
           {expanded && (
             <tr className="expandable" key="tr-expander">
