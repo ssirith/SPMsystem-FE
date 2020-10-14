@@ -15,6 +15,7 @@ import axios from "axios"
 import DropdownNotiStudent from "./DropdownNotiStudent"
 import DropdownNotiTeacher from "./DropdownNotiTeacher"
 import DropdownNotiAA from "./DropdownNotiAA"
+import dayjs from "dayjs"
 export default function Navbars() {
   const headers = {
     Authorization: `Bearer ${Cookie.get("jwt")}`,
@@ -37,19 +38,19 @@ export default function Navbars() {
         `${process.env.REACT_APP_API_BE}/notification/student/${user.user_id}`,
         { headers }
       )
-      setNotiStudent(response.data)
+      sortNotificationStudent(response.data)
     } else if (user && user.user_type === "Teacher") {
       const responseTeacher = await axios.get(
         `${process.env.REACT_APP_API_BE}/notification/teacher/${user.user_id}`,
         { headers }
       )
-      setNotiTeacher(responseTeacher.data)
+      sortNotificationTeacher(responseTeacher.data)
     } else if (user && user.user_type === "AA") {
       const responseAA = await axios.get(
         `${process.env.REACT_APP_API_BE}/notification/aa/${user.user_id}`,
         { headers }
       )
-      setNotiAA(responseAA.data)
+      sortNotificationAA(responseAA.data)
     } else {
       navigate('/')
     }
@@ -64,6 +65,18 @@ export default function Navbars() {
     navigate("/")
   }
 
+  function sortNotificationStudent(notification){
+    notification.notification.sort((a,b)=>(dayjs(b.created_at).isBefore(a.created_at)?-1:1))
+    setNotiStudent(notification)
+  }
+  function sortNotificationTeacher(notification){
+    notification.notification.sort((a,b)=>(dayjs(b.created_at).isBefore(a.created_at)?-1:1))
+    setNotiTeacher(notification)
+  }
+  function sortNotificationAA(notification){
+    notification.notification.sort((a,b)=>(dayjs(b.created_at).isBefore(a.created_at)?-1:1))
+    setNotiAA(notification)
+  }
   async function readNotification(notiStudent) {
     console.log("noti student", notiStudent)
     let tempNotiStudent = notiStudent.notification
