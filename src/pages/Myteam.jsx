@@ -34,7 +34,7 @@ export default function Myteam() {
   const fetchData = useCallback(async () => {
     try {
       setIsPreFetch(true)
-      if (user.user_type === "Student") {
+      if (user&&user.user_type === "Student") {
         console.log("in if student")
         const dat = await axios.get(
           `http://127.0.0.1:8000/api/group/${user.user_id}`,
@@ -50,14 +50,14 @@ export default function Myteam() {
         )
         const dep = data.find((a) => a.student_id === user.user_id)
         setCheckDepartment(dep.department)
-      } else if (user.user_type === "Teacher") {
+      } else if (user&&user.user_type === "Teacher") {
         console.log("in if student")
         const data = await axios.get(
           `${process.env.REACT_APP_API_BE}/projects/response/teacher/${user.user_id}`,
           { headers }
         )
         setGroup(data.data)
-      } else if (user.user_type === "AA") {
+      } else if (user&&user.user_type === "AA") {
         console.log("in if student")
         const data = await axios.get(
           `${process.env.REACT_APP_API_BE}/projects/response/aa/${user.user_id}`,

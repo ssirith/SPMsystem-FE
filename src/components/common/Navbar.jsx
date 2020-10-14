@@ -32,6 +32,7 @@ export default function Navbars() {
 
   const fetchData = useCallback(async () => {
     if (user && user.user_type === "Student") {
+      console.log("fetch function")
       const response = await axios.get(
         `${process.env.REACT_APP_API_BE}/notification/student/${user.user_id}`,
         { headers }
@@ -49,6 +50,8 @@ export default function Navbars() {
         { headers }
       )
       setNotiAA(responseAA.data)
+    } else {
+      navigate('/')
     }
   }, [])
   useEffect(() => {
@@ -62,6 +65,7 @@ export default function Navbars() {
   }
 
   async function readNotification(notiStudent) {
+    console.log("noti student", notiStudent)
     let tempNotiStudent = notiStudent.notification
     let readNotification = []
     let filterReadnotification = []
@@ -180,24 +184,20 @@ export default function Navbars() {
               <ul className="navbar-nav px-3">
                 <div style={{ marginTop: 7 }}>
                   <li className="nav-item text-nowrap mr-4">
-                    {notiStudent.num_of_unread_notification ? (
-                      <Badge
-                        badgeContent={notiStudent.num_of_unread_notification}
-                        invisible={
-                          notiStudent.num_of_unread_notification != 0
-                            ? false
-                            : true
-                        }
-                        color="secondary"
-                      >
-                        <NotificationsIcon
-                          onClick={() => readNotification(notiStudent)}
-                          style={{ cursor: "pointer", color: "white" }}
-                        />
-                      </Badge>
-                    ) : (
-                      <NotificationsIcon />
-                    )}
+                    <Badge
+                      badgeContent={notiStudent.num_of_unread_notification}
+                      invisible={
+                        notiStudent.num_of_unread_notification != 0
+                          ? false
+                          : true
+                      }
+                      color="secondary"
+                    >
+                      <NotificationsIcon
+                        onClick={() => readNotification(notiStudent)}
+                        style={{ cursor: "pointer", color: "white" }}
+                      />
+                    </Badge>
 
                     <Dropdown
                       className="mr-12"
@@ -255,21 +255,20 @@ export default function Navbars() {
               <ul className="navbar-nav px-3">
                 <div style={{ marginTop: 7 }}>
                   <li className="nav-item text-nowrap mr-4">
-                    {notiTeacher.num_of_unread_notification ? (
-                      <Badge
-                        badgeContent={notiTeacher.num_of_unread_notification}
-                        invisible={
-                          notiTeacher.num_of_unread_notification != 0
-                            ? false
-                            : true
-                        }
-                        color="secondary"
-                      >
-                        <NotificationsIcon />
-                      </Badge>
-                    ) : (
-                      <NotificationsIcon />
-                    )}
+                    <Badge
+                      badgeContent={notiTeacher.num_of_unread_notification}
+                      invisible={
+                        notiTeacher.num_of_unread_notification != 0
+                          ? false
+                          : true
+                      }
+                      color="secondary"
+                    >
+                      <NotificationsIcon
+                        onClick={() => readNotificationTeacher(notiTeacher)}
+                        style={{ cursor: "pointer", color: "white" }}
+                      />
+                    </Badge>
 
                     <Dropdown
                       className="mr-12"
@@ -327,22 +326,18 @@ export default function Navbars() {
               <ul className="navbar-nav px-3">
                 <div style={{ marginTop: 7 }}>
                   <li className="nav-item text-nowrap mr-4">
-                    {notiAA.num_of_unread_notification ? (
-                      <Badge
-                        badgeContent={notiAA.num_of_unread_notification}
-                        invisible={
-                          notiAA.num_of_unread_notification != 0 ? false : true
-                        }
-                        color="secondary"
-                      >
-                        <NotificationsIcon
-                          onClick={() => readNotificationAA(notiAA)}
-                          style={{ cursor: "pointer", color: "white" }}
-                        />
-                      </Badge>
-                    ) : (
-                      <NotificationsIcon />
-                    )}
+                    <Badge
+                      badgeContent={notiAA.num_of_unread_notification}
+                      invisible={
+                        notiAA.num_of_unread_notification != 0 ? false : true
+                      }
+                      color="secondary"
+                    >
+                      <NotificationsIcon
+                        onClick={() => readNotificationAA(notiAA)}
+                        style={{ cursor: "pointer", color: "white" }}
+                      />
+                    </Badge>
 
                     <Dropdown
                       className="mr-12"

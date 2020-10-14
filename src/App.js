@@ -40,7 +40,7 @@ function App() {
     [settingContext, setSettingContext]
   )
   // const { user, setUser } = useContext(UserContext) 
-  const [user, setUser] = useState(null
+  const [user, setUser] = useState({})
   
   
     // id: "1", 
@@ -58,7 +58,7 @@ function App() {
     // 1 Siam Yamsaengsung
     // 2 Umaporn Supasitthimethee
     // 9 Pichet Limvachiranan
-  )
+  
 
   const userValue = useMemo(() => ({ user, setUser }), [user, setUser])
 
