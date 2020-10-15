@@ -44,7 +44,8 @@ export default function MainLayout(props) {
   return (
     <>
      {/* {console.log('storage',localStorage.getItem('user'))} */}
-      <Navbar />
+     {/* {console.log('ggg',user)} */}
+      <Navbar user={user} />
       <div className="container-fluid ">
         <div className="row">
           <Sidebar statusbar={props.statusbar} />
