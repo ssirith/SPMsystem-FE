@@ -26,7 +26,7 @@ export default function ModalDeleteAnnouncement(props) {
 
       if (response.status === 200) {
         alert("Delete Success.")
-        window.location.reload()
+        navigate('/main')
       }
     } catch (err) {
       console.log(err)

@@ -34,7 +34,7 @@ export default function MainLayout(props) {
         navigate("/")
       }
     } catch (err) {
-      navigate("/")
+      navigate('/')
     }
   })
   
