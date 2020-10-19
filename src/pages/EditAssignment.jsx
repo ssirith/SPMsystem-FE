@@ -264,7 +264,7 @@ export default function CreateAssignment(props) {
                     }
                 })
             }
-            const teacher_id = user.user_id
+            // const teacher_id = user.user_id
             const rubric_id = rubric.rubric_id
 
             const data = new FormData();
@@ -306,7 +306,14 @@ export default function CreateAssignment(props) {
             data.append('assignment_detail', assignment_detail)//assignment_detail
             data.append('due_date', due_date)//due_date
             data.append('due_time', due_time)//due_time
-            data.append('teacher_id', teacher_id)//teacher_id
+            // data.append('teacher_id', teacher_id)//teacher_id
+            if (user.user_type === "Teacher") {
+                data.append("teacher_id", user.user_id)
+                data.append("aa_id", "")
+            } else  {
+                data.append("teacher_id", "")
+                data.append("aa_id", user.user_id)
+            }
             data.append('rubric_id', rubric_id)//rubric_id
 
             try {

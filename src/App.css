@@ -212,3 +212,8 @@ tr.expandable > td > .inner {
   margin: 15px;
   overflow: hidden;
 }
+.scrollable-menu {
+  height: auto;
+  max-height: 500px;
+  overflow-x: hidden;
+}
