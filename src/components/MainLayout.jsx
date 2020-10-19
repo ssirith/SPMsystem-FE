@@ -28,13 +28,15 @@ export default function MainLayout(props) {
       if (response.status === 200) {
         // localStorage.setItem("user", JSON.stringify(response.data))
         console.log('response.data',response.data)
-        setUser(response.data)
+        localStorage.setItem('user',JSON.stringify(response.data))
+        let localuser=JSON.parse(localStorage.getItem('user'))
+        setUser(localuser)
         // console.log('ggg',user)
       } else if (response.status === 401) {
         navigate("/")
       }
     } catch (err) {
-      navigate('/')
+      console.log(err)
     }
   })
   

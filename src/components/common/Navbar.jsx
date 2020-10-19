@@ -51,8 +51,6 @@ export default function Navbars() {
         { headers }
       )
       sortNotificationAA(responseAA.data)
-    } else {
-      navigate('/')
     }
   }, [])
   useEffect(() => {
@@ -60,6 +58,7 @@ export default function Navbars() {
   }, [user])
 
   function logOut() {
+    localStorage.removeItem('user')
     setUser(null)
     Cookie.remove("jwt")
     navigate("/")

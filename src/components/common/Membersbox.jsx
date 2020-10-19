@@ -34,21 +34,24 @@ export default function Membersbox(props) {
       <Card className={classes.root}>
         <CardHeader title={props.title} />
         <CardContent>
-          <div className="container">
-            <p>{user.user_id} {user.name}</p>
-            
-            {props.members &&
-              props.members.map((std, index) => {
-                return (
-                  <>
-                    <p key={index}>
-                      {std.student_id} {std.student_name}
-                    </p>
-                  </>
-                )
-              })}
-          </div>
-         
+          {user && (
+            <div className="container">
+              <p>
+                {user.user_id} {user.name}
+              </p>
+
+              {props.members &&
+                props.members.map((std, index) => {
+                  return (
+                    <>
+                      <p key={index}>
+                        {std.student_id} {std.student_name}
+                      </p>
+                    </>
+                  )
+                })}
+            </div>
+          )}
         </CardContent>
       </Card>
     </>
