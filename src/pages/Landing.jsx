@@ -46,7 +46,7 @@ export default function Landing() {
         <img    
           src="/image/login2.jpg"
           height="100%"
-          width="900px"
+          width="1100px"
         />
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
@@ -54,9 +54,9 @@ export default function Landing() {
           <p style={{ fontSize: 100 }} className="primary">SPM System</p>
         </div>
         <div style={{ margin: '10px', width: '80%' }}>
-          <a href="http://std-sso-fe.sit.kmutt.ac.th/login?response_type=code&client_id=jxZ1W&redirect_uri=http://localhost:3000/checkAuth">
+          <a href="https://std-sso-fe.sit.kmutt.ac.th/login?response_type=code&client_id=jxZ1W&redirect_uri=http://localhost:3000/checkAuth">
             <Button variant="contained" color="primary" fullWidth >
-              Primary
+              Login with SSO
             </Button>
           </a>
         </div>

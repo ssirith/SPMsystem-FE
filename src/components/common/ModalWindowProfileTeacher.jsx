@@ -77,7 +77,6 @@ export default function ModalWindowProfileProfileTeacher(props) {
                 const res = await axios.post(`${process.env.REACT_APP_API_BE}/student/edit/profile/teacher`, data,{headers})
                 if (res.status === 200) {
                     alert("Edit Profile Success.")
-                    window.location.reload()
                     navigate("/main")
                     props.setIsOpen(false)
                 }

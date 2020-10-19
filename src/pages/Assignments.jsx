@@ -43,10 +43,10 @@ export default function Assignments() {
   const [sortassignments, setSortAssignments] = useState([])
   const [isPrefetch, setIsPreFetch] = useState(false)
   const [teacher_assignments, setTeacher_Assignments] = useState()
+  // const [aa_assignment, setAa_Assignments] = useState()
   const [responsible, setResponsible] = useState()
   const [checkFilter, setCheckFilter] = useState(false)
   const [search, setSearch] = useState("")
-
   const fetchData = useCallback(async () => {
     try {
       
@@ -64,6 +64,7 @@ export default function Assignments() {
       const ass = await axios.get(`${process.env.REACT_APP_API_BE}/assignments`,{headers})
       const tch = await axios.get(`${process.env.REACT_APP_API_BE}/assignments/responsible/teacher/${user.user_id}`,{headers})
       setTeacher_Assignments(ass.data)
+      // setAa_Assignments(ass.data)
       setResponsible(tch.data)
       setIsPreFetch(false)
     } catch (err) {
@@ -71,6 +72,7 @@ export default function Assignments() {
       navigate('/main')
     }
   }, [])
+
   function sortAssignments(assignments){
     let newAssignment=assignments
     newAssignment.sort((a,b)=> (dayjs(b.date_time).isBefore(a.date_time)?1:-1))
@@ -193,9 +195,7 @@ export default function Assignments() {
                 <div className="col-8">
                   <AssignmentTopicBoxAA
                     assignments={teacher_assignments}
-                    // responsible={responsible}
                     search={search}
-                    // checkFilter={checkFilter}
                   />
                 </div>
               </div>

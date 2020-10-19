@@ -64,16 +64,16 @@ export default function Navbars() {
     navigate("/")
   }
 
-  function sortNotificationStudent(notification){
-    notification.notification.sort((a,b)=>(dayjs(b.created_at).isBefore(a.created_at)?-1:1))
+  function sortNotificationStudent(notification) {
+    notification.notification.sort((a, b) => (dayjs(b.created_at).isBefore(a.created_at) ? -1 : 1))
     setNotiStudent(notification)
   }
-  function sortNotificationTeacher(notification){
-    notification.notification.sort((a,b)=>(dayjs(b.created_at).isBefore(a.created_at)?-1:1))
+  function sortNotificationTeacher(notification) {
+    notification.notification.sort((a, b) => (dayjs(b.created_at).isBefore(a.created_at) ? -1 : 1))
     setNotiTeacher(notification)
   }
-  function sortNotificationAA(notification){
-    notification.notification.sort((a,b)=>(dayjs(b.created_at).isBefore(a.created_at)?-1:1))
+  function sortNotificationAA(notification) {
+    notification.notification.sort((a, b) => (dayjs(b.created_at).isBefore(a.created_at) ? -1 : 1))
     setNotiAA(notification)
   }
   async function readNotification(notiStudent) {
@@ -185,11 +185,14 @@ export default function Navbars() {
       {console.log("noti std", notiStudent)}
       {user && user.user_type === "Student" && (
         <Navbar className="navbar navbar-dark sticky-top bg flex-md-nowrap p-0 ">
-          <Link to="/main">
-            <p className="header navbar-brand col-sm-3 col-md-2 p-0 ml-3 mt-3">
-              SPM System
-            </p>
-          </Link>
+
+          <div style={{ marginLeft: 25, marginTop: 7 }}>
+            <Link to="/main">
+              <p className="header navbar-brand col-sm-3 col-md-2 p-0 ml-3 mt-3">
+                <h1> SPM System </h1>
+              </p>
+            </Link>
+          </div>
           <Nav className="mr-auto"></Nav>
           <Nav>
             <div style={{ marginRight: 42 }}>
@@ -217,12 +220,13 @@ export default function Navbars() {
                       menuAlign={{ lg: "left" }}
                     >
                       <div
-                        className="position-absolute bg-light rounded"
+                        className="position-absolute bg-light rounded scrollable-menu"
                         style={{
                           zIndex: 99,
                           right: 0,
                           display: isOpenNotiStd ? "" : "none",
                           width: "400px",
+
                         }}
                       >
                         {notiStudent.notification &&
@@ -256,11 +260,13 @@ export default function Navbars() {
       )}
       {user && user.user_type === "Teacher" && (
         <Navbar className="navbar navbar-dark sticky-top bg flex-md-nowrap p-0 ">
-          <Link to="/main">
-            <p className="navbar-brand col-sm-3 col-md-2 p-0 ml-3 mt-3">
-              SPM System
+          <div style={{ marginLeft: 25, marginTop: 7 }}>
+            <Link to="/main">
+              <p className="navbar-brand col-sm-3 col-md-2 p-0 ml-3 mt-3">
+                SPM System
             </p>
-          </Link>
+            </Link>
+          </div>
           <Nav className="mr-auto"></Nav>
           <Nav>
             <div style={{ marginRight: 42 }}>
@@ -288,7 +294,7 @@ export default function Navbars() {
                       menuAlign={{ lg: "left" }}
                     >
                       <div
-                        className="position-absolute bg-light rounded"
+                        className="position-absolute bg-light rounded scrollable-menu"
                         style={{
                           zIndex: 99,
                           right: 0,
@@ -327,11 +333,13 @@ export default function Navbars() {
       )}
       {user && user.user_type === "AA" && (
         <Navbar className="navbar navbar-dark sticky-top bg flex-md-nowrap p-0 ">
-          <Link to="/main">
-            <p className="navbar-brand col-sm-3 col-md-2 p-0 ml-3 mt-3">
-              SPM System
+          <div style={{ marginLeft: 25, marginTop: 7 }}>
+            <Link to="/main">
+              <p className="navbar-brand col-sm-3 col-md-2 p-0 ml-3 mt-3">
+                SPM System
             </p>
-          </Link>
+            </Link>
+          </div>
           <Nav className="mr-auto"></Nav>
           <Nav>
             <div style={{ marginRight: 42 }}>
@@ -357,7 +365,7 @@ export default function Navbars() {
                       menuAlign={{ lg: "left" }}
                     >
                       <div
-                        className="position-absolute bg-light rounded"
+                        className="position-absolute bg-light rounded scrollable-menu"
                         style={{
                           zIndex: 99,
                           right: 0,
