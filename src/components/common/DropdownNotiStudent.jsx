@@ -2,7 +2,6 @@ import { Navigation } from "@material-ui/icons"
 import { navigate } from "@reach/router"
 import React from "react"
 import { Assignment, Speaker } from "@material-ui/icons"
-import { Scrollbars } from 'react-custom-scrollbars';
 export default function DropdownNotiStudent(props) {
   function navigation() {
     if (props.notification.assignment_id === null) {

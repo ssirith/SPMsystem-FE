@@ -32,25 +32,29 @@ export default function Navbars() {
   const [notiAA, setNotiAA] = useState({})
 
   const fetchData = useCallback(async () => {
-    if (user && user.user_type === "Student") {
-      console.log("fetch function")
-      const response = await axios.get(
-        `${process.env.REACT_APP_API_BE}/notification/student/${user.user_id}`,
-        { headers }
-      )
-      sortNotificationStudent(response.data)
-    } else if (user && user.user_type === "Teacher") {
-      const responseTeacher = await axios.get(
-        `${process.env.REACT_APP_API_BE}/notification/teacher/${user.user_id}`,
-        { headers }
-      )
-      sortNotificationTeacher(responseTeacher.data)
-    } else if (user && user.user_type === "AA") {
-      const responseAA = await axios.get(
-        `${process.env.REACT_APP_API_BE}/notification/aa/${user.user_id}`,
-        { headers }
-      )
-      sortNotificationAA(responseAA.data)
+    try {
+      if (user && user.user_type === "Student") {
+        console.log("fetch function")
+        const response = await axios.get(
+          `${process.env.REACT_APP_API_BE}/notification/student/${user.user_id}`,
+          { headers }
+        )
+        sortNotificationStudent(response.data)
+      } else if (user && user.user_type === "Teacher") {
+        const responseTeacher = await axios.get(
+          `${process.env.REACT_APP_API_BE}/notification/teacher/${user.user_id}`,
+          { headers }
+        )
+        sortNotificationTeacher(responseTeacher.data)
+      } else if (user && user.user_type === "AA") {
+        const responseAA = await axios.get(
+          `${process.env.REACT_APP_API_BE}/notification/aa/${user.user_id}`,
+          { headers }
+        )
+        sortNotificationAA(responseAA.data)
+      }
+    } catch (err) {
+      console.log(err)
     }
   }, [])
   useEffect(() => {
@@ -58,22 +62,28 @@ export default function Navbars() {
   }, [user])
 
   function logOut() {
-    localStorage.removeItem('user')
+    localStorage.removeItem("user")
     setUser(null)
     Cookie.remove("jwt")
     navigate("/")
   }
 
   function sortNotificationStudent(notification) {
-    notification.notification.sort((a, b) => (dayjs(b.created_at).isBefore(a.created_at) ? -1 : 1))
+    notification.notification.sort((a, b) =>
+      dayjs(b.created_at).isBefore(a.created_at) ? -1 : 1
+    )
     setNotiStudent(notification)
   }
   function sortNotificationTeacher(notification) {
-    notification.notification.sort((a, b) => (dayjs(b.created_at).isBefore(a.created_at) ? -1 : 1))
+    notification.notification.sort((a, b) =>
+      dayjs(b.created_at).isBefore(a.created_at) ? -1 : 1
+    )
     setNotiTeacher(notification)
   }
   function sortNotificationAA(notification) {
-    notification.notification.sort((a, b) => (dayjs(b.created_at).isBefore(a.created_at) ? -1 : 1))
+    notification.notification.sort((a, b) =>
+      dayjs(b.created_at).isBefore(a.created_at) ? -1 : 1
+    )
     setNotiAA(notification)
   }
   async function readNotification(notiStudent) {
@@ -185,7 +195,6 @@ export default function Navbars() {
       {console.log("noti std", notiStudent)}
       {user && user.user_type === "Student" && (
         <Navbar className="navbar navbar-dark sticky-top bg flex-md-nowrap p-0 ">
-
           <div style={{ marginLeft: 25, marginTop: 7 }}>
             <Link to="/main">
               <p className="header navbar-brand col-sm-3 col-md-2 p-0 ml-3 mt-3">
@@ -226,7 +235,6 @@ export default function Navbars() {
                           right: 0,
                           display: isOpenNotiStd ? "" : "none",
                           width: "400px",
-
                         }}
                       >
                         {notiStudent.notification &&
@@ -264,7 +272,7 @@ export default function Navbars() {
             <Link to="/main">
               <p className="navbar-brand col-sm-3 col-md-2 p-0 ml-3 mt-3">
                 SPM System
-            </p>
+              </p>
             </Link>
           </div>
           <Nav className="mr-auto"></Nav>
@@ -337,7 +345,7 @@ export default function Navbars() {
             <Link to="/main">
               <p className="navbar-brand col-sm-3 col-md-2 p-0 ml-3 mt-3">
                 SPM System
-            </p>
+              </p>
             </Link>
           </div>
           <Nav className="mr-auto"></Nav>

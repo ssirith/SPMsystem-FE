@@ -56,7 +56,7 @@ export default function Landing() {
         <div style={{ margin: '10px', width: '80%' }}>
           <a href="https://std-sso-fe.sit.kmutt.ac.th/login?response_type=code&client_id=jxZ1W&redirect_uri=http://localhost:3000/checkAuth">
             <Button variant="contained" color="primary" fullWidth >
-              Login with SSO
+              Login via SSO
             </Button>
           </a>
         </div>

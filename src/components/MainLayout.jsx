@@ -26,8 +26,7 @@ export default function MainLayout(props) {
       )
       console.log('response',response)
       if (response.status === 200) {
-        // localStorage.setItem("user", JSON.stringify(response.data))
-        console.log('response.data',response.data)
+        // console.log('response.data',response.data)
         localStorage.setItem('user',JSON.stringify(response.data))
         let localuser=JSON.parse(localStorage.getItem('user'))
         setUser(localuser)
