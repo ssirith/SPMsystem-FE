@@ -213,13 +213,12 @@ export default function EditRubric(props) {
 				if (response.status === 200) {
 					alert("Edit Success.")
 					navigate("/createassignment")
-					console.log(data)
-					window.location.reload()
+					
 				}
 			} catch (err) {
 				alert("It's not success, Please check your input")
 				console.error(err)
-				console.log(data)
+				
 			}
 
 		}

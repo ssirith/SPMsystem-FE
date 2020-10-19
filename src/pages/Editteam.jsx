@@ -146,7 +146,7 @@ export default function Editteam(props) {
       <div className="row">
         <div className="col-12 my-3">
           <BreadcrumbNavString
-            pastref="/"
+            pastref="/main"
             past="Home"
             current="Edit Project"
           />
@@ -240,7 +240,7 @@ export default function Editteam(props) {
       <div className="col-12 mx-auto">
         <div className="row">
           <div className="col-12 text-center">
-            <Link className='mr-2' to="/">
+            <Link className='mr-2' to="/main">
               <Buttons menu="Cancel"
               />
             </Link>
