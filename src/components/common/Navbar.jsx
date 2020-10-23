@@ -69,13 +69,19 @@ export default function Navbars() {
   }
 
   function sortNotificationStudent(notification) {
+    notification.notification.sort(
+      (a, b) => ((b.notification_id_fk === null) - (a.notification_id_fk=== null)) 
+    )
     notification.notification.sort((a, b) =>
       dayjs(b.created_at).isBefore(a.created_at) ? -1 : 1
     )
     setNotiStudent(notification)
   }
   function sortNotificationTeacher(notification) {
-     
+    //  console.log('in sort tttt')
+    notification.notification.sort(
+      (a, b) => ((b.notification_id_fk === null) - (a.notification_id_fk=== null)) 
+    )
     notification.notification.sort((a, b) =>
       dayjs(b.created_at).isBefore(a.created_at) ? -1 : 1
     )
@@ -83,6 +89,9 @@ export default function Navbars() {
   }
   console.log(notiTeacher)
   function sortNotificationAA(notification) {
+    notification.notification.sort(
+      (a, b) => ((b.notification_id_fk === null) - (a.notification_id_fk=== null)) 
+    )
     notification.notification.sort((a, b) =>
       dayjs(b.created_at).isBefore(a.created_at) ? -1 : 1
     )
