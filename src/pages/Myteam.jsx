@@ -30,7 +30,6 @@ export default function Myteam() {
   const [isOpenwindow, setIsOpenWindow] = useState(true)
   const [checkDepartment, setCheckDepartment] = useState()
   const [isPreFetch, setIsPreFetch] = useState(false)
-  console.log("user", user)
   const fetchData = useCallback(async () => {
     try {
       setIsPreFetch(true)
@@ -40,7 +39,6 @@ export default function Myteam() {
           `http://127.0.0.1:8000/api/group/${user.user_id}`,
           { headers }
         ) //[]http://127.0.0.1:8000/api/projects
-        console.log("group", dat.data)
         setStdGroup(dat.data)
         const { data } = await axios.get(
           `${process.env.REACT_APP_API_BE}/students`,

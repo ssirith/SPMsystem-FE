@@ -10,6 +10,8 @@ export default function DropdownNotiTeacher(props) {
       navigate("/assignments")
     }
   }
+  // console.log("notification",props.notification)
+  // console.log("isOpenNotiStd",props.isOpenNotiStd)
   return (
     <>
       <div className="container m-4">

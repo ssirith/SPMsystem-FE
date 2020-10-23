@@ -34,7 +34,7 @@ export default function Navbars() {
   const fetchData = useCallback(async () => {
     try {
       if (user && user.user_type === "Student") {
-        console.log("fetch function")
+        // console.log("fetch function")
         const response = await axios.get(
           `${process.env.REACT_APP_API_BE}/notification/student/${user.user_id}`,
           { headers }
@@ -75,11 +75,13 @@ export default function Navbars() {
     setNotiStudent(notification)
   }
   function sortNotificationTeacher(notification) {
+     
     notification.notification.sort((a, b) =>
       dayjs(b.created_at).isBefore(a.created_at) ? -1 : 1
     )
     setNotiTeacher(notification)
   }
+  console.log(notiTeacher)
   function sortNotificationAA(notification) {
     notification.notification.sort((a, b) =>
       dayjs(b.created_at).isBefore(a.created_at) ? -1 : 1
