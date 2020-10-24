@@ -14,23 +14,29 @@ export default function CallbackFromSSO(props) {
     accept: "application/json",
   }
   const { user, setUser } = useContext(UserContext)
+
   const fetchUserData = useCallback(async () => {
     const queryParams = queryString.parse(props.location.search)
-    // console.log('queryParams',queryParams)
+    console.log("queryParams", queryParams)
     try {
-      const auth = {
-        auth_code: queryParams.code,
-      }
-      const response = await axios.post(
-        `${process.env.REACT_APP_API_BE}/sso/check-authentication`,
-        auth,
-        { headers }
-      )
-      if (response.status === 200) {
-        setUser(response.data)
-        console.log("user context callback page", response.data)
-        Cookie.set("jwt", response.data.token)
-        navigate("/main")
+      if (queryParams.state === "SPMlogin") {
+        const auth = {
+          auth_code: queryParams.code,
+        }
+        const response = await axios.post(
+          `${process.env.REACT_APP_API_BE}/sso/check-authentication`,
+          auth,
+          { headers }
+        )
+        if (response.status === 200) {
+          setUser(response.data)
+          console.log("user context callback page", response.data)
+          Cookie.set("jwt", response.data.token)
+          navigate("/main")
+        }
+      } else {
+        alert("Something went wrong please contract support")
+        navigate("/")
       }
     } catch (err) {
       alert(err)
