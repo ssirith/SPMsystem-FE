@@ -12,11 +12,11 @@
 }
 .body{
   font-family: 'THSarabunNew'!important;
-  font-size: 24px;
+  font-size: 24px!important;
 }
 .header{
   font-family: 'THSarabunNewBold'!important;
-  font-size: 28px;
+  font-size: 28px!important;
 }
 .App {
   text-align: center;

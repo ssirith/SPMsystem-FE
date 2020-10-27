@@ -56,7 +56,7 @@ export default function Myteam() {
         )
         setGroup(data.data)
       } else if (user&&user.user_type === "AA") {
-        console.log("in if student")
+        // console.log("in if student")
         const data = await axios.get(
           `${process.env.REACT_APP_API_BE}/projects/response/aa/${user.user_id}`,
           { headers }

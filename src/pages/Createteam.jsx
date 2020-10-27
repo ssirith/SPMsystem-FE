@@ -88,7 +88,6 @@ export default function Createteam() {
       if (response.status === 200) {
         alert("Create Success.")
         navigate("/main")
-        window.location.reload()
       }
     } catch (err) {
       alert("It's not success, Please check your input")

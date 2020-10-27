@@ -56,7 +56,7 @@ export default function Announcements() {
           >
             <thead class="thead-primary">
               <tr>
-                <th colSpan="8" style={{ fontSize: "20px" }}>
+                <th colSpan="8" style={{ fontSize: "28px" }}>
                   Annoucements
                 </th>
               </tr>
@@ -101,7 +101,7 @@ export default function Announcements() {
               >
                 <thead class="thead-primary">
                   <tr>
-                    <th colSpan="8" style={{ fontSize: "20px" }}>
+                    <th colSpan="8" style={{ fontSize: "28px" }}>
                       Annoucements
               </th>
                   </tr>
@@ -149,7 +149,7 @@ export default function Announcements() {
               >
                 <thead class="thead-primary">
                   <tr>
-                    <th colSpan="8" style={{ fontSize: "20px" }}>
+                    <th colSpan="8" style={{ fontSize: "28px" }}>
                       Annoucements
                </th>
                   </tr>

@@ -27,14 +27,29 @@ export default function ModalComponentMember(props) {
   const { id } = useParams()
   const fetchData = useCallback(async () => {
     setIsPreFetch(true)
-    if (settingContext.student_one_more_group === false) {//false 0
-      const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/projects/${id}`,{headers})
-      const all = await axios.get(`${process.env.REACT_APP_API_BE}/students/nogroup`,{headers})
+    if (settingContext.student_one_more_group === false) {
+      //false 0
+      const {
+        data,
+      } = await axios.get(`${process.env.REACT_APP_API_BE}/projects/${id}`, {
+        headers,
+      })
+      const all = await axios.get(
+        `${process.env.REACT_APP_API_BE}/students/nogroup`,
+        { headers }
+      )
       setStudents(all.data) //{group[{},{},{},project{},teacher{[],}]
       setSave(data.group)
-    } else if (settingContext.student_one_more_group === true) {//true 1
-      const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/projects/${id}`,{headers})
-      const all = await axios.get(`${process.env.REACT_APP_API_BE}/students`,{headers})
+    } else if (settingContext.student_one_more_group === true) {
+      //true 1
+      const {
+        data,
+      } = await axios.get(`${process.env.REACT_APP_API_BE}/projects/${id}`, {
+        headers,
+      })
+      const all = await axios.get(`${process.env.REACT_APP_API_BE}/students`, {
+        headers,
+      })
       setStudents(all.data) //{group[{},{},{},project{},teacher{[],}]
       setSave(data.group)
     }
@@ -50,28 +65,34 @@ export default function ModalComponentMember(props) {
     const temp = [...students] // จำลองค่า students เพื่อไม่ให้เกิดการเปลี่ยนแปลงโดยตรงที่ students
     if (save) {
       for (let i = 0; i < save.length; i++) {
-        const index = temp.findIndex(temp => temp.student_id === save[i].student_id)
+        const index = temp.findIndex(
+          (temp) => temp.student_id === save[i].student_id
+        )
         if (index > -1) {
           temp.splice(index, 1)
         }
       }
     }
-    const filterUser = temp.findIndex(temp => temp.student_id === user.user_id)
+    const filterUser = temp.findIndex(
+      (temp) => temp.student_id === user.user_id
+    )
     if (filterUser > -1) {
       temp.splice(filterUser, 1)
     }
     setIsFilter(
       temp.filter(
-        std => std.student_name.toLowerCase().includes(search.toLowerCase()) || std.student_id.includes(search))
+        (std) =>
+          std.student_name.toLowerCase().includes(search.toLowerCase()) ||
+          std.student_id.includes(search)
+      )
     )
-
   }, [search, students, save])
 
-  function updateInput(e) { //เอาค่าที่แอดไปแสดง
+  function updateInput(e) {
+    //เอาค่าที่แอดไปแสดง
     setSave([...save, e])
     setSearch("")
   }
-
 
   function deleteMember(value) {
     const result = save
@@ -79,7 +100,7 @@ export default function ModalComponentMember(props) {
     if (index > -1) {
       result.splice(index, 1)
     }
-    setSave([...result])//สมาชิกที่เหลือหลังจากลบออก
+    setSave([...result]) //สมาชิกที่เหลือหลังจากลบออก
   }
 
   async function handleSubmit() {
@@ -89,11 +110,14 @@ export default function ModalComponentMember(props) {
         window.location.reload()
       }, 1000)
     }
-
   }
-  function disSubmit() { //ฟังก์ชันเพื่อไม่ให้สามารถกดปุ่ม  submit ได้ ถ้าแอดเกินที่กำหนด
+  function disSubmit() {
+    //ฟังก์ชันเพื่อไม่ให้สามารถกดปุ่ม  submit ได้ ถ้าแอดเกินที่กำหนด
     if (save) {
-      if (save.length < settingContext.number_of_member_min - 1 || save.length > settingContext.number_of_member_max - 1) {
+      if (
+        save.length < settingContext.number_of_member_min - 1 ||
+        save.length > settingContext.number_of_member_max - 1
+      ) {
         return (
           <Button variant="contained" disabled>
             {" "}
@@ -120,15 +144,14 @@ export default function ModalComponentMember(props) {
   }
 
   return (
-    
     <Modal
       show={props.isOpen}
       onHide={() => {
         props.setIsOpen(false)
       }}
-      scrollable='true'
+      scrollable="true"
     >
-      {console.log('std',students)}
+      {console.log("std", students)}
       <Modal.Header closeButton>
         <Modal.Title>{props.header}</Modal.Title>
       </Modal.Header>
@@ -141,7 +164,7 @@ export default function ModalComponentMember(props) {
         />
 
         <table className="table table-striped">
-          <tbody style={{cursor: 'pointer'}}>
+          <tbody style={{ cursor: "pointer" }}>
             {isFilter.map((ads, idx) => (
               <tr key={idx} onClick={() => updateInput(ads)}>
                 <td>{ads.student_id}</td>
@@ -150,33 +173,34 @@ export default function ModalComponentMember(props) {
             ))}
           </tbody>
         </table>
-
       </Modal.Body>
-      <Modal.Footer>
-        <div className="container">
-          <div className="row my-2" >
-            <div className="col-4">{user.user_id}</div>
-            <div className="col-4">{user.name}</div>
+      {user && (
+        <Modal.Footer>
+          <div className="container">
+            <div className="row my-2">
+              <div className="col-4">{user.user_id}</div>
+              <div className="col-4">{user.name}</div>
+            </div>
+            &nbsp;
+            {save &&
+              save.map((data, index) => {
+                return (
+                  <div className="row my-2" key={index}>
+                    <div className="col-4">{data.student_id}</div>
+                    <div className="col-4">{data.student_name}</div>
+                    <button
+                      className="btn btn-danger"
+                      onClick={() => deleteMember(data)}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                )
+              })}
           </div>
-          &nbsp;
-          {save &&
-            save.map((data, index) => {
-              return (
-                <div className="row my-2" key={index}>
-                  <div className="col-4">{data.student_id}</div>
-                  <div className="col-4">{data.student_name}</div>
-                  <button
-                    className="btn btn-danger"
-                    onClick={() => deleteMember(data)}
-                  >
-                    Delete
-                  </button>
-                </div>
-              )
-            })}
-        </div>
-        {disSubmit()}
-      </Modal.Footer>
+          {disSubmit()}
+        </Modal.Footer>
+      )}
     </Modal>
   )
 }

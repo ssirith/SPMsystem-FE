@@ -20,6 +20,7 @@ export default function Carditem(props) {
   // console.log(props.groups.project_id.length)//DSI-5 IT-4
   return (
     <>
+    {console.log('psrops group ',props.groups)}
       {/* <div>
         <Card className={classes.root}>
           <CardHeader
@@ -47,7 +48,7 @@ export default function Carditem(props) {
               <div className="text-center">
                 <p className="m-0">{props.groups.project_name}</p>
                 {props.groups.project_detail &&
-                  (props.groups.project_detail.length === 0 ? <></> : <p>{props.groups.project_detail.substring(0, 80) + "..."}</p>)
+                  (props.groups.project_detail.length != null ? <p>{props.groups.project_detail.substring(0, 80) + "..."}</p> : <p>-No Detail-</p>)
                 }
 
                 {props.groups.teachers &&

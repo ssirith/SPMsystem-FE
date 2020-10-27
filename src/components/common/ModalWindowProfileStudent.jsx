@@ -118,7 +118,7 @@ export default function ModalWindowProfile(props) {
   }
   function disSave() {
     if (department || checkDepartment) {
-      return (<button className="btn btn-primary" onClick={() => handleSave()}>SAVE</button>)
+      return (<button className="btn btn-primary px-3" onClick={() => handleSave()}>SAVE</button>)
     } else {
       return (<Button variant="contained" disabled>
         {" "}

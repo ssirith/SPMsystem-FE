@@ -136,7 +136,7 @@ export default function ModalWindowProfileProfileTeacher(props) {
                             <div className="col-12 text-center">
                                 <button className="btn btn-danger" onClick={() => props.setIsOpen(false)}>Cancel</button>
                                 {" "}
-                                <button className="btn btn-primary" onClick={() => handleSave()}>Save</button>
+                                <button className="btn btn-primary px-3" onClick={() => handleSave()}>Save</button>
                             </div>
                         </div>
                     </div>
