@@ -198,7 +198,6 @@ export default function Createteam() {
             <Buttons
               menu="Create"
               color="primary"
-              onClick={() => console.log("save")}
               onClick={(event) => handleSubmit(event)}
             />
 

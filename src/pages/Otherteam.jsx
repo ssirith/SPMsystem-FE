@@ -18,18 +18,18 @@ export default function Otherteam(props) {
   const headers = {
     Authorization: `Bearer ${Cookie.get("jwt")}`,
     "Content-Type": "application/json",
-    accept: "application/json",  
+    accept: "application/json",
   }
   const { user, setUser } = useContext(UserContext)
   // const userBeforeParse=JSON.parse(localStorage.getItem('user'))
   // const  [user, setUser ] = useState(userBeforeParse)
-  const [isPrefetch,setIsPreFetch]=useState(false)
+  const [isPrefetch, setIsPreFetch] = useState(false)
   const { id } = useParams()
   const [group, setGroup] = useState({})
   const fetchData = useCallback(async () => {
     setIsPreFetch(true)
     const data = await axios.get(
-      `${process.env.REACT_APP_API_BE}/projects/${id}`,{headers}
+      `${process.env.REACT_APP_API_BE}/projects/${id}`, { headers }
     )
     setGroup(data.data)
     setIsPreFetch(false)
@@ -37,8 +37,8 @@ export default function Otherteam(props) {
   useEffect(() => {
     fetchData()
   }, [])
-  if(isPrefetch){
-    return<><Loading open={isPrefetch}/></>
+  if (isPrefetch) {
+    return <><Loading open={isPrefetch} /></>
   }
   return (
     <div className="container">
@@ -77,28 +77,40 @@ export default function Otherteam(props) {
       <div className="col-12 mx-auto">
         <div className="row">
           <div className="col-12 text-center">
-            {user&&user.user_type == "AA" ? (
-              <Link to="/allprojects">
-                <Buttons
-                  menu="Back"
-                />
-              </Link>
-            ) : (
-              <Link to="/allprojects">
-                <Buttons
-                  menu="Back"
-                /> 
-              </Link>
-            )}
+            {user && user.user_type == "AA" ? (
+              <>
 
-            {user&&user.user_type == "AA" && (
+                <Link to="/allprojects">
+                  <Buttons
+                    menu="Back"
+                  />
+                </Link>
+                <Link to={`/editteam/${id}`} className="mx-2">
+                  <Buttons menu="Edit" color="primary" />
+                </Link>
+                <br />
+              </>
+
+            ) : (
+                <>
+                  <Link to="/allprojects">
+                    <Buttons
+                      menu="Back"
+                    />
+                  </Link>
+                  <br />
+                </>
+              )}
+
+            {/* {user && user.user_type == "AA" && (
               <Link to={`/editteam/${id}`} className="mx-2">
-                <Buttons menu="Edit" color = "primary" />
+                <Buttons menu="Edit" color="primary" />
               </Link>
-            )}
+            )} */}
           </div>
         </div>
       </div>
+      <br />
     </div>
   )
 }

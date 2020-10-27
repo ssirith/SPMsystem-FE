@@ -177,9 +177,9 @@ export default function ModalComponentMember(props) {
       {user && (
         <Modal.Footer>
           <div className="container">
-            <div className="row my-2">
+            <div className="row">
               <div className="col-4">{user.user_id}</div>
-              <div className="col-4">{user.name}</div>
+              <div style={{ marginLeft: 15 }}>{user.name}</div>
             </div>
             &nbsp;
             {save &&
@@ -187,13 +187,17 @@ export default function ModalComponentMember(props) {
                 return (
                   <div className="row my-2" key={index}>
                     <div className="col-4">{data.student_id}</div>
-                    <div className="col-4">{data.student_name}</div>
+                    <div className="col-4">
+                      {data.student_name && data.student_name.length > 11 ? (data.student_name.substring(0, 10) + "...") : (data.student_name)}
+                    </div>
+                    <div style={{ height: "20px", width: "50px", textAlign: "center" }}>
                     <button
                       className="btn btn-danger"
                       onClick={() => deleteMember(data)}
                     >
                       Delete
                     </button>
+                    </div>
                   </div>
                 )
               })}

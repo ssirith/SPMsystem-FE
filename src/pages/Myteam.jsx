@@ -205,33 +205,31 @@ export default function Myteam() {
       )}
       {user && user.user_type == "AA" && (
         <>
+        {group && group.length > 0 ? (
           <div className="container">
             <div className="row mt-5">
-              {group && group.length > 0 ? (
-                <div className="container">
-                  {group.map((data, index) => {
-                    return (
-                      <div className="col-3 m-3" key={index}>
-                        <Carditem groups={data} />
-                      </div>
-                    )
-                  })}
-                </div>
-              ) : (
-                <div className="container text-center my-auto">
-                  <img
-                    src="/image/myproject.jpg"
-                    alt="Dashboard logo"
-                    className="img-fluid"
-                    width="50%"
-                    height="auto"
-                  />
-                  <p>Oops, you don't have any project.</p>
-                </div>
-              )}
+              {group.map((data, index) => {
+                return (
+                  <div className="col-3 m-3" key={index}>
+                    <Carditem groups={data} />
+                  </div>
+                )
+              })}
             </div>
           </div>
-        </>
+        ) : (
+          <div className="container text-center my-auto">
+            <img
+              src="/image/myproject.jpg"
+              alt="Dashboard logo"
+              className="img-fluid"
+              width="50%"
+              height="auto"
+            />
+            <p>Oops, you don't have any project.</p>
+          </div>
+        )}
+      </>
       )}
     </>
   )

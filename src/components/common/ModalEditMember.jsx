@@ -28,13 +28,13 @@ export default function ModalEditMember(props) {
   const fetchData = useCallback(async () => {
     setIsPreFetch(true)
     if (settingContext.student_one_more_group === false) {//false 0
-      const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/projects/${id}`,{headers})
-      const all = await axios.get(`${process.env.REACT_APP_API_BE}/students/nogroup`,{headers})
+      const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/projects/${id}`, { headers })
+      const all = await axios.get(`${process.env.REACT_APP_API_BE}/students/nogroup`, { headers })
       setStudents(all.data) //{group[{},{},{},project{},teacher{[],}]
       setSave(data.group)
     } else if (settingContext.student_one_more_group === true) {//true 1
-      const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/projects/${id}`,{headers})
-      const all = await axios.get(`${process.env.REACT_APP_API_BE}/students`,{headers})
+      const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/projects/${id}`, { headers })
+      const all = await axios.get(`${process.env.REACT_APP_API_BE}/students`, { headers })
       setStudents(all.data) //{group[{},{},{},project{},teacher{[],}]
       setSave(data.group)
     }
@@ -143,7 +143,7 @@ export default function ModalEditMember(props) {
         />
 
         <table className="table table-striped">
-          <tbody style={{cursor: 'pointer'}}>
+          <tbody style={{ cursor: 'pointer' }}>
             {isFilter && isFilter.map((ads, idx) => (
               <tr key={idx} onClick={() => updateInput(ads)}>
                 <td>{ads.student_id}</td>
@@ -160,30 +160,37 @@ export default function ModalEditMember(props) {
             <div className="col-4">{user.user_id}</div>
             <div className="col-4">{user.name}</div>
           </div>
-          <br /> */}
+          <br />substring(0, 10) + "..." */ }
           {save &&
             save.map((data, index) => {
               return (
                 <div className="row my-2" key={index}>
                   <div className="col-4">{data.student_id}</div>
-                  <div className="col-4">{data.student_name}</div>
+                  <div className="col-4">
+                    {data.student_name&&data.student_name.length >11 ?(data.student_name.substring(0, 10) + "..."):(data.student_name)}
+                  </div>
                   {data.student_id !== user.user_id ?
-                    <button
-                      className="btn btn-danger"
-                      onClick={() => deleteMember(data)}
-                    >
-                      Delete
+                    <div style={{ height: "20px", width: "50px", textAlign: "center" }}>
+                      <button
+
+                        className="btn btn-danger"
+                        onClick={() => deleteMember(data)}
+                      >
+                        Delete
                 </button>
-                :<></>
+                    </div>
+                    : 
+                    <>
+                    </>
                   }
-                  <br/>
-                  <br/>  
+                  <br />
+                  <br />
                 </div>
-                
+
               )
             })
-            }
-            
+          }
+
         </div>
         {disSubmit()}
       </Modal.Footer>

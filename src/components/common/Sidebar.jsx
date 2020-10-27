@@ -16,7 +16,7 @@ export default function Sidebar(props) {
   // const  [user, setUser ] = useState(userBeforeParse)
   return (
     <>
-      {user&&user.user_type == "Student" && (
+      {user && user.user_type == "Student" && (
         <nav className="col-md-2 d-none d-md-block bg-light sidebar min-vh-100 p-0">
           <div className="sidebar-sticky">
             <div className="container">
@@ -34,57 +34,65 @@ export default function Sidebar(props) {
             </div>
             <ul className="nav flex-column mb-2">
               <li
-                className={`nav-item ${
-                  props.statusbar === 1 ? "bg-white" : "bg-light"
+                className={`nav-item ${props.statusbar === 1 ? "bg-white" : "bg-light"
                   } rounded`}
               >
                 <Link to="/main">
                   <div className="nav-link">
                     <ListItemIcon className='ml-3' >
                       <Group />
-                      <p className="mb-0 ml-4 text">My Project</p>
+                      {
+                        props.statusbar === 1 ? <p className="mb-0 ml-4 text" style={{ fontWeight: 'bold' }}>My Project</p> : <p className="mb-0 ml-4 text">My Project</p>
+                      }
+
                     </ListItemIcon>
                   </div>
                 </Link>
               </li>
               <li
-                className={`nav-item ${
-                  props.statusbar === 2 ? "bg-white" : "bg-light"
+                className={`nav-item ${props.statusbar === 2 ? "bg-white" : "bg-light"
                   } rounded`}
               >
                 <Link to="/allprojects">
                   <div className="nav-link">
                     <ListItemIcon>
                       <Business className='ml-3' />
-                      <p className="mb-0 ml-4 text">All Projects</p>
+                      {
+                        props.statusbar === 2 ? <p className="mb-0 ml-4 text"  style={{ fontWeight: 'bold' }}>All Projects</p> : <p className="mb-0 ml-4 text">All Projects</p>
+                      }
+                      
                     </ListItemIcon>
                   </div>
                 </Link>
               </li>
               <li
-                className={`nav-item ${
-                  props.statusbar === 3 ? "bg-white" : "bg-light"
+                className={`nav-item ${props.statusbar === 3 ? "bg-white" : "bg-light"
                   } rounded`}
               >
                 <Link to="/assignments">
                   <div className="nav-link">
                     <ListItemIcon>
                       <Assignment className='ml-3' />
-                      <p className="mb-0 ml-4 text">Assignments</p>
+                      {
+                        props.statusbar === 3 ? <p className="mb-0 ml-4 text"  style={{ fontWeight: 'bold' }}>Assignments</p> : <p className="mb-0 ml-4 text">Assignments</p>
+                      }
+                      
                     </ListItemIcon>
                   </div>
                 </Link>
               </li>
               <li
-                className={`nav-item ${
-                  props.statusbar === 5 ? "bg-white" : "bg-light"
+                className={`nav-item ${props.statusbar === 5 ? "bg-white" : "bg-light"
                   } rounded`}
               >
                 <Link to="/announcements">
                   <div className="nav-link">
                     <ListItemIcon>
                       <Speaker className='ml-3' />
-                      <p className="mb-0 ml-4 text">Annoucement</p>
+                      {
+                        props.statusbar === 5 ? <p className="mb-0 ml-4 text"  style={{ fontWeight: 'bold' }}>Annoucement</p> : <p className="mb-0 ml-4 text">Annoucement</p>
+                      }
+                      
                     </ListItemIcon>
                   </div>
                 </Link>
@@ -94,13 +102,13 @@ export default function Sidebar(props) {
         </nav>
       )}
 
-      {user&&user.user_type == "Teacher" && (
+      {user && user.user_type == "Teacher" && (
         <nav className="col-md-2 d-none d-md-block bg-light sidebar min-vh-100 p-0">
           <div className="sidebar-sticky">
             <div className="container">
               <div className="row">
                 <div className="mx-auto mt-5 mb-2">
-                  <Avatar alt={user.user_name}  src={`http://127.0.0.1:8000/storage/images/${user.user_id}.jpg`} />
+                  <Avatar alt={user.user_name} src={`http://127.0.0.1:8000/storage/images/${user.user_id}.jpg`} />
                 </div>
               </div>
               <div className="row">
@@ -111,79 +119,83 @@ export default function Sidebar(props) {
                   <div className='row justify-content-center'>
                     <p >{user.user_type}</p>
                   </div>
-                  
+
                 </div>
               </div>
             </div>
             <ul className="nav flex-column mb-2">
               <li
-                className={`nav-item ${
-                  props.statusbar === 1 ? "bg-white" : "bg-light"
+                className={`nav-item ${props.statusbar === 1 ? "bg-white" : "bg-light"
                   } rounded`}
               >
                 <Link to="/main">
                   <div className="nav-link">
                     <ListItemIcon>
                       <Group className='ml-3' />
-                      <p className="mb-0 ml-4 text">My Project</p>
+                      {
+                        props.statusbar === 1 ? <p className="mb-0 ml-4 text" style={{ fontWeight: 'bold' }}>My Project</p> : <p className="mb-0 ml-4 text">My Project</p>
+                      }
                     </ListItemIcon>
                   </div>
                 </Link>
               </li>
               <li
-                class={`nav-item ${
-                  props.statusbar === 2 ? "bg-white" : "bg-light"
+                class={`nav-item ${props.statusbar === 2 ? "bg-white" : "bg-light"
                   } rounded`}
               >
                 <Link to="/allprojects">
                   <div className="nav-link">
                     <ListItemIcon>
                       <Business className='ml-3' />
-                      <p className="mb-0 ml-4 text">All Projects</p>
+                      {
+                        props.statusbar === 2 ? <p className="mb-0 ml-4 text"  style={{ fontWeight: 'bold' }}>All Projects</p> : <p className="mb-0 ml-4 text">All Projects</p>
+                      }
                     </ListItemIcon>
                   </div>
                 </Link>
               </li>
               <li
-                className={`nav-item ${
-                  props.statusbar === 3 ? "bg-white" : "bg-light"
+                className={`nav-item ${props.statusbar === 3 ? "bg-white" : "bg-light"
                   } rounded`}
               >
                 <Link to="/assignments">
                   <div className="nav-link">
                     <ListItemIcon>
                       <Assignment className='ml-3' />
-                      <p className="mb-0 ml-4 text">Assignments</p>
+                      {
+                        props.statusbar === 3 ? <p className="mb-0 ml-4 text"  style={{ fontWeight: 'bold' }}>Assignments</p> : <p className="mb-0 ml-4 text">Assignments</p>
+                      }
                     </ListItemIcon>
                   </div>
                 </Link>
               </li>
               <li
-                className={`nav-item ${
-                  props.statusbar === 5 ? "bg-white" : "bg-light"
+                className={`nav-item ${props.statusbar === 5 ? "bg-white" : "bg-light"
                   } rounded`}
               >
                 <Link to="/announcements">
                   <div className="nav-link">
                     <ListItemIcon>
                       <Speaker className='ml-3' />
-                      <p className="mb-0 ml-4 text">Annoucement</p>
+                      {
+                        props.statusbar === 5 ? <p className="mb-0 ml-4 text"  style={{ fontWeight: 'bold' }}>Annoucement</p> : <p className="mb-0 ml-4 text">Annoucement</p>
+                      }
                     </ListItemIcon>
                   </div>
                 </Link>
               </li>
-              
+
             </ul>
           </div>
         </nav>
       )}
-      {user&&user.user_type === "AA" && (
+      {user && user.user_type === "AA" && (
         <nav className="col-md-2 d-none d-md-block bg-light sidebar min-vh-100 p-0">
           <div className="sidebar-sticky">
             <div className="container">
               <div className="row">
                 <div className="mx-auto mt-5 mb-2">
-                  <Avatar alt={user.user_name}  src={`http://127.0.0.1:8000/storage/images/${user.user_id}.jpg`} />
+                  <Avatar alt={user.user_name} src={`http://127.0.0.1:8000/storage/images/${user.user_id}.jpg`} />
                 </div>
               </div>
               <div className="row">
@@ -195,57 +207,62 @@ export default function Sidebar(props) {
             </div>
             <ul className="nav flex-column mb-2">
               <li
-                className={`nav-item ${
-                  props.statusbar === 1 ? "bg-white" : "bg-light"
+                className={`nav-item ${props.statusbar === 1 ? "bg-white" : "bg-light"
                   } rounded`}
               >
                 <Link to="/main">
                   <div className="nav-link">
                     <ListItemIcon>
                       <Business className='ml-3' />
-                      <p className="mb-0 ml-4 text">All Projects</p>
+                      {
+                        props.statusbar === 1 ? <p className="mb-0 ml-4 text"  style={{ fontWeight: 'bold' }}>All Projects</p> : <p className="mb-0 ml-4 text">All Projects</p>
+                      }
                     </ListItemIcon>
                   </div>
                 </Link>
               </li>
               <li
-                className={`nav-item ${
-                  props.statusbar === 3 ? "bg-white" : "bg-light"
+                className={`nav-item ${props.statusbar === 3 ? "bg-white" : "bg-light"
                   } rounded`}
               >
                 <Link to="/assignments">
                   <div className="nav-link">
                     <ListItemIcon>
                       <Assignment className='ml-3' />
-                      <p className="mb-0 ml-4 text">Assignments</p>
+                      {
+                        props.statusbar === 3 ? <p className="mb-0 ml-4 text"  style={{ fontWeight: 'bold' }}>Assignments</p> : <p className="mb-0 ml-4 text">Assignments</p>
+                      }
                     </ListItemIcon>
                   </div>
                 </Link>
               </li>
               <li
-                className={`nav-item ${
-                  props.statusbar === 5 ? "bg-white" : "bg-light"
+                className={`nav-item ${props.statusbar === 5 ? "bg-white" : "bg-light"
                   } rounded`}
               >
                 <Link to="/announcements">
                   <div className="nav-link">
                     <ListItemIcon>
                       <Speaker className='ml-3' />
-                      <p className="mb-0 ml-4 text">Annoucement</p>
+                      {
+                        props.statusbar === 5 ? <p className="mb-0 ml-4 text"  style={{ fontWeight: 'bold' }}>Annoucement</p> : <p className="mb-0 ml-4 text">Annoucement</p>
+                      }
                     </ListItemIcon>
                   </div>
                 </Link>
               </li>
               <li
-                className={`nav-item ${
-                  props.statusbar === 6 ? "bg-white" : "bg-light"
+                className={`nav-item ${props.statusbar === 6 ? "bg-white" : "bg-light"
                   } rounded`}
               >
                 <Link to="/Setting">
                   <div className="nav-link">
                     <ListItemIcon>
                       <SettingsIcon className='ml-3' />
-                      <p className="mb-0 ml-4 text">Setting</p>
+                      {
+                        props.statusbar === 6 ? <p className="mb-0 ml-4 text"  style={{ fontWeight: 'bold' }}>Setting</p> : <p className="mb-0 ml-4 text">Setting</p>
+                      }
+                      
                     </ListItemIcon>
                   </div>
                 </Link>

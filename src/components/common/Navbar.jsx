@@ -89,7 +89,7 @@ export default function Navbars() {
     )
     setNotiTeacher(notification)
   }
-  console.log(notiTeacher)
+  // console.log(notiTeacher)
   function sortNotificationAA(notification) {
     notification.notification.sort(
       (a, b) =>
@@ -206,14 +206,16 @@ export default function Navbars() {
   }
   return (
     <>
-      {console.log("noti std", notiStudent)}
+      {/* {console.log("noti std", notiStudent)} */}
       {user && user.user_type === "Student" && (
+        // <Navbar style={{ border: "red 1px solid" }}>
         <Navbar className="navbar navbar-dark sticky-top bg flex-md-nowrap p-0 ">
-          <div style={{ marginLeft: 25, marginTop: 7 }}>
+          <div style={{ marginLeft: 30 }}>
             <Link to="/main">
-              <p className="header navbar-brand col-sm-3 col-md-2 p-0 ml-3 mt-3">
-                <h1> SPM System </h1>
-              </p>
+              <div className="header navbar-brand col-sm-3 col-md-2 p-0 ml-3 mt-3" >
+                {/* <div className="header navbar-brand col-sm-3 col-md-2 p-0 ml-3 mt-3"> */}
+                <h2>SPM System</h2>
+              </div>
             </Link>
           </div>
           <Nav className="mr-auto"></Nav>
@@ -282,11 +284,12 @@ export default function Navbars() {
       )}
       {user && user.user_type === "Teacher" && (
         <Navbar className="navbar navbar-dark sticky-top bg flex-md-nowrap p-0 ">
-          <div style={{ marginLeft: 25, marginTop: 7 }}>
+          <div style={{ marginLeft: 30 }}>
             <Link to="/main">
-              <p className="header navbar-brand col-sm-3 col-md-2 p-0 ml-3 mt-3">
-                <h1>SPM System</h1>
-              </p>
+              <div className="header navbar-brand col-sm-3 col-md-2 p-0 ml-3 mt-3" >
+                {/* <div className="header navbar-brand col-sm-3 col-md-2 p-0 ml-3 mt-3"> */}
+                <h2>SPM System</h2>
+              </div>
             </Link>
           </div>
           <Nav className="mr-auto"></Nav>
@@ -355,15 +358,16 @@ export default function Navbars() {
       )}
       {user && user.user_type === "AA" && (
         <Navbar className="navbar navbar-dark sticky-top bg flex-md-nowrap p-0 ">
-          <div style={{ marginLeft: 25, marginTop: 7 }}>
-            <Link to="/main">
-              <p className="header navbar-brand col-sm-3 col-md-2 p-0 ml-3 mt-3">
-                <h1>SPM System</h1>
-              </p>
-            </Link>
-          </div>
-          <Nav className="mr-auto"></Nav>
-          <Nav>
+        <div style={{ marginLeft: 30 }}>
+          <Link to="/main">
+            <div className="header navbar-brand col-sm-3 col-md-2 p-0 ml-3 mt-3" >
+              {/* <div className="header navbar-brand col-sm-3 col-md-2 p-0 ml-3 mt-3"> */}
+              <h2>SPM System</h2>
+            </div>
+          </Link>
+        </div>
+        <Nav className="mr-auto"></Nav>
+        <Nav>
             <div style={{ marginRight: 42 }}>
               <ul className="navbar-nav px-3">
                 <div style={{ marginTop: 7 }}>
