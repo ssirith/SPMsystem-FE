@@ -70,7 +70,8 @@ export default function Navbars() {
 
   function sortNotificationStudent(notification) {
     notification.notification.sort(
-      (a, b) => ((b.notification_id_fk === null) - (a.notification_id_fk=== null)) 
+      (a, b) =>
+        (b.notification_id_fk === null) - (a.notification_id_fk === null)
     )
     notification.notification.sort((a, b) =>
       dayjs(b.created_at).isBefore(a.created_at) ? -1 : 1
@@ -80,7 +81,8 @@ export default function Navbars() {
   function sortNotificationTeacher(notification) {
     //  console.log('in sort tttt')
     notification.notification.sort(
-      (a, b) => ((b.notification_id_fk === null) - (a.notification_id_fk=== null)) 
+      (a, b) =>
+        (b.notification_id_fk === null) - (a.notification_id_fk === null)
     )
     notification.notification.sort((a, b) =>
       dayjs(b.created_at).isBefore(a.created_at) ? -1 : 1
@@ -90,7 +92,8 @@ export default function Navbars() {
   console.log(notiTeacher)
   function sortNotificationAA(notification) {
     notification.notification.sort(
-      (a, b) => ((b.notification_id_fk === null) - (a.notification_id_fk=== null)) 
+      (a, b) =>
+        (b.notification_id_fk === null) - (a.notification_id_fk === null)
     )
     notification.notification.sort((a, b) =>
       dayjs(b.created_at).isBefore(a.created_at) ? -1 : 1
@@ -281,8 +284,8 @@ export default function Navbars() {
         <Navbar className="navbar navbar-dark sticky-top bg flex-md-nowrap p-0 ">
           <div style={{ marginLeft: 25, marginTop: 7 }}>
             <Link to="/main">
-              <p className="navbar-brand col-sm-3 col-md-2 p-0 ml-3 mt-3">
-                SPM System
+              <p className="header navbar-brand col-sm-3 col-md-2 p-0 ml-3 mt-3">
+                <h1>SPM System</h1>
               </p>
             </Link>
           </div>
@@ -354,8 +357,8 @@ export default function Navbars() {
         <Navbar className="navbar navbar-dark sticky-top bg flex-md-nowrap p-0 ">
           <div style={{ marginLeft: 25, marginTop: 7 }}>
             <Link to="/main">
-              <p className="navbar-brand col-sm-3 col-md-2 p-0 ml-3 mt-3">
-                SPM System
+              <p className="header navbar-brand col-sm-3 col-md-2 p-0 ml-3 mt-3">
+                <h1>SPM System</h1>
               </p>
             </Link>
           </div>
