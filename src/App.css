@@ -62,7 +62,7 @@
   border-color: #336699 !important;
 }
 .btn-danger {
-  color: #fff;
+  color: #fff!important;
   background-color: #eb5757 !important;
   border-color: #eb5757 !important;
 }
