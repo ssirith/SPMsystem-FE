@@ -20,7 +20,7 @@ export default function Carditem(props) {
   // console.log(props.groups.project_id.length)//DSI-5 IT-4
   return (
     <>
-    {console.log('psrops group ',props.groups)}
+      {console.log('psrops group ', props.groups)}
       {/* <div>
         <Card className={classes.root}>
           <CardHeader
@@ -36,10 +36,9 @@ export default function Carditem(props) {
       </div> */}
 
       <div>
-        <Card style={{ width: "18rem", height: "14rem" }}>
+        <Card style={{ width: "18rem", height: "15rem" }}>
           <Card.Header>
-            {`${
-              props.groups.project_department
+            {`${props.groups.project_department
               }60-${props.groups.project_id && (props.groups.project_id.length > 4 ?
                 (props.groups.project_id.substring(3)) : (props.groups.project_id.substring(2)))}`}
           </Card.Header>
@@ -47,19 +46,19 @@ export default function Carditem(props) {
             <Card.Text>
               <div className="text-center">
                 <p className="m-0">{props.groups.project_name}</p>
-                {props.groups.project_detail &&
-                  (props.groups.project_detail.length != null ? <p>{props.groups.project_detail.substring(0, 80) + "..."}</p> : <p>-No Detail-</p>)
-                }
+                {props.groups.project_detail === null ?
+                  <p className="my-0">-No Detail-</p> : <p className="my-0">{props.groups.project_detail.substring(0, 80) + "..."}</p>}
 
                 {props.groups.teachers &&
                   (props.groups.teachers.length === 0
-                    ? "No Advisor"
+                    ? <p className="my-0">No Advisor</p>
                     : props.groups.teachers.map((a, index) => {
                       return <p className="my-0">Advisor: {a.teacher_name}</p>
                     }))}
               </div>
             </Card.Text>
           </Card.Body>
+
           <Card.Link href={`/projects/${props.groups.project_id}`} className='d-flex justify-content-end m-2'>
             <Button size="small" color="primary">
               More
