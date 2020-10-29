@@ -40,7 +40,7 @@ function App() {
     [settingContext, setSettingContext]
   )
   // const { user, setUser } = useContext(UserContext) 
-  const [user, setUser] = useState({})
+  const [user, setUser] = useState(null)
   
   
     // id: "1", 

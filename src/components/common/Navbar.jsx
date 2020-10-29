@@ -59,7 +59,7 @@ export default function Navbars() {
   }, [])
   useEffect(() => {
     fetchData()
-  }, [user])
+  }, [])
 
   function logOut() {
     localStorage.removeItem("user")
