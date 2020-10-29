@@ -52,19 +52,19 @@ export default function Carditem(props) {
                 <p className="m-0">{props.groups.project_name}</p>
                 {props.groups.project_detail ? (
                   props.groups.project_detail === null ? (
-                    <p className="my-0">-No Detail-</p>
+                    <p className="my-0 grey">-No Detail-</p>
                   ) : (
                     <p className="my-0">
                       {props.groups.project_detail.substring(0, 80) + "..."}
                     </p>
                   )
                 ) : (
-                  <p className="my-0">-No Detail-</p>
+                  <p className="my-0 grey">-No Detail-</p>
                 )}
 
                 {props.groups.teachers &&
                   (props.groups.teachers.length === 0 ? (
-                    <p className="my-0">No Advisor</p>
+                    <p className="my-0 grey">-No Advisor-</p>
                   ) : (
                     props.groups.teachers.map((a, index) => {
                       return <p className="my-0">Advisor: {a.teacher_name}</p>
