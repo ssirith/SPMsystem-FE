@@ -6,6 +6,7 @@ import axios from "axios"
 import { navigate } from "@reach/router"
 import { useContext } from "react"
 import { UserContext } from "../UserContext"
+import Loading from "../components/common/Loading"
 
 export default function CallbackFromSSO(props) {
   const headers = {
@@ -47,9 +48,5 @@ export default function CallbackFromSSO(props) {
     fetchUserData()
   }, [fetchUserData])
 
-  return (
-    <div className="text-center vh-100">
-      <h1 className="my-auto">CHECKING......</h1>
-    </div>
-  )
+  return <Loading open={true} />
 }
