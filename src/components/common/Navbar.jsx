@@ -27,9 +27,9 @@ export default function Navbars() {
   const { user, setUser } = useContext(UserContext)
   const [isOpenWindow, setIsOpenWindow] = useState(false)
   const [isOpenNotiStd, setIsOpenNotiStd] = useState(false)
-  const [notiStudent, setNotiStudent] = useState({})
-  const [notiTeacher, setNotiTeacher] = useState({})
-  const [notiAA, setNotiAA] = useState({})
+  const [notiStudent, setNotiStudent] = useState([])
+  const [notiTeacher, setNotiTeacher] = useState([])
+  const [notiAA, setNotiAA] = useState([])
 
   const fetchData = useCallback(async () => {
     try {
@@ -51,14 +51,14 @@ export default function Navbars() {
           `${process.env.REACT_APP_API_BE}/notification/aa/${user.user_id}`,
           { headers }
         )
-        sortNotificationAA(responseAA.data)
       }
     } catch (err) {
       console.log(err)
     }
   }, [])
+
   useEffect(() => {
-    fetchData()
+      fetchData()
   }, [])
 
   function logOut() {
@@ -102,6 +102,9 @@ export default function Navbars() {
   }
   async function readNotification(notiStudent) {
     console.log("noti student", notiStudent)
+    if (!notiStudent) {
+      return
+    }
     let tempNotiStudent = notiStudent.notification
     let readNotification = []
     let filterReadnotification = []
@@ -203,16 +206,17 @@ export default function Navbars() {
     let filter = data.filter((value, index) => data.indexOf(value) === index)
     //  notiFromBE.foreEach()
     return filter
-  }
+ }
   return (
     <>
-      {/* {console.log("noti std", notiStudent)} */}
+      {console.log("noti std", notiStudent)}
+      {console.log("user from nav bar", user)}
       {user && user.user_type === "Student" && (
         // <Navbar style={{ border: "red 1px solid" }}>
         <Navbar className="navbar navbar-dark sticky-top bg flex-md-nowrap p-0 ">
           <div style={{ marginLeft: 30 }}>
             <Link to="/main">
-              <div className="header navbar-brand col-sm-3 col-md-2 p-0 ml-3 mt-3" >
+              <div className="header navbar-brand col-sm-3 col-md-2 p-0 ml-3 mt-3">
                 {/* <div className="header navbar-brand col-sm-3 col-md-2 p-0 ml-3 mt-3"> */}
                 <h2>SPM System</h2>
               </div>
@@ -286,7 +290,7 @@ export default function Navbars() {
         <Navbar className="navbar navbar-dark sticky-top bg flex-md-nowrap p-0 ">
           <div style={{ marginLeft: 30 }}>
             <Link to="/main">
-              <div className="header navbar-brand col-sm-3 col-md-2 p-0 ml-3 mt-3" >
+              <div className="header navbar-brand col-sm-3 col-md-2 p-0 ml-3 mt-3">
                 {/* <div className="header navbar-brand col-sm-3 col-md-2 p-0 ml-3 mt-3"> */}
                 <h2>SPM System</h2>
               </div>
@@ -358,16 +362,16 @@ export default function Navbars() {
       )}
       {user && user.user_type === "AA" && (
         <Navbar className="navbar navbar-dark sticky-top bg flex-md-nowrap p-0 ">
-        <div style={{ marginLeft: 30 }}>
-          <Link to="/main">
-            <div className="header navbar-brand col-sm-3 col-md-2 p-0 ml-3 mt-3" >
-              {/* <div className="header navbar-brand col-sm-3 col-md-2 p-0 ml-3 mt-3"> */}
-              <h2>SPM System</h2>
-            </div>
-          </Link>
-        </div>
-        <Nav className="mr-auto"></Nav>
-        <Nav>
+          <div style={{ marginLeft: 30 }}>
+            <Link to="/main">
+              <div className="header navbar-brand col-sm-3 col-md-2 p-0 ml-3 mt-3">
+                {/* <div className="header navbar-brand col-sm-3 col-md-2 p-0 ml-3 mt-3"> */}
+                <h2>SPM System</h2>
+              </div>
+            </Link>
+          </div>
+          <Nav className="mr-auto"></Nav>
+          <Nav>
             <div style={{ marginRight: 42 }}>
               <ul className="navbar-nav px-3">
                 <div style={{ marginTop: 7 }}>

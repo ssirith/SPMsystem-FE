@@ -6,7 +6,6 @@ import { navigate } from "@reach/router"
 import axios from "axios"
 import { UserContext } from "../UserContext"
 
-
 export default function MainLayout(props) {
   const { component: Child } = props
   const headers = {
@@ -17,18 +16,17 @@ export default function MainLayout(props) {
   const { user, setUser } = useContext(UserContext) //Mock data user context
   // const [user,setUser] =useState(null)
   const checkLogin = useCallback(async () => {
-    console.log('mainlayout')
+    console.log("mainlayout")
     try {
-      
       const response = await axios.get(
         `${process.env.REACT_APP_API_BE}/sso/check-me`,
-        {headers}
+        { headers }
       )
-      console.log('response',response)
+      console.log("response", response)
       if (response.status === 200) {
         // console.log('response.data',response.data)
-        localStorage.setItem('user',JSON.stringify(response.data))
-        let localuser=JSON.parse(localStorage.getItem('user'))
+        localStorage.setItem("user", JSON.stringify(response.data))
+        let localuser = JSON.parse(localStorage.getItem("user"))
         setUser(localuser)
         // console.log('ggg',user)
       } else if (response.status === 401) {
@@ -38,15 +36,16 @@ export default function MainLayout(props) {
       console.log(err)
     }
   })
-  
+
   useEffect(() => {
     checkLogin()
   }, [])
+  console.log("user main layout", user)
   return (
     <>
-     {/* {console.log('storage',localStorage.getItem('user'))} */}
-     {/* {console.log('ggg',user)} */}
-      <Navbar user={user} />
+      {/* {console.log('storage',localStorage.getItem('user'))} */}
+      {/* {console.log('ggg',user)} */}
+      {user && <Navbar />}
       <div className="container-fluid ">
         <div className="row">
           <Sidebar statusbar={props.statusbar} />
