@@ -123,9 +123,6 @@ export default function Assesment(props) {
     setIsPreFetch(false)
   }, [])
 
-  console.log("feedback", feedback)
-  console.log("assignment", isAssesment)
-
   useEffect(() => {
     fetchData()
   }, [user])
@@ -206,7 +203,6 @@ export default function Assesment(props) {
           feedback: feedback,
         }
       }
-      console.log(data)
       try {
         const response = await axios.post(
           `${process.env.REACT_APP_API_BE}/assessment`,

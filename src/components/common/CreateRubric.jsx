@@ -148,7 +148,6 @@ export default function CreateRubric() {
                       <Buttons
                         menu="Save"
                         color="primary"
-                        onClick={() => console.log("Create")}
                       />
                     </Link>
                 </div>

@@ -14,7 +14,7 @@ import AutocompleteText from "../components/common/AutocompleteText"
 import axios from "axios"
 import { SettingContext } from "../SettingContext"
 import Loading from "../components/common/Loading"
-
+import Swal from 'sweetalert2'
 export default function Setting() {
   const headers = {
     Authorization: `Bearer ${Cookie.get("jwt")}`,
@@ -52,23 +52,21 @@ export default function Setting() {
   const fetchData = useCallback(async () => {
     try {
       setIsPreFetch(true)
-      const response = await axios.get(`${process.env.REACT_APP_API_BE}/config`,{headers})
-      console.log('arrya from be',response.data)
+      const response = await axios.get(`${process.env.REACT_APP_API_BE}/config`, { headers })
       // setSettingList(data.data)
       setSettingDisplay(settingContext)
-      const temp =[]
-      response.data.map((data,index)=>{
-        if(parseInt(data.student_one_more_group)){
-          temp.push({...data,student_one_more_group:true})
+      const temp = []
+      response.data.map((data, index) => {
+        if (parseInt(data.student_one_more_group)) {
+          temp.push({ ...data, student_one_more_group: true })
           // setSettingList([...settingList,{...data,student_one_more_group:true}])
-        }else {
-          temp.push({...data,student_one_more_group:false})
+        } else {
+          temp.push({ ...data, student_one_more_group: false })
           // setSettingList([...settingList,{...data,student_one_more_group:false}])
 
         }
       })
       setSettingList(temp)
-      // console.log(settingContext)
       setIsPreFetch(false)
     } catch (err) {
       console.log(err)
@@ -82,7 +80,7 @@ export default function Setting() {
   useEffect(() => {
     checkRole()
   }, [user])
-  
+
   async function handleToggle() {
     if (
       settingDisplay.number_of_member_min > settingDisplay.number_of_member_max
@@ -104,25 +102,37 @@ export default function Setting() {
       // console.log(setting)
       const response = await axios.post(
         `${process.env.REACT_APP_API_BE}/config`,
-        settingDisplay,{headers}
+        settingDisplay, { headers }
       )
       if (response.status === 200) {
         setSettingYearContext(settingDisplay.year_of_study)
-        alert("The setting has been Updated.")
-        navigate("/main")
+        Swal.fire({
+          icon: 'success',
+          title: 'Save!',
+          text: 'The setting has been Updated.',
+          timer: 2000,
+          showCancelButton: false,
+          showConfirmButton: false
+        })
 
+        setTimeout(() => {
+          navigate(`/main`)
+        }, 2000);
       }
     } catch (err) {
-      alert("Your input is incorrect, Please try again.")
+      Swal.fire({
+        icon: 'error',
+        title: 'Oop...',
+        text: 'Something went wrong, Please Try again.',
+      })
       console.log(err)
     }
   }
   if (isPrefetch) {
-    return <><Loading open={isPrefetch}/></>
+    return <><Loading open={isPrefetch} /></>
   }
   return (
     <div className="container">
-      {console.log('settinglist',settingList)}
       {/* {console.log("settingDisplay in seeting page", settingDisplay)} */}
       <div className="row mt-5">
         <h4>Project</h4>
@@ -171,7 +181,7 @@ export default function Setting() {
               <div className="col-4">
                 <label htmlFor="Max">Max</label>
                 <input
-                required
+                  required
                   type="number"
                   className="form-control"
                   id="maxUser"
@@ -197,7 +207,7 @@ export default function Setting() {
             <div className="row col-8 ml-2">
               <div className="col-4">
                 <input
-                required
+                  required
                   className="form-check-input"
                   type="radio"
                   name="exampleRadios"
@@ -217,7 +227,7 @@ export default function Setting() {
               </div>
               <div className="col-4">
                 <input
-                required
+                  required
                   className="form-check-input"
                   type="radio"
                   name="exampleRadios"

@@ -2,7 +2,6 @@ import React, { useState, useCallback, useEffect, useContext } from "react"
 import Cookie from "js-cookie"
 import { Link } from "@reach/router"
 import Boxitem from "../components/common/Boxitem"
-import Inputtext from "../components/common/Inputtext"
 import MyteamMember from "../components/common/MyteamMember"
 import MyteamAdvisor from "../components/common/MyteamAdvisor"
 import Topicbox from "../components/common/Topicbox"
@@ -10,10 +9,10 @@ import Buttons from "../components/common/Buttons"
 import axios from "axios"
 import ModalcomponentDelete from "../components/common/ModalcomponentDelete"
 import { UserContext } from "../UserContext"
-import { SettingContext } from "../SettingContext"
 import ModalWindowProfileStudent from "../components/common/ModalWindowProfileStudent"
 import Carditem from "../components/common/Carditem"
 import Loading from "../components/common/Loading"
+import Swal from 'sweetalert2'
 export default function Myteam() {
   const headers = {
     Authorization: `Bearer ${Cookie.get("jwt")}`,
@@ -21,9 +20,6 @@ export default function Myteam() {
     accept: "application/json",
   }
   const { user, setUser } = useContext(UserContext) //Mock data user context
-  // let userBeforeParse = JSON.parse(localStorage.getItem("user"))
-  // const [user, setUser] = useState(null)
-  // const { settingContext, setSettingContext } = useContext(SettingContext)
   const [stdGroup, setStdGroup] = useState({}) // กลุ่มของนศ.ถูกเก็บเป็น object
   const [group, setGroup] = useState([])
   const [isOpenDelete, setIsOpenDelete] = useState(false)
@@ -34,7 +30,6 @@ export default function Myteam() {
     try {
       setIsPreFetch(true)
       if (user&&user.user_type === "Student") {
-        console.log("in if student")
         const dat = await axios.get(
           `http://127.0.0.1:8000/api/group/${user.user_id}`,
           { headers }
@@ -49,7 +44,6 @@ export default function Myteam() {
         const dep = data.find((a) => a.student_id === user.user_id)
         setCheckDepartment(dep.department)
       } else if (user&&user.user_type === "Teacher") {
-        console.log("in if student")
         const data = await axios.get(
           `${process.env.REACT_APP_API_BE}/projects/response/teacher/${user.user_id}`,
           { headers }

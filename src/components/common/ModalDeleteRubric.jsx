@@ -2,8 +2,8 @@ import React from "react"
 import Cookie from "js-cookie"
 import { Modal } from "react-bootstrap"
 import Buttons from "./Buttons"
-import Inputtext from "./Inputtext"
 import axios from "axios"
+import Swal from 'sweetalert2'
 import { useNavigate } from "@reach/router"
 export default function ModalDeleteRubric(props) {
   const headers = {
@@ -19,16 +19,29 @@ export default function ModalDeleteRubric(props) {
       rubric_id 
 
     }
-    console.log(data)
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_API_BE}/rubric/delete`,data,{headers})
       if (response.status === 200) {
-        alert("Delete Success.")
-        navigate("/createassignment")
+        Swal.fire({
+          icon: 'success',
+          title: 'Save!',
+          text: 'Delete Success.',
+          timer: 2000,
+          showCancelButton: false,
+          showConfirmButton: false
+        })
+
+        setTimeout(() => {
+          navigate("/createassignment")
+        }, 2000);
       }
     } catch (err) {
-      alert("This rubric is using on others assignment !!")
+      Swal.fire({
+        icon: 'error',
+        title: 'Oop...',
+        text: 'Something went wrong, Please Try again.',
+      })
       console.log(err)
     }
   }

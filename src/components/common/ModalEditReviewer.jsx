@@ -43,7 +43,6 @@ export default function ModalEditReviewer(props) {
   useEffect(() => {
     fetchData()
   }, [])
-console.log(save)
 
   useEffect(() => {
     const temp = [...teachers]

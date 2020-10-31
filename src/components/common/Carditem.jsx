@@ -21,7 +21,6 @@ export default function Carditem(props) {
   // console.log(props.groups.project_id.length)//DSI-5 IT-4
   return (
     <>
-      {console.log("psrops group ", props.groups)}
       {/* <div>
         <Card className={classes.root}>
           <CardHeader

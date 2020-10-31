@@ -131,7 +131,6 @@ export default function AnnouncementTable(props) {
                 <div ref={expanderBody} className="inner uk-grid">
                   <div className="container">
                     <div className="uk-width-1-4 uk-text-center text-break">
-                      {console.log(props.announcement)}
                       <p>{props.announcement.announcement_detail}</p>
                     </div>
 
@@ -146,8 +145,6 @@ export default function AnnouncementTable(props) {
                             return (
                               <div key={index}>
                                 <FolderIcon className="primary" />
-                                &nbsp;
-                                {console.log(att.announcement)}
                                 <a
                                   href={`http://127.0.0.1:8000/storage/${att.announcement_file}`}
                                   download

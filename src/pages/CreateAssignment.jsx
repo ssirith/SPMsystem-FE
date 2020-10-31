@@ -9,7 +9,6 @@ import Button from "@material-ui/core/Button"
 import Buttons from "../components/common/Buttons"
 import DueDate from "../components/common/DueDate"
 import DropdownRubric from "../components/common/DropdownRubric"
-import CreateRubric from "../components/common/CreateRubric"
 import ModalAddReviewer from "../components/common/ModalAddReviewer"
 import { Link, useNavigate, Redirect, Router } from "@reach/router"
 import { UserContext } from "../UserContext"
@@ -20,13 +19,12 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FolderIcon from "@material-ui/icons/Folder"
 import TimePicker from '../components/common/TimePicker';
-import { keys } from "@material-ui/core/styles/createBreakpoints"
 import dayjs from "dayjs"
 import { makeStyles } from '@material-ui/core/styles';
 import { Container, Row, Col } from 'reactstrap';
 import { Table } from "react-bootstrap"
 import Loading from "../components/common/Loading"
-// import { Router } from "@material-ui/icons"
+import Swal from 'sweetalert2'
 const useStyles = makeStyles((theme) => ({
     margin: {
         margin: theme.spacing(1),
@@ -107,7 +105,6 @@ export default function CreateAssignment() {
                     setCriterion(criterions)
                 }
                 refreshCriterion()
-                console.log(criterions)
             }
 
         })
@@ -146,7 +143,6 @@ export default function CreateAssignment() {
     const handleDuedate = (event) => {
         var date = dayjs(event.target.value).format('YYYY-MM-DD');
         setDue_date(date)
-        console.log("due_date=>", due_date)
     }
 
     const handleTimePicker = (event) => {
@@ -181,7 +177,6 @@ export default function CreateAssignment() {
     function handleClickAdd() {
         inputRef.current.click()
     }
-    console.log()
     async function handleSubmit() {
         const responsible_teacher = []
         reviewer.map((r, index) => responsible_teacher.push(r.teacher_id))
@@ -219,14 +214,29 @@ export default function CreateAssignment() {
         try {
             const response = await axios.post(`${process.env.REACT_APP_API_BE}/assignments`, data,{headers})
             if (response.status === 200) {
-                alert("Create Success.")
-                navigate("/assignments")
-
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Save!',
+                    text: 'Edit Success.',
+                    timer: 2000,
+                    showCancelButton: false,
+                    showConfirmButton: false
+                  })
+          
+                  setTimeout(() => {
+                    navigate("/assignments")
+                  }, 2000);
             }
         } catch (err) {
-            alert("It's not success, Please check your input")
             console.error(err)
+            Swal.fire({
+                icon: 'error',
+                title: 'Oop...',
+                text: 'Something went wrong, Please Try again.',
+        
+              })
         }
+       
     }
 
     if (isPreFetch) {

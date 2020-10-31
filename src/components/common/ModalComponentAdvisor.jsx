@@ -22,7 +22,6 @@ export default function ModalComponentAdvisor(props) {
   const fetchData = useCallback(async () => {
     const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/projects/${id}`,{headers})
     const all = await axios.get(`${process.env.REACT_APP_API_BE}/teachers`,{headers})
-    console.log(all)
     setTeachers(all.data) //[{group[{},{},{},project{},teacher{[],}]
     setSave(data.teacher)
   }, [])
@@ -58,7 +57,6 @@ export default function ModalComponentAdvisor(props) {
     if (index > -1) {
       result.splice(index, 1)
     }
-    console.log(result)
     setSave([...result])//สมาชิกที่เหลือหลังจากลบออก
   }
 

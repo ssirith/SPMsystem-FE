@@ -23,7 +23,6 @@ export default function ModalComponentDelete(props) {
         `${process.env.REACT_APP_API_BE}/projects/delete`,
         idForDelete,{headers}
       )
-      console.log(response)
       if (response.status === 200) {
         alert("Delete Success.")
         setTimeout(()=>{

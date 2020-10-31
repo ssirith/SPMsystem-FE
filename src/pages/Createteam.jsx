@@ -13,6 +13,7 @@ import BreadcrumbNavString from "../components/common/BreadcrumbNavString"
 import Textarea from "../components/common/Textarea"
 import { UserContext } from "../UserContext"
 import Loading from "../components/common/Loading"
+import Swal from 'sweetalert2'
 export default function Createteam() {
   const headers = {
     Authorization: `Bearer ${Cookie.get("jwt")}`,
@@ -37,7 +38,7 @@ export default function Createteam() {
   const [advisor, setAdvisor] = useState([])
   const fetchData = useCallback(async () => {
     setIsPreFetch(true)
-    const all = await axios.get(`${process.env.REACT_APP_API_BE}/students`,{headers})
+    const all = await axios.get(`${process.env.REACT_APP_API_BE}/students`, { headers })
     setStudents(all.data)
     setIsPreFetch(false)
   }, [])
@@ -84,18 +85,33 @@ export default function Createteam() {
         student_id,
         teacher_id,
         department,
-      },{headers})
+      }, { headers })
       if (response.status === 200) {
-        alert("Create Success.")
-        navigate("/main")
+        Swal.fire({
+          icon: 'success',
+          title: 'Save!',
+          text: 'Create Success.',
+          timer: 2000,
+          showCancelButton: false,
+          showConfirmButton: false
+        })
+
+        setTimeout(() => {
+          navigate("/main")
+        }, 2000);
       }
     } catch (err) {
-      alert("It's not success, Please check your input")
+      Swal.fire({
+        icon: 'error',
+        title: 'Oop...',
+        text: 'Something went wrong, Please Try again.',
+
+      })
       console.error(err)
     }
   }
   if (isPreFetch) {
-    return <><Loading open={isPreFetch}/></>
+    return <><Loading open={isPreFetch} /></>
   }
   return (
     <div className="container">

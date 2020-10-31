@@ -60,7 +60,6 @@ export default function ModalComponentMember(props) {
     fetchData()
   }, [])
 
-  console.log(settingContext)
   useEffect(() => {
     const temp = [...students] // จำลองค่า students เพื่อไม่ให้เกิดการเปลี่ยนแปลงโดยตรงที่ students
     if (save) {
@@ -151,7 +150,6 @@ export default function ModalComponentMember(props) {
       }}
       scrollable="true"
     >
-      {console.log("std", students)}
       <Modal.Header closeButton>
         <Modal.Title>{props.header}</Modal.Title>
       </Modal.Header>

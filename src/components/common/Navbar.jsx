@@ -101,7 +101,6 @@ export default function Navbars() {
     setNotiAA(notification)
   }
   async function readNotification(notiStudent) {
-    console.log("noti student", notiStudent)
     if (!notiStudent) {
       return
     }
@@ -111,7 +110,6 @@ export default function Navbars() {
     setIsOpenNotiStd(!isOpenNotiStd)
     tempNotiStudent.filter((unread) => unread.notification_id_fk === null)
     tempNotiStudent.map((t, index) => readNotification.push(t.notification_id))
-    console.log("read noti", readNotification)
     filterReadnotification = filterReadNotification(
       readNotification,
       tempNotiStudent
@@ -128,9 +126,7 @@ export default function Navbars() {
         { headers }
       )
       if (response.status === 200) {
-        console.log(response)
         readNotification = []
-        console.log("clear read noti", readNotification)
       }
     } catch (err) {
       console.log(err)
@@ -144,12 +140,10 @@ export default function Navbars() {
     setIsOpenNotiStd(!isOpenNotiStd)
     tempNotiTeacher.filter((unread) => unread.notification_id_fk === null)
     tempNotiTeacher.map((t, index) => readNotification.push(t.notification_id))
-    console.log("read noti", readNotification)
     filterReadnotification = filterReadNotification(
       readNotification,
       tempNotiTeacher
     )
-    console.log("filter read", filterReadnotification)
     const alreadyReadNotification = {
       notification_id: filterReadnotification,
       teacher_id: user.user_id,
@@ -161,9 +155,7 @@ export default function Navbars() {
         { headers }
       )
       if (response.status === 200) {
-        console.log(response)
         readNotification = []
-        console.log("clear read noti", readNotification)
       }
     } catch (err) {
       console.log(err)
@@ -176,12 +168,10 @@ export default function Navbars() {
     setIsOpenNotiStd(!isOpenNotiStd)
     tempNotiAA.filter((unread) => unread.notification_id_fk === null)
     tempNotiAA.map((t, index) => readNotification.push(t.notification_id))
-    console.log("read noti", readNotification)
     filterReadnotification = filterReadNotification(
       readNotification,
       tempNotiAA
     )
-    console.log("filter read", filterReadnotification)
     const alreadyReadNotification = {
       notification_id: filterReadnotification,
       aa_id: user.user_id,
@@ -193,9 +183,7 @@ export default function Navbars() {
         { headers }
       )
       if (response.status === 200) {
-        console.log(response)
         readNotification = []
-        console.log("clear read noti", readNotification)
       }
     } catch (err) {
       console.log(err)
@@ -209,8 +197,6 @@ export default function Navbars() {
  }
   return (
     <>
-      {console.log("noti std", notiStudent)}
-      {console.log("user from nav bar", user)}
       {user && user.user_type === "Student" && (
         // <Navbar style={{ border: "red 1px solid" }}>
         <Navbar className="navbar navbar-dark sticky-top bg flex-md-nowrap p-0 ">

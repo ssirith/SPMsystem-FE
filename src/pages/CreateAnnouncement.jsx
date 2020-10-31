@@ -13,6 +13,7 @@ import { UserContext } from "../UserContext"
 import DeleteIcon from '@material-ui/icons/Delete';
 import FolderIcon from "@material-ui/icons/Folder";
 import dayjs from "dayjs"
+import Swal from 'sweetalert2'
 const useStyles = makeStyles({
     root: {
         position: "relative",
@@ -98,20 +99,31 @@ export default function CreateAnnouncement() {
         } else {
             data.append('attachment[]', [])
         }
-        for (var value of data.values()) {
-            console.log(value);
-        }
         try {
             const response = await axios.post(`${process.env.REACT_APP_API_BE}/announcement`, data,{ headers })
             if (response.status === 200) {
-                alert("Create Success.")
-                navigate("/announcements")
-
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Save!',
+                    text: 'Create Success.',
+                    timer: 2000,
+                    showCancelButton: false,
+                    showConfirmButton: false
+                  })
+          
+                  setTimeout(() => {
+                    navigate("/announcements")
+                  }, 2000);
             }
         } catch (err) {
-            alert("It's not success, Please check your input")
             console.error(err)
+            Swal.fire({
+                icon: 'error',
+                title: 'Oop...',
+                text: 'Something went wrong, Please Try again.',
+              })
         }
+        
 
     }
     return (

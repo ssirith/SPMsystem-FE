@@ -2,7 +2,7 @@ import React from "react"
 import Cookie from "js-cookie"
 import { Modal } from "react-bootstrap"
 import Buttons from "./Buttons"
-import Inputtext from "./Inputtext"
+import Swal from 'sweetalert2'
 import axios from "axios"
 import { useNavigate } from "@reach/router"
 export default function ModalDeleteAssignment(props) {
@@ -24,10 +24,25 @@ export default function ModalDeleteAssignment(props) {
       )
       
       if (response.status === 200) {
-        alert("Delete Success.")
-        navigate("/assignments")
+        Swal.fire({
+          icon: 'success',
+          title: 'Save!',
+          text: 'Delete Success.',
+          timer: 2000,
+          showCancelButton: false,
+          showConfirmButton: false
+        })
+
+        setTimeout(() => {
+          navigate("/assignments")
+        }, 2000);
       }
     } catch (err) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oop...',
+        text: 'Something went wrong, Please Try again.',
+      })
       console.log(err)
     }
   }
