@@ -2,8 +2,8 @@ import React from "react"
 import Cookie from "js-cookie"
 import { Modal } from "react-bootstrap"
 import Buttons from "./Buttons"
-import Inputtext from "./Inputtext"
 import axios from "axios"
+import Swal from 'sweetalert2'
 import { useNavigate } from "@reach/router"
 export default function ModalDeleteAnnouncement(props) {
   const headers = {
@@ -13,7 +13,6 @@ export default function ModalDeleteAnnouncement(props) {
   }
   let navigate = useNavigate()
   async function deleteAssignment() {
-    console.log(props.toDelete)
     const idForDelete = {
       announcement_id: props.toDelete
     }
@@ -25,13 +24,29 @@ export default function ModalDeleteAnnouncement(props) {
       )
 
       if (response.status === 200) {
-        alert("Delete Success.")
-        navigate('/main')
+        Swal.fire({
+          icon: 'success',
+          title: 'Save!',
+          text: 'Delete Success.',
+          timer: 2000,
+          showCancelButton: false,
+          showConfirmButton: false
+        })
+
+        setTimeout(() => {
+          navigate("/main")
+        }, 2000);
       }
     } catch (err) {
       console.log(err)
+      Swal.fire({
+        icon: 'error',
+        title: 'Oop...',
+        text: 'Something went wrong, Please Try again.',
+      })
     }
   }
+
   return (
 
     <Modal

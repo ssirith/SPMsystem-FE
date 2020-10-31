@@ -18,7 +18,6 @@ export default function CallbackFromSSO(props) {
 
   const fetchUserData = useCallback(async () => {
     const queryParams = queryString.parse(props.location.search)
-    console.log("queryParams", queryParams)
     try {
       if (queryParams.state === "SPMlogin") {
         const auth = {
@@ -31,7 +30,6 @@ export default function CallbackFromSSO(props) {
         )
         if (response.status === 200) {
           setUser(response.data)
-          console.log("user context callback page", response.data)
           Cookie.set("jwt", response.data.token)
           navigate("/main")
         }

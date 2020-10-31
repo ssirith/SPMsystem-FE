@@ -5,8 +5,7 @@ import axios from "axios"
 import Image from "react-bootstrap/Image"
 import Button from "@material-ui/core/Button"
 import { useParams, useNavigate } from "@reach/router"
-import Dropdown from "./Dropdown"
-import DropdownEdit from "./DropdownEdit"
+import Swal from 'sweetalert2'
 import { UserContext } from "../../UserContext"
 export default function ModalWindowProfileProfileTeacher(props) {
     const headers = {
@@ -76,13 +75,27 @@ export default function ModalWindowProfileProfileTeacher(props) {
                 data.append("teacher_id", teacher_id)
                 const res = await axios.post(`${process.env.REACT_APP_API_BE}/student/edit/profile/teacher`, data,{headers})
                 if (res.status === 200) {
-                    alert("Edit Profile Success.")
-                    navigate("/main")
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Save!',
+                        text: 'Edit Profile Success.',
+                        timer: 2000,
+                        showCancelButton: false,
+                        showConfirmButton: false
+                      })
+              
+                      setTimeout(() => {
+                        window.location.reload()
+                      }, 2000);
                     props.setIsOpen(false)
                 }
             }
             catch (err) {
-                alert("Not success, please check your input.")
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oop...',
+                    text: 'Something went wrong, Please Try again.',
+                  })
                 console.log(err)
             }
         } else {
@@ -93,14 +106,27 @@ export default function ModalWindowProfileProfileTeacher(props) {
                 data.append("aa_id", aa_id)
                 const res = await axios.post(`${process.env.REACT_APP_API_BE}/student/edit/profile/aa`, data,{headers})
                 if (res.status === 200) {
-                    alert("Edit Profile Success.")
-                    window.location.reload()
-                    navigate("/main")
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Save!',
+                        text: 'Edit Profile Success.',
+                        timer: 2000,
+                        showCancelButton: false,
+                        showConfirmButton: false
+                      })
+              
+                      setTimeout(() => {
+                        window.location.reload()
+                      }, 2000);
                     props.setIsOpen(false)
                 }
             }
             catch (err) {
-                alert("Not success, please check your input.")
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oop...',
+                    text: 'Something went wrong, Please Try again.',
+                  })
                 console.log(err)
             }
         }

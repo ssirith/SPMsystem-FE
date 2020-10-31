@@ -3,8 +3,7 @@ import Cookie from "js-cookie"
 import { Link, navigate } from "@reach/router"
 import dayjs from "dayjs"
 import Buttons from "./Buttons"
-import ChangeHistoryIcon from "@material-ui/icons/ChangeHistory"
-import DetailsIcon from "@material-ui/icons/Details"
+import Swal from 'sweetalert2'
 import FolderIcon from "@material-ui/icons/Folder"
 import DeleteIcon from "@material-ui/icons/Delete"
 import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord"
@@ -61,9 +60,14 @@ export default function AssignmentTable(props) {
 
       // console.log('new ', newRubric)
     } catch (err) {
-      alert(
-        "Please create project group before go to this page or contract the developers."
-      )
+      Swal.fire({
+        icon: 'error',
+        title: 'Oop...',
+        text: 'Please create project group before go to this page or contract the developers.',
+      })
+      // alert(
+      //   "Please create project group before go to this page or contract the developers."
+      // )
       navigate("/main")
       console.log(err)
     }
@@ -156,10 +160,8 @@ export default function AssignmentTable(props) {
       var status = ""
       if (dayjs().isBefore(dueDate, thisDay)) {
         status = "Submitted"
-        console.log("in if")
       } else if (dayjs().isAfter(thisDay, dueDate)) {
         status = "Submitted Late"
-        console.log("in else")
       }
       const formData = new FormData()
       formData.append("assignment_id", assignment.assignment_id)
@@ -220,10 +222,6 @@ export default function AssignmentTable(props) {
 
   return (
     <>
-      {console.log(
-        "this day is before duedate",
-        dayjs().isBefore(thisDay, dueDate)
-      )}
       {/* {console.log('res assigment',response.data)} */}
       {/* {console.log("criterions", rubric.criterions)} */}
       {/* {console.log("sort criterions", newCriterions)} */}
@@ -343,7 +341,6 @@ export default function AssignmentTable(props) {
                       <p>Score:&nbsp;</p>
                     </div>
                     &nbsp;&nbsp;&nbsp;
-                    {console.log(assignment.assessment)}
                     {assignment && (
                       <p>
                         {assignment.status !== null ? (

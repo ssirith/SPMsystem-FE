@@ -12,6 +12,7 @@ import RemoveIcon from '@material-ui/icons/Remove';
 import { Container, Row, Col } from 'reactstrap';
 import { UserContext } from "../UserContext"
 import Loading from "../components/common/Loading"
+import Swal from 'sweetalert2'
 export default function EditRubric(props) {
 	let navigate = useNavigate()
 	const { user, setUser } = useContext(UserContext)
@@ -159,7 +160,6 @@ export default function EditRubric(props) {
 
 		}
 		setCriterions(newCriterions)
-		console.log(criterions)
 	}
 
 	function handleRemoveTable(data, index) {
@@ -211,16 +211,31 @@ export default function EditRubric(props) {
 			try {
 				const response = await axios.post(`${process.env.REACT_APP_API_BE}/rubric/edit`, data,{headers})
 				if (response.status === 200) {
+					Swal.fire({
+						icon: 'success',
+						title: 'Save!',
+						text: 'Edit Success.',
+						timer: 2000,
+						showCancelButton: false,
+						showConfirmButton: false
+					  })
+			  
+					  setTimeout(() => {
+						navigate(`/createassignment`)
+					  }, 2000);
 					alert("Edit Success.")
 					navigate("/createassignment")
 					
 				}
 			} catch (err) {
-				alert("It's not success, Please check your input")
+				Swal.fire({
+					icon: 'error',
+					title: 'Oop...',
+					text: 'Something went wrong, Please Try again.',
+				  })
 				console.error(err)
 				
 			}
-
 		}
 	}
 	if(isPreFetch){

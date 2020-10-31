@@ -11,7 +11,6 @@ export default function ModalFeedback(props) {
       counter == props.feedback.length - 1
     ) {
       setCounter(0)
-      console.log("too much")
     } else if (counter < props.feedback.length - 1) {
       setCounter(counter + 1)
     }
@@ -21,13 +20,10 @@ export default function ModalFeedback(props) {
       setCounter(counter - 1)
     } else if (counter == 0) {
       setCounter(props.feedback.length - 1)
-      console.log("already 0")
     }
   }
   return (
     <>
-      {console.log("counter", counter)}
-      {console.log("length", props.feedback)}
       <Modal
         show={props.isOpen}
         onHide={() => {

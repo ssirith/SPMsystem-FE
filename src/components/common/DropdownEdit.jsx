@@ -14,7 +14,6 @@ export default function DropdownProfile(props) {
   const handleChange = e => {
     props.setDepartment(e.target.value)
   }
-  console.log(props.checkDepartment)
   return (
     <form noValidate autoComplete="off">
       <div>

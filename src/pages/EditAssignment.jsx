@@ -27,12 +27,12 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Container, Row, Col } from 'reactstrap';
 import { Table } from "react-bootstrap"
 import Loading from "../components/common/Loading";
+import Swal from 'sweetalert2'
 const useStyles = makeStyles((theme) => ({
     margin: {
         margin: theme.spacing(1),
     },
 }));
-// import { Router } from "@material-ui/icons"
 export default function CreateAssignment(props) {
     const headers = {
         Authorization: `Bearer ${Cookie.get("jwt")}`,
@@ -319,11 +319,25 @@ export default function CreateAssignment(props) {
             try {
                 const response = await axios.post(`${process.env.REACT_APP_API_BE}/assignments/edit`, data,{headers})
                 if (response.status === 200) {
-                    alert("Edit Success.")
-                    navigate(`/assignments/${props.id}`)
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Save!',
+                        text: 'Edit Success.',
+                        timer: 2000,
+                        showCancelButton: false,
+                        showConfirmButton: false
+                      })
+              
+                      setTimeout(() => {
+                        navigate(`/assignments/${props.id}`)
+                      }, 2000);
                 }
             } catch (err) {
-                alert("It's not success, Please check your input")
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oop...',
+                    text: 'Something went wrong, Please Try again.',
+                  })
                 console.error(err)
             }
         }

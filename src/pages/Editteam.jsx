@@ -1,21 +1,21 @@
 import React, { useState, useCallback, useEffect, useContext } from "react"
 import Cookie from 'js-cookie'
 import Inputtext from "../components/common/Inputtext"
-import Topicbox from "../components/common/Topicbox"
 import MembersboxEdit from "../components/common/MembersboxEdit"
 import Advisorbox from "../components/common/Advisorbox"
-import Boxitem from "../components/common/Boxitem"
 import Buttons from "../components/common/Buttons"
 import ModalEditMember from "../components/common/ModalEditMember"
 import ModalEditAdvisor from "../components/common/ModalEditAdvisor"
 import Dropdown from "../components/common/Dropdown"
 import axios from 'axios'
-import { Link, useParams } from "@reach/router"
+import { Link, useNavigate } from "@reach/router"
 import BreadcrumbNavString from "../components/common/BreadcrumbNavString"
 import Textarea from "../components/common/Textarea"
 import { UserContext } from "../UserContext"
 import Loading from "../components/common/Loading"
+import Swal from 'sweetalert2'
 export default function Editteam(props) {
+  let navigate = useNavigate()
   const headers = {
     Authorization: `Bearer ${Cookie.get("jwt")}`,
     "Content-Type": "application/json",
@@ -38,13 +38,12 @@ export default function Editteam(props) {
   const fetchData = useCallback(
     async () => {
       setIsPreFetch(true)
-      const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/projects/${props.id}`,{headers})
-      console.log(data)
+      const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/projects/${props.id}`, { headers })
       setProject(data.project)
       setMember(data.group)
       setAdvisor(data.teacher)
       setDepartment(data.project.project_department)
-      const all = await axios.get(`${process.env.REACT_APP_API_BE}/students`,{headers})
+      const all = await axios.get(`${process.env.REACT_APP_API_BE}/students`, { headers })
       setStudents(all.data)
       setIsPreFetch(false)
     },
@@ -53,7 +52,7 @@ export default function Editteam(props) {
   useEffect(() => {
     fetchData()
   }, [])
-  
+
   const handleProjectName = (event) => {
     setProject({
       ...project,
@@ -125,20 +124,34 @@ export default function Editteam(props) {
 
     try {
       const response = await axios.
-        put(`${process.env.REACT_APP_API_BE}/projects/edit/${project_id}`, dataForEdit,{headers})
-      console.log(response)
+        put(`${process.env.REACT_APP_API_BE}/projects/edit/${project_id}`, dataForEdit, { headers })
       if (response.status === 200) {
-        alert("Edit Success.")
-        window.location.reload()
+        Swal.fire({
+          icon: 'success',
+          title: 'Save!',
+          text: 'Edit Success.',
+          timer: 2000,
+          showCancelButton: false,
+          showConfirmButton: false
+        })
+
+        setTimeout(() => {
+          navigate('/main')
+        }, 2000);
       }
     } catch (err) {
       console.log(err)
-      alert("It's not success, Please check your input")
+      Swal.fire({
+        icon: 'error',
+        title: 'Oop...',
+        text: 'Something went wrong, Please Try again.',
+
+      })
     }
 
   }
   if (isPreFetch) {
-    return <><Loading open={isPreFetch}/></>
+    return <><Loading open={isPreFetch} /></>
   }
 
   return (
@@ -244,18 +257,17 @@ export default function Editteam(props) {
               <Buttons menu="Cancel"
               />
             </Link>
-            <Link to="/main">
-              <Buttons
-                menu="Save"
-                color="primary"
-                onClick={() => console.log("Save")}
-                onClick={(event) => handleSubmit(event)} />
-            </Link>
+            {/* <Link to="/main"> */}
+            <Buttons
+              menu="Save"
+              color="primary"
+              onClick={(event) => handleSubmit(event)} />
+            {/* </Link> */}
 
           </div>
         </div>
       </div>
-      <br/>
+      <br />
     </div>
   )
 }

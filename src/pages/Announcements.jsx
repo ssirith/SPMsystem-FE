@@ -35,7 +35,6 @@ export default function Announcements() {
   function sortAnnouncement(announcements) {
     let newAnnouncements = announcements
     newAnnouncements.sort((a, b) => dayjs(a.announcement_date).isBefore(dayjs(b.announcement_date)) ? 1 : -1)
-    console.log('sort announce', newAnnouncements)
     setAnnouncements(newAnnouncements)
   }
 

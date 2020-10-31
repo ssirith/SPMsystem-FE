@@ -8,7 +8,7 @@ import { useParams, useNavigate } from "@reach/router"
 import Dropdown from "./Dropdown"
 import DropdownEdit from "./DropdownEdit"
 import { UserContext } from "../../UserContext"
-import { Avatar } from "@material-ui/core"
+import Swal from 'sweetalert2'
 export default function ModalWindowProfile(props) {
   const headers = {
     Authorization: `Bearer ${Cookie.get("jwt")}`,
@@ -75,16 +75,32 @@ export default function ModalWindowProfile(props) {
         data.append("student_id", student_id)
         data.append("department", department)
         const res = await axios.post(`${process.env.REACT_APP_API_BE}/student/edit/profile/student`, data,{headers})
+        
         if (res.status === 200) {
-          alert("Edit Profile Success.")
-          window.location.reload()
+          Swal.fire({
+            icon: 'success',
+            title: 'Save!',
+            text: 'Edit Profile Success.',
+            timer: 2000,
+            showCancelButton: false,
+            showConfirmButton: false
+          })
+  
+          setTimeout(() => {
+            window.location.reload()
+          }, 2000);
           props.setIsOpen(false)
         }
       }
       catch (err) {
-        alert("Not success, please check your input.")
+        Swal.fire({
+          icon: 'error',
+          title: 'Oop...',
+          text: 'Something went wrong, Please Try again.',
+        })
         console.log(err)
       }
+      
     } else if (checkDepartment) {
       try {
         const data = new FormData();//craete form
@@ -93,14 +109,27 @@ export default function ModalWindowProfile(props) {
         data.append("department", checkDepartment)
         const res = await axios.post(`${process.env.REACT_APP_API_BE}/student/edit/profile/student`, data,{headers})
         if (res.status === 200) {
-          alert("Edit Profile Success.")
+          Swal.fire({
+            icon: 'success',
+            title: 'Save!',
+            text: 'Edit Profile Success.',
+            timer: 2000,
+            showCancelButton: false,
+            showConfirmButton: false
+          })
+  
+          setTimeout(() => {
+            window.location.reload()
+          }, 2000);
           props.setIsOpen(false)
-          console.log(data)
-          window.location.reload()
         }
       }
       catch (err) {
-        alert("It's not success, please check your input.")
+        Swal.fire({
+          icon: 'error',
+          title: 'Oop...',
+          text: 'Something went wrong, Please Try again.',
+        })
         console.log(err)
       }
     }

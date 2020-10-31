@@ -11,6 +11,7 @@ import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 import { Container, Row, Col } from 'reactstrap';
 import { UserContext } from "../UserContext"
+import Swal from 'sweetalert2'
 export default function CreateRubric() {
 	const headers = {
 		Authorization: `Bearer ${Cookie.get("jwt")}`,
@@ -118,25 +119,38 @@ export default function CreateRubric() {
 			rubric_title,
 			criterions
 		}
-		console.log(data)
 		if (checkInput()) {
 			alert("It's not success, Please check your input !!!")	
 		} else {
 			try {
 				const response = await axios.post(`${process.env.REACT_APP_API_BE}/rubric`, data,{headers})
 				if (response.status === 200) {
-					alert("Create Success.")
-					navigate("/createassignment")
-
+					Swal.fire({
+						icon: 'success',
+						title: 'Save!',
+						text: 'Edit Success.',
+						timer: 2000,
+						showCancelButton: false,
+						showConfirmButton: false
+					  })
+			  
+					  setTimeout(() => {
+						navigate("/createassignment")
+					  }, 2000);
 				}
 			} catch (err) {
-				alert("It's not success, Please check your input")
+				Swal.fire({
+					icon: 'error',
+					title: 'Oop...',
+					text: 'Something went wrong, Please Try again.',
+			
+				  })
 				console.error(err)
 			}
+		
 		}
 
 	}
-console.log(criterions)
 
 	return (
 		<>

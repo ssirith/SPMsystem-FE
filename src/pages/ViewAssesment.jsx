@@ -54,7 +54,6 @@ export default function ViewAssesment() {
       const response = await axios.get(
         `${process.env.REACT_APP_API_BE}/assessment/${id}/${project_id}`,{headers}
       )
-      console.log("response", response.data)
       if (response.status === 200) {
         loopCriterions(response.data.criterions)
         SetAssessment(response.data)
@@ -299,7 +298,6 @@ export default function ViewAssesment() {
                               </div>
                             </Col>
                             <Col sm={2}>
-                              {/* {console.log("new", newscore)} */}
                               {newscore ? (
                                 <div key={index}>
                                   {`:`}&nbsp;

@@ -16,13 +16,11 @@ export default function MainLayout(props) {
   const { user, setUser } = useContext(UserContext) //Mock data user context
   // const [user,setUser] =useState(null)
   const checkLogin = useCallback(async () => {
-    console.log("mainlayout")
     try {
       const response = await axios.get(
         `${process.env.REACT_APP_API_BE}/sso/check-me`,
         { headers }
       )
-      console.log("response", response)
       if (response.status === 200) {
         // console.log('response.data',response.data)
         localStorage.setItem("user", JSON.stringify(response.data))
@@ -40,7 +38,6 @@ export default function MainLayout(props) {
   useEffect(() => {
     checkLogin()
   }, [])
-  console.log("user main layout", user)
   return (
     <>
       {/* {console.log('storage',localStorage.getItem('user'))} */}

@@ -13,6 +13,8 @@ import { UserContext } from "../UserContext"
 import DeleteIcon from '@material-ui/icons/Delete';
 import FolderIcon from "@material-ui/icons/Folder";
 import dayjs from "dayjs";
+import Loading from "../components/common/Loading";
+import Swal from 'sweetalert2'
 const useStyles = makeStyles({
     root: {
         position: "relative",
@@ -66,7 +68,6 @@ export default function CreateAnnouncement() {
     useEffect(() => {
         fetchData()
     }, [])
-    console.log(announcement)
     const checkRole = useCallback(() => {
         if (user.user_type === "Student") {
             alert(`You dont'have permission to go this page.`)
@@ -137,25 +138,34 @@ export default function CreateAnnouncement() {
         } else {
             data.append('delete_attachment[]', [])
         }
-
-        for (var value of data.values()) {
-            console.log(value);
-        }
         try {
             const response = await axios.post(`${process.env.REACT_APP_API_BE}/announcement/edit`, data,{headers})
             if (response.status === 200) {
-                alert("Edit Success.")
-                navigate("/announcements")
-
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Save!',
+                    text: 'Edit Success.',
+                    timer: 2000,
+                    showCancelButton: false,
+                    showConfirmButton: false
+                  })
+          
+                  setTimeout(() => {
+                    navigate("/announcements")
+                  }, 2000);
             }
         } catch (err) {
-            alert("It's not success, Please check your input")
+            Swal.fire({
+                icon: 'error',
+                title: 'Oop...',
+                text: 'Something went wrong, Please Try again.',
+        
+              })
             console.error(err)
         }
-
     }
     if (isPrefetch) {
-        return <></>
+        return <><Loading open={isPrefetch} /></>
     }
     return (
         <>
