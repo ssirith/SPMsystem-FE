@@ -23,14 +23,23 @@
   min-height: 100vh !important;
   min-width: 100vw !important;
 }
-
+.background-login{
+  background-image: url(/image/bg-01.png)!important;
+  background-size: cover;
+  height: 100%;
+  width: auto;
+  
+}
 /* .App-logo {
   height: 40vmin;
   pointer-events: none;
 } */
 .no-bg{
-  background-color: white;
+  background-color: white !important;
   border: none;
+}
+.no-edge{
+  border-radius: 20px!important;
 }
 .primary {
   color: #336699;
