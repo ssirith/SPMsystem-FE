@@ -65,10 +65,6 @@ export default function AssignmentTable(props) {
         title: 'Oop...',
         text: 'Please create project group before go to this page or contract the developers.',
       })
-      // alert(
-      //   "Please create project group before go to this page or contract the developers."
-      // )
-      navigate("/main")
       console.log(err)
     }
   })
@@ -201,10 +197,26 @@ export default function AssignmentTable(props) {
         { headers }
       )
       if (response.status === 200) {
-        alert("Success")
-        window.location.reload()
+        Swal.fire({
+          icon: 'success',
+          title: 'Save!',
+          text: 'Success.',
+          timer: 2000,
+          showCancelButton: false,
+          showConfirmButton: false
+        })
+
+        setTimeout(() => {
+          window.location.reload()
+        }, 2000);
       }
     } catch (err) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oop...',
+        text: 'Something went wrong, Please Try again.',
+      })
+      navigate("/main")
       console.log(err)
     }
   }
@@ -212,7 +224,11 @@ export default function AssignmentTable(props) {
     if (selectedFile.length != 0) {
       upLoad()
     } else {
-      alert("No File selected, please select at least one file before submit")
+      Swal.fire({
+        icon: 'error',
+        title: 'Oop...',
+        text: 'No File selected, please select at least one file before submit.',
+      })
     }
   }
 
@@ -236,15 +252,15 @@ export default function AssignmentTable(props) {
             assignment.status.status === "Submitted" ? (
               <FiberManualRecordIcon className="successStatus" />
             ) : (
-              <FiberManualRecordIcon className="warning" />
-            )
+                <FiberManualRecordIcon className="warning" />
+              )
           ) : (
-            <FiberManualRecordIcon
-              color={
-                dayjs().isBefore(dueDate, thisDay) ? "disabled" : "secondary"
-              }
-            />
-          )}
+              <FiberManualRecordIcon
+                color={
+                  dayjs().isBefore(dueDate, thisDay) ? "disabled" : "secondary"
+                }
+              />
+            )}
         </td>{" "}
         <td width="30%">{`Due ${dayjs(props.assignment.date_time).format(
           "YYYY MMMM, D / HH:mm A"
@@ -253,8 +269,8 @@ export default function AssignmentTable(props) {
           {expanded ? (
             <RemoveIcon color="primary" />
           ) : (
-            <AddIcon color="primary" />
-          )}
+              <AddIcon color="primary" />
+            )}
         </td>
       </tr>
 
@@ -263,13 +279,12 @@ export default function AssignmentTable(props) {
           <td className="uk-background-muted" colSpan={7}>
             <div ref={expanderBody} className="inner uk-grid">
               <div className="uk-width-1-4 uk-text-center">
-                <small className="text-danger">{`by ${
-                  assignment.teacher.teacher_name
-                } on ${dayjs(props.assignment.created_at).format(
-                  "MMMM DD, YYYY"
-                )} At ${dayjs(props.assignment.created_at).format(
-                  "HH:mm A"
-                )} `}</small>
+                <small className="text-danger">{`by ${assignment.teacher.teacher_name
+                  } on ${dayjs(props.assignment.created_at).format(
+                    "MMMM DD, YYYY"
+                  )} At ${dayjs(props.assignment.created_at).format(
+                    "HH:mm A"
+                  )} `}</small>
               </div>
               <div className="container row">
                 <div className="col-8">
@@ -282,10 +297,10 @@ export default function AssignmentTable(props) {
                       <div className="d-flex">
                         &nbsp;
                         <p className="text-danger m-0">{` ${dayjs(
-                          props.assignment.due_date
-                        ).format("MMMM d, YYYY")} at ${dayjs(
-                          props.assignment.date_time
-                        ).format("HH:mm A")}`}</p>
+                        props.assignment.due_date
+                      ).format("MMMM d, YYYY")} at ${dayjs(
+                        props.assignment.date_time
+                      ).format("HH:mm A")}`}</p>
                       </div>
                       <p className="text-break">
                         {props.assignment.assignment_detail}
@@ -351,15 +366,15 @@ export default function AssignmentTable(props) {
                           ) : assignment.status.total_score !== null ? (
                             assignment.status.total_score
                           ) : (
+                                <div className="text-danger">
+                                  Waitng for assessment
+                                </div>
+                              )
+                        ) : (
                             <div className="text-danger">
                               Waitng for assessment
                             </div>
-                          )
-                        ) : (
-                          <div className="text-danger">
-                            Waitng for assessment
-                          </div>
-                        )}
+                          )}
                       </p>
                     )}
                   </div>
@@ -480,15 +495,15 @@ export default function AssignmentTable(props) {
                 ) : assignment.status.total_score !== null ? (
                   <Buttons className="bg-light" menu="Submit" disabled />
                 ) : (
-                  <Buttons className="bg-light" menu="Submit" disabled />
-                )
+                      <Buttons className="bg-light" menu="Submit" disabled />
+                    )
               ) : (
-                <Buttons
-                  color="primary"
-                  menu="Submit"
-                  onClick={() => handleToggle()}
-                />
-              )}
+                  <Buttons
+                    color="primary"
+                    menu="Submit"
+                    onClick={() => handleToggle()}
+                  />
+                )}
               {/* {assignment && assignment.status === null ? (
                 <Buttons
                   color="primary"

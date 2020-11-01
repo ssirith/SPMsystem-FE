@@ -127,6 +127,11 @@ export default function CreateAssignment(props) {
             })
             setIsPreFetch(false)
         } catch (err) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oop...',
+                text: 'Something went wrong, Please Try again.',
+            })
             console.log(err)
         }
     }, [])
@@ -177,7 +182,11 @@ export default function CreateAssignment(props) {
 
     const checkRole = useCallback(() => {
         if (user.user_type === "Student") {
-            alert(`You dont'have permission to go this page.`)
+            Swal.fire({
+                icon: 'error',
+                title: 'Oop...',
+                text: `You dont'have permission to go this page.`,
+            })
             navigate("/main")
         }
     })
@@ -248,8 +257,13 @@ export default function CreateAssignment(props) {
     function setModalDelete(value) {
         if (rubric !== "") {
             setIsOpenDeleteRubric(value)
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oop...',
+                text: "No rubric for deleting !!",
+            })
         }
-        else (alert("No rubric for deleting !!"))
     }
 
     async function setModalChange(value) {

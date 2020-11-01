@@ -16,11 +16,11 @@ export default function CreateRubric() {
 	const headers = {
 		Authorization: `Bearer ${Cookie.get("jwt")}`,
 		"Content-Type": "application/json",
-		accept: "application/json",	
-	  }
+		accept: "application/json",
+	}
 	const { user, setUser } = useContext(UserContext)
-// 	const userBeforeParse=JSON.parse(localStorage.getItem('user'))
-//   const  [user, setUser ] = useState(userBeforeParse)
+	// 	const userBeforeParse=JSON.parse(localStorage.getItem('user'))
+	//   const  [user, setUser ] = useState(userBeforeParse)
 	let navigate = useNavigate()
 	const [rubricTitle, setRubricTitle] = useState()
 	const handleRubricTitle = (event) => {
@@ -54,16 +54,20 @@ export default function CreateRubric() {
 
 	}
 	const checkRole = useCallback(() => {
-		if (user.user_type === "Student" ) {
-		  alert(`You dont'have permission to go this page.`)
-		  navigate("/main")
+		if (user.user_type === "Student") {
+			Swal.fire({
+				icon: 'error',
+				title: 'Oop...',
+				text: `You dont'have permission to go this page.`,
+			})
+			navigate("/main")
 		}
-	  })
-	
-	  useEffect(() => {
+	})
+
+	useEffect(() => {
 		checkRole()
-	  }, [user])
-	  
+	}, [user])
+
 	function addDetailScore(index) {
 		let newCriterions = [...criterions]
 		for (let i = 0; i < newCriterions.length; i++) {
@@ -88,13 +92,13 @@ export default function CreateRubric() {
 		setCriterions(newCriterions)
 	}
 
-	function handleRemove(event,data, index) {
+	function handleRemove(event, data, index) {
 		let newCriterions = [...criterions]
 		for (let i = 0; i < newCriterions.length; i++) {
-			if(index === i){
-				newCriterions.splice(i,1)
+			if (index === i) {
+				newCriterions.splice(i, 1)
 			}
-			
+
 		}
 		setCriterions(newCriterions)
 	}
@@ -111,7 +115,7 @@ export default function CreateRubric() {
 		return noti;
 
 	}
-	
+
 	const handleSubmit = async (event) => {
 
 		const rubric_title = rubricTitle;
@@ -120,10 +124,14 @@ export default function CreateRubric() {
 			criterions
 		}
 		if (checkInput()) {
-			alert("It's not success, Please check your input !!!")	
+			Swal.fire({
+				icon: 'error',
+				title: 'Oop...',
+				text: "It's not success, Please check your input !!!",
+			})
 		} else {
 			try {
-				const response = await axios.post(`${process.env.REACT_APP_API_BE}/rubric`, data,{headers})
+				const response = await axios.post(`${process.env.REACT_APP_API_BE}/rubric`, data, { headers })
 				if (response.status === 200) {
 					Swal.fire({
 						icon: 'success',
@@ -132,22 +140,22 @@ export default function CreateRubric() {
 						timer: 2000,
 						showCancelButton: false,
 						showConfirmButton: false
-					  })
-			  
-					  setTimeout(() => {
+					})
+
+					setTimeout(() => {
 						navigate("/createassignment")
-					  }, 2000);
+					}, 2000);
 				}
 			} catch (err) {
 				Swal.fire({
 					icon: 'error',
 					title: 'Oop...',
 					text: 'Something went wrong, Please Try again.',
-			
-				  })
+
+				})
 				console.error(err)
 			}
-		
+
 		}
 
 	}
@@ -253,7 +261,7 @@ export default function CreateRubric() {
 										<Buttons
 											menu="Delete Criterion"
 											color="secondary"
-											onClick={(event) => handleRemove(event,data, index)}
+											onClick={(event) => handleRemove(event, data, index)}
 										/>
 									</Col>
 								</Row>

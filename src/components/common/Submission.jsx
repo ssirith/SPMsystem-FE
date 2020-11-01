@@ -10,7 +10,7 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
-import FormLabel from '@material-ui/core/FormLabel';
+import Swal from 'sweetalert2'
 function Submission(props) {
     const headers = {
         Authorization: `Bearer ${Cookie.get("jwt")}`,
@@ -37,6 +37,11 @@ function Submission(props) {
                 setSend_assignment(res.data)
                 setIsPreFetch(false)
             } catch (err) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oop...',
+                    text: 'Something went wrong, Please Try again.',
+                  })
                 console.log(err)
             }
         }, [])

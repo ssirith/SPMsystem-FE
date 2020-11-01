@@ -14,6 +14,7 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Buttons from "./Buttons";
 import { Link } from "@reach/router";
+import Swal from 'sweetalert2'
 
 function SendAssignmentTable(props) {
     const useStyles = makeStyles({
@@ -70,6 +71,11 @@ function SendAssignmentTable(props) {
                 setSend_assignment(tempSend)
                 setIsPreFetch(false)
             } catch (err) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oop...',
+                    text: 'Something went wrong, Please Try again.',
+                  })
                 console.log(err)
             }
         }, [])

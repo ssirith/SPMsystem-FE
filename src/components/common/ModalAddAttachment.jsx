@@ -26,6 +26,12 @@ export default function ModalAddAttachment(props) {
       setTeachers(all.data) //[{group[{},{},{},project{},teacher{[],}]
       setSave(data.teacher)
     } catch (err) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oop...',
+        text: 'Something went wrong, Please Try again.',
+      })
+      navigate("/main")
       console.log(err)
     }
     

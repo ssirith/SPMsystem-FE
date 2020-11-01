@@ -7,7 +7,7 @@ import { navigate } from "@reach/router"
 import { useContext } from "react"
 import { UserContext } from "../UserContext"
 import Loading from "../components/common/Loading"
-
+import Swal from 'sweetalert2'
 export default function CallbackFromSSO(props) {
   const headers = {
     Authorization: `Bearer ${Cookie.get("jwt")}`,
@@ -34,10 +34,19 @@ export default function CallbackFromSSO(props) {
           navigate("/main")
         }
       } else {
-        alert("Something went wrong please contract support")
+        Swal.fire({
+          icon: 'error',
+          title: 'Oop...',
+          text: "Something went wrong please contract support.",
+        })
         navigate("/")
       }
     } catch (err) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oop...',
+        text: 'Something went wrong, Please Try again.',
+      })
       alert(err)
     }
   }, [props.location.search])

@@ -7,7 +7,7 @@ import React, {
 } from "react"
 import Cookie from "js-cookie"
 import { Link } from "@reach/router"
-import dayjs from "dayjs"
+import Swal from 'sweetalert2'
 import Buttons from "./Buttons"
 import axios from "axios"
 import AddIcon from "@material-ui/icons/Add"
@@ -38,6 +38,11 @@ export default function AnnouncementTable(props) {
       SetAnnouncement(response.data)
       setIsPreFetch(false)
     } catch (err) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oop...',
+        text: 'Something went wrong, Please Try again.',
+      })
       console.log(err)
     }
   })

@@ -13,6 +13,7 @@ import AssignmentTopicBox from "../components/common/AssignmentTopicBox"
 import AssignmentTopicBoxAA from "../components/common/AssignmentTopicBoxAA"
 import FilterAssignmentBox from "../components/common/FilterAssignmentBox"
 import Loading from "../components/common/Loading"
+import Swal from 'sweetalert2'
 export default function Assignments() {
   const headers = {
     Authorization: `Bearer ${Cookie.get("jwt")}`,
@@ -49,10 +50,10 @@ export default function Assignments() {
   const [search, setSearch] = useState("")
   const fetchData = useCallback(async () => {
     try {
-      
+
       setIsPreFetch(true)
       const response = await axios.get(
-        `${process.env.REACT_APP_API_BE}/assignments`,{headers}
+        `${process.env.REACT_APP_API_BE}/assignments`, { headers }
       )
       // console.log('res data',response.data)
       const temp = []
@@ -61,37 +62,42 @@ export default function Assignments() {
         // console.log('temp',temp)
       })
       sortAssignments(temp)
-      const ass = await axios.get(`${process.env.REACT_APP_API_BE}/assignments`,{headers})
-      const tch = await axios.get(`${process.env.REACT_APP_API_BE}/assignments/responsible/teacher/${user.user_id}`,{headers})
+      const ass = await axios.get(`${process.env.REACT_APP_API_BE}/assignments`, { headers })
+      const tch = await axios.get(`${process.env.REACT_APP_API_BE}/assignments/responsible/teacher/${user.user_id}`, { headers })
       setTeacher_Assignments(ass.data)
       // setAa_Assignments(ass.data)
       setResponsible(tch.data)
       setIsPreFetch(false)
     } catch (err) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oop...',
+        text: 'Something went wrong, Please Try again.',
+      })
       console.log(err)
       navigate('/main')
     }
   }, [])
 
-  function sortAssignments(assignments){
-    let newAssignment=assignments
-    newAssignment.sort((a,b)=> (dayjs(b.date_time).isBefore(a.date_time)?1:-1))
+  function sortAssignments(assignments) {
+    let newAssignment = assignments
+    newAssignment.sort((a, b) => (dayjs(b.date_time).isBefore(a.date_time) ? 1 : -1))
     setSortAssignments(newAssignment)
   }
- 
+
   useEffect(() => {
     fetchData()
   }, [user])
   if (isPrefetch) {
     return <>
-    <Loading open={isPrefetch}/>
+      <Loading open={isPrefetch} />
     </>
   }
 
   return (
     <>
-    {/* {console.log('sort',sortassignments)} */}
-      {user&&user.user_type === "Student" && (
+      {/* {console.log('sort',sortassignments)} */}
+      {user && user.user_type === "Student" && (
         <div className="container mt-5">
           <div className="d-inline my-auto">
             <FiberManualRecordIcon className="successStatus" />
@@ -118,9 +124,9 @@ export default function Assignments() {
           </table>
         </div>
       )}
-      {user&&user.user_type === "Teacher" && (
+      {user && user.user_type === "Teacher" && (
         <div className="container">
-          <br/>
+          <br />
           <div className="row">
             <div className="col-12 my-3">
               <div className="row">
@@ -164,7 +170,7 @@ export default function Assignments() {
           </div>
         </div>
       )}
-      {user&&user.user_type === "AA" && (
+      {user && user.user_type === "AA" && (
         <div className="container">
           <div className="row">
             <div className="col-12 my-3">
@@ -204,6 +210,6 @@ export default function Assignments() {
         </div>
       )}
     </>
-  
+
   )
 }

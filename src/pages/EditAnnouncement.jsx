@@ -65,6 +65,11 @@ export default function CreateAnnouncement() {
             setAnnoucement_Description(resposne.data.announcement_detail)
             setIsPreFetch(false)
         } catch (err) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oop...',
+                text: 'Something went wrong, Please Try again.',
+            })
             console.log(err)
         }
     }, [])
@@ -74,7 +79,11 @@ export default function CreateAnnouncement() {
     }, [])
     const checkRole = useCallback(() => {
         if (user.user_type === "Student") {
-            alert(`You dont'have permission to go this page.`)
+            Swal.fire({
+                icon: 'error',
+                title: 'Oop...',
+                text: `You dont'have permission to go this page.`,
+            })
             navigate("/main")
         }
     })

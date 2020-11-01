@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useContext } from "react"
 import Cookie from "js-cookie"
 import { Modal } from "react-bootstrap"
-import Buttons from "./Buttons"
+import Swal from 'sweetalert2'
 import Inputtext from "./Inputtext"
 import axios from "axios"
 import { useEffect } from "react"
@@ -56,6 +56,11 @@ export default function ModalComponentMember(props) {
       }
       setIsPreFetch(false)
     } catch (err) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oop...',
+        text: 'Something went wrong, Please Try again.',
+      })
       console.log(err)
     }
   }, [])

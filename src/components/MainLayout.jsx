@@ -5,7 +5,7 @@ import Sidebar from "./common/Sidebar"
 import { navigate } from "@reach/router"
 import axios from "axios"
 import { UserContext } from "../UserContext"
-
+import Swal from 'sweetalert2'
 export default function MainLayout(props) {
   const { component: Child } = props
   const headers = {
@@ -31,6 +31,11 @@ export default function MainLayout(props) {
         navigate("/")
       }
     } catch (err) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oop...',
+        text: 'Something went wrong, Please Try again.',
+      })
       console.log(err)
     }
   })

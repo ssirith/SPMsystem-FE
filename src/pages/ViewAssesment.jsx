@@ -13,6 +13,8 @@ import axios from "axios"
 import Buttons from "../components/common/Buttons"
 import { Container, Row, Col } from 'reactstrap';
 import Loading from "../components/common/Loading"
+import Swal from 'sweetalert2'
+
 export default function ViewAssesment() {
   const headers = {
     Authorization: `Bearer ${Cookie.get("jwt")}`,
@@ -52,7 +54,7 @@ export default function ViewAssesment() {
     try {
       setIsPreFetch(true)
       const response = await axios.get(
-        `${process.env.REACT_APP_API_BE}/assessment/${id}/${project_id}`,{headers}
+        `${process.env.REACT_APP_API_BE}/assessment/${id}/${project_id}`, { headers }
       )
       if (response.status === 200) {
         loopCriterions(response.data.criterions)
@@ -61,6 +63,11 @@ export default function ViewAssesment() {
         setIsPreFetch(false)
       }
     } catch (err) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oop...',
+        text: 'Something went wrong, Please Try again.',
+      })
       console.log(err)
     }
   }, [])
@@ -99,7 +106,11 @@ export default function ViewAssesment() {
 
   const checkRole = useCallback(() => {
     if (user.user_type === "Student" || user.user_type === "Teacher") {
-      alert(`You dont'have permission to go this page.`)
+      Swal.fire({
+        icon: 'error',
+        title: 'Oop...',
+        text: `You dont'have permission to go this page.`,
+      })
       navigate("/main")
     }
   })
@@ -108,7 +119,7 @@ export default function ViewAssesment() {
     checkRole()
   }, [user])
   if (isPrefetch) {
-    return <><Loading open={isPrefetch}/>/</>
+    return <><Loading open={isPrefetch} />/</>
   }
   return (
     <>
@@ -267,7 +278,7 @@ export default function ViewAssesment() {
                       <b>{responsible.teacher_name}</b>
                     </Col>
                   </Row>
-                  <br/>
+                  <br />
                   {/* <div
                     className="col-12"
                   // style={{ border: "3px solid purple" }}
@@ -291,8 +302,8 @@ export default function ViewAssesment() {
                       )
                       return (
                         <>
-                          <Row  style={{ marginLeft: 78 }}>
-                            <Col sm={3}  style={{ marginTop: 4 }}>
+                          <Row style={{ marginLeft: 78 }}>
+                            <Col sm={3} style={{ marginTop: 4 }}>
                               <div>
                                 <p>{criteria.criteria_name}</p>
                               </div>

@@ -3,12 +3,10 @@ import Cookie from 'js-cookie'
 import BreadcrumbNav from "../components/common/BreadcrumbNav"
 import { Link, useParams } from "@reach/router"
 import Boxitem from "../components/common/Boxitem"
-import Membersbox from "../components/common/Membersbox"
 import Topicbox from "../components/common/Topicbox"
-import Button from "../components/common/Buttons"
 import Buttons from "../components/common/Buttons"
 import axios from "axios"
-import Inputtext from "../components/common/Inputtext"
+import Swal from 'sweetalert2'
 import MyteamMember from "../components/common/MyteamMember"
 import MyteamAdvisor from "../components/common/MyteamAdvisor"
 import { UserContext } from "../UserContext"
@@ -35,6 +33,11 @@ export default function Otherteam(props) {
       setGroup(data.data)
       setIsPreFetch(false)
     } catch (err) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oop...',
+        text: 'Something went wrong, Please Try again.',
+      })
       console.log(err)
     }
   }, [])

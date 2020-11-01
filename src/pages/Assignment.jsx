@@ -14,6 +14,8 @@ import Submission from "../components/common/Submission"
 import { Table } from "react-bootstrap"
 import { UserContext } from "../UserContext"
 import Loading from "../components/common/Loading"
+import Swal from 'sweetalert2'
+
 const useStyles = makeStyles(
     {
         root: {
@@ -97,6 +99,11 @@ export default function Assignment(props) {
             setRubric(criterions)
             setIsPreFetch(false)
         } catch (err) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oop...',
+                text: 'Something went wrong, Please Try again.',
+              })
             console.log(err)
         }
     }, [])
@@ -105,7 +112,11 @@ export default function Assignment(props) {
     }, [])
     const checkRole = useCallback(() => {
         if (user && user.user_type === "Student") {
-            alert(`You dont'have permission to go this page.`)
+            Swal.fire({
+                icon: 'error',
+                title: 'Oop...',
+                text: `You dont'have permission to go this page.`,
+              })
             navigate("/main")
         }
     })

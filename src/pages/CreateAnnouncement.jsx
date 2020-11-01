@@ -49,7 +49,11 @@ export default function CreateAnnouncement() {
     const [today, setDate] = useState(new Date())
     const checkRole = useCallback(() => {
         if (user&&user.user_type === "Student") {
-            alert(`You dont'have permission to go this page.`)
+            Swal.fire({
+                icon: 'error',
+                title: 'Oop...',
+                text: `You dont'have permission to go this page.`,
+              })
             navigate("/main")
         }
     })

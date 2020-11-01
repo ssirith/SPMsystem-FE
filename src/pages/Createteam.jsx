@@ -43,6 +43,11 @@ export default function Createteam() {
       setStudents(all.data)
       setIsPreFetch(false)
     } catch (err) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oop...',
+        text: 'Something went wrong, Please Try again.',
+      })
       console.log(err)
     }
   }, [])

@@ -44,7 +44,11 @@ export default function Setting() {
   }
   const checkRole = useCallback(() => {
     if (user.user_type === "Student" || user.user_type === "Teacher") {
-      alert(`You dont'have permission to go this page.`)
+      Swal.fire({
+        icon: 'error',
+        title: 'Oop...',
+        text: `You dont'have permission to go this page.`,
+      })
       navigate("/main")
     }
   })
@@ -69,6 +73,11 @@ export default function Setting() {
       setSettingList(temp)
       setIsPreFetch(false)
     } catch (err) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oop...',
+        text: 'Something went wrong, Please Try again.',
+      })
       console.log(err)
     }
   })
@@ -85,16 +94,28 @@ export default function Setting() {
     if (
       settingDisplay.number_of_member_min > settingDisplay.number_of_member_max
     ) {
-      alert("The number is incorrect")
+      Swal.fire({
+        icon: 'error',
+        title: 'Oop...',
+        text: "The number is incorrect",
+      })
     } else if (
       settingDisplay.number_of_member_max < settingDisplay.number_of_member_min
     ) {
-      alert("The number is incorrect")
+      Swal.fire({
+        icon: 'error',
+        title: 'Oop...',
+        text: "The number is incorrect",
+      })
     } else if (
       settingDisplay.number_of_member_max <= 0 ||
       settingDisplay.number_of_member_min <= 0
     ) {
-      alert("The number is incorrect")
+      Swal.fire({
+        icon: 'error',
+        title: 'Oop...',
+        text: "The number is incorrect",
+      })
     }
 
     try {

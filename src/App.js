@@ -26,7 +26,7 @@ import { SettingYearContext } from "./SettingYearContext"
 import { SettingContext } from "./SettingContext"
 import axios from "axios"
 import CallbackFromSSO from "./pages/CallbackFromSSO"
-
+import Swal from 'sweetalert2'
 function App() {
   const [settingYearContext, setSettingYearContext] = useState(dayjs().format('YYYY') - 1)// อิงตาม ปฏิทิน 2020
   // const [settingYearContext, setSettingYearContext] = useState(dayjs().format('2019'))
@@ -41,24 +41,24 @@ function App() {
   )
   // const { user, setUser } = useContext(UserContext) 
   const [user, setUser] = useState(null)
-  
-  
-    // id: "1", 
-    // name: "Siam Yamsaengsung", 
-    // role: "teacher",
 
-    // id: "11", 
-    // name: "Pornthip Yamsaengsung", 
-    // role: "aa",
 
-    // id: "60130500114", 
-    // name: "Suthiwat Sirithanakom",
-    // role: "Student", 
+  // id: "1", 
+  // name: "Siam Yamsaengsung", 
+  // role: "teacher",
 
-    // 1 Siam Yamsaengsung
-    // 2 Umaporn Supasitthimethee
-    // 9 Pichet Limvachiranan
-  
+  // id: "11", 
+  // name: "Pornthip Yamsaengsung", 
+  // role: "aa",
+
+  // id: "60130500114", 
+  // name: "Suthiwat Sirithanakom",
+  // role: "Student", 
+
+  // 1 Siam Yamsaengsung
+  // 2 Umaporn Supasitthimethee
+  // 9 Pichet Limvachiranan
+
 
   const userValue = useMemo(() => ({ user, setUser }), [user, setUser])
 
@@ -75,6 +75,11 @@ function App() {
         setSettingContext({ ...response.data, student_one_more_group: false })
       }
     } catch (err) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oop...',
+        text: 'Something went wrong, Please Try again.',
+      })
       console.log(err)
     }
   })
@@ -88,9 +93,9 @@ function App() {
       <SettingContext.Provider value={settingValue}>
         <UserContext.Provider value={userValue}>
           <Router>
-            <CallbackFromSSO path='/checkAuth'/>
+            <CallbackFromSSO path='/checkAuth' />
             <Landing
-            path="/"/>
+              path="/" />
             <MainLayout
               path="/main"
               component={Myteam}

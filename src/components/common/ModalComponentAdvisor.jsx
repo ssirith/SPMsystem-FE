@@ -2,7 +2,7 @@ import React, { useState, useCallback } from "react"
 import Cookie from "js-cookie"
 import { useParams } from "@reach/router"
 import { Modal } from "react-bootstrap"
-import Buttons from "./Buttons"
+import Swal from 'sweetalert2'
 import Inputtext from "./Inputtext"
 import axios from "axios"
 import { useEffect } from "react"
@@ -26,6 +26,11 @@ export default function ModalComponentAdvisor(props) {
       setTeachers(all.data) //[{group[{},{},{},project{},teacher{[],}]
       setSave(data.teacher)
     } catch (err) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oop...',
+        text: 'Something went wrong, Please Try again.',
+      })
       console.log(err)
     }
   }, [])

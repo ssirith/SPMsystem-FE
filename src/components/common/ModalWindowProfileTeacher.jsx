@@ -36,6 +36,11 @@ export default function ModalWindowProfileProfileTeacher(props) {
             }
             setIsPreFetch(false)
         } catch (err) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oop...',
+                text: 'Something went wrong, Please Try again.',
+              })
             console.log(err)
         }
 
@@ -66,7 +71,11 @@ export default function ModalWindowProfileProfileTeacher(props) {
             setImage(input)
         }
         else {
-            alert("It's not a image, please check your file.")
+            Swal.fire({
+                icon: 'error',
+                title: 'Oop...',
+                text: "It's not a image, please check your file.",
+              })
             return (props.setIsOpen(false))
         }
     }

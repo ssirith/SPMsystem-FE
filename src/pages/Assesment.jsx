@@ -15,7 +15,7 @@ import { Table } from "react-bootstrap"
 import { Container, Row, Col } from "reactstrap"
 import Textarea from "../components/common/Textarea"
 import Loading from "../components/common/Loading"
-
+import Swal from 'sweetalert2'
 export default function Assesment(props) {
   const { user, setUser } = useContext(UserContext)
   //     const userBeforeParse=JSON.parse(localStorage.getItem('user'))
@@ -123,6 +123,11 @@ export default function Assesment(props) {
       }
       setIsPreFetch(false)
     } catch (err) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oop...',
+        text: 'Something went wrong, Please Try again.',
+      })
       console.log(err)
     }
   }, [])
@@ -134,7 +139,11 @@ export default function Assesment(props) {
   const checkRole = useCallback(() => {
     if (user) {
       if ((user && user.user_type === "Student") || user.user_type === "AA") {
-        alert(`You dont'have permission to go this page.`)
+        Swal.fire({
+          icon: 'error',
+          title: 'Oop...',
+          text: `You dont'have permission to go this page.`
+        })
         navigate("/main")
       }
     }
@@ -213,15 +222,33 @@ export default function Assesment(props) {
           data, { headers }
         )
         if (response.status === 200) {
-          alert("Success.")
-          navigate(`/assignments/${assignment_id}`)
+          Swal.fire({
+            icon: 'success',
+            title: 'Save!',
+            text: 'Success.',
+            timer: 2000,
+            showCancelButton: false,
+            showConfirmButton: false
+          })
+
+          setTimeout(() => {
+            navigate(`/assignments/${props.id}`)
+          }, 2000);
         }
       } catch (err) {
-        alert("It's not success, Please check your input")
+        Swal.fire({
+          icon: 'error',
+          title: 'Oop...',
+          text: 'Something went wrong, Please Try again.',
+        })
         console.error(err)
       }
     } else {
-      alert("Check your input!!")
+      Swal.fire({
+        icon: 'error',
+        title: 'Oop...',
+        text: "Check your input!!",
+      })
     }
   }
   if (isPreFetch) {

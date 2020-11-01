@@ -3,6 +3,7 @@ import Cookie from 'js-cookie'
 import Carditem from "../components/common/Carditem"
 import axios from "axios"
 import Loading from "../components/common/Loading"
+import Swal from 'sweetalert2'
 
 export default function Teams() {
   const headers = {
@@ -19,6 +20,11 @@ export default function Teams() {
       setGroup(data.data) // AllProject
       setIsPreFetch(false)
     } catch (err) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oop...',
+        text: 'Something went wrong, Please Try again.',
+      })
       console.log(err)
     }
   }, [])

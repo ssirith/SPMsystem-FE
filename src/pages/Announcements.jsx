@@ -3,7 +3,7 @@ import Cookie from 'js-cookie'
 import AnnoucementTable from "../components/common/AnnoucementTable"
 import { UserContext } from "../UserContext"
 import { Link, useParams } from "@reach/router"
-import { makeStyles } from "@material-ui/core/styles"
+import Swal from 'sweetalert2'
 import Buttons from "../components/common/Buttons"
 import axios from "axios"
 // import { Container} from "@material-ui/core"
@@ -28,6 +28,11 @@ export default function Announcements() {
       sortAnnouncement(resposne.data)
       setIsPreFetch(false)
     } catch (err) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oop...',
+        text: 'Something went wrong, Please Try again.',
+      })
       console.log(err)
     }
   }, [])

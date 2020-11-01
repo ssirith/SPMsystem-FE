@@ -63,6 +63,11 @@ export default function CreateAssignment() {
             setShowAllRubric(rub.data)// ได้ array ของ rubric ทั้งหมด
             setIsPreFetch(false)
         } catch (err) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oop...',
+                text: 'Something went wrong, Please Try again.',
+            })
             console.log(err)
         }
     }, [])
@@ -116,7 +121,11 @@ export default function CreateAssignment() {
 
     const checkRole = useCallback(() => {
         if (user && user.user_type === "Student") {
-            alert(`You dont'have permission to go this page.`)
+            Swal.fire({
+                icon: 'error',
+                title: 'Oop...',
+                text: `You dont'have permission to go this page.`,
+            })
             navigate("/main")
         }
     })
@@ -165,8 +174,14 @@ export default function CreateAssignment() {
     function setEdit(value) {
         if (value) {
             navigate(`/editrubric/${value}`)
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oop...',
+                text: "No rubric for editing !!",
+            })
         }
-        else (alert("No rubric for editing !!"))
+
     }
 
 
@@ -174,8 +189,13 @@ export default function CreateAssignment() {
     function setModalDelete(value) {
         if (rubric !== "") {
             setIsOpenDeleteRubric(value)
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oop...',
+                text: "No rubric for deleting !!",
+            })
         }
-        else (alert("No rubric for deleting !!"))
     }
 
     function handleClickAdd() {

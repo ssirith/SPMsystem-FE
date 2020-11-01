@@ -101,6 +101,11 @@ export default function EditRubric(props) {
 				setRealCriterions(realCriterions)
 				setIsPreFetch(false)
 			} catch (err) {
+				Swal.fire({
+					icon: 'error',
+					title: 'Oop...',
+					text: 'Something went wrong, Please Try again.',
+				})
 				console.log(err)
 			}
 		},
@@ -112,7 +117,11 @@ export default function EditRubric(props) {
 
 	const checkRole = useCallback(() => {
 		if (user.user_type === "Student") {
-			alert(`You dont'have permission to go this page.`)
+			Swal.fire({
+				icon: 'error',
+				title: 'Oop...',
+				text: `You dont'have permission to go this page.`,
+			})
 			navigate("/main")
 		}
 	})
@@ -209,7 +218,11 @@ export default function EditRubric(props) {
 			create_criterions
 		}
 		if (checkInput()) {
-			alert("It's not success, Please check your input !!!")
+			Swal.fire({
+				icon: 'error',
+				title: 'Oop...',
+				text: "It's not success, Please check your input !!!",
+			})
 
 		} else {
 			try {
@@ -227,8 +240,6 @@ export default function EditRubric(props) {
 					setTimeout(() => {
 						navigate(`/createassignment`)
 					}, 2000);
-					alert("Edit Success.")
-					navigate("/createassignment")
 
 				}
 			} catch (err) {

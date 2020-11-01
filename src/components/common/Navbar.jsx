@@ -4,7 +4,7 @@ import NotificationsIcon from "@material-ui/icons/Notifications"
 import { Link, navigate } from "@reach/router"
 import { UserContext } from "../../UserContext"
 import Dropdown from "react-bootstrap/Dropdown"
-import { DropdownButton, Table } from "react-bootstrap"
+import Swal from 'sweetalert2'
 import Badge from "@material-ui/core/Badge"
 import { DropdownItem } from "react-bootstrap"
 import { Navbar, Nav, NavDropdown } from "react-bootstrap"
@@ -53,6 +53,11 @@ export default function Navbars() {
         )
       }
     } catch (err) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oop...',
+        text: 'Something went wrong, Please Try again.',
+      })
       console.log(err)
     }
   }, [])
@@ -129,6 +134,11 @@ export default function Navbars() {
         readNotification = []
       }
     } catch (err) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oop...',
+        text: 'Something went wrong, Please Try again.',
+      })
       console.log(err)
     }
   }
@@ -158,6 +168,11 @@ export default function Navbars() {
         readNotification = []
       }
     } catch (err) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oop...',
+        text: 'Something went wrong, Please Try again.',
+      })
       console.log(err)
     }
   }
@@ -186,6 +201,11 @@ export default function Navbars() {
         readNotification = []
       }
     } catch (err) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oop...',
+        text: 'Something went wrong, Please Try again.',
+      })
       console.log(err)
     }
   }
