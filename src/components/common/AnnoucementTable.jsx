@@ -109,7 +109,7 @@ export default function AnnouncementTable(props) {
                                 <FolderIcon className="primary" />
                                 &nbsp;
                                 <a
-                                  href={`http://127.0.0.1:8000/storage/${att.announcement_file}`}
+                                  href={`https://seniorprojectmanagement.tk/storage/${att.announcement_file}`}
                                   download
                                   target="_blank"
                                 >
@@ -151,7 +151,7 @@ export default function AnnouncementTable(props) {
                               <div key={index}>
                                 <FolderIcon className="primary" />
                                 <a
-                                  href={`http://127.0.0.1:8000/storage/${att.announcement_file}`}
+                                  href={`https://seniorprojectmanagement.tk/storage/${att.announcement_file}`}
                                   download
                                   target="_blank"
                                 >

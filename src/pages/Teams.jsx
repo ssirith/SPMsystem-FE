@@ -16,7 +16,7 @@ export default function Teams() {
   const fetchData = useCallback(async () => {
     try {
       setIsPreFetch(true)
-      const data = await axios.get(`http://127.0.0.1:8000/api/projects`, { headers }) //[]
+      const data = await axios.get(`https://seniorprojectmanagement.tk/api/projects`, { headers }) //[]
       setGroup(data.data) // AllProject
       setIsPreFetch(false)
     } catch (err) {

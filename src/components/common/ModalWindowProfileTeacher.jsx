@@ -51,7 +51,7 @@ export default function ModalWindowProfileProfileTeacher(props) {
 
     function imageHandler() {
         if (checkImage) {
-            return (`http://127.0.0.1:8000/storage/images/${user.user_id}.jpg`)
+            return (`https://seniorprojectmanagement.tk/storage/images/${user.user_id}.jpg`)
         } else {
             return (`/image/userimage.png`)
         }

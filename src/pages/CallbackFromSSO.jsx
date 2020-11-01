@@ -25,8 +25,8 @@ export default function CallbackFromSSO(props) {
         }
         const response = await axios.post(
           `${process.env.REACT_APP_API_BE}/sso/check-authentication`,
-          auth,
-          { headers }
+          auth
+          // { headers }
         )
         if (response.status === 200) {
           setUser(response.data)
@@ -47,7 +47,7 @@ export default function CallbackFromSSO(props) {
         title: 'Oop...',
         text: 'Something went wrong, Please Try again.',
       })
-      alert(err)
+      console.log(err)
     }
   }, [props.location.search])
 

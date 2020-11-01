@@ -19,7 +19,7 @@ export default function Landing() {
     //       alignItems="center">
     //       <div>
     //         <p style={{ fontSize: 100 }} className="primary">SPM System</p>
-    //         <a href="http://std-sso-fe.sit.kmutt.ac.th/login?response_type=code&client_id=jxZ1W&redirect_uri=http://localhost:3000/checkAuth">
+    //         <a href="https://std-sso-fe.sit.kmutt.ac.th/login?response_type=code&client_id=jxZ1W&redirect_uri=https://localhost:3000/checkAuth">
     //           <Buttons menu="Login" fullWidth={true} className="btn-primary " />
     //         </a>
     //       </div>
@@ -29,7 +29,7 @@ export default function Landing() {
     //       <div>
     //         <p style={{ fontSize: 100 }} className="primary">SPM System</p>
 
-    //         <a href="http://std-sso-fe.sit.kmutt.ac.th/login?response_type=code&client_id=jxZ1W&redirect_uri=http://localhost:3000/checkAuth">
+    //         <a href="https://std-sso-fe.sit.kmutt.ac.th/login?response_type=code&client_id=jxZ1W&redirect_uri=https://localhost:3000/checkAuth">
     //           <Buttons menu="Login" fullWidth={true} className="btn-primary " />
     //         </a>
 
@@ -53,7 +53,7 @@ export default function Landing() {
     //       <p style={{ fontSize: 100 }} className="primary">SPM Systems</p>
     //     </div>
     //     <div style={{ margin: '10px', width: '80%' }}>
-    //       <a href="https://std-sso-fe.sit.kmutt.ac.th/login?response_type=code&client_id=CslkDUZS&redirect_uri=http://localhost:3000/checkAuth&state=SPMlogin">
+    //       <a href="https://std-sso-fe.sit.kmutt.ac.th/login?response_type=code&client_id=CslkDUZS&redirect_uri=https://localhost:3000/checkAuth&state=SPMlogin">
     //         <Button variant="contained" color="primary" fullWidth >
     //           Login via SSO
     //         </Button>
@@ -65,7 +65,7 @@ export default function Landing() {
       
         <img style={{marginTop:'200px'}} src="/image/logo@3x.png" height="30%" width="auto" />
         <div className='w-50 mx-auto'>
-           <a href="https://std-sso-fe.sit.kmutt.ac.th/login?response_type=code&client_id=CslkDUZS&redirect_uri=http://localhost:3000/checkAuth&state=SPMlogin">
+           <a href="https://std-sso-fe.sit.kmutt.ac.th/login?response_type=code&client_id=CslkDUZS&redirect_uri=https://spm-systems.netlify.app/checkAuth&state=SPMlogin">
              <Button variant="contained" className='no-bg no-edge' fullWidth >
                Login via SSO
              </Button>

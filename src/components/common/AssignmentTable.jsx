@@ -319,7 +319,7 @@ export default function AssignmentTable(props) {
                             <FolderIcon className="primary" />
                             &nbsp;
                             <a
-                              href={`http://127.0.0.1:8000/storage/${a.attachment}`}
+                              href={`https://seniorprojectmanagement.tk/storage/${a.attachment}`}
                               download
                               target="_blank"
                             >

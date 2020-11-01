@@ -31,9 +31,9 @@ export default function Myteam() {
       setIsPreFetch(true)
       if (user&&user.user_type === "Student") {
         const dat = await axios.get(
-          `http://127.0.0.1:8000/api/group/${user.user_id}`,
+          `https://seniorprojectmanagement.tk/api/group/${user.user_id}`,
           { headers }
-        ) //[]http://127.0.0.1:8000/api/projects
+        ) //[]https://127.0.0.1:8000/api/projects
         setStdGroup(dat.data)
         const { data } = await axios.get(
           `${process.env.REACT_APP_API_BE}/students`,

@@ -65,6 +65,9 @@ function App() {
   const fetchData = useCallback(async () => {
     try {
       const response = await axios.get(`${process.env.REACT_APP_API_BE}/config/${settingYearContext}`)
+      // const test = await axios.get('https://jsonplaceholder.typicode.com/todos/1')
+      console.log('response',response)
+      // console.log('test',test)
       // console.log('response true false from database',response.data.student_one_more_group)
       // setSettingContext(response.data)
       if (parseInt(response.data.student_one_more_group)) {

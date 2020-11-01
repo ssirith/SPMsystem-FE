@@ -320,7 +320,7 @@ export default function Assesment(props) {
                       {isAssesment.send_assignment.map((a, index) => {
                         return (
                           <a
-                            href={`http://127.0.0.1:8000/storage/${a.send_assignment}`}
+                            href={`https://seniorprojectmanagement.tk/storage/${a.send_assignment}`}
                             download
                             target="_blank"
                           >

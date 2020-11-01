@@ -194,7 +194,7 @@ export default function ViewAssesment() {
                     return (
                       <>
                         <a
-                          href={`http://127.0.0.1:8000/storage/${file.send_assignment}`}
+                          href={`https://seniorprojectmanagement.tk/storage/${file.send_assignment}`}
                           download
                           target="_blank">
                           <FolderIcon className="primary" />
