@@ -37,14 +37,14 @@ export default function CreateAnnouncement() {
         Authorization: `Bearer ${Cookie.get("jwt")}`,
         "Content-Type": "application/json",
         accept: "application/json",
-      }
+    }
     const classes = useStyles()
     const inputRef = useRef()
     let navigate = useNavigate()
     const { id } = useParams()
     const { user, setUser } = useContext(UserContext)
-//     const userBeforeParse=JSON.parse(localStorage.getItem('user'))
-//   const  [user, setUser ] = useState(userBeforeParse)
+    //     const userBeforeParse=JSON.parse(localStorage.getItem('user'))
+    //   const  [user, setUser ] = useState(userBeforeParse)
     const [announcement, setAnnouncement] = useState()
     const [today, setDate] = useState(new Date())
     const [attachmentFromBE, setAttachmentFromBE] = useState([])
@@ -56,13 +56,17 @@ export default function CreateAnnouncement() {
     const [isPrefetch, setIsPreFetch] = useState(false)
 
     const fetchData = useCallback(async () => {
-        setIsPreFetch(true)
-        const resposne = await axios.get(`${process.env.REACT_APP_API_BE}/announcement/${id}`,{headers})
-        setAnnouncement(resposne.data)// ได้ array ของ rubric ทั้งหมด
-        setAttachmentFromBE(resposne.data.attachment)
-        setAnnoucement_Title(resposne.data.announcement_title)
-        setAnnoucement_Description(resposne.data.announcement_detail)
-        setIsPreFetch(false)
+        try {
+            setIsPreFetch(true)
+            const resposne = await axios.get(`${process.env.REACT_APP_API_BE}/announcement/${id}`, { headers })
+            setAnnouncement(resposne.data)// ได้ array ของ rubric ทั้งหมด
+            setAttachmentFromBE(resposne.data.attachment)
+            setAnnoucement_Title(resposne.data.announcement_title)
+            setAnnoucement_Description(resposne.data.announcement_detail)
+            setIsPreFetch(false)
+        } catch (err) {
+            console.log(err)
+        }
     }, [])
 
     useEffect(() => {
@@ -82,7 +86,7 @@ export default function CreateAnnouncement() {
     function handleAnnouncementTitle(event) {
         setAnnoucement_Title(event.target.value)
     }
-  
+
     function handleDescription(event) {
         setAnnoucement_Description(event.target.value)
     }
@@ -102,7 +106,7 @@ export default function CreateAnnouncement() {
         selectAttachment.splice(index, 1)
         setSelectAttachment([...selectAttachment])
     }
-   
+
     function deleteFilesFromBE(data) {
         const newDeleteSeletedFile = [...delete_attachment]
         const newAttachmentFromBE = [...attachmentFromBE]
@@ -115,7 +119,7 @@ export default function CreateAnnouncement() {
         setAttachmentFromBE(seletedFile) //แทนที่ค่าเก่าใน BE ด้วยค่า selectfile ใหม่
         setDelete_attachment(newDeleteSeletedFile)
     }
- 
+
     async function handleSubmit() {
         const data = new FormData();
         data.append("announcement_id", parseInt(id))
@@ -139,7 +143,7 @@ export default function CreateAnnouncement() {
             data.append('delete_attachment[]', [])
         }
         try {
-            const response = await axios.post(`${process.env.REACT_APP_API_BE}/announcement/edit`, data,{headers})
+            const response = await axios.post(`${process.env.REACT_APP_API_BE}/announcement/edit`, data, { headers })
             if (response.status === 200) {
                 Swal.fire({
                     icon: 'success',
@@ -148,19 +152,19 @@ export default function CreateAnnouncement() {
                     timer: 2000,
                     showCancelButton: false,
                     showConfirmButton: false
-                  })
-          
-                  setTimeout(() => {
+                })
+
+                setTimeout(() => {
                     navigate("/announcements")
-                  }, 2000);
+                }, 2000);
             }
         } catch (err) {
             Swal.fire({
                 icon: 'error',
                 title: 'Oop...',
                 text: 'Something went wrong, Please Try again.',
-        
-              })
+
+            })
             console.error(err)
         }
     }
@@ -221,7 +225,7 @@ export default function CreateAnnouncement() {
                         <Col sm={1.5}>
                             Attachment:
                 </Col>
-                        <Col style={{ marginLeft: 390}}>
+                        <Col style={{ marginLeft: 390 }}>
                             <Buttons
                                 menu="Add"
                                 color="primary"
@@ -266,34 +270,34 @@ export default function CreateAnnouncement() {
                                                     return (<></>)
                                                 }
                                             })}
-                                             {selectAttachment.map((file, index) => {
-                                            if (file) {
-                                                return (
-                                                    <>
-                                                        <li key={index}>
-                                                            &nbsp;
+                                            {selectAttachment.map((file, index) => {
+                                                if (file) {
+                                                    return (
+                                                        <>
+                                                            <li key={index}>
+                                                                &nbsp;
                                                             <FolderIcon className="primary" />
                                                             &nbsp;
                                                             {file.name.substring(0, 25)}
                                                             &nbsp;
                                                             <button
-                                                                onClick={() => {
-                                                                    deleteSelectFile(index)
-                                                                }}
-                                                            >
-                                                                <DeleteIcon
-                                                                    fontSize="small"
-                                                                    color="error"
-                                                                />
-                                                            </button>
-                                                        </li>
-                                                        <br />
-                                                    </>
-                                                )
-                                            } else {
-                                                return <></>
-                                            }
-                                        })}
+                                                                    onClick={() => {
+                                                                        deleteSelectFile(index)
+                                                                    }}
+                                                                >
+                                                                    <DeleteIcon
+                                                                        fontSize="small"
+                                                                        color="error"
+                                                                    />
+                                                                </button>
+                                                            </li>
+                                                            <br />
+                                                        </>
+                                                    )
+                                                } else {
+                                                    return <></>
+                                                }
+                                            })}
                                         </ul>
                                     </div>
                                 </Card.Body>

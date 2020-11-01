@@ -37,15 +37,19 @@ export default function Editteam(props) {
   const [students, setStudents] = useState([])
   const fetchData = useCallback(
     async () => {
-      setIsPreFetch(true)
-      const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/projects/${props.id}`, { headers })
-      setProject(data.project)
-      setMember(data.group)
-      setAdvisor(data.teacher)
-      setDepartment(data.project.project_department)
-      const all = await axios.get(`${process.env.REACT_APP_API_BE}/students`, { headers })
-      setStudents(all.data)
-      setIsPreFetch(false)
+      try {
+        setIsPreFetch(true)
+        const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/projects/${props.id}`, { headers })
+        setProject(data.project)
+        setMember(data.group)
+        setAdvisor(data.teacher)
+        setDepartment(data.project.project_department)
+        const all = await axios.get(`${process.env.REACT_APP_API_BE}/students`, { headers })
+        setStudents(all.data)
+        setIsPreFetch(false)
+      } catch (err) {
+        console.log(err)
+      }
     },
     [],
   )

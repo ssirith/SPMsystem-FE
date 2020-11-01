@@ -11,29 +11,33 @@ export default function ModalWindowProfileProfileTeacher(props) {
     const headers = {
         Authorization: `Bearer ${Cookie.get("jwt")}`,
         "Content-Type": "application/json",
-        accept: "application/json",      
-      }
+        accept: "application/json",
+    }
     const [image, setImage] = useState("")
     const [checkDepartment, setCheckDepartment] = useState()
     const [checkImage, setCheckImage] = useState()
     const { id } = useParams()
     const [isPreFetch, setIsPreFetch] = useState(false)
     const { user, setUser } = useContext(UserContext)
-//     const userBeforeParse=JSON.parse(localStorage.getItem('user'))
-//   const  [user, setUser ] = useState(userBeforeParse)
+    //     const userBeforeParse=JSON.parse(localStorage.getItem('user'))
+    //   const  [user, setUser ] = useState(userBeforeParse)
     let navigate = useNavigate()
     const fetchData = useCallback(async () => {
-        setIsPreFetch(true)
-        if (user.user_type === "Teacher") {
-            const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/teachers`,{headers})
-            const check = data.find((temp) => temp.teacher_id === user.user_id)
-            setCheckImage(check.image)
-        } else {
-            const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/aas`,{headers})
-            const check = data.find((temp) => temp.aa_id === user.user_id)
-            setCheckImage(check.image)
+        try {
+            setIsPreFetch(true)
+            if (user.user_type === "Teacher") {
+                const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/teachers`, { headers })
+                const check = data.find((temp) => temp.teacher_id === user.user_id)
+                setCheckImage(check.image)
+            } else {
+                const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/aas`, { headers })
+                const check = data.find((temp) => temp.aa_id === user.user_id)
+                setCheckImage(check.image)
+            }
+            setIsPreFetch(false)
+        } catch (err) {
+            console.log(err)
         }
-        setIsPreFetch(false)
 
     }, [])
     useEffect(() => {
@@ -73,7 +77,7 @@ export default function ModalWindowProfileProfileTeacher(props) {
                 const data = new FormData();//craete form
                 data.append("image", image)
                 data.append("teacher_id", teacher_id)
-                const res = await axios.post(`${process.env.REACT_APP_API_BE}/student/edit/profile/teacher`, data,{headers})
+                const res = await axios.post(`${process.env.REACT_APP_API_BE}/student/edit/profile/teacher`, data, { headers })
                 if (res.status === 200) {
                     Swal.fire({
                         icon: 'success',
@@ -82,11 +86,11 @@ export default function ModalWindowProfileProfileTeacher(props) {
                         timer: 2000,
                         showCancelButton: false,
                         showConfirmButton: false
-                      })
-              
-                      setTimeout(() => {
+                    })
+
+                    setTimeout(() => {
                         window.location.reload()
-                      }, 2000);
+                    }, 2000);
                     props.setIsOpen(false)
                 }
             }
@@ -95,7 +99,7 @@ export default function ModalWindowProfileProfileTeacher(props) {
                     icon: 'error',
                     title: 'Oop...',
                     text: 'Something went wrong, Please Try again.',
-                  })
+                })
                 console.log(err)
             }
         } else {
@@ -104,7 +108,7 @@ export default function ModalWindowProfileProfileTeacher(props) {
                 const data = new FormData();//craete form
                 data.append("image", image)
                 data.append("aa_id", aa_id)
-                const res = await axios.post(`${process.env.REACT_APP_API_BE}/student/edit/profile/aa`, data,{headers})
+                const res = await axios.post(`${process.env.REACT_APP_API_BE}/student/edit/profile/aa`, data, { headers })
                 if (res.status === 200) {
                     Swal.fire({
                         icon: 'success',
@@ -113,11 +117,11 @@ export default function ModalWindowProfileProfileTeacher(props) {
                         timer: 2000,
                         showCancelButton: false,
                         showConfirmButton: false
-                      })
-              
-                      setTimeout(() => {
+                    })
+
+                    setTimeout(() => {
                         window.location.reload()
-                      }, 2000);
+                    }, 2000);
                     props.setIsOpen(false)
                 }
             }
@@ -126,7 +130,7 @@ export default function ModalWindowProfileProfileTeacher(props) {
                     icon: 'error',
                     title: 'Oop...',
                     text: 'Something went wrong, Please Try again.',
-                  })
+                })
                 console.log(err)
             }
         }
@@ -147,7 +151,7 @@ export default function ModalWindowProfileProfileTeacher(props) {
                 </Modal.Header >
                 <Modal.Body>
                     <div className="col-12 mx-auto">
-                        
+
                         <div className="col-12 text-center">
                             <Image id="img" src={imageHandler()} className="mb-2" style={{ width: '150px', height: '50%' }} roundedCircle />
                             {" "}

@@ -37,10 +37,14 @@ export default function Createteam() {
   const [member, setMember] = useState([])
   const [advisor, setAdvisor] = useState([])
   const fetchData = useCallback(async () => {
-    setIsPreFetch(true)
-    const all = await axios.get(`${process.env.REACT_APP_API_BE}/students`, { headers })
-    setStudents(all.data)
-    setIsPreFetch(false)
+    try {
+      setIsPreFetch(true)
+      const all = await axios.get(`${process.env.REACT_APP_API_BE}/students`, { headers })
+      setStudents(all.data)
+      setIsPreFetch(false)
+    } catch (err) {
+      console.log(err)
+    }
   }, [])
   useEffect(() => {
     fetchData()

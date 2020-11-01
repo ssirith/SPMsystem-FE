@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from "react"
 import Cookie from "js-cookie"
-import {useParams} from "@reach/router"
+import { useParams } from "@reach/router"
 import { Modal } from "react-bootstrap"
 import Buttons from "./Buttons"
 import Inputtext from "./Inputtext"
@@ -12,7 +12,7 @@ export default function ModalComponentAdvisor(props) {
   const headers = {
     Authorization: `Bearer ${Cookie.get("jwt")}`,
     "Content-Type": "application/json",
-    accept: "application/json", 
+    accept: "application/json",
   }
   const [save, setSave] = useState() //เอาค่ามาจาก axios
   const [teachers, setTeachers] = useState([])
@@ -20,10 +20,14 @@ export default function ModalComponentAdvisor(props) {
   const [search, setSearch] = useState("")
   const { id } = useParams()
   const fetchData = useCallback(async () => {
-    const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/projects/${id}`,{headers})
-    const all = await axios.get(`${process.env.REACT_APP_API_BE}/teachers`,{headers})
-    setTeachers(all.data) //[{group[{},{},{},project{},teacher{[],}]
-    setSave(data.teacher)
+    try {
+      const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/projects/${id}`, { headers })
+      const all = await axios.get(`${process.env.REACT_APP_API_BE}/teachers`, { headers })
+      setTeachers(all.data) //[{group[{},{},{},project{},teacher{[],}]
+      setSave(data.teacher)
+    } catch (err) {
+      console.log(err)
+    }
   }, [])
   useEffect(() => {
     fetchData()
@@ -32,18 +36,18 @@ export default function ModalComponentAdvisor(props) {
     const temp = [...teachers] // จำลองค่าteachers เพื่อไม่ให้เกิดการเปลี่ยนแปลงโดยตรงที่ teachers
     if (save) {
       for (let i = 0; i < save.length; i++) {
-        
+
         const index = temp.findIndex(temp => temp.teacher_name === save[i].teacher_name)
         if (index > -1) {
           temp.splice(index, 1)
         }
       }
     }
-      
-      setIsFilter(
-        temp.filter(
-          tch => tch.teacher_name.toLowerCase().includes(search.toLowerCase()) )
-      )
+
+    setIsFilter(
+      temp.filter(
+        tch => tch.teacher_name.toLowerCase().includes(search.toLowerCase()))
+    )
   }, [search, teachers, save])
 
   function updateInput(e) { //เอาค่าที่แอดไปแสดง
@@ -63,12 +67,12 @@ export default function ModalComponentAdvisor(props) {
   async function handleSubmit() {
     await props.addAdvisor(save)
     if (props.setIsOpen(false)) {
-      setTimeout(()=>{
+      setTimeout(() => {
         window.location.reload()
-      },2000)
+      }, 2000)
     }
   }
-  
+
   function disSubmit() { //ฟังก์ชันเพื่อไม่ให้สามารถกดปุ่ม  submit ได้ ถ้าแอดเกินที่กำหนด
     if (save) {
       if (save.length > 2) {
@@ -113,7 +117,7 @@ export default function ModalComponentAdvisor(props) {
           onChange={(e) => setSearch(e.target.value)}
         />
         <table className="table table-striped">
-          <tbody style={{cursor: 'pointer'}}>
+          <tbody style={{ cursor: 'pointer' }}>
             {isFilter.map((tch, idx) => (
               <tr className="text-center" key={idx} onClick={() => updateInput(tch)}>
                 <td>{tch.teacher_name}</td>

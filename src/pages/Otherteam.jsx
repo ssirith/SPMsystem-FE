@@ -27,12 +27,16 @@ export default function Otherteam(props) {
   const { id } = useParams()
   const [group, setGroup] = useState({})
   const fetchData = useCallback(async () => {
-    setIsPreFetch(true)
-    const data = await axios.get(
-      `${process.env.REACT_APP_API_BE}/projects/${id}`, { headers }
-    )
-    setGroup(data.data)
-    setIsPreFetch(false)
+    try {
+      setIsPreFetch(true)
+      const data = await axios.get(
+        `${process.env.REACT_APP_API_BE}/projects/${id}`, { headers }
+      )
+      setGroup(data.data)
+      setIsPreFetch(false)
+    } catch (err) {
+      console.log(err)
+    }
   }, [])
   useEffect(() => {
     fetchData()

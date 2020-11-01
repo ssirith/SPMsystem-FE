@@ -35,13 +35,13 @@ export default function CreateAssignment() {
         Authorization: `Bearer ${Cookie.get("jwt")}`,
         "Content-Type": "application/json",
         accept: "application/json",
-      }
+    }
     const classes = useStyles();
     let navigate = useNavigate()
     const inputRef = useRef()
     const { user, setUser } = useContext(UserContext)
-//     const userBeforeParse=JSON.parse(localStorage.getItem('user'))
-//   const  [user, setUser ] = useState(userBeforeParse)
+    //     const userBeforeParse=JSON.parse(localStorage.getItem('user'))
+    //   const  [user, setUser ] = useState(userBeforeParse)
     const [attachment, setAttachment] = useState([])
     const [isOpenAttachment, setIsOpenAttachment] = useState(false)
     const [isPreFetch, setIsPreFetch] = useState(false)
@@ -57,10 +57,14 @@ export default function CreateAssignment() {
     const [isOpenDeleteRubric, setIsOpenDeleteRubric] = useState(false)
 
     const fetchData = useCallback(async () => {
-        setIsPreFetch(true)
-        const rub = await axios.get(`${process.env.REACT_APP_API_BE}/rubric`,{headers})
-        setShowAllRubric(rub.data)// ได้ array ของ rubric ทั้งหมด
-        setIsPreFetch(false)
+        try {
+            setIsPreFetch(true)
+            const rub = await axios.get(`${process.env.REACT_APP_API_BE}/rubric`, { headers })
+            setShowAllRubric(rub.data)// ได้ array ของ rubric ทั้งหมด
+            setIsPreFetch(false)
+        } catch (err) {
+            console.log(err)
+        }
     }, [])
 
     useEffect(() => {
@@ -72,7 +76,7 @@ export default function CreateAssignment() {
         showAllRubric.map((a) => {
             if (a.rubric_id === rubric.rubric_id) {
                 async function refreshCriterion() {
-                    const temp = await axios.get(`${process.env.REACT_APP_API_BE}/rubric/${rubric.rubric_id}`,{headers})
+                    const temp = await axios.get(`${process.env.REACT_APP_API_BE}/rubric/${rubric.rubric_id}`, { headers })
                     temp.data.criterions.map((c, index) => {
                         let idx = criterions.findIndex(item => item.criteria_id === c.criteria_id)
                         if (idx !== -1) {//0
@@ -85,7 +89,7 @@ export default function CreateAssignment() {
                             criterions[idx].score.sort((a, b) => {
                                 return a.value - b.value
                             })
-                            
+
                         } else {
                             criterions.push(
                                 {
@@ -111,7 +115,7 @@ export default function CreateAssignment() {
     }, [rubric])
 
     const checkRole = useCallback(() => {
-        if (user&&user.user_type === "Student") {
+        if (user && user.user_type === "Student") {
             alert(`You dont'have permission to go this page.`)
             navigate("/main")
         }
@@ -191,7 +195,7 @@ export default function CreateAssignment() {
         if (user.user_type === "Teacher") {
             data.append("teacher_id", user.user_id)
             data.append("aa_id", "")
-        } else  {
+        } else {
             data.append("teacher_id", "")
             data.append("aa_id", user.user_id)
         }
@@ -212,7 +216,7 @@ export default function CreateAssignment() {
         }
 
         try {
-            const response = await axios.post(`${process.env.REACT_APP_API_BE}/assignments`, data,{headers})
+            const response = await axios.post(`${process.env.REACT_APP_API_BE}/assignments`, data, { headers })
             if (response.status === 200) {
                 Swal.fire({
                     icon: 'success',
@@ -221,11 +225,11 @@ export default function CreateAssignment() {
                     timer: 2000,
                     showCancelButton: false,
                     showConfirmButton: false
-                  })
-          
-                  setTimeout(() => {
+                })
+
+                setTimeout(() => {
                     navigate("/assignments")
-                  }, 2000);
+                }, 2000);
             }
         } catch (err) {
             console.error(err)
@@ -233,14 +237,14 @@ export default function CreateAssignment() {
                 icon: 'error',
                 title: 'Oop...',
                 text: 'Something went wrong, Please Try again.',
-        
-              })
+
+            })
         }
-       
+
     }
 
     if (isPreFetch) {
-        return <><Loading open={isPreFetch}/></>
+        return <><Loading open={isPreFetch} /></>
     }
 
     return (

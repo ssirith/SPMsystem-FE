@@ -25,25 +25,29 @@ export default function ModalWindowProfile(props) {
   const { id } = useParams()
   const [isPreFetch, setIsPreFetch] = useState(false)
   const { user, setUser } = useContext(UserContext)
-  
+
   let navigate = useNavigate()
   const fetchData = useCallback(async () => {
-    setIsPreFetch(true)
-    const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/students`,{headers})
-    const check = data.find((temp) => temp.student_id === user.user_id)
-    setCheckDepartment(check.department)//ค่าจาก db
-    setCheckImage(check.image)
-    setIsPreFetch(false)
+    try {
+      setIsPreFetch(true)
+      const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/students`, { headers })
+      const check = data.find((temp) => temp.student_id === user.user_id)
+      setCheckDepartment(check.department)//ค่าจาก db
+      setCheckImage(check.image)
+      setIsPreFetch(false)
+    } catch (err) {
+      console.log(err)
+    }
 
   }, [])
   useEffect(() => {
     fetchData()
   }, [])
 
-  function imageHandler(){
-    if(checkImage){
+  function imageHandler() {
+    if (checkImage) {
       return (`http://127.0.0.1:8000/storage/images/${user.user_id}.jpg`)
-    }else{
+    } else {
       return (`/image/userimage.png`)
     }
   }
@@ -74,8 +78,8 @@ export default function ModalWindowProfile(props) {
         data.append("image", image)
         data.append("student_id", student_id)
         data.append("department", department)
-        const res = await axios.post(`${process.env.REACT_APP_API_BE}/student/edit/profile/student`, data,{headers})
-        
+        const res = await axios.post(`${process.env.REACT_APP_API_BE}/student/edit/profile/student`, data, { headers })
+
         if (res.status === 200) {
           Swal.fire({
             icon: 'success',
@@ -85,7 +89,7 @@ export default function ModalWindowProfile(props) {
             showCancelButton: false,
             showConfirmButton: false
           })
-  
+
           setTimeout(() => {
             window.location.reload()
           }, 2000);
@@ -100,14 +104,14 @@ export default function ModalWindowProfile(props) {
         })
         console.log(err)
       }
-      
+
     } else if (checkDepartment) {
       try {
         const data = new FormData();//craete form
         data.append("image", image)
         data.append("student_id", student_id)
         data.append("department", checkDepartment)
-        const res = await axios.post(`${process.env.REACT_APP_API_BE}/student/edit/profile/student`, data,{headers})
+        const res = await axios.post(`${process.env.REACT_APP_API_BE}/student/edit/profile/student`, data, { headers })
         if (res.status === 200) {
           Swal.fire({
             icon: 'success',
@@ -117,7 +121,7 @@ export default function ModalWindowProfile(props) {
             showCancelButton: false,
             showConfirmButton: false
           })
-  
+
           setTimeout(() => {
             window.location.reload()
           }, 2000);
@@ -186,39 +190,39 @@ export default function ModalWindowProfile(props) {
   }
   return (
     <>
-    <Modal
-      show={props.isOpen}
-      onHide={disOnHide()}
-    >
-      <Modal.Header closeButton={disOnHide()}>
-        <Modal.Title id="contained-model-title-vcenter">Profile</Modal.Title>
-      </Modal.Header >
-      <Modal.Body>
-        <div className="row">
-          <div className="col-7 my-3">
-            <Image id="img" src={imageHandler()} className="mb-2" style={{ width: '100px', height: '50%' }} roundedCircle />
-            <input type="file" id="file-input" name="file" accept=".jpg,.jpeg,.png" onChange={(e) => uploadImage(e)} /> <br />
-            <p>Upload your image. (Supported File Type: .jpg, .jpeg, .png)</p>
-          </div>
-          <div className="col-5 my-3">
-            <div className="row">
-              {DropdownHandler()}
-            </div>
-          </div>
-        </div>
-      </Modal.Body>
-      <Modal.Footer>
-        <div className="col-12 mx-auto">
+      <Modal
+        show={props.isOpen}
+        onHide={disOnHide()}
+      >
+        <Modal.Header closeButton={disOnHide()}>
+          <Modal.Title id="contained-model-title-vcenter">Profile</Modal.Title>
+        </Modal.Header >
+        <Modal.Body>
           <div className="row">
-            <div className="col-12 text-center">
-              {hideCancel()}
-              {" "}
-              {disSave()}
+            <div className="col-7 my-3">
+              <Image id="img" src={imageHandler()} className="mb-2" style={{ width: '100px', height: '50%' }} roundedCircle />
+              <input type="file" id="file-input" name="file" accept=".jpg,.jpeg,.png" onChange={(e) => uploadImage(e)} /> <br />
+              <p>Upload your image. (Supported File Type: .jpg, .jpeg, .png)</p>
+            </div>
+            <div className="col-5 my-3">
+              <div className="row">
+                {DropdownHandler()}
+              </div>
             </div>
           </div>
-        </div>
-      </Modal.Footer>
-    </Modal>
+        </Modal.Body>
+        <Modal.Footer>
+          <div className="col-12 mx-auto">
+            <div className="row">
+              <div className="col-12 text-center">
+                {hideCancel()}
+                {" "}
+                {disSave()}
+              </div>
+            </div>
+          </div>
+        </Modal.Footer>
+      </Modal>
     </>
   )
 }

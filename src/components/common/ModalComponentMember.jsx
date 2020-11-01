@@ -26,35 +26,38 @@ export default function ModalComponentMember(props) {
   const { settingContext, setSettingContext } = useContext(SettingContext)
   const { id } = useParams()
   const fetchData = useCallback(async () => {
-    setIsPreFetch(true)
-    if (settingContext.student_one_more_group === false) {
-      //false 0
-      const {
-        data,
-      } = await axios.get(`${process.env.REACT_APP_API_BE}/projects/${id}`, {
-        headers,
-      })
-      const all = await axios.get(
-        `${process.env.REACT_APP_API_BE}/students/nogroup`,
-        { headers }
-      )
-      setStudents(all.data) //{group[{},{},{},project{},teacher{[],}]
-      setSave(data.group)
-    } else if (settingContext.student_one_more_group === true) {
-      //true 1
-      const {
-        data,
-      } = await axios.get(`${process.env.REACT_APP_API_BE}/projects/${id}`, {
-        headers,
-      })
-      const all = await axios.get(`${process.env.REACT_APP_API_BE}/students`, {
-        headers,
-      })
-      setStudents(all.data) //{group[{},{},{},project{},teacher{[],}]
-      setSave(data.group)
+    try {
+      setIsPreFetch(true)
+      if (settingContext.student_one_more_group === false) {
+        //false 0
+        const {
+          data,
+        } = await axios.get(`${process.env.REACT_APP_API_BE}/projects/${id}`, {
+          headers,
+        })
+        const all = await axios.get(
+          `${process.env.REACT_APP_API_BE}/students/nogroup`,
+          { headers }
+        )
+        setStudents(all.data) //{group[{},{},{},project{},teacher{[],}]
+        setSave(data.group)
+      } else if (settingContext.student_one_more_group === true) {
+        //true 1
+        const {
+          data,
+        } = await axios.get(`${process.env.REACT_APP_API_BE}/projects/${id}`, {
+          headers,
+        })
+        const all = await axios.get(`${process.env.REACT_APP_API_BE}/students`, {
+          headers,
+        })
+        setStudents(all.data) //{group[{},{},{},project{},teacher{[],}]
+        setSave(data.group)
+      }
+      setIsPreFetch(false)
+    } catch (err) {
+      console.log(err)
     }
-
-    setIsPreFetch(false)
   }, [])
   useEffect(() => {
     fetchData()
@@ -189,11 +192,11 @@ export default function ModalComponentMember(props) {
                       {data.student_name && data.student_name.length > 11 ? (data.student_name.substring(0, 10) + "...") : (data.student_name)}
                     </div>
                     <div style={{ height: "20px", width: "50px", textAlign: "center" }}>
-                    <button
-                      className="btn btn-danger"
-                      onClick={() => deleteMember(data)}
-                    >
-                      Delete
+                      <button
+                        className="btn btn-danger"
+                        onClick={() => deleteMember(data)}
+                      >
+                        Delete
                     </button>
                     </div>
                   </div>

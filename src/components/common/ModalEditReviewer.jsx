@@ -25,19 +25,23 @@ export default function ModalEditReviewer(props) {
   // const userBeforeParse=JSON.parse(localStorage.getItem('user'))
   // const  [user, setUser ] = useState(userBeforeParse)
   const fetchData = useCallback(async () => {
-    setIsPreFetch(true)
-    const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/assignments/${id}`,{headers})
-    const res = await axios.get(`${process.env.REACT_APP_API_BE}/teachers`,{headers})
-    setTeachers(res.data)
-    setResnponsible_teacher(data.resnponsible)
-    var newSave = [];
-    res.data.map((t) => {
-      if (data.resnponsible.some((r) => r.responsible_teacher_id === t.teacher_id)){
-        newSave.push(t)
-        setSave(newSave)
-      }
-    })
-    setIsPreFetch(false)
+    try {
+      setIsPreFetch(true)
+      const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/assignments/${id}`, { headers })
+      const res = await axios.get(`${process.env.REACT_APP_API_BE}/teachers`, { headers })
+      setTeachers(res.data)
+      setResnponsible_teacher(data.resnponsible)
+      var newSave = [];
+      res.data.map((t) => {
+        if (data.resnponsible.some((r) => r.responsible_teacher_id === t.teacher_id)) {
+          newSave.push(t)
+          setSave(newSave)
+        }
+      })
+      setIsPreFetch(false)
+    } catch (err) {
+      console.log(err)
+    }
   }, [])
 
   useEffect(() => {

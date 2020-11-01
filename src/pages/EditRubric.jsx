@@ -16,13 +16,13 @@ import Swal from 'sweetalert2'
 export default function EditRubric(props) {
 	let navigate = useNavigate()
 	const { user, setUser } = useContext(UserContext)
-// 	const userBeforeParse=JSON.parse(localStorage.getItem('user'))
-//   const  [user, setUser ] = useState(userBeforeParse)
+	// 	const userBeforeParse=JSON.parse(localStorage.getItem('user'))
+	//   const  [user, setUser ] = useState(userBeforeParse)
 	const headers = {
 		Authorization: `Bearer ${Cookie.get("jwt")}`,
 		"Content-Type": "application/json",
-		accept: "application/json",		
-	  }
+		accept: "application/json",
+	}
 	const [isPreFetch, setIsPreFetch] = useState(false)
 	const [rubricTitle, setRubricTitle] = useState("")
 	const [rubric, setRubric] = useState()
@@ -37,68 +37,72 @@ export default function EditRubric(props) {
 
 	const fetchData = useCallback(
 		async () => {
-			setIsPreFetch(true)
-			const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/rubric/${props.id}`,{headers})
-			setRubricTitle(data.rubric_title)
-			var criterions = [];
-			data.criterions.map((c, index) => {
-				let idx = criterions.findIndex(item => item.criteria_id === c.criteria_id)
-				if (idx !== -1) {
-					criterions[idx].criteria_detail.push({
-						criteria_detail_id: c.criteria_detail_id,
-						name: c.criteria_detail,
-						value: c.criteria_score
-					}
-					)
-				} else {
-					criterions.push(
-						{
-							criteria_id: c.criteria_id,
-							criteria_name: c.criteria_name,
-							delete_criteria_deteail: [],
-							criteria_detail: [
-								{
-									criteria_detail_id: c.criteria_detail_id,
-									name: c.criteria_detail,
-									value: c.criteria_score
-								}
-							]
+			try {
+				setIsPreFetch(true)
+				const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/rubric/${props.id}`, { headers })
+				setRubricTitle(data.rubric_title)
+				var criterions = [];
+				data.criterions.map((c, index) => {
+					let idx = criterions.findIndex(item => item.criteria_id === c.criteria_id)
+					if (idx !== -1) {
+						criterions[idx].criteria_detail.push({
+							criteria_detail_id: c.criteria_detail_id,
+							name: c.criteria_detail,
+							value: c.criteria_score
 						}
-					)
-				}
-			})
-
-			var realCriterions = [];
-			data.criterions.map((c, index) => {
-				let idx = realCriterions.findIndex(item => item.criteria_id === c.criteria_id)
-				if (idx !== -1) {
-					realCriterions[idx].criteria_detail.push({
-						criteria_detail_id: c.criteria_detail_id,
-						name: c.criteria_detail,
-						value: c.criteria_score
+						)
+					} else {
+						criterions.push(
+							{
+								criteria_id: c.criteria_id,
+								criteria_name: c.criteria_name,
+								delete_criteria_deteail: [],
+								criteria_detail: [
+									{
+										criteria_detail_id: c.criteria_detail_id,
+										name: c.criteria_detail,
+										value: c.criteria_score
+									}
+								]
+							}
+						)
 					}
-					)
-				} else {
-					realCriterions.push(
-						{
-							criteria_id: c.criteria_id,
-							criteria_name: c.criteria_name,
-							delete_criteria_deteail: [],
-							criteria_detail: [
-								{
-									criteria_detail_id: c.criteria_detail_id,
-									name: c.criteria_detail,
-									value: c.criteria_score
-								}
-							]
-						}
-					)
-				}
-			})
+				})
 
-			setCriterions(criterions)
-			setRealCriterions(realCriterions)
-			setIsPreFetch(false)
+				var realCriterions = [];
+				data.criterions.map((c, index) => {
+					let idx = realCriterions.findIndex(item => item.criteria_id === c.criteria_id)
+					if (idx !== -1) {
+						realCriterions[idx].criteria_detail.push({
+							criteria_detail_id: c.criteria_detail_id,
+							name: c.criteria_detail,
+							value: c.criteria_score
+						}
+						)
+					} else {
+						realCriterions.push(
+							{
+								criteria_id: c.criteria_id,
+								criteria_name: c.criteria_name,
+								delete_criteria_deteail: [],
+								criteria_detail: [
+									{
+										criteria_detail_id: c.criteria_detail_id,
+										name: c.criteria_detail,
+										value: c.criteria_score
+									}
+								]
+							}
+						)
+					}
+				})
+
+				setCriterions(criterions)
+				setRealCriterions(realCriterions)
+				setIsPreFetch(false)
+			} catch (err) {
+				console.log(err)
+			}
 		},
 		[],
 	)
@@ -108,14 +112,14 @@ export default function EditRubric(props) {
 
 	const checkRole = useCallback(() => {
 		if (user.user_type === "Student") {
-		  alert(`You dont'have permission to go this page.`)
-		  navigate("/main")
+			alert(`You dont'have permission to go this page.`)
+			navigate("/main")
 		}
-	  })
-	
-	  useEffect(() => {
+	})
+
+	useEffect(() => {
 		checkRole()
-	  }, [user])
+	}, [user])
 
 	function handleCriteriaName(event, index) {//type number
 		criterions[index].criteria_name = event.target.value
@@ -165,10 +169,10 @@ export default function EditRubric(props) {
 	function handleRemoveTable(data, index) {
 		let newCriterions = [...criterions]
 		for (let i = 0; i < newCriterions.length; i++) {
-			if(index === i){
-				newCriterions.splice(i,1)
+			if (index === i) {
+				newCriterions.splice(i, 1)
 			}
-			
+
 		}
 		setCriterions(newCriterions)
 	}
@@ -209,7 +213,7 @@ export default function EditRubric(props) {
 
 		} else {
 			try {
-				const response = await axios.post(`${process.env.REACT_APP_API_BE}/rubric/edit`, data,{headers})
+				const response = await axios.post(`${process.env.REACT_APP_API_BE}/rubric/edit`, data, { headers })
 				if (response.status === 200) {
 					Swal.fire({
 						icon: 'success',
@@ -218,28 +222,28 @@ export default function EditRubric(props) {
 						timer: 2000,
 						showCancelButton: false,
 						showConfirmButton: false
-					  })
-			  
-					  setTimeout(() => {
+					})
+
+					setTimeout(() => {
 						navigate(`/createassignment`)
-					  }, 2000);
+					}, 2000);
 					alert("Edit Success.")
 					navigate("/createassignment")
-					
+
 				}
 			} catch (err) {
 				Swal.fire({
 					icon: 'error',
 					title: 'Oop...',
 					text: 'Something went wrong, Please Try again.',
-				  })
+				})
 				console.error(err)
-				
+
 			}
 		}
 	}
-	if(isPreFetch){
-		return<><Loading open={isPreFetch}/></>
+	if (isPreFetch) {
+		return <><Loading open={isPreFetch} /></>
 	}
 	return (
 		<>
@@ -407,7 +411,7 @@ export default function EditRubric(props) {
 						</div>
 					</div>
 				</div>
-				<br/>
+				<br />
 			</div>
 		</>
 	)

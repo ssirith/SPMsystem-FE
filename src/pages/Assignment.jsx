@@ -45,7 +45,7 @@ export default function Assignment(props) {
         Authorization: `Bearer ${Cookie.get("jwt")}`,
         "Content-Type": "application/json",
         accept: "application/json",
-      }
+    }
     const [assignment_title, setAssignment_Title] = useState()
     const [assignment_id, setAssignment_id] = useState()
     const [propject_department, setProject_department] = useState("")
@@ -53,54 +53,58 @@ export default function Assignment(props) {
     const [isOpenDelete, setIsOpenDelete] = useState(false)
     const [isPreFetch, setIsPreFetch] = useState(false)
     const [search, setSearch] = useState("")
-//     const userBeforeParse=JSON.parse(localStorage.getItem('user'))
-//   const  [user, setUser ] = useState(userBeforeParse)
+    //     const userBeforeParse=JSON.parse(localStorage.getItem('user'))
+    //   const  [user, setUser ] = useState(userBeforeParse)
     let navigate = useNavigate()
     const { user, setUser } = useContext(UserContext)
     const { id } = useParams()//user.user_id
     const { project_id } = useParams()//assignment_id
     const fetchData = useCallback(async () => {
-        setIsPreFetch(true)
-        const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/assignments/${props.id}`,{headers})//props.id == user.user_id
-        setAssignment_Title(data.assignment_title)
-        setAssignment_id(data.assignment_id)
-        var criterions = [];
-        data.criterion.map((c, index) => {
-            let idx = criterions.findIndex(item => item.criteria_id === c.criteria_id)
-            if (idx !== -1) {//0
-                criterions[idx].score.push(
-                    {
-                        name: c.criteria_detail,
-                        value: c.criteria_score
-                    }
-                )
-                criterions[idx].score.sort((a, b) => {
-                    return a.value - b.value
-                })
-            } else {
-                criterions.push(
-                    {
-                        criteria_id: c.criteria_id,
-                        criteria_name: c.criteria_name,
-                        score: [
-                            {
-                                name: c.criteria_detail,
-                                value: c.criteria_score
-                            }
-                        ]
-                    }
-                )
-            }
-        })
+        try {
+            setIsPreFetch(true)
+            const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/assignments/${props.id}`, { headers })//props.id == user.user_id
+            setAssignment_Title(data.assignment_title)
+            setAssignment_id(data.assignment_id)
+            var criterions = [];
+            data.criterion.map((c, index) => {
+                let idx = criterions.findIndex(item => item.criteria_id === c.criteria_id)
+                if (idx !== -1) {//0
+                    criterions[idx].score.push(
+                        {
+                            name: c.criteria_detail,
+                            value: c.criteria_score
+                        }
+                    )
+                    criterions[idx].score.sort((a, b) => {
+                        return a.value - b.value
+                    })
+                } else {
+                    criterions.push(
+                        {
+                            criteria_id: c.criteria_id,
+                            criteria_name: c.criteria_name,
+                            score: [
+                                {
+                                    name: c.criteria_detail,
+                                    value: c.criteria_score
+                                }
+                            ]
+                        }
+                    )
+                }
+            })
 
-        setRubric(criterions)
-        setIsPreFetch(false)
+            setRubric(criterions)
+            setIsPreFetch(false)
+        } catch (err) {
+            console.log(err)
+        }
     }, [])
     useEffect(() => {
         fetchData()
     }, [])
     const checkRole = useCallback(() => {
-        if (user&&user.user_type === "Student") {
+        if (user && user.user_type === "Student") {
             alert(`You dont'have permission to go this page.`)
             navigate("/main")
         }
@@ -110,7 +114,7 @@ export default function Assignment(props) {
         checkRole()
     }, [user])
     if (isPreFetch) {
-        return <><Loading open={isPreFetch}/></>
+        return <><Loading open={isPreFetch} /></>
     }
 
     return (

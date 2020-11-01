@@ -22,10 +22,14 @@ export default function Announcements() {
   const [announcements, setAnnouncements] = useState()
   const [isPrefetch, setIsPreFetch] = useState(false)
   const fetchData = useCallback(async () => {
-    setIsPreFetch(true)
-    const resposne = await axios.get(`${process.env.REACT_APP_API_BE}/announcement`,{headers})
-    sortAnnouncement(resposne.data)
-    setIsPreFetch(false)
+    try {
+      setIsPreFetch(true)
+      const resposne = await axios.get(`${process.env.REACT_APP_API_BE}/announcement`, { headers })
+      sortAnnouncement(resposne.data)
+      setIsPreFetch(false)
+    } catch (err) {
+      console.log(err)
+    }
   }, [])
 
   useEffect(() => {
@@ -43,7 +47,7 @@ export default function Announcements() {
   }
   return (
     <>
-      {user&&user.user_type === "Student" && (
+      {user && user.user_type === "Student" && (
         <div className="container mt-5">
           <table
             class="table"
@@ -72,7 +76,7 @@ export default function Announcements() {
           </table>
         </div>
       )}
-      {user&&user.user_type === "Teacher" && (
+      {user && user.user_type === "Teacher" && (
         <Container>
           <br />
           <Row >
@@ -120,7 +124,7 @@ export default function Announcements() {
           </Row>
         </Container>
       )}
-      {user&&user.user_type === "AA" && (
+      {user && user.user_type === "AA" && (
         <Container>
           <br />
           <Row >

@@ -26,20 +26,23 @@ export default function ModalEditMember(props) {
   // const userBeforeParse=JSON.parse(localStorage.getItem('user'))
   // const  [user, setUser ] = useState(userBeforeParse)
   const fetchData = useCallback(async () => {
-    setIsPreFetch(true)
-    if (settingContext.student_one_more_group === false) {//false 0
-      const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/projects/${id}`, { headers })
-      const all = await axios.get(`${process.env.REACT_APP_API_BE}/students/nogroup`, { headers })
-      setStudents(all.data) //{group[{},{},{},project{},teacher{[],}]
-      setSave(data.group)
-    } else if (settingContext.student_one_more_group === true) {//true 1
-      const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/projects/${id}`, { headers })
-      const all = await axios.get(`${process.env.REACT_APP_API_BE}/students`, { headers })
-      setStudents(all.data) //{group[{},{},{},project{},teacher{[],}]
-      setSave(data.group)
+    try {
+      setIsPreFetch(true)
+      if (settingContext.student_one_more_group === false) {//false 0
+        const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/projects/${id}`, { headers })
+        const all = await axios.get(`${process.env.REACT_APP_API_BE}/students/nogroup`, { headers })
+        setStudents(all.data) //{group[{},{},{},project{},teacher{[],}]
+        setSave(data.group)
+      } else if (settingContext.student_one_more_group === true) {//true 1
+        const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/projects/${id}`, { headers })
+        const all = await axios.get(`${process.env.REACT_APP_API_BE}/students`, { headers })
+        setStudents(all.data) //{group[{},{},{},project{},teacher{[],}]
+        setSave(data.group)
+      }
+      setIsPreFetch(false)
+    } catch (err) {
+      console.log(err)
     }
-
-    setIsPreFetch(false)
   }, [])
   useEffect(() => {
     fetchData()
@@ -166,7 +169,7 @@ export default function ModalEditMember(props) {
                 <div className="row my-2" key={index}>
                   <div className="col-4">{data.student_id}</div>
                   <div className="col-4">
-                    {data.student_name&&data.student_name.length >11 ?(data.student_name.substring(0, 10) + "..."):(data.student_name)}
+                    {data.student_name && data.student_name.length > 11 ? (data.student_name.substring(0, 10) + "...") : (data.student_name)}
                   </div>
                   {data.student_id !== user.user_id ?
                     <div style={{ height: "20px", width: "50px", textAlign: "center" }}>
@@ -178,7 +181,7 @@ export default function ModalEditMember(props) {
                         Delete
                 </button>
                     </div>
-                    : 
+                    :
                     <>
                     </>
                   }

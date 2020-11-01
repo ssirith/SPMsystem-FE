@@ -11,18 +11,22 @@ export default function Teams() {
     accept: "application/json",
   }
   const [group, setGroup] = useState([])
-  const [isPrefetch,setIsPreFetch]=useState(false)
+  const [isPrefetch, setIsPreFetch] = useState(false)
   const fetchData = useCallback(async () => {
-    setIsPreFetch(true)
-    const data = await axios.get(`http://127.0.0.1:8000/api/projects`,{headers}) //[]
-    setGroup(data.data) // AllProject
-    setIsPreFetch(false)
+    try {
+      setIsPreFetch(true)
+      const data = await axios.get(`http://127.0.0.1:8000/api/projects`, { headers }) //[]
+      setGroup(data.data) // AllProject
+      setIsPreFetch(false)
+    } catch (err) {
+      console.log(err)
+    }
   }, [])
   useEffect(() => {
     fetchData()
   }, [])
-  if(isPrefetch){
-    return<><Loading open={isPrefetch}/></>
+  if (isPrefetch) {
+    return <><Loading open={isPrefetch} /></>
   }
 
   return (
@@ -43,8 +47,8 @@ export default function Teams() {
       ) : (
           <div className="container text-center my-auto">
             <img src='/image/allproject.jpg' alt='Dashboard logo' className='img-fluid' width='50%' height='auto' />
-            <br/>
-            <br/>
+            <br />
+            <br />
             <p>
               Oops, you don't have any project.
           </p>

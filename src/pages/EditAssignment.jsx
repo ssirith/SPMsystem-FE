@@ -37,14 +37,14 @@ export default function CreateAssignment(props) {
     const headers = {
         Authorization: `Bearer ${Cookie.get("jwt")}`,
         "Content-Type": "application/json",
-        accept: "application/json",       
-      }
+        accept: "application/json",
+    }
     const classes = useStyles();
     let navigate = useNavigate()
     const inputRef = useRef()
     const { user, setUser } = useContext(UserContext)
-//     const userBeforeParse=JSON.parse(localStorage.getItem('user'))
-//   const  [user, setUser ] = useState(userBeforeParse)
+    //     const userBeforeParse=JSON.parse(localStorage.getItem('user'))
+    //   const  [user, setUser ] = useState(userBeforeParse)
     const [assignment, setAssignment] = useState({})
     const [attachmentFromBE, setAttachmentFromBE] = useState([])
     const [selectAttachment, setSelectAttachment] = useState([])
@@ -67,64 +67,68 @@ export default function CreateAssignment(props) {
     const [isOpenDeleteRubric, setIsOpenDeleteRubric] = useState(false)
     const [isOpenChangeRubric, setIsOpenChangeRubric] = useState(false)
     const fetchData = useCallback(async () => {
-        setIsPreFetch(true)
-        const rub = await axios.get(`${process.env.REACT_APP_API_BE}/rubric`,{headers})
-        setShowAllRubric(rub.data)
-        // const test = await axios.get(`${process.env.REACT_APP_API_BE}/rubric/${2}`)
-        // setTest(test.data)
-        const teacher = await axios.get(`${process.env.REACT_APP_API_BE}/teachers`,{headers})
-        const res = await axios.get(`${process.env.REACT_APP_API_BE}/assignments/${props.id}`,{headers})
-        setAssignment(res.data)
-        setAssignment_title(res.data.assignment_title)
-        setAssignment_detail(res.data.assignment_detail)
-        setDue_date(res.data.due_date)
-        setDue_time(res.data.due_time)
-        setAttachmentFromBE(res.data.attachment)
-        var newReviewer = []
-        teacher.data.map((t) => {
-            if (res.data.resnponsible.some(item => item.responsible_teacher_id === t.teacher_id)) {
-                newReviewer.push(t)
-                setReviewer(newReviewer)
-                setReviewerFromBE(newReviewer)
-            }
+        try {
+            setIsPreFetch(true)
+            const rub = await axios.get(`${process.env.REACT_APP_API_BE}/rubric`, { headers })
+            setShowAllRubric(rub.data)
+            // const test = await axios.get(`${process.env.REACT_APP_API_BE}/rubric/${2}`)
+            // setTest(test.data)
+            const teacher = await axios.get(`${process.env.REACT_APP_API_BE}/teachers`, { headers })
+            const res = await axios.get(`${process.env.REACT_APP_API_BE}/assignments/${props.id}`, { headers })
+            setAssignment(res.data)
+            setAssignment_title(res.data.assignment_title)
+            setAssignment_detail(res.data.assignment_detail)
+            setDue_date(res.data.due_date)
+            setDue_time(res.data.due_time)
+            setAttachmentFromBE(res.data.attachment)
+            var newReviewer = []
+            teacher.data.map((t) => {
+                if (res.data.resnponsible.some(item => item.responsible_teacher_id === t.teacher_id)) {
+                    newReviewer.push(t)
+                    setReviewer(newReviewer)
+                    setReviewerFromBE(newReviewer)
+                }
 
-        })
-        var criterions = [];
-        res.data.criterion.map((c, index) => {
-            let idx = criterions.findIndex(item => item.criteria_id === c.criteria_id)
-            if (idx !== -1) {//0
-                criterions[idx].score.push(
-                    {
-                        name: c.criteria_detail,
-                        value: c.criteria_score
-                    }
-                )
-                criterions[idx].score.sort((a, b) => {
-                    return a.value - b.value
-                })
-            } else {
-                criterions.push(
-                    {
-                        criteria_id: c.criteria_id,
-                        criteria_name: c.criteria_name,
-                        score: [
-                            {
-                                name: c.criteria_detail,
-                                value: c.criteria_score
-                            }
-                        ]
-                    }
-                )
-            }
-        })
-        setCriterionBE(criterions)
-        rub.data.map((r) => {
-            if (r.rubric_id === res.data.rubric_id) {
-                setRubric(r)
-                setRubricBE(r)
-            }
-        })
-        setIsPreFetch(false)
+            })
+            var criterions = [];
+            res.data.criterion.map((c, index) => {
+                let idx = criterions.findIndex(item => item.criteria_id === c.criteria_id)
+                if (idx !== -1) {//0
+                    criterions[idx].score.push(
+                        {
+                            name: c.criteria_detail,
+                            value: c.criteria_score
+                        }
+                    )
+                    criterions[idx].score.sort((a, b) => {
+                        return a.value - b.value
+                    })
+                } else {
+                    criterions.push(
+                        {
+                            criteria_id: c.criteria_id,
+                            criteria_name: c.criteria_name,
+                            score: [
+                                {
+                                    name: c.criteria_detail,
+                                    value: c.criteria_score
+                                }
+                            ]
+                        }
+                    )
+                }
+            })
+            setCriterionBE(criterions)
+            rub.data.map((r) => {
+                if (r.rubric_id === res.data.rubric_id) {
+                    setRubric(r)
+                    setRubricBE(r)
+                }
+            })
+            setIsPreFetch(false)
+        } catch (err) {
+            console.log(err)
+        }
     }, [])
     useEffect(() => {
         fetchData()
@@ -135,7 +139,7 @@ export default function CreateAssignment(props) {
         showAllRubric.map((a) => {
             if (a.rubric_id === rubric.rubric_id) {
                 async function refreshCriterion() {
-                    const temp = await axios.get(`${process.env.REACT_APP_API_BE}/rubric/${rubric.rubric_id}`,{headers})
+                    const temp = await axios.get(`${process.env.REACT_APP_API_BE}/rubric/${rubric.rubric_id}`, { headers })
                     temp.data.criterions.map((c, index) => {
                         let idx = criterions.findIndex(item => item.criteria_id === c.criteria_id)
                         if (idx !== -1) {//0
@@ -310,14 +314,14 @@ export default function CreateAssignment(props) {
             if (user.user_type === "Teacher") {
                 data.append("teacher_id", user.user_id)
                 data.append("aa_id", "")
-            } else  {
+            } else {
                 data.append("teacher_id", "")
                 data.append("aa_id", user.user_id)
             }
             data.append('rubric_id', rubric_id)//rubric_id
 
             try {
-                const response = await axios.post(`${process.env.REACT_APP_API_BE}/assignments/edit`, data,{headers})
+                const response = await axios.post(`${process.env.REACT_APP_API_BE}/assignments/edit`, data, { headers })
                 if (response.status === 200) {
                     Swal.fire({
                         icon: 'success',
@@ -326,18 +330,18 @@ export default function CreateAssignment(props) {
                         timer: 2000,
                         showCancelButton: false,
                         showConfirmButton: false
-                      })
-              
-                      setTimeout(() => {
+                    })
+
+                    setTimeout(() => {
                         navigate(`/assignments/${props.id}`)
-                      }, 2000);
+                    }, 2000);
                 }
             } catch (err) {
                 Swal.fire({
                     icon: 'error',
                     title: 'Oop...',
                     text: 'Something went wrong, Please Try again.',
-                  })
+                })
                 console.error(err)
             }
         }
@@ -348,7 +352,7 @@ export default function CreateAssignment(props) {
     }
 
     if (isPreFetch) {
-        return <><Loading open={isPreFetch}/></>
+        return <><Loading open={isPreFetch} /></>
     }
 
     return (

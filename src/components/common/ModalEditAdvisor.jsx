@@ -6,7 +6,7 @@ import Inputtext from "./Inputtext"
 import axios from "axios"
 import { useEffect } from "react"
 import Button from "@material-ui/core/Button"
-import {useParams} from "@reach/router"
+import { useParams } from "@reach/router"
 export default function ModalEditAdvisor(props) {
   const headers = {
     Authorization: `Bearer ${Cookie.get("jwt")}`,
@@ -22,11 +22,14 @@ export default function ModalEditAdvisor(props) {
   const { id } = useParams()
 
   const fetchData = useCallback(async () => {
-    const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/projects/${id}`,{headers})
-    const all = await axios.get(`${process.env.REACT_APP_API_BE}/teachers`,{headers})
-    
-    setTeachers(all.data) //{group[{},{},{},project{},teacher{[],}]
-    setSave(data.teacher)
+    try {
+      const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/projects/${id}`, { headers })
+      const all = await axios.get(`${process.env.REACT_APP_API_BE}/teachers`, { headers })
+      setTeachers(all.data) //{group[{},{},{},project{},teacher{[],}]
+      setSave(data.teacher)
+    } catch (err) {
+      console.log(err)
+    }
   }, [])
   useEffect(() => {
     fetchData()
@@ -42,10 +45,10 @@ export default function ModalEditAdvisor(props) {
         }
       }
     }
-      setIsFilter(
-        temp.filter(
-          tch => tch.teacher_name.toLowerCase().includes(search.toLowerCase()) )
-      )
+    setIsFilter(
+      temp.filter(
+        tch => tch.teacher_name.toLowerCase().includes(search.toLowerCase()))
+    )
   }, [search, teachers, save])
 
   function updateInput(e) {
@@ -66,10 +69,10 @@ export default function ModalEditAdvisor(props) {
   async function handleSubmit() {
     await props.addAdvisor(save)
     if (props.setIsOpen(false)) {
-        
-      setTimeout(()=>{
+
+      setTimeout(() => {
         window.location.reload()
-      },1000)
+      }, 1000)
     }
   }
 
@@ -117,7 +120,7 @@ export default function ModalEditAdvisor(props) {
           onChange={(e) => setSearch(e.target.value)}
         />
         <table className="table table-striped">
-          <tbody style={{cursor: 'pointer'}}>
+          <tbody style={{ cursor: 'pointer' }}>
             {isFilter.map((ads, idx) => (
               <tr className="text-center" key={idx} onClick={() => updateInput(ads)}>
                 <td>{ads.teacher_name}</td>

@@ -25,20 +25,24 @@ export default function ModalAddReviewer(props) {
   // const  [user, setUser ] = useState(userBeforeParse)
 
   const fetchData = useCallback(async () => {
-    setIsPreFetch(true)
-    const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/teachers`,{headers})
-    setTeachers(data)
-    var newSave = [];
-    if (props) {
-      data.map((t) => {
-        if (user&&t.teacher_id === user.user_id) {
-          newSave.push(t)
-          setSave(newSave)
-          props.addReviewer(save)
-        }
-      })
+    try {
+      setIsPreFetch(true)
+      const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/teachers`, { headers })
+      setTeachers(data)
+      var newSave = [];
+      if (props) {
+        data.map((t) => {
+          if (user && t.teacher_id === user.user_id) {
+            newSave.push(t)
+            setSave(newSave)
+            props.addReviewer(save)
+          }
+        })
+      }
+      setIsPreFetch(false)
+    } catch (err) {
+      console.log(err)
     }
-    setIsPreFetch(false)
   }, [])
   useEffect(() => {
     fetchData()
@@ -113,7 +117,7 @@ export default function ModalAddReviewer(props) {
   }
   return (
     <>
-      <div style={{marginLeft : 10}}>
+      <div style={{ marginLeft: 10 }}>
         <Modal
           show={props.isOpen}
           onHide={() => {
@@ -132,9 +136,9 @@ export default function ModalAddReviewer(props) {
               onChange={(e) => setSearch(e.target.value)}
             />
             <table className="table table-striped">
-              <tbody style={{cursor: 'pointer'}}>
+              <tbody style={{ cursor: 'pointer' }}>
                 {isFilter.map((tch, idx) => (
-                  <tr className="text-center" key={idx} onClick={() => updateInput(tch)} >                   
+                  <tr className="text-center" key={idx} onClick={() => updateInput(tch)} >
                     <td >{tch.teacher_name}</td>
                   </tr>
                 ))}

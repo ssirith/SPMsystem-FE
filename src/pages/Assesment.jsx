@@ -54,73 +54,77 @@ export default function Assesment(props) {
   const classes = useStyles()
 
   const fetchData = useCallback(async () => {
-    setIsPreFetch(true)
-    const res = await axios.get(
-      `${process.env.REACT_APP_API_BE}/assessment/${assignment_id}/${id}`,
-      { headers }
-    )
-    var criterions = []
-    res.data.criterions.map((c, index) => {
-      let idx = criterions.findIndex(
-        (item) => item.criteria_id === c.criteria_id
+    try {
+      setIsPreFetch(true)
+      const res = await axios.get(
+        `${process.env.REACT_APP_API_BE}/assessment/${assignment_id}/${id}`,
+        { headers }
       )
-      if (idx !== -1) {
-        criterions[idx].criteria_detail.push({
-          criteria_detail_id: c.criteria_detail_id,
-          name: c.criteria_detail,
-          value: c.criteria_score,
-        })
-        criterions[idx].criteria_detail.sort((a, b) => {
-          return a.value - b.value
-        })
-      } else {
-        criterions.push({
-          criteria_id: c.criteria_id,
-          criteria_name: c.criteria_name,
-          delete_criteria_deteail: [],
-          criteria_detail: [
-            {
-              criteria_detail_id: c.criteria_detail_id,
-              name: c.criteria_detail,
-              value: c.criteria_score,
-            },
-          ],
-        })
+      var criterions = []
+      res.data.criterions.map((c, index) => {
+        let idx = criterions.findIndex(
+          (item) => item.criteria_id === c.criteria_id
+        )
+        if (idx !== -1) {
+          criterions[idx].criteria_detail.push({
+            criteria_detail_id: c.criteria_detail_id,
+            name: c.criteria_detail,
+            value: c.criteria_score,
+          })
+          criterions[idx].criteria_detail.sort((a, b) => {
+            return a.value - b.value
+          })
+        } else {
+          criterions.push({
+            criteria_id: c.criteria_id,
+            criteria_name: c.criteria_name,
+            delete_criteria_deteail: [],
+            criteria_detail: [
+              {
+                criteria_detail_id: c.criteria_detail_id,
+                name: c.criteria_detail,
+                value: c.criteria_score,
+              },
+            ],
+          })
+        }
+      })
+      var newProjectID = ""
+      if (id.length) {
+        if (id.length > 4) {
+          newProjectID =
+            id.substring(0, 3) + "60-" + id.substring(id.length - 2, id.length)
+        } else {
+          newProjectID =
+            id.substring(0, 2) + "60-" + id.substring(id.length - 2, id.length)
+        }
       }
-    })
-    var newProjectID = ""
-    if (id.length) {
-      if (id.length > 4) {
-        newProjectID =
-          id.substring(0, 3) + "60-" + id.substring(id.length - 2, id.length)
-      } else {
-        newProjectID =
-          id.substring(0, 2) + "60-" + id.substring(id.length - 2, id.length)
-      }
-    }
-    setPorjectID(newProjectID)
-    setCriterions(criterions)
-    setIsAssesment(res.data)
+      setPorjectID(newProjectID)
+      setCriterions(criterions)
+      setIsAssesment(res.data)
 
-    let filterTeacher = res.data.responsible_assignment.find(
-      (r) => r.teacher_id === user.user_id
-    ) //2
-    const newAssessment = res.data.assessment.filter(
-      (a) => a.responsible_assignment_id === filterTeacher.id
-    )
-    setAssesmentScore(newAssessment)
-
-    if (res.data.feedback.length !== 0) {
-      let checkFeedback = res.data.feedback.find(
-        (f) => f.teacher_id === user.user_id
+      let filterTeacher = res.data.responsible_assignment.find(
+        (r) => r.teacher_id === user.user_id
+      ) //2
+      const newAssessment = res.data.assessment.filter(
+        (a) => a.responsible_assignment_id === filterTeacher.id
       )
-      if (checkFeedback) {
-        setFeedback(checkFeedback.feedback_detail) //[]
+      setAssesmentScore(newAssessment)
+
+      if (res.data.feedback.length !== 0) {
+        let checkFeedback = res.data.feedback.find(
+          (f) => f.teacher_id === user.user_id
+        )
+        if (checkFeedback) {
+          setFeedback(checkFeedback.feedback_detail) //[]
+        }
+      } else {
+        setFeedback("")
       }
-    } else {
-      setFeedback("")
+      setIsPreFetch(false)
+    } catch (err) {
+      console.log(err)
     }
-    setIsPreFetch(false)
   }, [])
 
   useEffect(() => {
@@ -206,7 +210,7 @@ export default function Assesment(props) {
       try {
         const response = await axios.post(
           `${process.env.REACT_APP_API_BE}/assessment`,
-          data,{ headers }
+          data, { headers }
         )
         if (response.status === 200) {
           alert("Success.")
@@ -274,11 +278,11 @@ export default function Assesment(props) {
                       <medium className="d-inline">On time</medium>
                     </p>
                   ) : (
-                    <p>
-                      <FiberManualRecordIcon color="secondary" />
-                      <medium className="d-inline">Late</medium>
-                    </p>
-                  )}
+                      <p>
+                        <FiberManualRecordIcon color="secondary" />
+                        <medium className="d-inline">Late</medium>
+                      </p>
+                    )}
                 </Col>
               </Row>
 
@@ -391,17 +395,17 @@ export default function Assesment(props) {
                             />
                           </div>
                         ) : (
-                          <div key={index}>
-                            {": "}&nbsp;
-                            <input
-                              type="text"
-                              size="4"
-                              onChange={(event) =>
-                                handleAssesment(event, index, data)
-                              }
-                            />
-                          </div>
-                        )}
+                            <div key={index}>
+                              {": "}&nbsp;
+                              <input
+                                type="text"
+                                size="4"
+                                onChange={(event) =>
+                                  handleAssesment(event, index, data)
+                                }
+                              />
+                            </div>
+                          )}
                         <br />
                       </Col>
                     </Row>
