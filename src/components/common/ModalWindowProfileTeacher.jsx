@@ -41,7 +41,7 @@ export default function ModalWindowProfileProfileTeacher(props) {
                 title: 'Oop...',
                 text: 'Something went wrong, Please Try again.',
               })
-            console.log(err)
+            // console.log(err)
         }
 
     }, [])
@@ -109,7 +109,7 @@ export default function ModalWindowProfileProfileTeacher(props) {
                     title: 'Oop...',
                     text: 'Something went wrong, Please Try again.',
                 })
-                console.log(err)
+                // console.log(err)
             }
         } else {
             const aa_id = user.user_id;
@@ -140,7 +140,7 @@ export default function ModalWindowProfileProfileTeacher(props) {
                     title: 'Oop...',
                     text: 'Something went wrong, Please Try again.',
                 })
-                console.log(err)
+                // console.log(err)
             }
         }
 

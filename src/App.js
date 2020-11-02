@@ -66,7 +66,7 @@ function App() {
     try {
       const response = await axios.get(`${process.env.REACT_APP_API_BE}/config/${settingYearContext}`)
       // const test = await axios.get('https://jsonplaceholder.typicode.com/todos/1')
-      console.log('response',response)
+      // console.log('response',response)
       // console.log('test',test)
       // console.log('response true false from database',response.data.student_one_more_group)
       // setSettingContext(response.data)
@@ -83,7 +83,7 @@ function App() {
         title: 'Oop...',
         text: 'Something went wrong, Please Try again.',
       })
-      console.log(err)
+      // console.log(err)
     }
   })
   //  console.log('app',settingContext)

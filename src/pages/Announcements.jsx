@@ -33,7 +33,7 @@ export default function Announcements() {
         title: 'Oop...',
         text: 'Something went wrong, Please Try again.',
       })
-      console.log(err)
+      // console.log(err)
     }
   }, [])
 

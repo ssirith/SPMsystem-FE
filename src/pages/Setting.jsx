@@ -78,7 +78,7 @@ export default function Setting() {
         title: 'Oop...',
         text: 'Something went wrong, Please Try again.',
       })
-      console.log(err)
+      // console.log(err)
     }
   })
 
@@ -119,6 +119,7 @@ export default function Setting() {
     }
 
     try {
+      setIsPreFetch(true)
       // setSetting(settingDisplay)
       // console.log(setting)
       const response = await axios.post(
@@ -135,7 +136,7 @@ export default function Setting() {
           showCancelButton: false,
           showConfirmButton: false
         })
-
+        setIsPreFetch(false)
         setTimeout(() => {
           navigate(`/main`)
         }, 2000);
@@ -146,7 +147,7 @@ export default function Setting() {
         title: 'Oop...',
         text: 'Something went wrong, Please Try again.',
       })
-      console.log(err)
+      // console.log(err)
     }
   }
   if (isPrefetch) {
@@ -156,13 +157,13 @@ export default function Setting() {
     <div className="container">
       {/* {console.log("settingDisplay in seeting page", settingDisplay)} */}
       <div className="row mt-5">
-        <h4>Project</h4>
+        <h4 className='header'>Project</h4>
       </div>
       <div className="row mt-2">
         <div className="col-12">
           <div className="row">
             <div className="col-4 mx-0">
-              <h6>Year of Study:</h6>
+              <h6 className='body'>Year of Study:</h6>
             </div>
             <div className="col-8">
               <label htmlFor="Year">Year</label>
@@ -180,7 +181,7 @@ export default function Setting() {
         <div className="col-12">
           <div className="row">
             <div className="col-4 mx-0">
-              <h6>Number of Member for Group:</h6>
+              <h6 className='body'>Number of Member for Group:</h6>
             </div>
             <div className="row col-8">
               <div className="col-4">
@@ -223,7 +224,7 @@ export default function Setting() {
         <div className="col-12">
           <div className="row">
             <div className="col-4 mx-0">
-              <h6>Student can have more than one group:</h6>
+              <h6 className='body'>Student can have more than one group:</h6>
             </div>
             <div className="row col-8 ml-2">
               <div className="col-4">

@@ -70,7 +70,7 @@ export default function CreateAnnouncement() {
                 title: 'Oop...',
                 text: 'Something went wrong, Please Try again.',
             })
-            console.log(err)
+            // console.log(err)
         }
     }, [])
 
@@ -152,6 +152,7 @@ export default function CreateAnnouncement() {
             data.append('delete_attachment[]', [])
         }
         try {
+            setIsPreFetch(true)
             const response = await axios.post(`${process.env.REACT_APP_API_BE}/announcement/edit`, data, { headers })
             if (response.status === 200) {
                 Swal.fire({
@@ -162,7 +163,7 @@ export default function CreateAnnouncement() {
                     showCancelButton: false,
                     showConfirmButton: false
                 })
-
+            setIsPreFetch(false)
                 setTimeout(() => {
                     navigate("/announcements")
                 }, 2000);

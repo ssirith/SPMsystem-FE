@@ -48,7 +48,7 @@ export default function Createteam() {
         title: 'Oop...',
         text: 'Something went wrong, Please Try again.',
       })
-      console.log(err)
+      // console.log(err)
     }
   }, [])
   useEffect(() => {
@@ -77,6 +77,7 @@ export default function Createteam() {
 
 
   const handleSubmit = async (event) => {
+    setIsPreFetch(true)
     const project_name = mygroup.name
     const project_detail = mygroup.detail
     const student_id = []//array
@@ -104,11 +105,11 @@ export default function Createteam() {
           showCancelButton: false,
           showConfirmButton: false
         })
-
+      setIsPreFetch(false)
         setTimeout(() => {
           navigate("/main")
         }, 2000);
-      }
+      }      
     } catch (err) {
       Swal.fire({
         icon: 'error',

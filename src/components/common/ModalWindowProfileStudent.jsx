@@ -41,7 +41,7 @@ export default function ModalWindowProfile(props) {
         title: 'Oop...',
         text: 'Something went wrong, Please Try again.',
       })
-      console.log(err)
+      // console.log(err)
     }
 
   }, [])
@@ -111,7 +111,7 @@ export default function ModalWindowProfile(props) {
           title: 'Oop...',
           text: 'Something went wrong, Please Try again.',
         })
-        console.log(err)
+        // console.log(err)
       }
 
     } else if (checkDepartment) {
@@ -143,7 +143,7 @@ export default function ModalWindowProfile(props) {
           title: 'Oop...',
           text: 'Something went wrong, Please Try again.',
         })
-        console.log(err)
+        // console.log(err)
       }
     }
 

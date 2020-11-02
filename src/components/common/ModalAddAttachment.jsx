@@ -32,7 +32,7 @@ export default function ModalAddAttachment(props) {
         text: 'Something went wrong, Please Try again.',
       })
       navigate("/main")
-      console.log(err)
+      // console.log(err)
     }
     
   }, [])

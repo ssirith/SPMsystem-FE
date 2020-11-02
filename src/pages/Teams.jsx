@@ -16,7 +16,7 @@ export default function Teams() {
   const fetchData = useCallback(async () => {
     try {
       setIsPreFetch(true)
-      const data = await axios.get(`https://seniorprojectmanagement.tk/api/projects`, { headers }) //[]
+      const data = await axios.get(`${process.env.REACT_APP_API_BE}/projects`, { headers }) //[]
       setGroup(data.data) // AllProject
       setIsPreFetch(false)
     } catch (err) {
@@ -25,7 +25,7 @@ export default function Teams() {
         title: 'Oop...',
         text: 'Something went wrong, Please Try again.',
       })
-      console.log(err)
+      // console.log(err)
     }
   }, [])
   useEffect(() => {

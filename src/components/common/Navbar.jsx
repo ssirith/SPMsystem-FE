@@ -51,6 +51,7 @@ export default function Navbars() {
           `${process.env.REACT_APP_API_BE}/notification/aa/${user.user_id}`,
           { headers }
         )
+        sortNotificationAA(responseAA.data)
       }
     } catch (err) {
       Swal.fire({
@@ -58,7 +59,7 @@ export default function Navbars() {
         title: 'Oop...',
         text: 'Something went wrong, Please Try again.',
       })
-      console.log(err)
+      // console.log(err)
     }
   }, [])
 
@@ -139,7 +140,7 @@ export default function Navbars() {
         title: 'Oop...',
         text: 'Something went wrong, Please Try again.',
       })
-      console.log(err)
+      // console.log(err)
     }
   }
 
@@ -173,7 +174,7 @@ export default function Navbars() {
         title: 'Oop...',
         text: 'Something went wrong, Please Try again.',
       })
-      console.log(err)
+      // console.log(err)
     }
   }
   async function readNotificationAA(notiAA) {
@@ -206,7 +207,7 @@ export default function Navbars() {
         title: 'Oop...',
         text: 'Something went wrong, Please Try again.',
       })
-      console.log(err)
+      // console.log(err)
     }
   }
 
@@ -278,14 +279,15 @@ export default function Navbars() {
                   </li>
                 </div>
                 <NavDropdown title={user.name} id="collasible-nav-dropdown">
-                  <DropdownItem onClick={() => setIsOpenWindow(true)}>
+                  <DropdownItem onClick={() => setIsOpenWindow(true)} className='body'>
                     Edit Profile
                   </DropdownItem>
                   <ModalWindowProfileStudent
                     isOpen={isOpenWindow}
                     setIsOpen={setIsOpenWindow}
                   />
-                  <DropdownItem onClick={() => logOut()}>Logout</DropdownItem>
+                  <NavDropdown.Divider />
+                  <DropdownItem className='body' onClick={() => logOut()}>Logout</DropdownItem>
                 </NavDropdown>
               </ul>
             </div>
@@ -359,7 +361,8 @@ export default function Navbars() {
                     isOpen={isOpenWindow}
                     setIsOpen={setIsOpenWindow}
                   />
-                  <DropdownItem onClick={() => logOut()}>Logout</DropdownItem>
+                  <NavDropdown.Divider />
+                  <DropdownItem className='body' onClick={() => logOut()}>Logout</DropdownItem>
                 </NavDropdown>
               </ul>
             </div>
@@ -422,7 +425,7 @@ export default function Navbars() {
                   </li>
                 </div>
                 <NavDropdown title={user.name} id="collasible-nav-dropdown">
-                  <DropdownItem onClick={() => setIsOpenWindow(true)}>
+                  <DropdownItem className='body' onClick={() => setIsOpenWindow(true)}>
                     Edit Profile
                   </DropdownItem>
                   <ModalWindowProfileTeacher
@@ -430,7 +433,7 @@ export default function Navbars() {
                     setIsOpen={setIsOpenWindow}
                   />
                   <NavDropdown.Divider />
-                  <DropdownItem onClick={() => logOut()}>Logout</DropdownItem>
+                  <DropdownItem  className='body' onClick={() => logOut()}>Logout</DropdownItem>
                 </NavDropdown>
               </ul>
             </div>

@@ -36,7 +36,8 @@ export default function MainLayout(props) {
         title: 'Oop...',
         text: 'Something went wrong, Please Try again.',
       })
-      console.log(err)
+      navigate("/")
+      // console.log(err)
     }
   })
 

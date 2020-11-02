@@ -12,6 +12,7 @@ import RemoveIcon from "@material-ui/icons/Remove"
 import ModalFeedback from "./ModalFeedback"
 import ModalRubric from "./ModalRubric"
 import axios from "axios"
+import Loading from "./Loading"
 
 export default function AssignmentTable(props) {
   const headers = {
@@ -65,7 +66,8 @@ export default function AssignmentTable(props) {
         title: 'Oop...',
         text: 'Please create project group before go to this page or contract the developers.',
       })
-      console.log(err)
+      navigate('/main')
+      // console.log(err)
     }
   })
 
@@ -153,6 +155,7 @@ export default function AssignmentTable(props) {
   }
   async function upLoad() {
     try {
+      setIsPreFetch(true)
       var status = ""
       if (dayjs().isBefore(dueDate, thisDay)) {
         status = "Submitted"
@@ -210,6 +213,7 @@ export default function AssignmentTable(props) {
           window.location.reload()
         }, 2000);
       }
+      setIsPreFetch(false)
     } catch (err) {
       Swal.fire({
         icon: 'error',
@@ -217,7 +221,7 @@ export default function AssignmentTable(props) {
         text: 'Something went wrong, Please Try again.',
       })
       navigate("/main")
-      console.log(err)
+      // console.log(err)
     }
   }
   function handleToggle() {
@@ -233,7 +237,7 @@ export default function AssignmentTable(props) {
   }
 
   if (isPrefetch) {
-    return <></>
+    return <Loading open={isPrefetch}/> 
   }
 
   return (

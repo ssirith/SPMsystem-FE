@@ -74,7 +74,7 @@ export default function Assignments() {
         title: 'Oop...',
         text: 'Something went wrong, Please Try again.',
       })
-      console.log(err)
+      // console.log(err)
       navigate('/main')
     }
   }, [])
@@ -113,7 +113,7 @@ export default function Assignments() {
           <table class="table" style={{ outlineStyle: 'solid', outlineWidth: '1px', outlineColor: '#C4C4C4' }}>
             <thead class="thead-primary">
               <tr>
-                <th colSpan="8" style={{ fontSize: '20px' }}>Assignments</th>
+                <th colSpan="8" style={{ fontSize: '28px' }}>Assignments</th>
               </tr>
             </thead>
             <tbody>

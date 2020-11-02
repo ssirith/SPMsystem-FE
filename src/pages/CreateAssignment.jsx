@@ -68,7 +68,7 @@ export default function CreateAssignment() {
                 title: 'Oop...',
                 text: 'Something went wrong, Please Try again.',
             })
-            console.log(err)
+            // console.log(err)
         }
     }, [])
 

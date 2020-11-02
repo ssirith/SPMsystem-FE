@@ -106,7 +106,7 @@ export default function EditRubric(props) {
 					title: 'Oop...',
 					text: 'Something went wrong, Please Try again.',
 				})
-				console.log(err)
+				// console.log(err)
 			}
 		},
 		[],
@@ -226,6 +226,7 @@ export default function EditRubric(props) {
 
 		} else {
 			try {
+				setIsPreFetch(true)
 				const response = await axios.post(`${process.env.REACT_APP_API_BE}/rubric/edit`, data, { headers })
 				if (response.status === 200) {
 					Swal.fire({
@@ -236,7 +237,7 @@ export default function EditRubric(props) {
 						showCancelButton: false,
 						showConfirmButton: false
 					})
-
+				setIsPreFetch(false)
 					setTimeout(() => {
 						navigate(`/createassignment`)
 					}, 2000);

@@ -31,7 +31,7 @@ export default function Myteam() {
       setIsPreFetch(true)
       if (user&&user.user_type === "Student") {
         const dat = await axios.get(
-          `https://seniorprojectmanagement.tk/api/group/${user.user_id}`,
+          `${process.env.REACT_APP_API_BE}/group/${user.user_id}`,
           { headers }
         ) //[]https://127.0.0.1:8000/api/projects
         setStdGroup(dat.data)
@@ -66,7 +66,7 @@ export default function Myteam() {
         title: 'Oop...',
         text: 'Something went wrong, Please Try again.',
       })
-      console.log(err)
+      // console.log(err)
     }
   })
 

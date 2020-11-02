@@ -38,7 +38,7 @@ export default function ModalDeleteAnnouncement(props) {
         }, 2000);
       }
     } catch (err) {
-      console.log(err)
+      // console.log(err)
       Swal.fire({
         icon: 'error',
         title: 'Oop...',

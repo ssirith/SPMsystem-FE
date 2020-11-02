@@ -43,7 +43,7 @@ export default function AnnouncementTable(props) {
         title: 'Oop...',
         text: 'Something went wrong, Please Try again.',
       })
-      console.log(err)
+      // console.log(err)
     }
   })
   useEffect(() => {

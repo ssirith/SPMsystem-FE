@@ -132,7 +132,7 @@ export default function CreateAssignment(props) {
                 title: 'Oop...',
                 text: 'Something went wrong, Please Try again.',
             })
-            console.log(err)
+            // console.log(err)
         }
     }, [])
     useEffect(() => {
@@ -335,6 +335,7 @@ export default function CreateAssignment(props) {
             data.append('rubric_id', rubric_id)//rubric_id
 
             try {
+                setIsPreFetch(true)
                 const response = await axios.post(`${process.env.REACT_APP_API_BE}/assignments/edit`, data, { headers })
                 if (response.status === 200) {
                     Swal.fire({
@@ -345,7 +346,7 @@ export default function CreateAssignment(props) {
                         showCancelButton: false,
                         showConfirmButton: false
                     })
-
+                    setIsPreFetch(false)
                     setTimeout(() => {
                         navigate(`/assignments/${props.id}`)
                     }, 2000);

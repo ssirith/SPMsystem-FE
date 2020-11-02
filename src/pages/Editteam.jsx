@@ -53,7 +53,7 @@ export default function Editteam(props) {
           title: 'Oop...',
           text: 'Something went wrong, Please Try again.',
         })
-        console.log(err)
+        // console.log(err)
       }
     },
     [],
@@ -132,6 +132,7 @@ export default function Editteam(props) {
     }
 
     try {
+      setIsPreFetch(true)
       const response = await axios.
         put(`${process.env.REACT_APP_API_BE}/projects/edit/${project_id}`, dataForEdit, { headers })
       if (response.status === 200) {
@@ -143,13 +144,13 @@ export default function Editteam(props) {
           showCancelButton: false,
           showConfirmButton: false
         })
-
+      setIsPreFetch(false)
         setTimeout(() => {
           navigate('/main')
         }, 2000);
       }
     } catch (err) {
-      console.log(err)
+      // console.log(err)
       Swal.fire({
         icon: 'error',
         title: 'Oop...',
