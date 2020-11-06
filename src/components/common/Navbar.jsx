@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect, useCallback } from "react"
+import React, { useState, useContext, useEffect, useCallback, useRef } from "react"
 import Cookie from "js-cookie"
 import NotificationsIcon from "@material-ui/icons/Notifications"
 import { Link, navigate } from "@reach/router"
@@ -30,7 +30,7 @@ export default function Navbars() {
   const [notiStudent, setNotiStudent] = useState([])
   const [notiTeacher, setNotiTeacher] = useState([])
   const [notiAA, setNotiAA] = useState([])
-
+  const notiRef=useRef()
   const fetchData = useCallback(async () => {
     try {
       if (user && user.user_type === "Student") {
@@ -73,6 +73,18 @@ export default function Navbars() {
     Cookie.remove("jwt")
     navigate("/")
   }
+
+  useEffect(()=>{
+    let handler=(event)=>{
+      if(!notiRef.current.contains(event.target)){
+        setIsOpenNotiStd(false)
+      }
+    }
+    document.addEventListener('mousedown',handler)
+    return()=>{
+      document.removeEventListener('mousedown',handler)
+    }
+  })
 
   function sortNotificationStudent(notification) {
     notification.notification.sort(
@@ -256,6 +268,7 @@ export default function Navbars() {
                       menuAlign={{ lg: "left" }}
                     >
                       <div
+                        ref={notiRef}
                         className="position-absolute bg-light rounded scrollable-menu"
                         style={{
                           zIndex: 99,
@@ -331,6 +344,7 @@ export default function Navbars() {
                       menuAlign={{ lg: "left" }}
                     >
                       <div
+                        ref={notiRef}
                         className="position-absolute bg-light rounded scrollable-menu"
                         style={{
                           zIndex: 99,
@@ -404,6 +418,7 @@ export default function Navbars() {
                       menuAlign={{ lg: "left" }}
                     >
                       <div
+                        ref={notiRef}
                         className="position-absolute bg-light rounded scrollable-menu"
                         style={{
                           zIndex: 99,
