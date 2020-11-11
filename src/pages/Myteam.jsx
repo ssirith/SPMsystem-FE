@@ -64,7 +64,7 @@ export default function Myteam() {
       Swal.fire({
         icon: 'error',
         title: 'Oop...',
-        text: 'Something went wrong, Please Try again.',
+        text: 'Something went wrong, Please Try again later.',
       })
       // console.log(err)
     }

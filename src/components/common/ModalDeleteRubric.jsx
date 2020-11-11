@@ -1,10 +1,11 @@
-import React from "react"
+import React, { useState } from "react"
 import Cookie from "js-cookie"
 import { Modal } from "react-bootstrap"
 import Buttons from "./Buttons"
 import axios from "axios"
 import Swal from 'sweetalert2'
 import { useNavigate } from "@reach/router"
+import Loading from "./Loading"
 export default function ModalDeleteRubric(props) {
   const headers = {
     Authorization: `Bearer ${Cookie.get("jwt")}`,
@@ -12,7 +13,7 @@ export default function ModalDeleteRubric(props) {
     accept: "application/json",
   }
   let navigate = useNavigate()
-  
+  const [isPrefetch, setIsPreFetch] = useState(false)  
   async function deleteRubric() {
     const rubric_id= props.toDelete.rubric_id;
     const data ={
@@ -20,9 +21,11 @@ export default function ModalDeleteRubric(props) {
 
     }
     try {
+      setIsPreFetch(true)
       const response = await axios.post(
         `${process.env.REACT_APP_API_BE}/rubric/delete`,data,{headers})
       if (response.status === 200) {
+        setIsPreFetch(false)
         Swal.fire({
           icon: 'success',
           title: 'Save!',
@@ -37,14 +40,22 @@ export default function ModalDeleteRubric(props) {
         }, 2000);
       }
     } catch (err) {
+      setIsPreFetch(false)
       Swal.fire({
         icon: 'error',
         title: 'Oop...',
-        text: 'Something went wrong, Please Try again.',
+        text: 'Something went wrong, Please Try again later.',
       })
       // console.log(err)
     }
   }
+
+  if (isPrefetch) {
+    return <>
+      <Loading open={isPrefetch} />
+    </>
+  }
+
   return (
 
     <Modal

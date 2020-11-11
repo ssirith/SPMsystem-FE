@@ -66,7 +66,7 @@ export default function CreateAssignment() {
             Swal.fire({
                 icon: 'error',
                 title: 'Oop...',
-                text: 'Something went wrong, Please Try again.',
+                text: 'Something went wrong, Please Try again later.',
             })
             // console.log(err)
         }
@@ -202,6 +202,7 @@ export default function CreateAssignment() {
         inputRef.current.click()
     }
     async function handleSubmit() {
+        setIsPreFetch(true)
         const responsible_teacher = []
         reviewer.map((r, index) => responsible_teacher.push(r.teacher_id))
         // const teacher_id = user.user_id
@@ -238,6 +239,7 @@ export default function CreateAssignment() {
         try {
             const response = await axios.post(`${process.env.REACT_APP_API_BE}/assignments`, data, { headers })
             if (response.status === 200) {
+                setIsPreFetch(false)
                 Swal.fire({
                     icon: 'success',
                     title: 'Save!',
@@ -252,13 +254,15 @@ export default function CreateAssignment() {
                 }, 2000);
             }
         } catch (err) {
-            console.error(err)
+            // console.error(err)
+            setIsPreFetch(false)
             Swal.fire({
                 icon: 'error',
                 title: 'Oop...',
-                text: 'Something went wrong, Please Try again.',
+                text: 'Something went wrong, Please Try again later.',
 
             })
+            navigate("/assignments")
         }
 
     }
