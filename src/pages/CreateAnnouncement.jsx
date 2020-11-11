@@ -14,6 +14,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import FolderIcon from "@material-ui/icons/Folder";
 import dayjs from "dayjs"
 import Swal from 'sweetalert2'
+import Loading from "../components/common/Loading"
 const useStyles = makeStyles({
     root: {
         position: "relative",
@@ -47,6 +48,7 @@ export default function CreateAnnouncement() {
     const [announcement_Description, setAnnoucement_Description] = useState()
     const [attachment, setAttachment] = useState([])
     const [today, setDate] = useState(new Date())
+    const [isPreFetch, setIsPreFetch] = useState(false)
     const checkRole = useCallback(() => {
         if (user&&user.user_type === "Student") {
             Swal.fire({
@@ -83,6 +85,7 @@ export default function CreateAnnouncement() {
     }
     
     async function handleSubmit() {
+        setIsPreFetch(true)
         var date = dayjs(today).format('YYYY-MM-DD');
         setDate(date)
         const data = new FormData();
@@ -106,6 +109,7 @@ export default function CreateAnnouncement() {
         try {
             const response = await axios.post(`${process.env.REACT_APP_API_BE}/announcement`, data,{ headers })
             if (response.status === 200) {
+                setIsPreFetch(false)
                 Swal.fire({
                     icon: 'success',
                     title: 'Save!',
@@ -120,16 +124,21 @@ export default function CreateAnnouncement() {
                   }, 2000);
             }
         } catch (err) {
-            console.error(err)
+            // console.error(err)
+            setIsPreFetch(false)
             Swal.fire({
                 icon: 'error',
                 title: 'Oop...',
-                text: 'Something went wrong, Please Try again.',
+                text: 'Something went wrong, Please Try again later.',
               })
         }
         
 
     }
+    if (isPreFetch) {
+        return <><Loading open={isPreFetch} /></>
+    }
+
     return (
         <>
             <Container>
@@ -154,6 +163,7 @@ export default function CreateAnnouncement() {
                     </Col>
                     <Col sm={8} style={{ marginLeft: 47 }}>
                         <Inputtext
+                            required={true}
                             id="announcementname"
                             label="Input Announcement Name"
                             // defaultValue={assignment_title}

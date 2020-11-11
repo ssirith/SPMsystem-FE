@@ -1,18 +1,21 @@
-import React from "react"
+import React, { useState } from "react"
 import Cookie from "js-cookie"
 import { Modal } from "react-bootstrap"
 import Buttons from "./Buttons"
 import axios from "axios"
 import Swal from 'sweetalert2'
 import { useNavigate } from "@reach/router"
+import Loading from "./Loading"
 export default function ModalDeleteAnnouncement(props) {
   const headers = {
     Authorization: `Bearer ${Cookie.get("jwt")}`,
     "Content-Type": "application/json",
     accept: "application/json",
   }
+  const [isPrefetch, setIsPreFetch] = useState(false)
   let navigate = useNavigate()
   async function deleteAssignment() {
+    setIsPreFetch(true)
     const idForDelete = {
       announcement_id: props.toDelete
     }
@@ -24,6 +27,7 @@ export default function ModalDeleteAnnouncement(props) {
       )
 
       if (response.status === 200) {
+        setIsPreFetch(false)
         Swal.fire({
           icon: 'success',
           title: 'Save!',
@@ -39,12 +43,19 @@ export default function ModalDeleteAnnouncement(props) {
       }
     } catch (err) {
       // console.log(err)
+      setIsPreFetch(false)
       Swal.fire({
         icon: 'error',
         title: 'Oop...',
-        text: 'Something went wrong, Please Try again.',
+        text: 'Something went wrong, Please Try again later.',
       })
     }
+  }
+
+  if (isPrefetch) {
+    return <>
+      <Loading open={isPrefetch} />
+    </>
   }
 
   return (

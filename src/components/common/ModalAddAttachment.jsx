@@ -29,7 +29,7 @@ export default function ModalAddAttachment(props) {
       Swal.fire({
         icon: 'error',
         title: 'Oop...',
-        text: 'Something went wrong, Please Try again.',
+        text: 'Something went wrong, Please Try again later.',
       })
       navigate("/main")
       // console.log(err)

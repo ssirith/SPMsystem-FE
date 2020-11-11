@@ -34,7 +34,7 @@ export default function MainLayout(props) {
       Swal.fire({
         icon: 'error',
         title: 'Oop...',
-        text: 'Something went wrong, Please Try again.',
+        text: 'Something went wrong, Please Try again later.',
       })
       navigate("/")
       // console.log(err)

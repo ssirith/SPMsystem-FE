@@ -200,6 +200,7 @@ export default function AssignmentTable(props) {
         { headers }
       )
       if (response.status === 200) {
+        setIsPreFetch(false)
         Swal.fire({
           icon: 'success',
           title: 'Save!',
@@ -213,12 +214,11 @@ export default function AssignmentTable(props) {
           window.location.reload()
         }, 2000);
       }
-      setIsPreFetch(false)
     } catch (err) {
       Swal.fire({
         icon: 'error',
         title: 'Oop...',
-        text: 'Something went wrong, Please Try again.',
+        text: 'Something went wrong, Please Try again later.',
       })
       navigate("/main")
       // console.log(err)
@@ -283,9 +283,10 @@ export default function AssignmentTable(props) {
           <td className="uk-background-muted" colSpan={7}>
             <div ref={expanderBody} className="inner uk-grid">
               <div className="uk-width-1-4 uk-text-center">
+                {/* {console.log('props.assignment',props.assignment)} */}
                 {props.assignment &&
-                  <small className="text-danger">{`by ${assignment.teacher.teacher_name
-                    } on ${dayjs(props.assignment.created_at).format(
+                  <small className="text-danger">{`by ${props.assignment.teacher_name===null?(props.assignment.aa_name):(props.assignment.teacher_name)}
+                     on ${dayjs(props.assignment.created_at).format(
                       "MMMM DD, YYYY"
                     )} At ${dayjs(props.assignment.created_at).format(
                       "HH:mm A"
