@@ -84,7 +84,7 @@ export default function Myteam() {
 
   return (
     <>
-      {console.log("user context", user)}
+      {/* {console.log("user context", user)} */}
       {user && user.user_type === "Student" && (
         <>
           {user && user.department ? (
