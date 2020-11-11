@@ -165,6 +165,7 @@ export default function CreateAnnouncement() {
                         <Inputtext
                             id="announcementname"
                             label="Input Announcement Name"
+                            required
                             // defaultValue={assignment_title}
                             onChange={(event) => handleAnnouncementTitle(event)}
                         />
