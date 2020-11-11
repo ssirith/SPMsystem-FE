@@ -36,24 +36,24 @@ export default function CreateAnnouncement() {
         Authorization: `Bearer ${Cookie.get("jwt")}`,
         "Content-Type": "application/json",
         accept: "application/json",
-      }
+    }
     const classes = useStyles()
     const inputRef = useRef()
     let navigate = useNavigate()
     const { user, setUser } = useContext(UserContext)
-//     const userBeforeParse=JSON.parse(localStorage.getItem('user'))
-//   const  [user, setUser ] = useState(userBeforeParse)
+    //     const userBeforeParse=JSON.parse(localStorage.getItem('user'))
+    //   const  [user, setUser ] = useState(userBeforeParse)
     const [announcement_Title, setAnnoucement_Title] = useState()
     const [announcement_Description, setAnnoucement_Description] = useState()
     const [attachment, setAttachment] = useState([])
     const [today, setDate] = useState(new Date())
     const checkRole = useCallback(() => {
-        if (user&&user.user_type === "Student") {
+        if (user && user.user_type === "Student") {
             Swal.fire({
                 icon: 'error',
                 title: 'Oop...',
                 text: `You dont'have permission to go this page.`,
-              })
+            })
             navigate("/main")
         }
     })
@@ -81,7 +81,7 @@ export default function CreateAnnouncement() {
         attachment.splice(index, 1)
         setAttachment([...attachment])
     }
-    
+
     async function handleSubmit() {
         var date = dayjs(today).format('YYYY-MM-DD');
         setDate(date)
@@ -104,7 +104,7 @@ export default function CreateAnnouncement() {
             data.append('attachment[]', [])
         }
         try {
-            const response = await axios.post(`${process.env.REACT_APP_API_BE}/announcement`, data,{ headers })
+            const response = await axios.post(`${process.env.REACT_APP_API_BE}/announcement`, data, { headers })
             if (response.status === 200) {
                 Swal.fire({
                     icon: 'success',
@@ -113,11 +113,11 @@ export default function CreateAnnouncement() {
                     timer: 2000,
                     showCancelButton: false,
                     showConfirmButton: false
-                  })
-          
-                  setTimeout(() => {
+                })
+
+                setTimeout(() => {
                     navigate("/announcements")
-                  }, 2000);
+                }, 2000);
             }
         } catch (err) {
             console.error(err)
@@ -125,9 +125,9 @@ export default function CreateAnnouncement() {
                 icon: 'error',
                 title: 'Oop...',
                 text: 'Something went wrong, Please Try again.',
-              })
+            })
         }
-        
+
 
     }
     return (
@@ -154,6 +154,7 @@ export default function CreateAnnouncement() {
                     </Col>
                     <Col sm={8} style={{ marginLeft: 47 }}>
                         <Inputtext
+                            required
                             id="announcementname"
                             label="Input Announcement Name"
                             // defaultValue={assignment_title}
@@ -171,6 +172,7 @@ export default function CreateAnnouncement() {
                         <Textarea
                             id="description"
                             label="Input Announcement Description"
+                            required
                             // defaultValue={assignment_detail}
                             onChange={(event) => handleDescription(event)}
                         />
@@ -182,7 +184,7 @@ export default function CreateAnnouncement() {
                     <Col sm={1.5} >
                         Attachment:
                     </Col>
-                    <Col style={{ marginLeft: 390}}>
+                    <Col style={{ marginLeft: 390 }}>
                         <Buttons
                             menu="Add"
                             color="primary"

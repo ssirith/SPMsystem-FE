@@ -14,7 +14,7 @@ function Textarea(props) {
   return (
         <>
             <TextField className={classes.margin} id={props.id} label={props.label} defaultValue={props.defaultValue} color={props.color} 
-            variant="outlined" placeholder={props.placeholder}onChange={props.onChange} multiline rows={4}/>
+            variant="outlined" placeholder={props.placeholder}onChange={props.onChange} required={props.required} multiline rows={4}/>
         </>
   )
 }
