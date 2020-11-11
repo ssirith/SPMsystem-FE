@@ -237,7 +237,7 @@ export default function AssignmentTable(props) {
   }
 
   if (isPrefetch) {
-    return <Loading open={isPrefetch}/> 
+    return <Loading open={isPrefetch} />
   }
 
   return (
@@ -283,12 +283,14 @@ export default function AssignmentTable(props) {
           <td className="uk-background-muted" colSpan={7}>
             <div ref={expanderBody} className="inner uk-grid">
               <div className="uk-width-1-4 uk-text-center">
-                <small className="text-danger">{`by ${assignment.teacher.teacher_name
-                  } on ${dayjs(props.assignment.created_at).format(
-                    "MMMM DD, YYYY"
-                  )} At ${dayjs(props.assignment.created_at).format(
-                    "HH:mm A"
-                  )} `}</small>
+                {props.assignment &&
+                  <small className="text-danger">{`by ${assignment.teacher.teacher_name
+                    } on ${dayjs(props.assignment.created_at).format(
+                      "MMMM DD, YYYY"
+                    )} At ${dayjs(props.assignment.created_at).format(
+                      "HH:mm A"
+                    )} `}</small>
+                }
               </div>
               <div className="container row">
                 <div className="col-8">
