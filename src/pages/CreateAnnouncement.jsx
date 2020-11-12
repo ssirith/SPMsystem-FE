@@ -44,8 +44,8 @@ export default function CreateAnnouncement() {
     const { user, setUser } = useContext(UserContext)
     //     const userBeforeParse=JSON.parse(localStorage.getItem('user'))
     //   const  [user, setUser ] = useState(userBeforeParse)
-    const [announcement_Title, setAnnoucement_Title] = useState()
-    const [announcement_Description, setAnnoucement_Description] = useState()
+    const [announcement_Title, setAnnoucement_Title] = useState('')
+    const [announcement_Description, setAnnoucement_Description] = useState('')
     const [attachment, setAttachment] = useState([])
     const [today, setDate] = useState(new Date())
     const [isPreFetch, setIsPreFetch] = useState(false)
@@ -86,6 +86,13 @@ export default function CreateAnnouncement() {
 
     async function handleSubmit() {
         setIsPreFetch(true)
+        if (announcement_Title || announcement_Description === '') {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oop...',
+                text: 'Something went wrong, Please Try again later.',
+            });
+        }
         var date = dayjs(today).format('YYYY-MM-DD');
         setDate(date)
         const data = new FormData();
@@ -130,7 +137,7 @@ export default function CreateAnnouncement() {
                 icon: 'error',
                 title: 'Oop...',
                 text: 'Something went wrong, Please Try again later.',
-              })
+            });
         }
 
 
