@@ -254,7 +254,7 @@ export default function CreateAssignment() {
                 }, 2000);
             }
         } catch (err) {
-            // console.error(err)
+            console.error('create assignment page',err)
             setIsPreFetch(false)
             Swal.fire({
                 icon: 'error',

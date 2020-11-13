@@ -286,9 +286,9 @@ export default function AssignmentTable(props) {
                 {/* {console.log('props.assignment',props.assignment)} */}
                 {props.assignment &&
                   <small className="text-danger">{`by ${props.assignment.teacher_name===null?(props.assignment.aa_name):(props.assignment.teacher_name)}
-                     on ${dayjs(props.assignment.created_at).format(
+                     on ${dayjs(props.assignment.create_time).format(
                       "MMMM DD, YYYY"
-                    )} At ${dayjs(props.assignment.created_at).format(
+                    )} At ${dayjs(props.assignment.create_time).format(
                       "HH:mm A"
                     )} `}</small>
                 }

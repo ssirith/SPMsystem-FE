@@ -74,7 +74,7 @@ export default function Assignments() {
         title: 'Oop...',
         text: 'Something went wrong, Please Try again later.',
       })
-      // console.log(err)
+      // console.log('fectch function',err)
       navigate('/main')
     }
   }, [])

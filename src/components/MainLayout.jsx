@@ -52,7 +52,7 @@ export default function MainLayout(props) {
       <div className="container-fluid ">
         <div className="row">
           <Sidebar statusbar={props.statusbar} />
-          <Child {...props} />
+         {user&& <Child {...props} />}
         </div>
       </div>
     </>

@@ -47,7 +47,7 @@ export default function AssignmentTopicBox(props) {
                                                     <div className="container col-12 " style={{ 'fontSize': '20px' }}>
 
                                                         Assignment {data.assignment_id} : {data.assignment_title}<br />
-                                                    By {data.teacher_name} on {` ${dayjs(data.due_date).format("MMMM DD, YYYY")}`}
+                                                    By {data.teacher_name===null?(data.aa_name):(data.teacher_name)} on {` ${dayjs(data.due_date).format("MMMM DD, YYYY")}`}
 
                                                         <Link to={`/assignments/${data.assignment_id}`} className='d-flex justify-content-end m-2'>
                                                         <Button variant="contained" size="large" color="primary">
@@ -75,7 +75,7 @@ export default function AssignmentTopicBox(props) {
                                                 <div className="container col-12" style={{ 'fontSize': '20px' }}>
 
                                                     Assignment {data.assignment_id} : {data.assignment_title}<br />
-                                            By {data.teacher_name} on {` ${dayjs(data.due_date).format("MMMM DD, YYYY")}`}
+                                            By {data.teacher_name===null?(data.aa_name):(data.teacher_name)} on {` ${dayjs(data.due_date).format("MMMM DD, YYYY")}`}
                                                     <Link to={`/assignments/${data.assignment_id}`} className='d-flex justify-content-end m-2'>
                                                         <Button variant="contained" size="large" color="primary">
                                                             More
@@ -108,7 +108,7 @@ export default function AssignmentTopicBox(props) {
                                                         <div className="container col-12" style={{ 'fontSize': '20px' }}>
                                                             
                                                                 Assignment {data.assignment_id} : {data.assignment_title}<br />
-                                                    By {data.teacher_name} on {` ${dayjs(data.due_date).format("MMMM DD, YYYY")}`}
+                                                    By {data.teacher_name===null?(data.aa_name):(data.teacher_name)} on {` ${dayjs(data.due_date).format("MMMM DD, YYYY")}`}
                                                             
                                                             <Link to={`/assignments/${data.assignment_id}`} className='d-flex justify-content-end m-2'>
                                                             <Button variant="contained" size="large" color="primary">
@@ -136,7 +136,7 @@ export default function AssignmentTopicBox(props) {
                                                     <div className="container col-12" style={{ 'fontSize': '20px' }}>
                                                     
                                                             Assignment {data.assignment_id} : {data.assignment_title}<br />
-                                            By {data.teacher_name} on {` ${dayjs(data.due_date).format("MMMM DD, YYYY")}`}
+                                            By {data.teacher_name===null?(data.aa_name):(data.teacher_name)} on {` ${dayjs(data.due_date).format("MMMM DD, YYYY")}`}
                                                         
                                                         <Link to={`/assignments/${data.assignment_id}`} className='d-flex justify-content-end m-2'>
                                                         <Button variant="contained" size="large" color="primary">

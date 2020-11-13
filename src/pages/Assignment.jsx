@@ -99,6 +99,8 @@ export default function Assignment(props) {
             setRubric(criterions)
             setIsPreFetch(false)
         } catch (err) {
+            setIsPreFetch(false)
+            console.log(err)
             Swal.fire({
                 icon: 'error',
                 title: 'Oop...',

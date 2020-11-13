@@ -217,11 +217,13 @@ export default function Assesment(props) {
         }
       }
       try {
+        setIsPreFetch(true)
         const response = await axios.post(
           `${process.env.REACT_APP_API_BE}/assessment`,
           data, { headers }
         )
         if (response.status === 200) {
+          setIsPreFetch(false)
           Swal.fire({
             icon: 'success',
             title: 'Save!',
@@ -232,16 +234,17 @@ export default function Assesment(props) {
           })
 
           setTimeout(() => {
-            navigate(`/assignments/${props.id}`)
+            navigate(`/assignments/${assignment_id}`)
           }, 2000);
         }
       } catch (err) {
+        setIsPreFetch(false)
         Swal.fire({
           icon: 'error',
           title: 'Oop...',
           text: 'Something went wrong, Please Try again later.',
         })
-        console.error(err)
+        // console.error(err)
       }
     } else {
       Swal.fire({
