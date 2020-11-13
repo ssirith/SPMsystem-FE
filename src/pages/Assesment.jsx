@@ -223,7 +223,7 @@ export default function Assesment(props) {
           data, { headers }
         )
         if (response.status === 200) {
-          setIsPreFetch(false)
+          setIsPreFetch(true)
           Swal.fire({
             icon: 'success',
             title: 'Save!',

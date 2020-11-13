@@ -368,7 +368,7 @@ export default function Navbars() {
                   </li>
                 </div>
                 <NavDropdown title={user.name} id="collasible-nav-dropdown">
-                  <DropdownItem onClick={() => setIsOpenWindow(true)}>
+                  <DropdownItem className='body'onClick={() => setIsOpenWindow(true)}>
                     Edit Profile
                   </DropdownItem>
                   <ModalWindowProfileTeacher
