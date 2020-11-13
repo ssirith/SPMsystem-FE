@@ -205,14 +205,12 @@ export default function CreateAssignment() {
         setIsPreFetch(true)
         const responsible_teacher = []
         reviewer.map((r, index) => responsible_teacher.push(r.teacher_id))
-        // const teacher_id = user.user_id
         const rubric_id = rubric.rubric_id
         const data = new FormData();
         data.append('assignment_title', assignment_title)
         data.append('assignment_detail', assignment_detail)
         data.append('due_date', due_date)
         data.append('due_time', due_time)
-        // data.append('teacher_id', user.user_id)
         if (user.user_type === "Teacher") {
             data.append("teacher_id", user.user_id)
             data.append("aa_id", "")
