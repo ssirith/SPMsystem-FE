@@ -86,60 +86,67 @@ export default function CreateAnnouncement() {
 
     async function handleSubmit() {
         setIsPreFetch(true)
-        if (announcement_Title || announcement_Description === '') {
-            Swal.fire({
-                icon: 'error',
-                title: 'Oop...',
-                text: 'Something went wrong, Please Try again later.',
-            });
-        }
-        var date = dayjs(today).format('YYYY-MM-DD');
-        setDate(date)
-        const data = new FormData();
-        data.append("announcement_title", announcement_Title)
-        data.append("announcement_detail", announcement_Description)
-        data.append("announcement_date", date)
-        if (user.user_type === "Teacher") {
-            data.append("teacher_id", user.user_id)
-            data.append("aa_id", "")
-        } else {
-            data.append("teacher_id", "")
-            data.append("aa_id", user.user_id)
-        }
-        if (attachment.length !== 0) {
-            for (const acceptFile of attachment) {
-                data.append('attachment[]', acceptFile)
+        // if (announcement_Title || announcement_Description === '') {
+        //     Swal.fire({
+        //         icon: 'error',
+        //         title: 'Oop...',
+        //         text: 'Something went wrong, Please Try again later.',
+        //     });
+        // }
+        if (announcement_Title || announcement_Description !== '') {
+            var date = dayjs(today).format('YYYY-MM-DD');
+            setDate(date)
+            const data = new FormData();
+            data.append("announcement_title", announcement_Title)
+            data.append("announcement_detail", announcement_Description)
+            data.append("announcement_date", date)
+            if (user.user_type === "Teacher") {
+                data.append("teacher_id", user.user_id)
+                data.append("aa_id", "")
+            } else {
+                data.append("teacher_id", "")
+                data.append("aa_id", user.user_id)
             }
-        } else {
-            data.append('attachment[]', [])
-        }
-        try {
-            const response = await axios.post(`${process.env.REACT_APP_API_BE}/announcement`, data, { headers })
-            if (response.status === 200) {
+            if (attachment.length !== 0) {
+                for (const acceptFile of attachment) {
+                    data.append('attachment[]', acceptFile)
+                }
+            } else {
+                data.append('attachment[]', [])
+            }
+            try {
+                const response = await axios.post(`${process.env.REACT_APP_API_BE}/announcement`, data, { headers })
+                if (response.status === 200) {
+                    setIsPreFetch(false)
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Save!',
+                        text: 'Create Success.',
+                        timer: 2000,
+                        showCancelButton: false,
+                        showConfirmButton: false
+                    })
+
+                    setTimeout(() => {
+                        navigate("/announcements")
+                    }, 2000);
+                }
+            } catch (err) {
+                // console.error(err)
                 setIsPreFetch(false)
                 Swal.fire({
-                    icon: 'success',
-                    title: 'Save!',
-                    text: 'Create Success.',
-                    timer: 2000,
-                    showCancelButton: false,
-                    showConfirmButton: false
-                })
-
-                setTimeout(() => {
-                    navigate("/announcements")
-                }, 2000);
+                    icon: 'error',
+                    title: 'Oop...',
+                    text: 'Something went wrong, Please Try again later.',
+                });
             }
-        } catch (err) {
-            // console.error(err)
-            setIsPreFetch(false)
+        }else{
             Swal.fire({
                 icon: 'error',
                 title: 'Oop...',
                 text: 'Something went wrong, Please Try again later.',
             });
         }
-
 
     }
     if (isPreFetch) {
