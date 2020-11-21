@@ -7,6 +7,7 @@ import Landing from './pages/Landing'
 import Myteam from "./pages/Myteam"
 import Teams from "./pages/Teams"
 import Editteam from "./pages/Editteam"
+import ResponsibleProject from "./pages/ResponsibleProject"
 import Otherteam from "./pages/Otherteam"
 import Createteam from "./pages/Createteam"
 import Assignment from "./pages/Assignment"
@@ -111,6 +112,11 @@ function App() {
               path="/createteam"
               component={Createteam}
               statusbar={1} />
+              <MainLayout
+                path="/responsibleprojects/:id"
+                component={ResponsibleProject}
+                statusbar={1}
+              />
             <MainLayout
               path="/allprojects"
               component={Teams}

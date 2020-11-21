@@ -11,6 +11,7 @@ import ModalcomponentDelete from "../components/common/ModalcomponentDelete"
 import { UserContext } from "../UserContext"
 import ModalWindowProfileStudent from "../components/common/ModalWindowProfileStudent"
 import Carditem from "../components/common/Carditem"
+import CarditemForTeacherAA from "../components/common/CarditemForTeacherAA"
 import Loading from "../components/common/Loading"
 import Swal from 'sweetalert2'
 export default function Myteam() {
@@ -182,7 +183,7 @@ export default function Myteam() {
                 {group.map((data, index) => {
                   return (
                     <div className="col-3 m-3" key={index}>
-                      <Carditem groups={data} />
+                      <CarditemForTeacherAA groups={data} />
                     </div>
                   )
                 })}
@@ -210,7 +211,7 @@ export default function Myteam() {
               {group.map((data, index) => {
                 return (
                   <div className="col-3 m-3" key={index}>
-                    <Carditem groups={data} />
+                    <CarditemForTeacherAA groups={data} />
                   </div>
                 )
               })}
