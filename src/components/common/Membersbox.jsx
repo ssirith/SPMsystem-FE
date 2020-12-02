@@ -1,10 +1,10 @@
 import React, { useState, useCallback, useContext } from "react"
+import Cookie from "js-cookie"
 import { makeStyles } from "@material-ui/core/styles"
 import Card from "@material-ui/core/Card"
 import CardContent from "@material-ui/core/CardContent"
 import Buttons from "./Buttons"
 import { CardHeader } from "@material-ui/core"
-import axios from "axios"
 import { useEffect } from "react"
 import { UserContext } from "../../UserContext"
 const useStyles = makeStyles({
@@ -26,27 +26,32 @@ const useStyles = makeStyles({
 })
 export default function Membersbox(props) {
   const { user, setUser } = useContext(UserContext)
+  // const userBeforeParse=JSON.parse(localStorage.getItem('user'))
+  // const  [user, setUser ] = useState(userBeforeParse)
   const classes = useStyles()
   return (
     <>
       <Card className={classes.root}>
         <CardHeader title={props.title} />
         <CardContent>
-          <div className="container">
-            <p>{user.id} {user.name}</p>
-            
-            {props.members &&
-              props.members.map((std, index) => {
-                return (
-                  <>
-                    <p key={index}>
-                      {std.student_id} {std.student_name}
-                    </p>
-                  </>
-                )
-              })}
-          </div>
-         
+          {user && (
+            <div className="container">
+              <p>
+                {user.user_id} {user.name}
+              </p>
+
+              {props.members &&
+                props.members.map((std, index) => {
+                  return (
+                    <>
+                      <p key={index}>
+                        {std.student_id} {std.student_name}
+                      </p>
+                    </>
+                  )
+                })}
+            </div>
+          )}
         </CardContent>
       </Card>
     </>

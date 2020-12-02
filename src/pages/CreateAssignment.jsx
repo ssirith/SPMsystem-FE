@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useEffect, useContext, useRef } from "react"
+import Cookie from 'js-cookie'
 import BreadcrumbNavString from "../components/common/BreadcrumbNavString"
 import Inputtext from "../components/common/Inputtext"
 import Textarea from "../components/common/Textarea"
@@ -8,7 +9,6 @@ import Button from "@material-ui/core/Button"
 import Buttons from "../components/common/Buttons"
 import DueDate from "../components/common/DueDate"
 import DropdownRubric from "../components/common/DropdownRubric"
-import CreateRubric from "../components/common/CreateRubric"
 import ModalAddReviewer from "../components/common/ModalAddReviewer"
 import { Link, useNavigate, Redirect, Router } from "@reach/router"
 import { UserContext } from "../UserContext"
@@ -19,22 +19,29 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FolderIcon from "@material-ui/icons/Folder"
 import TimePicker from '../components/common/TimePicker';
-import { keys } from "@material-ui/core/styles/createBreakpoints"
 import dayjs from "dayjs"
 import { makeStyles } from '@material-ui/core/styles';
 import { Container, Row, Col } from 'reactstrap';
 import { Table } from "react-bootstrap"
-// import { Router } from "@material-ui/icons"
+import Loading from "../components/common/Loading"
+import Swal from 'sweetalert2'
 const useStyles = makeStyles((theme) => ({
     margin: {
         margin: theme.spacing(1),
     },
 }));
 export default function CreateAssignment() {
+    const headers = {
+        Authorization: `Bearer ${Cookie.get("jwt")}`,
+        "Content-Type": "application/json",
+        accept: "application/json",
+    }
     const classes = useStyles();
     let navigate = useNavigate()
     const inputRef = useRef()
     const { user, setUser } = useContext(UserContext)
+    //     const userBeforeParse=JSON.parse(localStorage.getItem('user'))
+    //   const  [user, setUser ] = useState(userBeforeParse)
     const [attachment, setAttachment] = useState([])
     const [isOpenAttachment, setIsOpenAttachment] = useState(false)
     const [isPreFetch, setIsPreFetch] = useState(false)
@@ -50,23 +57,31 @@ export default function CreateAssignment() {
     const [isOpenDeleteRubric, setIsOpenDeleteRubric] = useState(false)
 
     const fetchData = useCallback(async () => {
-        setIsPreFetch(true)
-        const rub = await axios.get(`${process.env.REACT_APP_API_BE}/rubric`)
-        setShowAllRubric(rub.data)// ได้ array ของ rubric ทั้งหมด
-        setIsPreFetch(false)
+        try {
+            setIsPreFetch(true)
+            const rub = await axios.get(`${process.env.REACT_APP_API_BE}/rubric`, { headers })
+            setShowAllRubric(rub.data)// ได้ array ของ rubric ทั้งหมด
+            setIsPreFetch(false)
+        } catch (err) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oop...',
+                text: 'Something went wrong, Please Try again later.',
+            })
+            // console.log(err)
+        }
     }, [])
 
     useEffect(() => {
         fetchData()
     }, [])
-    console.log(showAllRubric)
-    console.log(rubric)
+
     useEffect(() => {
         var criterions = [];
         showAllRubric.map((a) => {
             if (a.rubric_id === rubric.rubric_id) {
                 async function refreshCriterion() {
-                    const temp = await axios.get(`${process.env.REACT_APP_API_BE}/rubric/${rubric.rubric_id}`)
+                    const temp = await axios.get(`${process.env.REACT_APP_API_BE}/rubric/${rubric.rubric_id}`, { headers })
                     temp.data.criterions.map((c, index) => {
                         let idx = criterions.findIndex(item => item.criteria_id === c.criteria_id)
                         if (idx !== -1) {//0
@@ -79,7 +94,7 @@ export default function CreateAssignment() {
                             criterions[idx].score.sort((a, b) => {
                                 return a.value - b.value
                             })
-                            
+
                         } else {
                             criterions.push(
                                 {
@@ -99,16 +114,19 @@ export default function CreateAssignment() {
                     setCriterion(criterions)
                 }
                 refreshCriterion()
-                console.log(criterions)
             }
 
         })
     }, [rubric])
 
     const checkRole = useCallback(() => {
-        if (user.role === "student") {
-            alert(`You dont'have permission to go this page.`)
-            navigate("/")
+        if (user && user.user_type === "Student") {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oop...',
+                text: `You dont'have permission to go this page.`,
+            })
+            navigate("/main")
         }
     })
 
@@ -138,7 +156,6 @@ export default function CreateAssignment() {
     const handleDuedate = (event) => {
         var date = dayjs(event.target.value).format('YYYY-MM-DD');
         setDue_date(date)
-        console.log("due_date=>", due_date)
     }
 
     const handleTimePicker = (event) => {
@@ -157,8 +174,14 @@ export default function CreateAssignment() {
     function setEdit(value) {
         if (value) {
             navigate(`/editrubric/${value}`)
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oop...',
+                text: "No rubric for editing !!",
+            })
         }
-        else (alert("No rubric for editing !!"))
+
     }
 
 
@@ -166,25 +189,35 @@ export default function CreateAssignment() {
     function setModalDelete(value) {
         if (rubric !== "") {
             setIsOpenDeleteRubric(value)
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oop...',
+                text: "No rubric for deleting !!",
+            })
         }
-        else (alert("No rubric for deleting !!"))
     }
 
     function handleClickAdd() {
         inputRef.current.click()
     }
-
     async function handleSubmit() {
+        setIsPreFetch(true)
         const responsible_teacher = []
         reviewer.map((r, index) => responsible_teacher.push(r.teacher_id))
-        const teacher_id = user.id
         const rubric_id = rubric.rubric_id
         const data = new FormData();
         data.append('assignment_title', assignment_title)
         data.append('assignment_detail', assignment_detail)
         data.append('due_date', due_date)
         data.append('due_time', due_time)
-        data.append('teacher_id', teacher_id)
+        if (user.user_type === "Teacher") {
+            data.append("teacher_id", user.user_id)
+            data.append("aa_id", "")
+        } else {
+            data.append("teacher_id", "")
+            data.append("aa_id", user.user_id)
+        }
         data.append('rubric_id', rubric_id)
         if (attachment.length !== 0) {
             for (const acceptFile of attachment) {
@@ -202,20 +235,38 @@ export default function CreateAssignment() {
         }
 
         try {
-            const response = await axios.post(`${process.env.REACT_APP_API_BE}/assignments`, data)
+            const response = await axios.post(`${process.env.REACT_APP_API_BE}/assignments`, data, { headers })
             if (response.status === 200) {
-                alert("Create Success.")
-                navigate("/assignments")
+                setIsPreFetch(false)
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Save!',
+                    text: 'Edit Success.',
+                    timer: 2000,
+                    showCancelButton: false,
+                    showConfirmButton: false
+                })
 
+                setTimeout(() => {
+                    navigate("/assignments")
+                }, 2000);
             }
         } catch (err) {
-            alert("It's not success, Please check your input")
-            console.error(err)
+            console.error('create assignment page',err)
+            setIsPreFetch(false)
+            Swal.fire({
+                icon: 'error',
+                title: 'Oop...',
+                text: 'Something went wrong, Please Try again later.',
+
+            })
+            navigate("/assignments")
         }
+
     }
 
     if (isPreFetch) {
-        return <></>
+        return <><Loading open={isPreFetch} /></>
     }
 
     return (
@@ -306,7 +357,7 @@ export default function CreateAssignment() {
                                                             &nbsp;
                                                             <FolderIcon className="primary" />
                                                             &nbsp;
-                                                            {f.name.substring(0, 30)}
+                                                            {f.name.substring(0, 25)}
                                                             &nbsp;
                                                             <button onClick={() => deleteFilesUpload(f, index)}>
                                                                 <DeleteIcon fontSize="small" color="error" />

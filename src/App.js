@@ -3,9 +3,11 @@ import "./App.css"
 import { UserContext } from "./UserContext"
 import { Router } from "@reach/router"
 import MainLayout from "./components/MainLayout"
+import Landing from './pages/Landing'
 import Myteam from "./pages/Myteam"
 import Teams from "./pages/Teams"
 import Editteam from "./pages/Editteam"
+import ResponsibleProject from "./pages/ResponsibleProject"
 import Otherteam from "./pages/Otherteam"
 import Createteam from "./pages/Createteam"
 import Assignment from "./pages/Assignment"
@@ -15,14 +17,17 @@ import EditAssignment from "./pages/EditAssignment"
 import CreateRubric from "./pages/CreateRubric"
 import EditRubric from "./pages/EditRubric"
 import Assesment from "./pages/Assesment"
-import Annoucements from "./pages/Annoucements"
+import Announcements from "./pages/Announcements"
+import CreateAnnouncement from "./pages/CreateAnnouncement"
+import EditAnnouncement from "./pages/EditAnnouncement"
 import ViewAssesment from "./pages/ViewAssesment"
 import Setting from "./pages/Setting"
 import dayjs from 'dayjs';
 import { SettingYearContext } from "./SettingYearContext"
 import { SettingContext } from "./SettingContext"
 import axios from "axios"
-
+import CallbackFromSSO from "./pages/CallbackFromSSO"
+import Swal from 'sweetalert2'
 function App() {
   const [settingYearContext, setSettingYearContext] = useState(dayjs().format('YYYY') - 1)// อิงตาม ปฏิทิน 2020
   // const [settingYearContext, setSettingYearContext] = useState(dayjs().format('2019'))
@@ -35,22 +40,35 @@ function App() {
     () => ({ settingContext, setSettingContext }),
     [settingContext, setSettingContext]
   )
-  const [user, setUser] = useState({
+  // const { user, setUser } = useContext(UserContext) 
+  const [user, setUser] = useState(null)
 
-    id: "2", //เวลา demo  เปลี่ยนที่นี่
-    name: "Umaporn Supasitthimethee",
-    role: "teacher", //เวลา demo  เปลี่ยนที่นี่
 
-    //1 Siam Yamsaengsung
-    //2 Umaporn Supasitthimethee
-    //9 Pichet Limvachiranan
-  })
+  // id: "1", 
+  // name: "Siam Yamsaengsung", 
+  // role: "teacher",
+
+  // id: "11", 
+  // name: "Pornthip Yamsaengsung", 
+  // role: "aa",
+
+  // id: "60130500114", 
+  // name: "Suthiwat Sirithanakom",
+  // role: "Student", 
+
+  // 1 Siam Yamsaengsung
+  // 2 Umaporn Supasitthimethee
+  // 9 Pichet Limvachiranan
+
 
   const userValue = useMemo(() => ({ user, setUser }), [user, setUser])
 
   const fetchData = useCallback(async () => {
     try {
       const response = await axios.get(`${process.env.REACT_APP_API_BE}/config/${settingYearContext}`)
+      // const test = await axios.get('https://jsonplaceholder.typicode.com/todos/1')
+      // console.log('response',response)
+      // console.log('test',test)
       // console.log('response true false from database',response.data.student_one_more_group)
       // setSettingContext(response.data)
       if (parseInt(response.data.student_one_more_group)) {
@@ -61,7 +79,12 @@ function App() {
         setSettingContext({ ...response.data, student_one_more_group: false })
       }
     } catch (err) {
-      console.log(err)
+      Swal.fire({
+        icon: 'error',
+        title: 'Oop...',
+        text: 'Something went wrong, Please Try again later.',
+      })
+      // console.log(err)
     }
   })
   //  console.log('app',settingContext)
@@ -74,8 +97,11 @@ function App() {
       <SettingContext.Provider value={settingValue}>
         <UserContext.Provider value={userValue}>
           <Router>
+            <CallbackFromSSO path='/checkAuth' />
+            <Landing
+              path="/" />
             <MainLayout
-              path="/"
+              path="/main"
               component={Myteam}
               statusbar={1} />
             <MainLayout
@@ -86,6 +112,11 @@ function App() {
               path="/createteam"
               component={Createteam}
               statusbar={1} />
+              <MainLayout
+                path="/responsibleprojects/:id"
+                component={ResponsibleProject}
+                statusbar={1}
+              />
             <MainLayout
               path="/allprojects"
               component={Teams}
@@ -136,8 +167,18 @@ function App() {
               statusbar={3}
             />
             <MainLayout
-              path="/annoucements"
-              component={Annoucements}
+              path="/announcements"
+              component={Announcements}
+              statusbar={5}
+            />
+            <MainLayout
+              path="/createannouncement"
+              component={CreateAnnouncement}
+              statusbar={5}
+            />
+            <MainLayout
+              path="/editannouncement/:id"
+              component={EditAnnouncement}
               statusbar={5}
             />
             <MainLayout path="/Setting" component={Setting} statusbar={6} />

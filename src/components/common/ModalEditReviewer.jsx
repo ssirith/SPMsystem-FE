@@ -1,13 +1,19 @@
 import React, { useState, useCallback, useContext } from "react"
+import Cookie from "js-cookie"
 import { useParams } from "@reach/router"
 import { Modal } from "react-bootstrap"
-import Buttons from "./Buttons"
+import Swal from 'sweetalert2'
 import Inputtext from "./Inputtext"
 import axios from "axios"
 import { useEffect } from "react"
 import Button from "@material-ui/core/Button"
 import { UserContext } from "../../UserContext"
 export default function ModalEditReviewer(props) {
+  const headers = {
+    Authorization: `Bearer ${Cookie.get("jwt")}`,
+    "Content-Type": "application/json",
+    accept: "application/json",
+  }
   const [save, setSave] = useState() //เอาค่ามาจาก axios
   const [resnponsible_teacher, setResnponsible_teacher] = useState() //เอาค่ามาจาก axios
   const [teachers, setTeachers] = useState([])
@@ -16,26 +22,36 @@ export default function ModalEditReviewer(props) {
   const [isPreFetch, setIsPreFetch] = useState(false)
   const { id } = useParams()
   const { user, setUser } = useContext(UserContext)
+  // const userBeforeParse=JSON.parse(localStorage.getItem('user'))
+  // const  [user, setUser ] = useState(userBeforeParse)
   const fetchData = useCallback(async () => {
-    setIsPreFetch(true)
-    const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/assignments/${id}`)
-    const res = await axios.get(`${process.env.REACT_APP_API_BE}/teachers`)
-    setTeachers(res.data)
-    setResnponsible_teacher(data.resnponsible)
-    var newSave = [];
-    res.data.map((t) => {
-      if (data.resnponsible.some((r) => r.responsible_teacher_id === t.teacher_id)){
-        newSave.push(t)
-        setSave(newSave)
-      }
-    })
-    setIsPreFetch(false)
+    try {
+      setIsPreFetch(true)
+      const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/assignments/${id}`, { headers })
+      const res = await axios.get(`${process.env.REACT_APP_API_BE}/teachers`, { headers })
+      setTeachers(res.data)
+      setResnponsible_teacher(data.resnponsible)
+      var newSave = [];
+      res.data.map((t) => {
+        if (data.resnponsible.some((r) => r.responsible_teacher_id === t.teacher_id)) {
+          newSave.push(t)
+          setSave(newSave)
+        }
+      })
+      setIsPreFetch(false)
+    } catch (err) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oop...',
+        text: 'Something went wrong, Please Try again later.',
+      })
+      // console.log(err)
+    }
   }, [])
 
   useEffect(() => {
     fetchData()
   }, [])
-console.log(save)
 
   useEffect(() => {
     const temp = [...teachers]

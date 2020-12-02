@@ -1,12 +1,18 @@
 import React, { useState, useCallback } from "react"
+import Cookie from "js-cookie"
 import { Modal } from "react-bootstrap"
-import Buttons from "./Buttons"
+import Swal from 'sweetalert2'
 import Inputtext from "./Inputtext"
 import axios from "axios"
 import { useEffect } from "react"
 import Button from "@material-ui/core/Button"
-import {useParams} from "@reach/router"
+import { useParams } from "@reach/router"
 export default function ModalEditAdvisor(props) {
+  const headers = {
+    Authorization: `Bearer ${Cookie.get("jwt")}`,
+    "Content-Type": "application/json",
+    accept: "application/json",
+  }
   const [save, setSave] = useState() //เอาค่ามาจาก axios
   const [teachers, setTeachers] = useState([])
   const [display, setDisplay] = useState([]) //ค่าแสดงบน Add
@@ -16,11 +22,19 @@ export default function ModalEditAdvisor(props) {
   const { id } = useParams()
 
   const fetchData = useCallback(async () => {
-    const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/projects/${id}`)
-    const all = await axios.get(`${process.env.REACT_APP_API_BE}/teachers`)
-    
-    setTeachers(all.data) //{group[{},{},{},project{},teacher{[],}]
-    setSave(data.teacher)
+    try {
+      const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/projects/${id}`, { headers })
+      const all = await axios.get(`${process.env.REACT_APP_API_BE}/teachers`, { headers })
+      setTeachers(all.data) //{group[{},{},{},project{},teacher{[],}]
+      setSave(data.teacher)
+    } catch (err) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oop...',
+        text: 'Something went wrong, Please Try again later.',
+      })
+      // console.log(err)
+    }
   }, [])
   useEffect(() => {
     fetchData()
@@ -36,10 +50,10 @@ export default function ModalEditAdvisor(props) {
         }
       }
     }
-      setIsFilter(
-        temp.filter(
-          tch => tch.teacher_name.toLowerCase().includes(search.toLowerCase()) )
-      )
+    setIsFilter(
+      temp.filter(
+        tch => tch.teacher_name.toLowerCase().includes(search.toLowerCase()))
+    )
   }, [search, teachers, save])
 
   function updateInput(e) {
@@ -60,10 +74,10 @@ export default function ModalEditAdvisor(props) {
   async function handleSubmit() {
     await props.addAdvisor(save)
     if (props.setIsOpen(false)) {
-        
-      setTimeout(()=>{
+
+      setTimeout(() => {
         window.location.reload()
-      },1000)
+      }, 1000)
     }
   }
 
@@ -111,7 +125,7 @@ export default function ModalEditAdvisor(props) {
           onChange={(e) => setSearch(e.target.value)}
         />
         <table className="table table-striped">
-          <tbody style={{cursor: 'pointer'}}>
+          <tbody style={{ cursor: 'pointer' }}>
             {isFilter.map((ads, idx) => (
               <tr className="text-center" key={idx} onClick={() => updateInput(ads)}>
                 <td>{ads.teacher_name}</td>

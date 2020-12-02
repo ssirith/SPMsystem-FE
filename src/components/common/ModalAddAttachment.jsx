@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from "react"
-import {useParams} from "@reach/router"
+import Cookie from "js-cookie"
+import { useParams } from "@reach/router"
 import { Modal } from "react-bootstrap"
 import Buttons from "./Buttons"
 import Inputtext from "./Inputtext"
@@ -8,17 +9,32 @@ import { useEffect } from "react"
 import Button from "@material-ui/core/Button"
 
 export default function ModalAddAttachment(props) {
+  const headers = {
+    Authorization: `Bearer ${Cookie.get("jwt")}`,
+    "Content-Type": "application/json",
+    accept: "application/json",
+  }
   const [save, setSave] = useState() //เอาค่ามาจาก axios
   const [teachers, setTeachers] = useState([])
   const [isFilter, setIsFilter] = useState([])
   const [search, setSearch] = useState("")
   const { id } = useParams()
   const fetchData = useCallback(async () => {
-    const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/projects/${id}`)
-    const all = await axios.get(`${process.env.REACT_APP_API_BE}/teachers`)
-    console.log(all)
-    setTeachers(all.data) //[{group[{},{},{},project{},teacher{[],}]
-    setSave(data.teacher)
+    try {
+      const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/projects/${id}`, { headers })
+      const all = await axios.get(`${process.env.REACT_APP_API_BE}/teachers`, { headers })
+      setTeachers(all.data) //[{group[{},{},{},project{},teacher{[],}]
+      setSave(data.teacher)
+    } catch (err) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oop...',
+        text: 'Something went wrong, Please Try again later.',
+      })
+      navigate("/main")
+      // console.log(err)
+    }
+    
   }, [])
   useEffect(() => {
     fetchData()
@@ -27,18 +43,18 @@ export default function ModalAddAttachment(props) {
     const temp = [...teachers] // จำลองค่าteachers เพื่อไม่ให้เกิดการเปลี่ยนแปลงโดยตรงที่ teachers
     if (save) {
       for (let i = 0; i < save.length; i++) {
-        
+
         const index = temp.findIndex(temp => temp.teacher_name === save[i].teacher_name)
         if (index > -1) {
           temp.splice(index, 1)
         }
       }
     }
-      
-      setIsFilter(
-        temp.filter(
-          tch => tch.teacher_name.toLowerCase().includes(search.toLowerCase()) )
-      )
+
+    setIsFilter(
+      temp.filter(
+        tch => tch.teacher_name.toLowerCase().includes(search.toLowerCase()))
+    )
   }, [search, teachers, save])
 
   function updateInput(e) { //เอาค่าที่แอดไปแสดง
@@ -52,19 +68,18 @@ export default function ModalAddAttachment(props) {
     if (index > -1) {
       result.splice(index, 1)
     }
-    console.log(result)
     setSave([...result])//สมาชิกที่เหลือหลังจากลบออก
   }
 
   async function handleSubmit() {
     await props.addAdvisor(save)
     if (props.setIsOpen(false)) {
-      setTimeout(()=>{
+      setTimeout(() => {
         window.location.reload()
-      },2000)
+      }, 2000)
     }
   }
-  
+
   function disSubmit() { //ฟังก์ชันเพื่อไม่ให้สามารถกดปุ่ม  submit ได้ ถ้าแอดเกินที่กำหนด
     if (save) {
       if (save.length > 2) {

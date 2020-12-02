@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useEffect } from "react"
+import Cookie from 'js-cookie'
 import axios from "axios"
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from "@reach/router"
@@ -9,8 +10,13 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
-import FormLabel from '@material-ui/core/FormLabel';
+import Swal from 'sweetalert2'
 function Submission(props) {
+    const headers = {
+        Authorization: `Bearer ${Cookie.get("jwt")}`,
+        "Content-Type": "application/json",
+        accept: "application/json",
+    }
     const useStyles = makeStyles({
         table: {
             minWidth: 650,
@@ -18,17 +24,26 @@ function Submission(props) {
     });
     const classes = useStyles();
     const [search, setSearch] = useState("")
-    
+
     const [isPreFetch, setIsPreFetch] = useState(false)
     const [send_assignment, setSend_assignment] = useState([])
     const [checkFilterDepartment, setCheckFilterDepartment] = useState("All")
     const [score, setScore] = useState("")
     const fetchData = useCallback(
         async () => {
-            setIsPreFetch(true)
-            const res = await axios.get(`${process.env.REACT_APP_API_BE}/send_assignment/${props.id}`)
-            setSend_assignment(res.data)
-            setIsPreFetch(false)
+            try {
+                setIsPreFetch(true)
+                const res = await axios.get(`${process.env.REACT_APP_API_BE}/send_assignment/${props.id}`, { headers })
+                setSend_assignment(res.data)
+                setIsPreFetch(false)
+            } catch (err) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oop...',
+                    text: 'Something went wrong, Please Try again later.',
+                  })
+                // console.log(err)
+            }
         }, [])
     useEffect(() => {
         fetchData()
@@ -118,7 +133,7 @@ function Submission(props) {
                     </div>
                 </div>
             </div>
-            
+
         </>
     )
 }

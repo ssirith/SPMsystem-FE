@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect, useCallback } from "react"
-import { Link } from "@reach/router"
+import Cookie from "js-cookie"
+import { Link, navigate } from "@reach/router"
 import dayjs from "dayjs"
 import Buttons from "./Buttons"
-import ChangeHistoryIcon from "@material-ui/icons/ChangeHistory"
-import DetailsIcon from "@material-ui/icons/Details"
+import Swal from 'sweetalert2'
 import FolderIcon from "@material-ui/icons/Folder"
 import DeleteIcon from "@material-ui/icons/Delete"
 import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord"
@@ -12,8 +12,14 @@ import RemoveIcon from "@material-ui/icons/Remove"
 import ModalFeedback from "./ModalFeedback"
 import ModalRubric from "./ModalRubric"
 import axios from "axios"
+import Loading from "./Loading"
 
 export default function AssignmentTable(props) {
+  const headers = {
+    Authorization: `Bearer ${Cookie.get("jwt")}`,
+    "Content-Type": "application/json",
+    accept: "application/json",
+  }
   const [selectedFile, setSelectedFile] = useState([])
   const [filefromBE, setFilefromBE] = useState([])
   const [deleteSelectedFile, setDeleteSelectedFile] = useState([])
@@ -27,17 +33,6 @@ export default function AssignmentTable(props) {
   const [newCriterions, setNewCriterions] = useState([])
   var thisDay = dayjs(new Date()).format("YYYY-M-D HH:mm")
   var dueDate = props.assignment.date_time
-  const mockFeedback = [
-    {
-      author: "Jame",
-      detail:
-        "sadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasdsadsadasdasdadasdasdasdasd",
-    },
-    {
-      author: "Joel",
-      detail: "21321312321312313131231231",
-    },
-  ]
 
   const fetchData = useCallback(async () => {
     try {
@@ -47,15 +42,17 @@ export default function AssignmentTable(props) {
       //   `${process.env.REACT_APP_API_BE}/rubric/${props.assignment.rubric_id}`
       // ) อันนี้คือตอนดึงข้อมูลของ assignmentครับ แล้วอันไหนที่่ดึง file ที่เราอัพโหลด
       const response = await axios.get(
-        `${process.env.REACT_APP_API_BE}/assignments/${props.assignment.assignment_id}/${props.user.id}`
+        `${process.env.REACT_APP_API_BE}/assignments/${props.assignment.assignment_id}/${props.user.user_id}`,
+        { headers }
       )
+
       SetAssignment(response.data)
       // console.log('file from be',response.data.file_assignment)
       setFilefromBE(response.data.file_assignment)
-      console.log(
-        response.data.file_assignment,
-        "response.data.file_assignment"
-      )
+      // console.log(
+      //   response.data.file_assignment,
+      //   "response.data.file_assignment"
+      // )
       // console.log("rubric from BE ", response.data)
       // setRubric(response.data.rubric)
       loopCriterions(response.data.rubric)
@@ -64,14 +61,20 @@ export default function AssignmentTable(props) {
 
       // console.log('new ', newRubric)
     } catch (err) {
-      console.log(err)
+      Swal.fire({
+        icon: 'error',
+        title: 'Oop...',
+        text: 'Please create project group before go to this page or contract the developers.',
+      })
+      navigate('/main')
+      // console.log(err)
     }
   })
 
   useEffect(() => {
     fetchData()
   }, [])
-  console.log(assignment)
+  // console.log(assignment)
   function uploadFile(event) {
     // function นี้ป่ะ อันนี้คือuploadครับ ใช่ครับ
     if (event.target.files[0]) {
@@ -126,7 +129,7 @@ export default function AssignmentTable(props) {
         })
         tempCriterions[idx].criteria_detail.sort((a, b) => {
           return a.score - b.score
-      })
+        })
       } else {
         tempCriterions.push({
           criteria_id: criterion.criteria_id,
@@ -152,17 +155,16 @@ export default function AssignmentTable(props) {
   }
   async function upLoad() {
     try {
+      setIsPreFetch(true)
       var status = ""
       if (dayjs().isBefore(dueDate, thisDay)) {
         status = "Submitted"
-        console.log("in if")
       } else if (dayjs().isAfter(thisDay, dueDate)) {
         status = "Submitted Late"
-        console.log("in else")
       }
       const formData = new FormData()
       formData.append("assignment_id", assignment.assignment_id)
-      formData.append("student_id", props.user.id)
+      formData.append("student_id", props.user.user_id)
       formData.append("status", status)
       if (selectedFile.length != 0) {
         for (const acceptFile of selectedFile) {
@@ -181,10 +183,9 @@ export default function AssignmentTable(props) {
         formData.append("delete_file_assignment[]", [])
       }
 
-
       // const formData = {
       //   assignment_id: assignment.assignment_id,
-      //   student_id: props.user.id,
+      //   student_id: props.user.user_id,
       //   status: status,
       //   send_file_assignment: selectedFile,
       //   delete_file_assignment: deleteSelectedFile.map((file) => file),
@@ -195,34 +196,52 @@ export default function AssignmentTable(props) {
       // formsnet.append("send_file_assignment[]",selectedFile)
       const response = await axios.post(
         `${process.env.REACT_APP_API_BE}/send_assignment`,
-        formData
+        formData,
+        { headers }
       )
       if (response.status === 200) {
-        alert("Success")
-        window.location.reload()
+        setIsPreFetch(false)
+        Swal.fire({
+          icon: 'success',
+          title: 'Save!',
+          text: 'Success.',
+          timer: 2000,
+          showCancelButton: false,
+          showConfirmButton: false
+        })
+
+        setTimeout(() => {
+          window.location.reload()
+        }, 2000);
       }
     } catch (err) {
-      console.log(err)
+      Swal.fire({
+        icon: 'error',
+        title: 'Oop...',
+        text: 'Something went wrong, Please Try again later.',
+      })
+      navigate("/main")
+      // console.log(err)
     }
   }
   function handleToggle() {
     if (selectedFile.length != 0) {
       upLoad()
     } else {
-      alert("No File selected, please select at least one file before submit")
+      Swal.fire({
+        icon: 'error',
+        title: 'Oop...',
+        text: 'No File selected, please select at least one file before submit.',
+      })
     }
   }
 
   if (isPrefetch) {
-    return <></>
+    return <Loading open={isPrefetch} />
   }
 
   return (
     <>
-      {console.log(
-        "this day is before duedate",
-        dayjs().isBefore(thisDay, dueDate)
-      )}
       {/* {console.log('res assigment',response.data)} */}
       {/* {console.log("criterions", rubric.criterions)} */}
       {/* {console.log("sort criterions", newCriterions)} */}
@@ -264,12 +283,15 @@ export default function AssignmentTable(props) {
           <td className="uk-background-muted" colSpan={7}>
             <div ref={expanderBody} className="inner uk-grid">
               <div className="uk-width-1-4 uk-text-center">
-                <small className="text-danger">{`by ${assignment.teacher.teacher_name
-                  } on ${dayjs(props.assignment.created_at).format(
-                    "MMMM DD, YYYY"
-                  )} At ${dayjs(props.assignment.created_at).format(
-                    "HH:mm A"
-                  )} `}</small>
+                {/* {console.log('props.assignment',props.assignment)} */}
+                {props.assignment &&
+                  <small className="text-danger">{`by ${props.assignment.teacher_name===null?(props.assignment.aa_name):(props.assignment.teacher_name)}
+                     on ${dayjs(props.assignment.create_time).format(
+                      "MMMM DD, YYYY"
+                    )} At ${dayjs(props.assignment.create_time).format(
+                      "HH:mm A"
+                    )} `}</small>
+                }
               </div>
               <div className="container row">
                 <div className="col-8">
@@ -301,8 +323,10 @@ export default function AssignmentTable(props) {
                       {assignment.attachment.map((a, index) => {
                         return (
                           <>
+                            <FolderIcon className="primary" />
+                            &nbsp;
                             <a
-                              href={`http://127.0.0.1:8000/storage/${a.attachment}`}
+                              href={`https://seniorprojectmanagement.tk/storage/${a.attachment}`}
                               download
                               target="_blank"
                             >
@@ -339,18 +363,24 @@ export default function AssignmentTable(props) {
                       <p>Score:&nbsp;</p>
                     </div>
                     &nbsp;&nbsp;&nbsp;
-                    {console.log(assignment.assessment)}
-
                     {assignment && (
                       <p>
                         {assignment.status !== null ? (
                           assignment.assessment.length == 0 ? (
-                            <div className="text-danger">Waitng for assessment</div>
+                            <div className="text-danger">
+                              Waitng for assessment
+                            </div>
+                          ) : assignment.status.total_score !== null ? (
+                            assignment.status.total_score
                           ) : (
-                              assignment.status.total_score !== null ? (assignment.status.total_score) : (<div className="text-danger">Waitng for assessment</div>)
-                            )
+                                <div className="text-danger">
+                                  Waitng for assessment
+                                </div>
+                              )
                         ) : (
-                          <div className="text-danger">Waitng for assessment</div>
+                            <div className="text-danger">
+                              Waitng for assessment
+                            </div>
                           )}
                       </p>
                     )}
@@ -469,9 +499,11 @@ export default function AssignmentTable(props) {
                     menu="Submit"
                     onClick={() => handleToggle()}
                   />
+                ) : assignment.status.total_score !== null ? (
+                  <Buttons className="bg-light" menu="Submit" disabled />
                 ) : (
-                    assignment.status.total_score !== null ? (<Buttons className="bg-light" menu="Submit" disabled />) : (<Buttons className="bg-light" menu="Submit" disabled />)
-                  )
+                      <Buttons className="bg-light" menu="Submit" disabled />
+                    )
               ) : (
                   <Buttons
                     color="primary"
@@ -496,8 +528,7 @@ export default function AssignmentTable(props) {
             </div>
           </td>
         </tr>
-      )
-      }
+      )}
     </>
   )
 }

@@ -1,7 +1,8 @@
 import React from "react"
+import Cookie from "js-cookie"
 import { Modal } from "react-bootstrap"
 import Buttons from "./Buttons"
-import Inputtext from "./Inputtext"
+import Swal from 'sweetalert2'
 import axios from "axios"
 import { useNavigate } from "@reach/router"
 export default function ModalChangeRubric(props) {
@@ -17,6 +18,11 @@ export default function ModalChangeRubric(props) {
                 }
             })
         }
+        const headers = {
+            Authorization: `Bearer ${Cookie.get("jwt")}`,
+            "Content-Type": "application/json",
+            accept: "application/json",
+          }
         const teacher_id = props.userId
         const rubric_id = props.rubric.rubric_id
 
@@ -63,13 +69,27 @@ export default function ModalChangeRubric(props) {
         data.append('rubric_id', rubric_id)//rubric_id
 
         try {
-            const response = await axios.post(`${process.env.REACT_APP_API_BE}/assignments/edit`, data)
+            const response = await axios.post(`${process.env.REACT_APP_API_BE}/assignments/edit`, data,{headers})
             if (response.status === 200) {
-                alert("Edit Success.")
-                navigate(`/assignments/${props.id}`)
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Save!',
+                    text: 'Edit Success.',
+                    timer: 2000,
+                    showCancelButton: false,
+                    showConfirmButton: false
+                  })
+          
+                  setTimeout(() => {
+                    navigate(`/assignments/${props.id}`)
+                  }, 2000);
             }
         } catch (err) {
-            alert("It's not success, Please check your input")
+            Swal.fire({
+                icon: 'error',
+                title: 'Oop...',
+                text: 'Something went wrong, Please Try again later.',
+              })
             console.error(err)
         }
     }

@@ -9,6 +9,8 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Grid from '@material-ui/core/Grid';
 export default function AssignmentTopicBox(props) {
     const { user, setUser } = useContext(UserContext)
+    // const userBeforeParse=JSON.parse(localStorage.getItem('user'))
+    // const  [user, setUser ] = useState(userBeforeParse)
     const [value, setValue] = useState('All Assignment');
     function checkRedio(e) { //true
         if (e) {

@@ -12,25 +12,34 @@
 }
 .body{
   font-family: 'THSarabunNew'!important;
-  font-size: 24px;
+  font-size: 24px!important;
 }
 .header{
   font-family: 'THSarabunNewBold'!important;
-  font-size: 28px;
+  font-size: 28px!important;
 }
 .App {
   text-align: center;
   min-height: 100vh !important;
   min-width: 100vw !important;
 }
-
+.background-login{
+  background-image: url(/image/bg-01.png)!important;
+  background-size: cover;
+  height: 100%;
+  width: auto;
+  
+}
 /* .App-logo {
   height: 40vmin;
   pointer-events: none;
 } */
 .no-bg{
-  background-color: white;
+  background-color: white !important;
   border: none;
+}
+.no-edge{
+  border-radius: 20px!important;
 }
 .primary {
   color: #336699;
@@ -57,12 +66,12 @@
   color: #336699 !important;
 }
 .btn-primary {
-  color: #fff;
+  color: #ffffff!important;
   background-color: #336699 !important;
   border-color: #336699 !important;
 }
 .btn-danger {
-  color: #fff;
+  color: #fff!important;
   background-color: #eb5757 !important;
   border-color: #eb5757 !important;
 }
@@ -131,7 +140,6 @@
 .filearea {
   background-color: #ffffff !important;
   border-radius: 5px !important;
-  width: 50%;
 }
 .fileareaAA {
   background-color: #EDEDED !important;
@@ -211,4 +219,9 @@ tr.expandable > td {
 tr.expandable > td > .inner {
   margin: 15px;
   overflow: hidden;
+}
+.scrollable-menu {
+  height: auto;
+  max-height: 500px;
+  overflow-x: hidden;
 }

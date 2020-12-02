@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useContext } from "react"
+import Cookie from 'js-cookie'
 import { makeStyles } from "@material-ui/core/styles"
 import { Card } from "react-bootstrap"
 import { Link, useNavigate } from "@reach/router"
@@ -12,6 +13,9 @@ import ModalDeleteAssignment from "../components/common/ModalDeleteAssignment"
 import Submission from "../components/common/Submission"
 import { Table } from "react-bootstrap"
 import { UserContext } from "../UserContext"
+import Loading from "../components/common/Loading"
+import Swal from 'sweetalert2'
+
 const useStyles = makeStyles(
     {
         root: {
@@ -39,6 +43,11 @@ const useStyles = makeStyles(
 )
 export default function Assignment(props) {
     const classes = useStyles()
+    const headers = {
+        Authorization: `Bearer ${Cookie.get("jwt")}`,
+        "Content-Type": "application/json",
+        accept: "application/json",
+    }
     const [assignment_title, setAssignment_Title] = useState()
     const [assignment_id, setAssignment_id] = useState()
     const [propject_department, setProject_department] = useState("")
@@ -46,55 +55,71 @@ export default function Assignment(props) {
     const [isOpenDelete, setIsOpenDelete] = useState(false)
     const [isPreFetch, setIsPreFetch] = useState(false)
     const [search, setSearch] = useState("")
-    const { user, setUser } = useContext(UserContext)
+    //     const userBeforeParse=JSON.parse(localStorage.getItem('user'))
+    //   const  [user, setUser ] = useState(userBeforeParse)
     let navigate = useNavigate()
-    // const { user, setUser } = useContext(UserContext)
-    const { id } = useParams()//user.id
+    const { user, setUser } = useContext(UserContext)
+    const { id } = useParams()//user.user_id
     const { project_id } = useParams()//assignment_id
     const fetchData = useCallback(async () => {
-        setIsPreFetch(true)
-        const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/assignments/${props.id}`)//props.id == user.id
-        setAssignment_Title(data.assignment_title)
-        setAssignment_id(data.assignment_id)
-        var criterions = [];
-        data.criterion.map((c, index) => {
-            let idx = criterions.findIndex(item => item.criteria_id === c.criteria_id)
-            if (idx !== -1) {//0
-                criterions[idx].score.push(
-                    {
-                        name: c.criteria_detail,
-                        value: c.criteria_score
-                    }
-                )
-                criterions[idx].score.sort((a, b) => {
-                    return a.value - b.value
-                })
-            } else {
-                criterions.push(
-                    {
-                        criteria_id: c.criteria_id,
-                        criteria_name: c.criteria_name,
-                        score: [
-                            {
-                                name: c.criteria_detail,
-                                value: c.criteria_score
-                            }
-                        ]
-                    }
-                )
-            }
-        })
+        try {
+            setIsPreFetch(true)
+            const { data } = await axios.get(`${process.env.REACT_APP_API_BE}/assignments/${props.id}`, { headers })//props.id == user.user_id
+            setAssignment_Title(data.assignment_title)
+            setAssignment_id(data.assignment_id)
+            var criterions = [];
+            data.criterion.map((c, index) => {
+                let idx = criterions.findIndex(item => item.criteria_id === c.criteria_id)
+                if (idx !== -1) {//0
+                    criterions[idx].score.push(
+                        {
+                            name: c.criteria_detail,
+                            value: c.criteria_score
+                        }
+                    )
+                    criterions[idx].score.sort((a, b) => {
+                        return a.value - b.value
+                    })
+                } else {
+                    criterions.push(
+                        {
+                            criteria_id: c.criteria_id,
+                            criteria_name: c.criteria_name,
+                            score: [
+                                {
+                                    name: c.criteria_detail,
+                                    value: c.criteria_score
+                                }
+                            ]
+                        }
+                    )
+                }
+            })
 
-        setRubric(criterions)
-        setIsPreFetch(false)
+            setRubric(criterions)
+            setIsPreFetch(false)
+        } catch (err) {
+            setIsPreFetch(false)
+            console.log(err)
+            Swal.fire({
+                icon: 'error',
+                title: 'Oop...',
+                text: 'Something went wrong, Please Try again later.',
+              })
+            // console.log(err)
+        }
     }, [])
     useEffect(() => {
         fetchData()
     }, [])
     const checkRole = useCallback(() => {
-        if (user.role === "student") {
-            alert(`You dont'have permission to go this page.`)
-            navigate("/")
+        if (user && user.user_type === "Student") {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oop...',
+                text: `You dont'have permission to go this page.`,
+              })
+            navigate("/main")
         }
     })
 
@@ -102,7 +127,7 @@ export default function Assignment(props) {
         checkRole()
     }, [user])
     if (isPreFetch) {
-        return <></>
+        return <><Loading open={isPreFetch} /></>
     }
 
     return (

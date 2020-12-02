@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useEffect, useContext } from "react"
+import Cookie from 'js-cookie'
 import { UserContext } from "../../UserContext"
 import axios from "axios"
 import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord"
@@ -13,6 +14,7 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Buttons from "./Buttons";
 import { Link } from "@reach/router";
+import Swal from 'sweetalert2'
 
 function SendAssignmentTable(props) {
     const useStyles = makeStyles({
@@ -20,49 +22,65 @@ function SendAssignmentTable(props) {
             minWidth: 650,
         },
     });
+    const headers = {
+        Authorization: `Bearer ${Cookie.get("jwt")}`,
+        "Content-Type": "application/json",
+        accept: "application/json",
+    }
     const classes = useStyles();
     const [isPreFetch, setIsPreFetch] = useState(false)
     const [permission, setPermission] = useState("")
     const [send_assignment, setSend_assignment] = useState()
     const { user, setUser } = useContext(UserContext)
+    //     const userBeforeParse=JSON.parse(localStorage.getItem('user'))
+    //   const  [user, setUser ] = useState(userBeforeParse)
     const fetchData = useCallback(
         async () => {
-            setIsPreFetch(true)
-            const res = await axios.get(`${process.env.REACT_APP_API_BE}/send_assignment/${props.id}/teacher/${user.id}`)
-            let tempSend = [];
-            res.data.submission.map(r => {
-                {
-                    r.project_id.length > 4 ? (
-                        tempSend.push({
-                            assignment_id: r.assignment_id,
-                            project_department: r.project_department,
-                            project_id: r.project_id.substring(0, 3) + "60-" + r.project_id.substring(r.project_id.length - 2, r.project_id.length),
-                            project_id_BE: r.project_id,
-                            status: r.status,
-                            total_score: r.total_score,
-                            permission: r.permission
-                        })
-                    ) : (
+            try {
+                setIsPreFetch(true)
+                const res = await axios.get(`${process.env.REACT_APP_API_BE}/send_assignment/${props.id}/teacher/${user.user_id}`, { headers })
+                let tempSend = [];
+                res.data.submission.map(r => {
+                    {
+                        r.project_id.length > 4 ? (
                             tempSend.push({
                                 assignment_id: r.assignment_id,
                                 project_department: r.project_department,
-                                project_id: r.project_id.substring(0, 2) + "60-" + r.project_id.substring(r.project_id.length - 2, r.project_id.length),
+                                project_id: r.project_id.substring(0, 3) + "60-" + r.project_id.substring(r.project_id.length - 2, r.project_id.length),
                                 project_id_BE: r.project_id,
                                 status: r.status,
                                 total_score: r.total_score,
                                 permission: r.permission
                             })
+                        ) : (
+                                tempSend.push({
+                                    assignment_id: r.assignment_id,
+                                    project_department: r.project_department,
+                                    project_id: r.project_id.substring(0, 2) + "60-" + r.project_id.substring(r.project_id.length - 2, r.project_id.length),
+                                    project_id_BE: r.project_id,
+                                    status: r.status,
+                                    total_score: r.total_score,
+                                    permission: r.permission
+                                })
 
-                        )
-                }
-            })
+                            )
+                    }
+                })
 
-            setPermission(res.data.permission)
-            setSend_assignment(tempSend)
-            setIsPreFetch(false)
+                setPermission(res.data.permission)
+                setSend_assignment(tempSend)
+                setIsPreFetch(false)
+            } catch (err) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oop...',
+                    text: 'Something went wrong, Please Try again later.',
+                  })
+                // console.log(err)
+            }
         }, [])
-    console.log(send_assignment)
-    console.log(user.id)
+    // console.log(send_assignment)
+    // console.log(user.user_id)
     useEffect(() => {
         fetchData()
     }, [])
@@ -106,7 +124,7 @@ function SendAssignmentTable(props) {
 
                                                                     {data.total_score !== null ? (<TableCell align="center">{data.total_score}</TableCell>) : (<TableCell align="center">-</TableCell>)}
                                                                     <TableCell align="center">
-                                                                        {user.role === 'teacher' ? (
+                                                                        {user && user.user_type === "Teacher" ? (
                                                                             permission === "Have Permission" ? (<Link to={`/send_assignment/${data.assignment_id}/teacher/${data.project_id_BE}`}>
                                                                                 <Buttons
                                                                                     menu={"Assesment"}
@@ -138,7 +156,7 @@ function SendAssignmentTable(props) {
                                                                             data.status === "Submitted Late" ? (<TableCell align="center"><FiberManualRecordIcon color="secondary" /><medium className="d-inline">Late</medium></TableCell>) : (<></>))}
                                                                     {data.total_score !== null ? (<TableCell align="center">{data.total_score}</TableCell>) : (<TableCell align="center">-</TableCell>)}
                                                                     <TableCell align="center">
-                                                                        {user.role === 'teacher' ? (
+                                                                        {user && user.user_type === "Teacher" ? (
                                                                             permission === "Have Permission" ? (<Link to={`/send_assignment/${data.assignment_id}/teacher/${data.project_id_BE}`}>
                                                                                 <Buttons
                                                                                     menu={"Assesment"}
@@ -178,7 +196,7 @@ function SendAssignmentTable(props) {
                                                                                 data.status === "Submitted Late" ? (<TableCell align="center"><FiberManualRecordIcon color="secondary" /><medium className="d-inline">Late</medium></TableCell>) : (<></>))}
                                                                         {data.total_score !== null ? (<TableCell align="center">{data.total_score}</TableCell>) : (<TableCell align="center">-</TableCell>)}
                                                                         <TableCell align="center">
-                                                                            {user.role === 'teacher' ? (
+                                                                            {user && user.user_type === "Teacher" ? (
                                                                                 permission === "Have Permission" ? (<Link to={`/send_assignment/${data.assignment_id}/teacher/${data.project_id_BE}`}>
                                                                                     <Buttons
                                                                                         menu={"Assesment"}
@@ -208,7 +226,7 @@ function SendAssignmentTable(props) {
                                                                         data.status === "Submitted Late" ? (<TableCell align="center"><FiberManualRecordIcon color="secondary" /><medium className="d-inline">Late</medium></TableCell>) : (<></>))}
                                                                 {data.total_score !== null ? (<TableCell align="center">{data.total_score}</TableCell>) : (<TableCell align="center">-</TableCell>)}
                                                                 <TableCell align="center">
-                                                                    {user.role === 'teacher' ? (
+                                                                    {user && user.user_type === "Teacher" ? (
                                                                         permission === "Have Permission" ? (<Link to={`/send_assignment/${data.assignment_id}/teacher/${data.project_id_BE}`}>
                                                                             <Buttons
                                                                                 menu={"Assesment"}
@@ -250,7 +268,7 @@ function SendAssignmentTable(props) {
                                                                                 data.status === "Submitted Late" ? (<TableCell align="center"><FiberManualRecordIcon color="secondary" /><medium className="d-inline">Late</medium></TableCell>) : (<></>))}
                                                                         {data.total_score !== null ? (<TableCell align="center">{data.total_score}</TableCell>) : (<TableCell align="center">-</TableCell>)}
                                                                         <TableCell align="center">
-                                                                            {user.role === 'teacher' ? (
+                                                                            {user && user.user_type === "Teacher" ? (
                                                                                 permission === "Have Permission" ? (<Link to={`/send_assignment/${data.assignment_id}/teacher/${data.project_id_BE}`}>
                                                                                     <Buttons
                                                                                         menu={"Assesment"}
@@ -280,7 +298,7 @@ function SendAssignmentTable(props) {
                                                                         data.status === "Submitted Late" ? (<TableCell align="center"><FiberManualRecordIcon color="secondary" /><medium className="d-inline">Late</medium></TableCell>) : (<></>))}
                                                                 {data.total_score !== null ? (<TableCell align="center">{data.total_score}</TableCell>) : (<TableCell align="center">-</TableCell>)}
                                                                 <TableCell align="center">
-                                                                    {user.role === 'teacher' ? (
+                                                                    {user && user.user_type === "Teacher" ? (
                                                                         permission === "Have Permission" ? (<Link to={`/send_assignment/${data.assignment_id}/teacher/${data.project_id_BE}`}>
                                                                             <Buttons
                                                                                 menu={"Assesment"}
@@ -322,7 +340,7 @@ function SendAssignmentTable(props) {
                                                                                 data.status === "Submitted Late" ? (<TableCell align="center"><FiberManualRecordIcon color="secondary" /><medium className="d-inline">Late</medium></TableCell>) : (<></>))}
                                                                         {data.total_score !== null ? (<TableCell align="center">{data.total_score}</TableCell>) : (<TableCell align="center">-</TableCell>)}
                                                                         <TableCell align="center">
-                                                                            {user.role === 'teacher' ? (
+                                                                            {user && user.user_type === "Teacher" ? (
                                                                                 permission === "Have Permission" ? (<Link to={`/send_assignment/${data.assignment_id}/teacher/${data.project_id_BE}`}>
                                                                                     <Buttons
                                                                                         menu={"Assesment"}
@@ -352,7 +370,7 @@ function SendAssignmentTable(props) {
                                                                         data.status === "Submitted Late" ? (<TableCell align="center"><FiberManualRecordIcon color="secondary" /><medium className="d-inline">Late</medium></TableCell>) : (<></>))}
                                                                 {data.total_score !== null ? (<TableCell align="center">{data.total_score}</TableCell>) : (<TableCell align="center">-</TableCell>)}
                                                                 <TableCell align="center">
-                                                                    {user.role === 'teacher' ? (
+                                                                    {user && user.user_type === "Teacher" ? (
                                                                         permission === "Have Permission" ? (<Link to={`/send_assignment/${data.assignment_id}/teacher/${data.project_id_BE}`}>
                                                                             <Buttons
                                                                                 menu={"Assesment"}
@@ -394,7 +412,7 @@ function SendAssignmentTable(props) {
                                                                                 data.status === "Submitted Late" ? (<TableCell align="center"><FiberManualRecordIcon color="secondary" /><medium className="d-inline">Late</medium></TableCell>) : (<></>))}
                                                                         {data.total_score !== null ? (<TableCell align="center">{data.total_score}</TableCell>) : (<TableCell align="center">-</TableCell>)}
                                                                         <TableCell align="center">
-                                                                            {user.role === 'teacher' ? (
+                                                                            {user && user.user_type === "Teacher" ? (
                                                                                 permission === "Have Permission" ? (<Link to={`/send_assignment/${data.assignment_id}/teacher/${data.project_id_BE}`}>
                                                                                     <Buttons
                                                                                         menu={"Assesment"}
@@ -424,7 +442,7 @@ function SendAssignmentTable(props) {
                                                                         data.status === "Submitted Late" ? (<TableCell align="center"><FiberManualRecordIcon color="secondary" /><medium className="d-inline">Late</medium></TableCell>) : (<></>))}
                                                                 {data.total_score !== null ? (<TableCell align="center">{data.total_score}</TableCell>) : (<TableCell align="center">-</TableCell>)}
                                                                 <TableCell align="center">
-                                                                    {user.role === 'teacher' ? (
+                                                                    {user && user.user_type === "Teacher" ? (
                                                                         permission === "Have Permission" ? (<Link to={`/send_assignment/${data.assignment_id}/teacher/${data.project_id_BE}`}>
                                                                             <Buttons
                                                                                 menu={"Assesment"}

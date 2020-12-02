@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useEffect, useContext, useRef } from "react"
+import Cookie from 'js-cookie'
 import BreadcrumbNavString from "../components/common/BreadcrumbNavString"
 import Inputtext from "../components/common/Inputtext"
 import IconButton from '@material-ui/core/IconButton';
@@ -25,17 +26,25 @@ import dayjs from "dayjs"
 import { makeStyles } from '@material-ui/core/styles';
 import { Container, Row, Col } from 'reactstrap';
 import { Table } from "react-bootstrap"
+import Loading from "../components/common/Loading";
+import Swal from 'sweetalert2'
 const useStyles = makeStyles((theme) => ({
     margin: {
         margin: theme.spacing(1),
     },
 }));
-// import { Router } from "@material-ui/icons"
 export default function CreateAssignment(props) {
+    const headers = {
+        Authorization: `Bearer ${Cookie.get("jwt")}`,
+        "Content-Type": "application/json",
+        accept: "application/json",
+    }
     const classes = useStyles();
     let navigate = useNavigate()
     const inputRef = useRef()
     const { user, setUser } = useContext(UserContext)
+    //     const userBeforeParse=JSON.parse(localStorage.getItem('user'))
+    //   const  [user, setUser ] = useState(userBeforeParse)
     const [assignment, setAssignment] = useState({})
     const [attachmentFromBE, setAttachmentFromBE] = useState([])
     const [selectAttachment, setSelectAttachment] = useState([])
@@ -58,64 +67,73 @@ export default function CreateAssignment(props) {
     const [isOpenDeleteRubric, setIsOpenDeleteRubric] = useState(false)
     const [isOpenChangeRubric, setIsOpenChangeRubric] = useState(false)
     const fetchData = useCallback(async () => {
-        setIsPreFetch(true)
-        const rub = await axios.get(`${process.env.REACT_APP_API_BE}/rubric`)
-        setShowAllRubric(rub.data)
-        // const test = await axios.get(`${process.env.REACT_APP_API_BE}/rubric/${2}`)
-        // setTest(test.data)
-        const teacher = await axios.get(`${process.env.REACT_APP_API_BE}/teachers`)
-        const res = await axios.get(`${process.env.REACT_APP_API_BE}/assignments/${props.id}`)
-        setAssignment(res.data)
-        setAssignment_title(res.data.assignment_title)
-        setAssignment_detail(res.data.assignment_detail)
-        setDue_date(res.data.due_date)
-        setDue_time(res.data.due_time)
-        setAttachmentFromBE(res.data.attachment)
-        var newReviewer = []
-        teacher.data.map((t) => {
-            if (res.data.resnponsible.some(item => item.responsible_teacher_id === t.teacher_id)) {
-                newReviewer.push(t)
-                setReviewer(newReviewer)
-                setReviewerFromBE(newReviewer)
-            }
+        try {
+            setIsPreFetch(true)
+            const rub = await axios.get(`${process.env.REACT_APP_API_BE}/rubric`, { headers })
+            setShowAllRubric(rub.data)
+            // const test = await axios.get(`${process.env.REACT_APP_API_BE}/rubric/${2}`)
+            // setTest(test.data)
+            const teacher = await axios.get(`${process.env.REACT_APP_API_BE}/teachers`, { headers })
+            const res = await axios.get(`${process.env.REACT_APP_API_BE}/assignments/${props.id}`, { headers })
+            setAssignment(res.data)
+            setAssignment_title(res.data.assignment_title)
+            setAssignment_detail(res.data.assignment_detail)
+            setDue_date(res.data.due_date)
+            setDue_time(res.data.due_time)
+            setAttachmentFromBE(res.data.attachment)
+            var newReviewer = []
+            teacher.data.map((t) => {
+                if (res.data.resnponsible.some(item => item.responsible_teacher_id === t.teacher_id)) {
+                    newReviewer.push(t)
+                    setReviewer(newReviewer)
+                    setReviewerFromBE(newReviewer)
+                }
 
-        })
-        var criterions = [];
-        res.data.criterion.map((c, index) => {
-            let idx = criterions.findIndex(item => item.criteria_id === c.criteria_id)
-            if (idx !== -1) {//0
-                criterions[idx].score.push(
-                    {
-                        name: c.criteria_detail,
-                        value: c.criteria_score
-                    }
-                )
-                criterions[idx].score.sort((a, b) => {
-                    return a.value - b.value
-                })
-            } else {
-                criterions.push(
-                    {
-                        criteria_id: c.criteria_id,
-                        criteria_name: c.criteria_name,
-                        score: [
-                            {
-                                name: c.criteria_detail,
-                                value: c.criteria_score
-                            }
-                        ]
-                    }
-                )
-            }
-        })
-        setCriterionBE(criterions)
-        rub.data.map((r) => {
-            if (r.rubric_id === res.data.rubric_id) {
-                setRubric(r)
-                setRubricBE(r)
-            }
-        })
-        setIsPreFetch(false)
+            })
+            var criterions = [];
+            res.data.criterion.map((c, index) => {
+                let idx = criterions.findIndex(item => item.criteria_id === c.criteria_id)
+                if (idx !== -1) {//0
+                    criterions[idx].score.push(
+                        {
+                            name: c.criteria_detail,
+                            value: c.criteria_score
+                        }
+                    )
+                    criterions[idx].score.sort((a, b) => {
+                        return a.value - b.value
+                    })
+                } else {
+                    criterions.push(
+                        {
+                            criteria_id: c.criteria_id,
+                            criteria_name: c.criteria_name,
+                            score: [
+                                {
+                                    name: c.criteria_detail,
+                                    value: c.criteria_score
+                                }
+                            ]
+                        }
+                    )
+                }
+            })
+            setCriterionBE(criterions)
+            rub.data.map((r) => {
+                if (r.rubric_id === res.data.rubric_id) {
+                    setRubric(r)
+                    setRubricBE(r)
+                }
+            })
+            setIsPreFetch(false)
+        } catch (err) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oop...',
+                text: 'Something went wrong, Please Try again later.',
+            })
+            // console.log(err)
+        }
     }, [])
     useEffect(() => {
         fetchData()
@@ -126,7 +144,7 @@ export default function CreateAssignment(props) {
         showAllRubric.map((a) => {
             if (a.rubric_id === rubric.rubric_id) {
                 async function refreshCriterion() {
-                    const temp = await axios.get(`${process.env.REACT_APP_API_BE}/rubric/${rubric.rubric_id}`)
+                    const temp = await axios.get(`${process.env.REACT_APP_API_BE}/rubric/${rubric.rubric_id}`, { headers })
                     temp.data.criterions.map((c, index) => {
                         let idx = criterions.findIndex(item => item.criteria_id === c.criteria_id)
                         if (idx !== -1) {//0
@@ -163,9 +181,13 @@ export default function CreateAssignment(props) {
     }, [rubric])
 
     const checkRole = useCallback(() => {
-        if (user.role === "student") {
-            alert(`You dont'have permission to go this page.`)
-            navigate("/")
+        if (user.user_type === "Student") {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oop...',
+                text: `You dont'have permission to go this page.`,
+            })
+            navigate("/main")
         }
     })
 
@@ -235,8 +257,13 @@ export default function CreateAssignment(props) {
     function setModalDelete(value) {
         if (rubric !== "") {
             setIsOpenDeleteRubric(value)
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oop...',
+                text: "No rubric for deleting !!",
+            })
         }
-        else (alert("No rubric for deleting !!"))
     }
 
     async function setModalChange(value) {
@@ -255,7 +282,7 @@ export default function CreateAssignment(props) {
                     }
                 })
             }
-            const teacher_id = user.id
+            // const teacher_id = user.user_id
             const rubric_id = rubric.rubric_id
 
             const data = new FormData();
@@ -297,17 +324,39 @@ export default function CreateAssignment(props) {
             data.append('assignment_detail', assignment_detail)//assignment_detail
             data.append('due_date', due_date)//due_date
             data.append('due_time', due_time)//due_time
-            data.append('teacher_id', teacher_id)//teacher_id
+            // data.append('teacher_id', teacher_id)//teacher_id
+            if (user.user_type === "Teacher") {
+                data.append("teacher_id", user.user_id)
+                data.append("aa_id", "")
+            } else {
+                data.append("teacher_id", "")
+                data.append("aa_id", user.user_id)
+            }
             data.append('rubric_id', rubric_id)//rubric_id
 
             try {
-                const response = await axios.post(`${process.env.REACT_APP_API_BE}/assignments/edit`, data)
+                setIsPreFetch(true)
+                const response = await axios.post(`${process.env.REACT_APP_API_BE}/assignments/edit`, data, { headers })
                 if (response.status === 200) {
-                    alert("Edit Success.")
-                    navigate(`/assignments/${props.id}`)
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Save!',
+                        text: 'Edit Success.',
+                        timer: 2000,
+                        showCancelButton: false,
+                        showConfirmButton: false
+                    })
+                    setIsPreFetch(false)
+                    setTimeout(() => {
+                        navigate(`/assignments/${props.id}`)
+                    }, 2000);
                 }
             } catch (err) {
-                alert("It's not success, Please check your input")
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oop...',
+                    text: 'Something went wrong, Please Try again later.',
+                })
                 console.error(err)
             }
         }
@@ -318,7 +367,7 @@ export default function CreateAssignment(props) {
     }
 
     if (isPreFetch) {
-        return <></>
+        return <><Loading open={isPreFetch} /></>
     }
 
     return (
@@ -408,7 +457,7 @@ export default function CreateAssignment(props) {
                                                             &nbsp;
                                                             <FolderIcon className="primary" />
                                                             &nbsp;
-                                                            {f.attachment_name.substring(0, 30)}
+                                                            {f.attachment_name.substring(0, 25)}
                                                             &nbsp;
                                                             <button onClick={() => deleteFilesFromBE(f, index)}>
                                                                 <DeleteIcon fontSize="small" color="error" />
@@ -429,7 +478,7 @@ export default function CreateAssignment(props) {
                                                             &nbsp;
                                                             <FolderIcon className="primary" />
                                                             &nbsp;
-                                                            {file.name.substring(0, 30)}
+                                                            {file.name.substring(0, 25)}
                                                             &nbsp;
                                                             <button
                                                                 onClick={() => {
@@ -625,7 +674,7 @@ export default function CreateAssignment(props) {
                                 header="Confirmation"
                                 assignment={assignment}
                                 reviewerFromBE={reviewerFromBE}
-                                userId={user.id}
+                                userId={user.user_id}
                                 rubric={rubric}
                                 delete_responsible_teacher={delete_responsible_teacher}
                                 selectAttachment={selectAttachment}

@@ -26,6 +26,8 @@ const useStyles = makeStyles({
 })
 export default function AssignmentTopicBox(props) {
     const { user, setUser } = useContext(UserContext)
+    // const userBeforeParse=JSON.parse(localStorage.getItem('user'))
+    // const  [user, setUser ] = useState(userBeforeParse)
     const classes = useStyles()
     function IsCheckFilter() {    
             return (
@@ -37,13 +39,13 @@ export default function AssignmentTopicBox(props) {
                                 return (
                                     <div key={index}>
                                         <Card className={classes.root}>
-                                            <CardHeader title={`Assignment ${data.assignment_id} `} />
+                                            <CardHeader title={` ${data.assignment_title} `} />
                                             <Card.Body>
                                                 <Card.Text>
                                                     <div className="container col-12 " style={{ 'fontSize': '20px' }}>
 
                                                         Assignment {data.assignment_id} : {data.assignment_title}<br />
-                                                    By {data.teacher_name} on {` ${dayjs(data.due_date).format("MMMM DD, YYYY")}`}
+                                                    By {data.teacher_name===null?(data.aa_name):(data.teacher_name)} on {` ${dayjs(data.due_date).format("MMMM DD, YYYY")}`}
 
                                                         <Link to={`/ assignments / ${data.assignment_id}`} className='d-flex justify-content-end m-2'>
                                                         <Button variant="contained" size="large" color="primary">
@@ -65,13 +67,13 @@ export default function AssignmentTopicBox(props) {
                             return (
                                 <div key={index}>
                                     <Card className={classes.root}>
-                                        <CardHeader title={`Assignment ${data.assignment_id} `} />
+                                        <CardHeader title={` ${data.assignment_title} `} />
                                         <Card.Body>
                                             <Card.Text>
                                                 <div className="container col-12" style={{ 'fontSize': '20px' }}>
 
                                                     Assignment {data.assignment_id} : {data.assignment_title}<br />
-                                            By {data.teacher_name} on {` ${dayjs(data.due_date).format("MMMM DD, YYYY")}`}
+                                            By {data.teacher_name===null?(data.aa_name):(data.teacher_name)} on {` ${dayjs(data.due_date).format("MMMM DD, YYYY")}`}
                                                     <Link to={`/assignments/${data.assignment_id}`} className='d-flex justify-content-end m-2'>
                                                         <Button variant="contained" size="large" color="primary">
                                                             More

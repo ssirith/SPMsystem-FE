@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback, useContext } from "react"
+import Cookie from 'js-cookie'
 import Inputtext from "../components/common/Inputtext"
 import Membersbox from "../components/common/Membersbox"
 import Advisorbox from "../components/common/Advisorbox"
@@ -11,8 +12,17 @@ import { Link, useNavigate } from "@reach/router"
 import BreadcrumbNavString from "../components/common/BreadcrumbNavString"
 import Textarea from "../components/common/Textarea"
 import { UserContext } from "../UserContext"
+import Loading from "../components/common/Loading"
+import Swal from 'sweetalert2'
 export default function Createteam() {
+  const headers = {
+    Authorization: `Bearer ${Cookie.get("jwt")}`,
+    "Content-Type": "application/json",
+    accept: "application/json",
+  }
   const { user, setUser } = useContext(UserContext)
+  // const userBeforeParse=JSON.parse(localStorage.getItem('user'))
+  // const  [user, setUser ] = useState(userBeforeParse)
   let navigate = useNavigate()
   const [isPreFetch, setIsPreFetch] = useState(false)
   const [departmentList, setDepartmentList] = useState(["SIT", "IT", "CS", "DSI"])
@@ -27,10 +37,19 @@ export default function Createteam() {
   const [member, setMember] = useState([])
   const [advisor, setAdvisor] = useState([])
   const fetchData = useCallback(async () => {
-    setIsPreFetch(true)
-    const all = await axios.get(`${process.env.REACT_APP_API_BE}/students`)
-    setStudents(all.data)
-    setIsPreFetch(false)
+    try {
+      setIsPreFetch(true)
+      const all = await axios.get(`${process.env.REACT_APP_API_BE}/students`, { headers })
+      setStudents(all.data)
+      setIsPreFetch(false)
+    } catch (err) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oop...',
+        text: 'Something went wrong, Please Try again later.',
+      })
+      // console.log(err)
+    }
   }, [])
   useEffect(() => {
     fetchData()
@@ -58,12 +77,13 @@ export default function Createteam() {
 
 
   const handleSubmit = async (event) => {
+    setIsPreFetch(true)
     const project_name = mygroup.name
     const project_detail = mygroup.detail
     const student_id = []//array
     member.map((m) => student_id.push(m.student_id))
-    const value = students.find((std) => std.student_id === user.id)//no std.id
-    if(value){
+    const value = students.find((std) => std.student_id === user.user_id)//no std.id
+    if (value) {
       student_id.push(value.student_id)
     }
     const teacher_id = []
@@ -75,32 +95,46 @@ export default function Createteam() {
         student_id,
         teacher_id,
         department,
-      })
+      }, { headers })
       if (response.status === 200) {
-        alert("Create Success.")
-        navigate("/")
-        window.location.reload()
-      }
+        Swal.fire({
+          icon: 'success',
+          title: 'Save!',
+          text: 'Create Success.',
+          timer: 2000,
+          showCancelButton: false,
+          showConfirmButton: false
+        })
+      setIsPreFetch(false)
+        setTimeout(() => {
+          navigate("/main")
+        }, 2000);
+      }      
     } catch (err) {
-      alert("It's not success, Please check your input")
+      Swal.fire({
+        icon: 'error',
+        title: 'Oop...',
+        text: 'Something went wrong, Please Try again later.',
+
+      })
       console.error(err)
     }
   }
   if (isPreFetch) {
-    return <></>
+    return <><Loading open={isPreFetch} /></>
   }
   return (
     <div className="container">
       <div className="row">
         <div className="col-12 my-3">
           <BreadcrumbNavString
-            pastref="/"
+            pastref="/main"
             past="My Project"
             current="Create Project"
           />
         </div>
         <div className="col-12 my-3">
-          <p>Senior Project Topic</p>
+          <b>Senior Project Topic</b>
         </div>
       </div>
       <div className="row">
@@ -168,7 +202,7 @@ export default function Createteam() {
           </div>
         </div>
       </div>
-
+      <br />
       <div className="col-12 my-3">
         <Textarea
           id="projectdetail"
@@ -181,7 +215,7 @@ export default function Createteam() {
       <div className="col-12 mx-auto">
         <div className="row">
           <div className="col-12 text-center">
-            <Link className="mr-2" to="/">
+            <Link className="mr-2" to="/main">
               <Buttons
                 menu="Cancel"
               />
@@ -190,13 +224,13 @@ export default function Createteam() {
             <Buttons
               menu="Create"
               color="primary"
-              onClick={() => console.log("save")}
               onClick={(event) => handleSubmit(event)}
             />
 
           </div>
         </div>
       </div>
+      <br />
     </div>
   )
 }
